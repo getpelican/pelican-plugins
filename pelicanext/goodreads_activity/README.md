@@ -18,7 +18,7 @@ This plugin is inspired by Marco Milanesi <kpanic@gnufunk.org> Github activity p
 Requirements
 ============
 
-`goodreads_activity` requires `feedparser` module.
+`goodreads_activity` requires feedparser.
 
 ```bash
 pip install feedparser
