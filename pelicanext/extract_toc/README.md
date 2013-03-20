@@ -17,7 +17,8 @@ Why do you need it?
 Pelican can generate TOC of reST and Markdown files, using markup's respective
 directive and extension. TOC is generated and placed at the beginning of
 `article.content`. You cannot place the TOC in `<nav>` HTML5 tag, nor can you
-place the TOC at the end of your article's content.
+place the TOC at the end of your article's content because TOC is part of
+`article.content`.
 
 This plugin extracts TOC from `article.content` and places it in `article.toc`.
 
