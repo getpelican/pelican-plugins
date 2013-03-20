@@ -14,10 +14,19 @@ Author Email    | talha131@gmail.com
 Author Homepage | http://onCrashReboot.com 
 Github Account  | https://github.com/talha131 
 
-## Credits
+### Credits
 
 This plugin is inspired by Marco Milanesi <kpanic@gnufunk.org> Github activity
 plugin.
+
+Requirements
+============
+
+`goodreads_activity` requires `feedparser` module.
+
+```bash
+pip install feedparser
+```
 
 How to Use
 ==========
