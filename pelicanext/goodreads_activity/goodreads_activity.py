@@ -78,16 +78,13 @@ Template Example
 """
 
 from pelican import signals
+import feedparser
 
 
 class GoodreadsActivity():
     def __init__(self, generator):
-        try:
-            import feedparser
-            self.activities = feedparser.parse(
-                generator.settings['GOODREADS_ACTIVITY_FEED'])
-        except ImportError:
-            raise Exception("Unable to find feedparser")
+        self.activities = feedparser.parse(
+            generator.settings['GOODREADS_ACTIVITY_FEED'])
 
     def fetch(self):
         goodreads_activity = {
