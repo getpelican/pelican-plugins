@@ -5,16 +5,12 @@ A Pelican plugin to lists books from your Goodreads shelves.
 
 Copyright (c) Talha Mansoor
 
-Author: Talha Mansoor
+Author: Talha Mansoor 
+Author Email: talha131@gmail.com 
+Author Homepage: http://onCrashReboot.com 
+Github Account: https://github.com/talha131 
 
-Author Email: talha131@gmail.com
-
-Author Homepage: http://onCrashReboot.com
-
-Github Account: https://github.com/talha131
-
-Credits
--------
+## Credits
 
 This plugin is inspired by Marco Milanesi <kpanic@gnufunk.org> Github activity plugin.
 
@@ -63,13 +59,11 @@ Template Example
 
 ```python
 {% if GOODREADS_ACTIVITY_FEED %}
-    <h2>{{ goodreads_activity.shelf_title }}</h2> 
-    {% for book in goodreads_activity.books %} 
-        <img src="{{book.sicon}}"/>
-        <header>{{book.title}}<small> by {{book.author}}</small></header> 
-        <article>
-            {{book.description|truncate(end='')}} <a href={{book.link}} target="_blank">...more</a> 
-        </article> 
+    <h2>{{ goodreads_activity.shelf_title }}</h2>
+    {% for book in goodreads_activity.books %}
+        <img src="{{book.s_cover}}"/>
+        <header>{{book.title}}<small> by {{book.author}}</small></header>
+        <article>{{book.description|truncate(end='')}}<a href={{book.link}} target="_blank">...more</a></article>
     {% endfor %}
 {% endif %}
 ```
