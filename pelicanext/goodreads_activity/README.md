@@ -15,8 +15,8 @@ Github Account  | https://github.com/talha131
 
 This plugin is inspired by Marco Milanesi <kpanic@gnufunk.org> Github activity plugin.
 
-How to
-======
+How to Use
+==========
 
 **Important** Unlike Marco's Github activity plugin, this plugin returns
 a dictionary composed of the books in your Goodreads shelf and their
