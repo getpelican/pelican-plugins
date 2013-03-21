@@ -29,5 +29,5 @@ folder. Then add to settings.py like this:
 
 Usage
 -----
-The plugin will activate and optimize images upon `finalizes` signal of
+The plugin will activate and optimize images upon `finalized` signal of
 pelican.
