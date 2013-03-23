@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import os.path
-
-from docutils import io, nodes, statemachine, utils
-from docutils.utils.error_reporting import SafeString, ErrorString
-from docutils.parsers.rst import directives, Directive
-
-from pelican.rstdirectives import Pygments
 
 """
 Include Pygments highlighted code with reStructuredText
@@ -18,6 +11,15 @@ Use this plugin to make writing coding tutorials easier! You can
 maintain the example source files separately from the actual article.
 
 """
+
+import os.path
+
+from docutils import io, nodes, statemachine, utils
+from docutils.utils.error_reporting import SafeString, ErrorString
+from docutils.parsers.rst import directives, Directive
+
+from pelican.rstdirectives import Pygments
+
 
 class CodeInclude(Directive):
 
@@ -53,7 +55,7 @@ class CodeInclude(Directive):
         path = nodes.reprunicode(path)
         encoding = self.options.get(
             'encoding', self.state.document.settings.input_encoding)
-        e_handler=self.state.document.settings.input_encoding_error_handler
+        e_handler = self.state.document.settings.input_encoding_error_handler
         tab_width = self.options.get(
             'tab-width', self.state.document.settings.tab_width)
         try:
@@ -68,7 +70,7 @@ class CodeInclude(Directive):
                               (self.name, SafeString(path)))
         except IOError as error:
             raise self.severe('Problems with "%s" directive path:\n%s.' %
-                      (self.name, ErrorString(error)))
+                              (self.name, ErrorString(error)))
         startline = self.options.get('start-line', None)
         endline = self.options.get('end-line', None)
         try:
@@ -89,9 +91,9 @@ class CodeInclude(Directive):
 
         self.options['source'] = path
         codeblock = Pygments(self.name,
-                             [lexer], # arguments
+                             [lexer],  # arguments
                              {},  # no options for this directive
-                             include_lines, # content
+                             include_lines,  # content
                              self.lineno,
                              self.content_offset,
                              self.block_text,
@@ -102,4 +104,3 @@ class CodeInclude(Directive):
 
 def register():
     directives.register_directive('code-include', CodeInclude)
-
