@@ -22,7 +22,6 @@ from pelican.rstdirectives import Pygments
 
 
 class CodeInclude(Directive):
-
     """
     Include content read from a separate source file, and highlight
     it with the given lexer (using pelican.rstdirectives.CodeBlock)
@@ -49,15 +48,18 @@ class CodeInclude(Directive):
         source = self.state_machine.input_lines.source(
             self.lineno - self.state_machine.input_offset - 1)
         source_dir = os.path.dirname(os.path.abspath(source))
+
         path = directives.path(self.arguments[0])
         path = os.path.normpath(os.path.join(source_dir, path))
         path = utils.relative_path(None, path)
         path = nodes.reprunicode(path)
+
         encoding = self.options.get(
             'encoding', self.state.document.settings.input_encoding)
         e_handler = self.state.document.settings.input_encoding_error_handler
         tab_width = self.options.get(
             'tab-width', self.state.document.settings.tab_width)
+
         try:
             self.state.document.settings.record_dependencies.add(path)
             include_file = io.FileInput(source_path=path,
