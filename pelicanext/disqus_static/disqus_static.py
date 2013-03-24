@@ -6,7 +6,7 @@ This plugin adds a disqus_comments property to all articles.
 Comments are fetched at generation time using disqus API.
 """
 
-from disqusapi import DisqusAPI
+from disqusapi import DisqusAPI, Paginator
 from pelican import signals
 
 def initialized(pelican):
@@ -20,11 +20,13 @@ def initialized(pelican):
 def disqus_static(generator):
     disqus = DisqusAPI(generator.settings['DISQUS_SECRET_KEY'], 
                        generator.settings['DISQUS_PUBLIC_KEY'])
-    threads = disqus.threads.list(forum=generator.settings['DISQUS_SITENAME'])
+    threads = Paginator(disqus.threads.list, 
+                        forum=generator.settings['DISQUS_SITENAME'])
     thread_dict = {} # disqus thread id => title
     for thread in threads:
         thread_dict[thread['id']] = thread['title']
-    posts = disqus.posts.list(forum=generator.settings['DISQUS_SITENAME'])
+
+    posts = Paginator(disqus.posts.list, forum=generator.settings['DISQUS_SITENAME'])
     post_dict = {} # title => [post1, post2, ...]
     for post in posts:
         if post['thread'] not in thread_dict.keys():
@@ -32,6 +34,7 @@ def disqus_static(generator):
         if thread_dict[post['thread']] not in post_dict.keys():
             post_dict[thread_dict[post['thread']]] = []
         post_dict[thread_dict[post['thread']]].append(post)
+
     for article in generator.articles:
         if article.title in post_dict:
             article.disqus_comments = post_dict[article.title]

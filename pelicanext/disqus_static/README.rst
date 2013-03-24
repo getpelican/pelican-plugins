@@ -9,6 +9,9 @@ Installation
 Because we use disqus API to retrieve the comments you need to create an application at
 http://disqus.com/api/applications/ which will provide you with a secret and public keys for the API.
 
+We use disqus-python package for communication with disqus API:
+``pip install disqus-python``
+
 Put ``disqus_static.py`` plugin in ``plugins`` folder in pelican installation 
 and use the following in your settings::
 
@@ -57,4 +60,3 @@ TODO
 -----
 
  - handle replies to comments properly and maintain parent-child relationships
- - test for sites with over 100 comments (I think disqus API only returns 100 items per request)
