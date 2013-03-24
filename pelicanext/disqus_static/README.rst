@@ -21,38 +21,37 @@ and use the following in your settings::
 Usage
 -----
 
-Example use of the comments in templates:
 .. code-block:: html+jinja
 
-  {% if article.disqus_comments %}
-  <div id="disqus_static_comments">
-    <h4>{{ article.disqus_comments|length }} comments</h4>
-    <ul class="post-list">
-      {% for comment in article.disqus_comments %}
-      <li class="post">
-        <div data-role="post-content" class="post-content">
-          <div class="avatar hovercard">
-            <img alt="Avatar" src="{{ comment.author.avatar.small.cache }}">
-          </div>
-          <div class="post-body">
-            <header>
-              <span class="publisher-anchor-color">{{ comment.author.name }}</span>
-              <span class="time-ago" title="{{ comment.createdAt }}">{{ comment.createdAt }}</span>
-            </header>
-            <div class="post-message-container" data-role="message-container">
-              <div data-role="message-content">
-                <div class="post-message publisher-anchor-color " data-role="message">
-                  {{ comment.message }}
+    {% if article.disqus_comments %}
+    <div id="disqus_static_comments">
+        <h4>{{ article.disqus_comments|length }} comments</h4>
+        <ul class="post-list">
+            {% for comment in article.disqus_comments %}
+            <li class="post">
+                <div data-role="post-content" class="post-content">
+                    <div class="avatar hovercard">
+                        <img alt="Avatar" src="{{ comment.author.avatar.small.cache }}">
+                    </div>
+                    <div class="post-body">
+                        <header>
+                            <span class="publisher-anchor-color">{{ comment.author.name }}</span>
+                            <span class="time-ago" title="{{ comment.createdAt }}">{{ comment.createdAt }}</span>
+                        </header>
+                        <div class="post-message-container" data-role="message-container">
+                            <div data-role="message-content">
+                                <div class="post-message publisher-anchor-color " data-role="message">
+                                    {{ comment.message }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 
 TODO
 -----
