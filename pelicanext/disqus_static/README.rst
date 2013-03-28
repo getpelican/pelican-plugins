@@ -28,11 +28,11 @@ Usage
 
     {% if article.disqus_comments %}
     <div id="disqus_static_comments">
-        <h4>{{ article.disqus_comments|length }} comments</h4>
+        <h4>{{ article.disqus_comment_count }} comments</h4>
         <ul class="post-list">
-            {% for comment in article.disqus_comments %}
+            {% for comment in article.disqus_comments recursive %}
             <li class="post">
-                <div data-role="post-content" class="post-content">
+                <div class="post-content">
                     <div class="avatar hovercard">
                         <img alt="Avatar" src="{{ comment.author.avatar.small.cache }}">
                     </div>
@@ -41,22 +41,20 @@ Usage
                             <span class="publisher-anchor-color">{{ comment.author.name }}</span>
                             <span class="time-ago" title="{{ comment.createdAt }}">{{ comment.createdAt }}</span>
                         </header>
-                        <div class="post-message-container" data-role="message-container">
-                            <div data-role="message-content">
-                                <div class="post-message publisher-anchor-color " data-role="message">
-                                    {{ comment.message }}
-                                </div>
+                        <div class="post-message-container">
+                            <div class="post-message publisher-anchor-color ">
+                                {{ comment.message }}
                             </div>
                         </div>
                     </div>
                 </div>
+                {% if comment.children %}
+                <ul class="children">
+                    {{ loop(comment.children) }}
+                </ul>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>
     </div>
     {% endif %}
-
-TODO
------
-
- - handle replies to comments properly and maintain parent-child relationships
