@@ -81,7 +81,7 @@ def initialized(pelican):
     if thumbnails or resize:
 
         content = pelican.settings.get('PATH')
-        for root, dirs, files in os.walk(os.path.join(content, gallery)):
+        for root, _, files in os.walk(os.path.join(content, gallery)):
             # skip thumbnail directory
             if root.endswith(directory):
                 continue
@@ -100,9 +100,9 @@ def initialized(pelican):
                         os.makedirs(thumbnail_dir)
 
                     img_root, _ = os.path.splitext(img)
-                    thumbnail_path = os.path.join(thumbnail_dir,
-                                                  '{}{}'.format(img_root, '.jpg'))
-                    resize_image(original_path, thumbnail_path, thumb_w, thumb_h)
+                    thumb_path = os.path.join(thumbnail_dir,
+                                              '{}{}'.format(img_root, '.jpg'))
+                    resize_image(original_path, thumb_path, thumb_w, thumb_h)
 
                 # resize original pictures if necessary
                 if resize:
@@ -126,8 +126,7 @@ def article_gallery(generator):
 
         try:
 
-            for img in os.listdir(os.path.join('./content', gallery,
-                                               article.slug)):
+            for img in os.listdir(source_path):
 
                 mime, _ = mimetypes.guess_type(img)
                 if mime is None or not mime.startswith('image'):
