@@ -26,7 +26,7 @@ class Image(object):
     def __init__(self, name, mime, url, thumbnail, thumbnail_url):
         self.name = name
         self.mime = mime
-        self.original_url = url
+        self.url = url
         self.thumbnail_url = thumbnail_url
         self.thumbnail = thumbnail
 
