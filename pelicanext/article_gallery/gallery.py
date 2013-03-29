@@ -46,33 +46,6 @@ def resize_image(image_in, image_out=None, width=800, height=600):
     img.save(image_out, 'JPEG', quality=90)
 
 
-def get_pictures(gallery, slug, thumbnail_dir, thumbnails=True):
-
-    res = []
-
-    source_path = os.path.join('./content', gallery, slug)
-    root_url = os.path.join('/static', gallery, slug)
-    thumbnail_root_url = os.path.join(root_url, thumbnail_dir)
-
-    try:
-
-        for img in os.listdir(os.path.join('./content', gallery, slug)):
-
-            mime, _ = mimetypes.guess_type(img)
-            if mime is None or not mime.startswith('image'):
-                continue
-
-            file_root, _ = os.path.splitext(img)
-            thumbnail_url = os.path.join(thumbnail_root_url,
-                                         '{}{}'.format(file_root, '.jpg'))
-            original_url = os.path.join(root_url, img)
-            res.append(Image(img, mime, original_url, thumbnails, thumbnail_url))
-
-    except exceptions.OSError:
-        logger.warning('No gallery found for the article "{}".'.format(slug))
-    return res
-
-
 def initialized(pelican):
     '''
         Gets and sets settings of the plugin then executes initializations.
@@ -107,7 +80,8 @@ def initialized(pelican):
     # if the original images need to be manipulated
     if thumbnails or resize:
 
-        for root, dirs, files in os.walk(os.path.join('./content', gallery)):
+        content = pelican.settings.get('PATH')
+        for root, dirs, files in os.walk(os.path.join(content, gallery)):
             # skip thumbnail directory
             if root.endswith(directory):
                 continue
@@ -134,15 +108,41 @@ def initialized(pelican):
                 if resize:
                     resize_image(original_path, width=resize_w, height=resize_h)
 
+
 def article_gallery(generator):
 
+    # get required parameters to build the object
+    content = generator.settings.get('PATH')
     gallery = generator.settings['ARTICLE_GALLERY']
     thumbnails = generator.settings['ARTICLE_GALLERY_THUMBNAILS']
     directory = generator.settings['ARTICLE_GALLERY_THUMBNAIL_DIR']
 
     for article in generator.articles:
-        article.gallery = get_pictures(gallery, article.slug, directory,
-                                       thumbnails)
+        article.gallery = []
+
+        source_path = os.path.join(content, gallery, article.slug)
+        root_url = os.path.join('/static', gallery, article.slug)
+        thumbnail_root_url = os.path.join(root_url, directory)
+
+        try:
+
+            for img in os.listdir(os.path.join('./content', gallery,
+                                               article.slug)):
+
+                mime, _ = mimetypes.guess_type(img)
+                if mime is None or not mime.startswith('image'):
+                    continue
+
+                file_root, _ = os.path.splitext(img)
+                thumbnail_url = os.path.join(thumbnail_root_url,
+                                             '{}{}'.format(file_root, '.jpg'))
+                original_url = os.path.join(root_url, img)
+                article.gallery.append(Image(img, mime, original_url,
+                                             thumbnails, thumbnail_url))
+
+        except exceptions.OSError:
+            logger.warning('No gallery found for the article "{}".'
+                           .format(article.slug))
 
 
 def register():

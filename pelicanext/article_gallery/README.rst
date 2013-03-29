@@ -45,10 +45,9 @@ Each item representing an image in the gallery has its own properties :
 Usage
 -----
 
-Example use of the gallery in templates:
 .. code-block:: html+jinja
 
-  {% for image in article.gallery %}
-  <img src="{{image.url}}" alt="{{image.name}}"/><br>
-  {% endfor %}
+    {% for image in article.gallery %}
+        <img src="{{image.url}}" alt="{{image.name}}"/><br>
+    {% endfor %}
 
