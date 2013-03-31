@@ -11,6 +11,12 @@ Author Email    | talha131@gmail.com
 Author Homepage | http://onCrashReboot.com 
 Github Account  | https://github.com/talha131 
 
+Acknowledgement
+---------------
+
+Thanks to [Avaris](https://github.com/avaris) for going out of the way to help
+me fix Unicode issues and doing a thorough code review.
+
 Why do you need it?
 ===================
 
