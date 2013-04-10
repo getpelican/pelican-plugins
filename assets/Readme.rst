@@ -1,0 +1,80 @@
+Asset management
+----------------
+
+This plugin allows you to use the `Webassets`_ module to manage assets such as
+CSS and JS files. The module must first be installed::
+
+    pip install webassets
+
+The Webassets module allows you to perform a number of useful asset management
+functions, including:
+
+* CSS minifier (``cssmin``, ``yui_css``, ...)
+* CSS compiler (``less``, ``sass``, ...)
+* JS minifier (``uglifyjs``, ``yui_js``, ``closure``, ...)
+
+Others filters include gzip compression, integration of images in CSS via data
+URIs, and more. Webassets can also append a version identifier to your asset
+URL to convince browsers to download new versions of your assets when you use
+far-future expires headers. Please refer to the `Webassets documentation`_ for
+more information.
+
+When used with Pelican, Webassets is configured to process assets in the
+``OUTPUT_PATH/theme`` directory. You can use Webassets in your templates by
+including one or more template tags. The Jinja variable ``{{ ASSET_URL }}`` can
+be used in templates and is relative to the ``theme/`` url. The
+``{{ ASSET_URL }}`` variable should be used in conjunction with the
+``{{ SITEURL }}`` variable in order to generate URLs properly. For example:
+
+.. code-block:: jinja
+
+    {% assets filters="cssmin", output="css/style.min.css", "css/inuit.css", "css/pygment-monokai.css", "css/main.css" %}
+        <link rel="stylesheet" href="{{ SITEURL }}/{{ ASSET_URL }}">
+    {% endassets %}
+
+... will produce a minified css file with a version identifier that looks like:
+
+.. code-block:: html
+
+    <link href="http://{SITEURL}/theme/css/style.min.css?b3a7c807" rel="stylesheet">
+
+These filters can be combined. Here is an example that uses the SASS compiler
+and minifies the output:
+
+.. code-block:: jinja
+
+    {% assets filters="sass,cssmin", output="css/style.min.css", "css/style.scss" %}
+        <link rel="stylesheet" href="{{ SITEURL }}/{{ ASSET_URL }}">
+    {% endassets %}
+
+Another example for Javascript:
+
+.. code-block:: jinja
+
+    {% assets filters="uglifyjs,gzip", output="js/packed.js", "js/jquery.js", "js/base.js", "js/widgets.js" %}
+        <script src="{{ SITEURL }}/{{ ASSET_URL }}"></script>
+    {% endassets %}
+
+The above will produce a minified and gzipped JS file:
+
+.. code-block:: html
+
+    <script src="http://{SITEURL}/theme/js/packed.js?00703b9d"></script>
+
+Pelican's debug mode is propagated to Webassets to disable asset packaging
+and instead work with the uncompressed assets.
+
+Many of Webasset's available compilers have additional configuration options
+(i.e. 'Less', 'Sass', 'Stylus', 'Closure_js').  You can pass these options to
+Webassets using the ``ASSET_CONFIG`` in your settings file.
+
+The following will handle Google Closure's compilation level and locate
+LessCSS's binary:
+
+.. code-block:: python
+
+    ASSET_CONFIG = (('closure_compressor_optimization', 'WHITESPACE_ONLY'),
+                    ('less_bin', 'lessc.cmd'), )
+
+.. _Webassets: https://github.com/miracle2k/webassets
+.. _Webassets documentation: http://webassets.readthedocs.org/en/latest/builtin_filters.html
