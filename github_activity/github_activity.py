@@ -11,6 +11,9 @@ A plugin to list your Github Activity
 
 from __future__ import unicode_literals, print_function
 
+import logging
+logger = logging.getLogger(__name__)
+
 from pelican import signals
 
 
@@ -19,12 +22,9 @@ class GitHubActivity():
         A class created to fetch github activity with feedparser
     """
     def __init__(self, generator):
-        try:
-            import feedparser
-            self.activities = feedparser.parse(
-                generator.settings['GITHUB_ACTIVITY_FEED'])
-        except ImportError:
-            raise Exception("Unable to find feedparser")
+        import feedparser
+        self.activities = feedparser.parse(
+            generator.settings['GITHUB_ACTIVITY_FEED'])
 
     def fetch(self):
         """
@@ -63,5 +63,9 @@ def register():
     """
         Plugin registration
     """
-    signals.article_generator_init.connect(feed_parser_initialization)
-    signals.article_generate_context.connect(fetch_github_activity)
+    try:
+        signals.article_generator_init.connect(feed_parser_initialization)
+        signals.article_generate_context.connect(fetch_github_activity)
+    except ImportError:
+        logger.warning('`github_activity` failed to load dependency `feedparser`.'
+                       '`github_activity` plugin not loaded.')

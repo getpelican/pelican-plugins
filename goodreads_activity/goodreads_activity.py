@@ -9,12 +9,16 @@ Copyright (c) Talha Mansoor
 """
 
 from __future__ import unicode_literals
+
+import logging
+logger = logging.getLogger(__name__)
+
 from pelican import signals
-import feedparser
 
 
 class GoodreadsActivity():
     def __init__(self, generator):
+        import feedparser
         self.activities = feedparser.parse(
             generator.settings['GOODREADS_ACTIVITY_FEED'])
 
@@ -51,5 +55,9 @@ def initialize_feedparser(generator):
 
 
 def register():
-    signals.article_generator_init.connect(initialize_feedparser)
-    signals.article_generate_context.connect(fetch_goodreads_activity)
+    try:
+        signals.article_generator_init.connect(initialize_feedparser)
+        signals.article_generate_context.connect(fetch_goodreads_activity)
+    except ImportError:
+        logger.warning('`goodreads_activity` failed to load dependency `feedparser`.'
+                       '`goodreads_activity` plugin not loaded.')

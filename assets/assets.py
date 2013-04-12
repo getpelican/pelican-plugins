@@ -20,9 +20,14 @@ import os
 import logging
 
 from pelican import signals
-from webassets import Environment
-from webassets.ext.jinja2 import AssetsExtension
+logger = logging.getLogger(__name__)
 
+try:
+    import webassets
+    from webassets import Environment
+    from webassets.ext.jinja2 import AssetsExtension
+except ImportError:
+    webassets = None
 
 def add_jinja2_ext(pelican):
     """Add Webassets to Jinja2 extensions in Pelican settings."""
@@ -41,13 +46,15 @@ def create_assets_env(generator):
         for item in generator.settings['ASSET_CONFIG']:
             generator.env.assets_environment.config[item[0]] = item[1]
 
-    logger = logging.getLogger(__name__)
     if logging.getLevelName(logger.getEffectiveLevel()) == "DEBUG":
         generator.env.assets_environment.debug = True
 
 
 def register():
     """Plugin registration."""
-
-    signals.initialized.connect(add_jinja2_ext)
-    signals.generator_init.connect(create_assets_env)
+    if webassets:
+        signals.initialized.connect(add_jinja2_ext)
+        signals.generator_init.connect(create_assets_env)
+    else:
+        logger.warning('`assets` failed to load dependency `webassets`.'
+                       '`assets` plugin not loaded.')

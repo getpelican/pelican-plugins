@@ -10,4 +10,4 @@ install:
     - pip install -e git://github.com/getpelican/pelican.git#egg=pelican
     - pip install --use-mirrors Markdown
     - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then pip install --use-mirrors webassets cssmin; fi
-script: nosetests tests
+script: nosetests
