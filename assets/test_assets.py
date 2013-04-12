@@ -13,8 +13,12 @@ import subprocess
 from pelican import Pelican
 from pelican.settings import read_settings
 
+import pytest
+
+assets = pytest.importorskip("assets")
+
 CUR_DIR = os.path.dirname(__file__)
-THEME_DIR = os.path.join(CUR_DIR, 'test_data', 'themes', 'assets_theme')
+THEME_DIR = os.path.join(CUR_DIR, 'test_data')
 CSS_REF = open(os.path.join(THEME_DIR, 'static', 'css',
                             'style.min.css')).read()
 CSS_HASH = hashlib.md5(CSS_REF).hexdigest()[0:8]
@@ -58,11 +62,10 @@ class TestWebAssets(unittest.TestCase):
     """Base class for testing webassets."""
 
     def setUp(self, override=None):
-        import assets
         
         self.temp_path = mkdtemp(prefix='pelicantests.')
         settings = {
-            'PATH': os.path.join(CUR_DIR, 'test_data', 'content'),
+            'PATH': os.path.join(os.path.dirname(CUR_DIR), 'tests', 'content'),
             'OUTPUT_PATH': self.temp_path,
             'PLUGINS': [assets],
             'THEME': THEME_DIR,
