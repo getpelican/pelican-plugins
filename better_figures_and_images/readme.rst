@@ -1,9 +1,11 @@
 Summary
 ===========
 
-This plug-in finds any `div class="figures"` tags in the output, finds the image contained inside each one,
-then checks the dimensions of the image file and adds the appropriate style="width: ???px;" to both the img tag
-and it's containing div.figure tag.
+This plug-in:
+
+- Adds a `style="width: ???px;"` attribute to any `<img>` tags in the content, by checking
+the dimensions of the image file and adding the appropriate style="width: ???px;" to the `<img>` tag.
+- Also finds any `div class="figures"` tags in the content, that contain images and adds the same style to them too.
 
 
 Assuming that the image is 250px wide, it turns output like this:
@@ -32,4 +34,3 @@ into output like this:
 	    </div>
 	</div>
 
-TODO: Currently only does the first figure, not all of them
