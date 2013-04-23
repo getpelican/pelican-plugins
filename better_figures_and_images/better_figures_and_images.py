@@ -7,17 +7,7 @@ This plugin:
 - Adds a style="width: ???px;" to each image in the content
 - Also adds the width of the contained image to any parent div.figures.
 
-
-<div class="figure">
-    <img alt="map to buried treasure" src="/static/images/dunc_smiling_192x192.jpg" />
-    <p class="caption">
-        This is the caption of the figure (a simple&nbsp;paragraph).
-    </p>
-    <div class="legend">
-        The legend consists of all elements after the caption. In this
-        case, the legend consists of this paragraph.
-    </div>
-</div>
+TODO: Need to add a test.py for this plugin.
 
 """
 
