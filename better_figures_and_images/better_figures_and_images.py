@@ -44,6 +44,8 @@ def content_object_init(instance):
 
         if 'img' in content:
             for img in soup('img'):
+                # TODO: Pretty sure this isn't the right way to do this, too hard coded.
+                # There must be a setting that I should be using?
                 src = instance.settings['PATH'] + '/images/' + os.path.split(img['src'])[1]
                 im = Image.open(src)
                 extra_style = 'width: {}px;'.format(im.size[0])
