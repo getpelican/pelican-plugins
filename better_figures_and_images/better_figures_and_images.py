@@ -1,11 +1,13 @@
 """
 Better Figures & Images
--------
+------------------------
 
 This plugin:
 
-- Adds a style="width: ???px;" to each image in the content
+- Adds a style="width: ???px; height: auto;" to each image in the content
 - Also adds the width of the contained image to any parent div.figures.
+    - If RESPONSIVE_IMAGES == True, adds style="max-width: 100%; height: auto;" instead
+- Corrects alt text: if alt == image filename, set alt = ''
 
 TODO: Need to add a test.py for this plugin.
 
@@ -38,7 +40,7 @@ def content_object_init(instance):
         if 'img' in content:
             for img in soup('img'):
                 if instance.settings['RESPONSIVE_IMAGES']:
-                    extra_style = 'max-width: 100%;'
+                    extra_style = 'max-width: 100%; height: auto;'
                 else:
                     # TODO: Pretty sure this isn't the right way to do this, too hard coded.
                     # There must be a setting that I should be using?
@@ -50,6 +52,10 @@ def content_object_init(instance):
                     img['style'] += extra_style
                 else:
                     img['style'] = extra_style
+
+                if img['alt'] == img['src']:
+                    img['alt'] = ''
+
                 fig = img.find_parent('div', 'figure')
                 if fig:
                     if fig.get('style'):
