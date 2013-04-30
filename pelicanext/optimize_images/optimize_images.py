@@ -44,7 +44,7 @@ def optimize(dirpath, filename):
         if filename.endswith(extension):
             filepath = os.path.join(dirpath, filename)
             command = command.format(filepath)
-            call(command)
+            call(command, shell=True)
 
 
 def register():
