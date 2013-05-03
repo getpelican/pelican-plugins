@@ -28,13 +28,13 @@ are a few extra steps required for this plugin:
   to accomplish this is to add the following lines within the header template
   of the theme you use:
 
-      {% if IPYNB_FORMATTING %}
-        {{ IPYNB_FORMATTING }}
+      {% if EXTRA_HEADER %}
+        {{ EXTRA_HEADER }}
       {% endif %}
 
   and in your ``pelicanconf.py`` file, include the line:
 
-      IPYNB_FORMATTING = open('_nb_header.html').read().decode('utf-8')
+      EXTRA_HEADER = open('_nb_header.html').read().decode('utf-8')
 
 [1] https://github.com/ipython/nbconvert
 """
@@ -51,7 +51,7 @@ def process_body(body):
     body = '\n'.join(body)
 
     # replace the highlight tags
-    body = body.replace('class="highlight"', 'class="highlight-ipynb"')
+    body = body.replace('highlight', 'highlight-ipynb')
 
     # specify <pre> tags
     body = body.replace('<pre', '<pre class="ipynb"')
@@ -72,7 +72,7 @@ def process_header(header):
     # replace the highlight tags
     header = header.replace('highlight', 'highlight-ipynb')
 
-    # specify <pre> tags
+    # specify pre tags
     header = header.replace('html, body', '\n'.join(('pre.ipynb {',
                                                      '  color: black;',
                                                      '  background: #f7f7f7;',
@@ -83,27 +83,18 @@ def process_header(header):
                                                      '}\n',
                                                      'html, body')))
 
+
     # create a special div for notebook
-    header = header.replace('body {', 'div.ipynb {')
+    R = re.compile(r'^body ?{', re.MULTILINE)
+    header = R.sub('div.ipynb {', header)
 
-    # specialize headers
-    header = header.replace('html, body,',
-                            '\n'.join((('h1.ipynb h2.ipynb h3.ipynb '
-                                        'h4.ipynb h5.ipynb h6.ipynb {'),
-                                       'h1.ipynb h2.ipynb ... {',
-                                       '  margin: 0;',
-                                       '  padding: 0;',
-                                       '  border: 0;',
-                                       '  font-size: 100%;',
-                                       '  font: inherit;',
-                                       '  vertical-align: baseline;',
-                                       '}\n',
-                                       'html, body,')))
+    # specify all headers
+    R = re.compile(r'^(h[1-6])', re.MULTILINE)
+    repl = lambda match: '.ipynb ' + match.groups()[0]
+    header = R.sub(repl, header)
 
-    header = header.replace('html, body,',
-                            '/*html, body,*/')
-    header = header.replace('h1, h2, h3, h4, h5, h6,',
-                            '/*h1, h2, h3, h4, h5, h6,*/')
+    # substitude ipynb class for html and body modifiers
+    header = header.replace('html, body', '.ipynb div,')
 
     return header.split('\n')
 
