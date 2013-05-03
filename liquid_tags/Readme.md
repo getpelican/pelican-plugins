@@ -14,7 +14,7 @@ First, in your pelicanconf.py file, add the plugins you want to  use:
 
     PLUGIN_PATH = '/path/to/pelican-plugins'
     PLUGINS = ['liquid_tags.img', 'liquid_tags.video',
-               'liquid_tags.include_code']
+               'liquid_tags.include_code', 'liquid_tags.notebook']
 
 There are several options available
 
@@ -45,8 +45,54 @@ document:
 
     {% include_code myscript.py [Title text] %}
 
-The script must be in the ``code`` subdirectory of your content folder, and
-in order for the resulting hyperlink to work, this directory must be listed
-under the STATIC_PATHS setting, e.g.:
+The script must be in the ``code`` subdirectory of your content folder:
+this default location can be changed by specifying
+
+   CODE_DIR = 'code'
+
+within your configuration file. Additionally, in order for the resulting
+hyperlink to work, this directory must be listed under the STATIC_PATHS
+setting, e.g.:
 
     STATIC_PATHS = ['images', 'code']
+
+## IPython notebooks
+To insert an ipython notebook into your post, enable the
+``liquid_tags.notebook`` plugin and add to your document:
+
+    {% notebook filename.ipynb %}
+
+The file should be specified relative to the ``notebooks`` subdirectory of the
+content directory.  Optionally, this subdirectory can be specified in the
+config file:
+
+    NOTEBOOK_DIR = 'notebooks'
+
+Because the conversion and rendering of notebooks is rather involved, there
+are a few extra steps required for this plugin:
+
+- First, the plugin requires that the nbconvert package [1]_ to be in the
+  python path. For example, in bash, this can be set via
+
+      >$ export PYTHONPATH=/path/to/nbconvert/
+
+  The nbconvert package is still in development, so we recommend using the
+  most recent version.  
+
+- After typing "make html" when using the notebook tag, a file called
+  ``_nb_header.html`` will be produced in the main directory.  The content
+  of the file should be included in the header of the theme.  An easy way
+  to accomplish this is to add the following lines within the header template
+  of the theme you use:
+
+      {% if EXTRA_HEADER %}
+      {{ EXTRA_HEADER }}
+      {% endif %}
+
+  and in your configuration file, include the line:
+
+      EXTRA_HEADER = open('_nb_header.html').read().decode('utf-8')
+
+  this will insert the proper css formatting into your document.
+
+[1] https://github.com/ipython/nbconvert
