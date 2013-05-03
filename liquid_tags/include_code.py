@@ -8,7 +8,7 @@ Syntax
 ------
 {% include_code path/to/code [Title text] %}
 
-The "path to code" is relative to the code path in
+The "path to code" is relative to the code subdirectory of
 the content directory (TODO: allow this to be set in configs).
 
 Example
@@ -37,8 +37,6 @@ FORMAT = re.compile(r"""^(?:\s+)?(?P<src>\S+)(?:\s+)?(?:(?:lang:)(?P<lang>\S+))?
 
 @LiquidTags.register('include_code')
 def include_code(preprocessor, tag, markup):
-    markup = markup.strip()
-
     title = None
     lang = None
     src = None
@@ -59,7 +57,7 @@ def include_code(preprocessor, tag, markup):
     code_path = os.path.join('content', code_dir, src)
 
     if not os.path.exists(code_path):
-        return "File {0} could not be found".format(code_path)
+        raise ValueError("File {0} could not be found".format(code_path))
 
     code = open(code_path).read()
 

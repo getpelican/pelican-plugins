@@ -35,8 +35,6 @@ VID_TYPEDICT = {'.mp4':"type='video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"'",
 
 @LiquidTags.register('video')
 def video(preprocessor, tag, markup):
-    markup = markup.strip()
-
     videos = []
     width = None
     height = None

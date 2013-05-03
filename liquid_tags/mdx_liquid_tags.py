@@ -9,6 +9,7 @@ Where "tag" is associated with some user-defined extension.
 These result in a preprocess step within markdown that produces
 either markdown or html.
 """
+import warnings
 import markdown
 import itertools
 import re
@@ -35,7 +36,7 @@ class _LiquidTagsPreprocessor(markdown.preprocessors.Preprocessor):
             tag = EXTRACT_TAG.match(markup).groups()[0]
             markup = EXTRACT_TAG.sub('', markup, 1)
             if tag in self._tags:
-                liquid_tags[i] = self._tags[tag](self, tag, markup)
+                liquid_tags[i] = self._tags[tag](self, tag, markup.strip())
                 
         # add an empty string to liquid_tags so that chaining works
         liquid_tags.append('')

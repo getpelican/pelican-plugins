@@ -36,7 +36,6 @@ ReTitleAlt = re.compile("""(?:"|')(?P<title>[^"']+)?(?:"|')\s+(?:"|')(?P<alt>[^"
 
 @LiquidTags.register('img')
 def img(preprocessor, tag, markup):
-    markup = markup.strip()
     attrs = None
 
     # Parse the markup string
