@@ -8,8 +8,11 @@ Syntax
 ------
 {% include_code path/to/code [Title text] %}
 
-The "path to code" is relative to the code subdirectory of
-the content directory (TODO: allow this to be set in configs).
+The "path to code" is specified relative to the ``code`` subdirectory of
+the content directory  Optionally, this subdirectory can be specified in the
+config file:
+
+    CODE_DIR = 'code'
 
 Example
 -------
@@ -52,8 +55,7 @@ def include_code(preprocessor, tag, markup):
         raise ValueError("Error processing input, "
                          "expected syntax: {0}".format(SYNTAX))
 
-    # TODO: make this directory a configurable setting
-    code_dir = 'code'
+    code_dir = preprocessor.configs.config['code_dir']
     code_path = os.path.join('content', code_dir, src)
 
     if not os.path.exists(code_path):

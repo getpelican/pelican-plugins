@@ -8,9 +8,11 @@ Syntax
 ------
 {% notebook filename.ipynb %}
 
-The file should be specified relative to the ``notebook`` subdirectory of the
-content directory.  [TODO: make this configurable].
-This will include the IPython notebook in the file.
+The file should be specified relative to the ``notebooks`` subdirectory of the
+content directory.  Optionally, this subdirectory can be specified in the
+config file:
+
+    NOTEBOOK_DIR = 'notebooks'
 
 Details
 -------
@@ -109,8 +111,7 @@ def notebook(preprocessor, tag, markup):
         raise ValueError("Error processing input, "
                          "expected syntax: {0}".format(SYNTAX))
 
-    # TODO: make the notebook directory a configurable setting
-    nb_dir = 'notebooks'
+    nb_dir =  preprocessor.configs.config['notebook_dir']
     nb_path = os.path.join('content', nb_dir, src)
     url = '/{0}/{1}/{2}'.format('static', nb_dir, src)
 
