@@ -18,8 +18,8 @@ logger = logging.getLogger(__name__)
 
 # A list of file types with their respective commands
 COMMANDS = [
-    ('.jpg', 'jpegtran -copy none -optimize "{0}" "{0}"'),
-    ('.png', 'optipng "{0}"'),
+    ('.jpg', 'jpegtran -copy none -optimize "{filename}" "{filename}"'),
+    ('.png', 'optipng "{filename}"'),
 ]
 
 def optimize_images(pelican):
@@ -43,7 +43,7 @@ def optimize(dirpath, filename):
     for extension, command in COMMANDS:
         if filename.endswith(extension):
             filepath = os.path.join(dirpath, filename)
-            command = command.format(filepath)
+            command = command.format(filename=filepath)
             call(command, shell=True)
 
 
