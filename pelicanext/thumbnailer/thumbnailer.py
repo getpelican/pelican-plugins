@@ -34,7 +34,7 @@ A list containing a tuple of settings.
 """
 
 import os
-import Image
+from PIL import Image
 from pelican import signals
 
 def thumbnailer(generator):
@@ -42,7 +42,7 @@ def thumbnailer(generator):
     resize = generator.settings['RESIZE']
     
     outputpath = generator.settings['OUTPUT_PATH']
-    imagesoutputpath = os.path.join(outputpath,'static/images')
+    imagesoutputpath = os.path.join(outputpath,'static', 'images')
     
     
     for path, overwrite, width, height in resize:
