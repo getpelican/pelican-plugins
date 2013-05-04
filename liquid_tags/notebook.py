@@ -43,7 +43,14 @@ are a few extra steps required for this plugin:
 import re
 import os
 from .mdx_liquid_tags import LiquidTags
-from converters import ConverterBloggerHTML  # part of the nbconvert package
+
+# nbconverters: part of the nbconvert package
+try:
+    from converters import ConverterBloggerHTMLSeparate
+    separate_available = True
+except ImportError:
+    from converters import ConverterBloggerHTML  # requires nbconvert package
+    separate_available = False
 
 SYNTAX = "{% notebook /path/to/notebook.ipynb %}"
 FORMAT = re.compile(r"""^(?:\s+)?(?P<src>\S+)(?:\s+)?$""")
@@ -111,7 +118,8 @@ def notebook(preprocessor, tag, markup):
         raise ValueError("Error processing input, "
                          "expected syntax: {0}".format(SYNTAX))
 
-    nb_dir =  preprocessor.configs.config['notebook_dir']
+    settings = preprocessor.configs.config['settings']
+    nb_dir =  settings.get('NOTEBOOK_DIR', 'notebooks')
     nb_path = os.path.join('content', nb_dir, src)
     url = '/{0}/{1}/{2}'.format('static', nb_dir, src)
 
@@ -119,16 +127,22 @@ def notebook(preprocessor, tag, markup):
         raise ValueError("File {0} could not be found".format(nb_path))
 
     # Call the notebook converter
-    converter = ConverterBloggerHTML(nb_path)
-    converter.read()
+    if separate_available:
+        converter = ConverterBloggerHTMLSeparate(nb_path)
+        converter.read()
+        
+        header_lines = converter.header_body()
+        body_lines = converter.main_body('\n')
+    else:
+        converter = ConverterBloggerHTML(nb_path)
+        converter.read()
 
-    header_lines = process_header(converter.header_body())
+        header_lines = process_header(converter.header_body())
+        body_lines = process_body(converter.main_body('\n'))
     
     print ("\n *** Writing styles to _nb_header.html: "
            "this should be included in the theme.\n")
     open('_nb_header.html', 'w').write('\n'.join(header_lines).encode('utf-8'))
-
-    body_lines = process_body(converter.main_body('\n'))
 
     body = preprocessor.configs.htmlStash.store('\n'.join(body_lines),
                                                 safe=True)
