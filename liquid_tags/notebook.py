@@ -6,13 +6,16 @@ notebook in a blog post.
 
 Syntax
 ------
-{% notebook filename.ipynb %}
+{% notebook filename.ipynb [ cells[start:end] ]%}
 
 The file should be specified relative to the ``notebooks`` subdirectory of the
 content directory.  Optionally, this subdirectory can be specified in the
 config file:
 
     NOTEBOOK_DIR = 'notebooks'
+
+The cells[start:end] statement is optional, and can be used to specify which
+block of cells from the notebook to include.
 
 Details
 -------
@@ -52,8 +55,8 @@ except ImportError:
     from converters import ConverterBloggerHTML  # requires nbconvert package
     separate_available = False
 
-SYNTAX = "{% notebook /path/to/notebook.ipynb %}"
-FORMAT = re.compile(r"""^(?:\s+)?(?P<src>\S+)(?:\s+)?$""")
+SYNTAX = "{% notebook /path/to/notebook.ipynb [ cells[start:end] ] %}"
+FORMAT = re.compile(r"""^(\s+)?(?P<src>\S+)(\s+)?((cells\[)(?P<start>-?[0-9]*):(?P<end>-?[0-9]*)(\]))?(\s+)?$""")
 
 
 def process_body(body):
@@ -108,15 +111,65 @@ def process_header(header):
     return header.split('\n')
 
 
+def strip_divs(body, start=None, end=None):
+    """Strip divs from the body for partial notebook insertion
+
+    If L represents the list of parsed main divs, then this returns
+    the document corresponding to the divs L[start:end].
+
+    body should be a list of lines in the body of the html file.
+    """
+    # TODO: this is a bit hackish.  It would be better to add a PR to
+    #       nbconvert which does this at the source.
+    DIV = re.compile('<div')
+    UNDIV = re.compile('</div')
+
+    # remove ipynb div
+    body_lines = body[1:-1]
+    
+    # split divs
+    L = []
+    count = 0
+    div_start = 0
+    for i, line in enumerate(body_lines):
+        count += len(DIV.findall(line))
+        count -= len(UNDIV.findall(line))
+        
+        if count == 0:
+            L.append(body_lines[div_start:i + 1])
+            div_start = i + 1
+        elif count < 0:
+            raise ValueError("parsing error: lost a tag")
+
+    if div_start != len(body_lines):
+        raise ValueError("parsing error: didn't find the end of the div")
+
+    body_lines = sum(L[start:end], [])
+
+    return body[:1] + body_lines + body[-1:]
+
+
 @LiquidTags.register('notebook')
 def notebook(preprocessor, tag, markup):
     match = FORMAT.search(markup)
     if match:
         argdict = match.groupdict()
         src = argdict['src']
+        start = argdict['start']
+        end = argdict['end']
     else:
         raise ValueError("Error processing input, "
                          "expected syntax: {0}".format(SYNTAX))
+
+    if start:
+        start = int(start)
+    else:
+        start = None
+
+    if end:
+        end = int(end)
+    else:
+        end = None
 
     settings = preprocessor.configs.config['settings']
     nb_dir =  settings.get('NOTEBOOK_DIR', 'notebooks')
@@ -143,6 +196,8 @@ def notebook(preprocessor, tag, markup):
     print ("\n *** Writing styles to _nb_header.html: "
            "this should be included in the theme.\n")
     open('_nb_header.html', 'w').write('\n'.join(header_lines).encode('utf-8'))
+
+    body_lines = strip_divs(body_lines, start, end)
 
     body = preprocessor.configs.htmlStash.store('\n'.join(body_lines),
                                                 safe=True)
