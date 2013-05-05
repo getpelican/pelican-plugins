@@ -3,10 +3,10 @@ Summary
 
 This plug-in:
 
-- Adds a `style="width: ???px;"` attribute to any `<img>` tags in the content, by checking
+- Adds a `style="width: ???px; height: auto;"` attribute to any `<img>` tags in the content, by checking
 the dimensions of the image file and adding the appropriate `style="width: ???px; height: auto;"` to the `<img>` tag.
 - Also finds any `div class="figures"` tags in the content, that contain images and adds the same style to them too.
-- If RESPONSIVE_IMAGES setting is true, it adds `style="max-width: 100%; height: auto;"` instead.
+- If RESPONSIVE_IMAGES setting is true, it adds `style="width: ???px; max-width: 100%; height: auto;"` instead.
 - Corrects Alt text: If an img alt attribute = the image filename, it sets it to ""
 
 
@@ -38,8 +38,8 @@ into output like this:
 
 or this, if RESPONSIVE_IMAGES = True:
 
-	<div class="figure" style="max-width: 100%; height: auto;">
-	    <img style="max-width: 100%; height: auto;" alt="" src="/static/images/image.jpg" />
+	<div class="figure" style="width: 250px; max-width: 100%; height: auto;">
+	    <img style="width: 250px; max-width: 100%; height: auto;" alt="" src="/static/images/image.jpg" />
 	    <p class="caption">
 	        This is the caption of the figure.
 	    </p>

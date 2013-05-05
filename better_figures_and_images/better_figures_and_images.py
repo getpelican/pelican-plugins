@@ -6,7 +6,7 @@ This plugin:
 
 - Adds a style="width: ???px; height: auto;" to each image in the content
 - Also adds the width of the contained image to any parent div.figures.
-    - If RESPONSIVE_IMAGES == True, adds style="max-width: 100%; height: auto;" instead
+    - If RESPONSIVE_IMAGES == True, adds style="width: ???px; max-width: 100%; height: auto;" instead
 - Corrects alt text: if alt == image filename, set alt = ''
 
 TODO: Need to add a test.py for this plugin.
@@ -26,16 +26,6 @@ def content_object_init(instance):
     if instance._content is not None:
         content = instance._content
         soup = BeautifulSoup(content)
-
-        # if '<object type="image/svg+xml"' in content:
-        #     for obj in soup('object'):
-        #         extra_style = 'max-width: 100%;'
-        #         fig = obj.find_parent('div', 'figure')
-        #         if fig:
-        #             if obj.get('style'):
-        #                 obj['style'] += extra_style
-        #             else:
-        #                 obj['style'] = extra_style
 
         if 'img' in content:
             for img in soup('img'):
