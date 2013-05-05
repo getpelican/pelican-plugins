@@ -140,6 +140,8 @@ def strip_divs(body, start=None, end=None):
     if div_start != len(body_lines):
         raise ValueError("parsing error: didn't find the end of the div")
 
+    L = L[1:]
+
     body_lines = sum(L[start:end], [])
 
     return body[:1] + body_lines + body[-1:]
