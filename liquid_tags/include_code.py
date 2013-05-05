@@ -69,7 +69,8 @@ def include_code(preprocessor, tag, markup):
     else:
         title = os.path.basename(src)
 
-    url = '/{0}/{1}/{2}'.format('static', code_dir, src)
+    static_dir = settings.get('STATIC_OUT_DIR', 'static')
+    url = '/{0}/{1}/{2}'.format(static_dir, code_dir, src)
 
     open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
                 "<a href='{url}'>download</a></figcaption>".format(title=title,

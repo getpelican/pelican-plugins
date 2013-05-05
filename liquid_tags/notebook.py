@@ -174,7 +174,6 @@ def notebook(preprocessor, tag, markup):
     settings = preprocessor.configs.config['settings']
     nb_dir =  settings.get('NOTEBOOK_DIR', 'notebooks')
     nb_path = os.path.join('content', nb_dir, src)
-    url = '/{0}/{1}/{2}'.format('static', nb_dir, src)
 
     if not os.path.exists(nb_path):
         raise ValueError("File {0} could not be found".format(nb_path))
