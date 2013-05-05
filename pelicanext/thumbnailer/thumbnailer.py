@@ -11,7 +11,7 @@ def thumbnailer(generator):
     imagesoutputpath = os.path.join(outputpath,'static', 'images')
     
     
-    for path, overwrite, suffix, processes in resize:
+    for path, suffix, processes in resize:
     
     	processor = ProcessorPipeline(processes)
     	
@@ -22,12 +22,9 @@ def thumbnailer(generator):
                 imagepath = os.path.join(dirpath, name)
                 
                 #Find output path
-                if overwrite:
-                    outputimagepath=imagepath
-                else:
-                   relpath = os.path.join(os.path.relpath(dirpath,processpath), name)
-                   thumbnailpath = os.path.join(imagesoutputpath, path+suffix)
-                   outputimagepath = os.path.join(thumbnailpath,relpath)
+                relpath = os.path.join(os.path.relpath(dirpath,processpath), name)
+                thumbnailpath = os.path.join(imagesoutputpath, path+suffix)
+                outputimagepath = os.path.join(thumbnailpath,relpath)
                 
                 #Create output directory if it doesnt exist
                 (dpath,dfile) = os.path.split(outputimagepath)
