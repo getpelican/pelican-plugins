@@ -48,12 +48,8 @@ import os
 from .mdx_liquid_tags import LiquidTags
 
 # nbconverters: part of the nbconvert package
-try:
-    from converters import ConverterBloggerHTMLSeparate
-    separate_available = True
-except ImportError:
-    from converters import ConverterBloggerHTML  # requires nbconvert package
-    separate_available = False
+from converters import ConverterBloggerHTML  # requires nbconvert package
+separate_available = False
 
 SYNTAX = "{% notebook /path/to/notebook.ipynb [ cells[start:end] ] %}"
 FORMAT = re.compile(r"""^(\s+)?(?P<src>\S+)(\s+)?((cells\[)(?P<start>-?[0-9]*):(?P<end>-?[0-9]*)(\]))?(\s+)?$""")
@@ -179,28 +175,26 @@ def notebook(preprocessor, tag, markup):
         raise ValueError("File {0} could not be found".format(nb_path))
 
     # Call the notebook converter
-    if separate_available:
-        converter = ConverterBloggerHTMLSeparate(nb_path)
-        converter.read()
-        
-        header_lines = converter.header_body()
-        body_lines = converter.main_body('\n')
-    else:
-        converter = ConverterBloggerHTML(nb_path)
-        converter.read()
+    converter = ConverterBloggerHTML(nb_path)
+    converter.read()
 
-        header_lines = process_header(converter.header_body())
-        body_lines = process_body(converter.main_body('\n'))
+    header_lines = process_header(converter.header_body())
+    body_lines = process_body(converter.main_body('\n'))
     
-    print ("\n *** Writing styles to _nb_header.html: "
-           "this should be included in the theme.\n")
-    open('_nb_header.html', 'w').write('\n'.join(header_lines).encode('utf-8'))
+    if not notebook.header_saved:
+        notebook.header_saved = True
+        print ("\n *** Writing styles to _nb_header.html: "
+               "this should be included in the theme.\n")
+        lines = '\n'.join(header_lines).encode('utf-8')
+        open('_nb_header.html', 'w').write(lines)
 
     body_lines = strip_divs(body_lines, start, end)
 
     body = preprocessor.configs.htmlStash.store('\n'.join(body_lines),
                                                 safe=True)
     return body
+
+notebook.header_saved = False
 
 
 #----------------------------------------------------------------------
