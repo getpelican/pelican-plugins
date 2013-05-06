@@ -128,6 +128,8 @@ def strip_divs(body, start=None, end=None):
     count = 0
     div_start = 0
     for i, line in enumerate(body_lines):
+        if not line:
+            continue
         count += len(DIV.findall(line))
         count -= len(UNDIV.findall(line))
         
@@ -135,12 +137,12 @@ def strip_divs(body, start=None, end=None):
             L.append(body_lines[div_start:i + 1])
             div_start = i + 1
         elif count < 0:
-            raise ValueError("parsing error: lost a tag")
+            raise ValueError("Fatal: parsing error -- lost a tag")
 
-    if div_start != len(body_lines):
+    # check that we've parsed to the end
+    # the last line may be blank, so we check two conditions
+    if div_start not in [len(body_lines), len(body_lines) - 1]:
         raise ValueError("parsing error: didn't find the end of the div")
-
-    L = L[1:]
 
     body_lines = sum(L[start:end], [])
 
