@@ -15,17 +15,10 @@ Installation
 To enable, ensure that `optimize_images.py` is put somewhere that is accessible.
 Then use as follows by adding the following to your settings.py:
 
+    PLUGIN_PATH = 'path/to/pelican-plugins'
     PLUGINS = ["optimize_images"]
 
-Be careful: Not loading the plugin is easy to do, and difficult to detect. To
-make life easier, find where pelican is installed, and then copy the plugin
-there. An easy way to find where pelican is installed is to verbose list the
-available themes by typing `pelican-themes -l -v`. 
-
-Once the pelican folder is found, copy `optimize_images.py` to the `plugins` 
-folder. Then add to settings.py like this:
-
-    PLUGINS = ["pelican.plugins.optimize_images"]
+`PLUGIN_PATH` can be a path relative to your settings file or an absolute path.
 
 Usage
 -----
