@@ -6,7 +6,7 @@ based on the octopress video tag [1]_
 
 Syntax
 ------
-{% include_code path/to/code [Title text] %}
+{% include_code path/to/code [lang:python] [Title text] %}
 
 The "path to code" is specified relative to the ``code`` subdirectory of
 the content directory  Optionally, this subdirectory can be specified in the
@@ -82,8 +82,15 @@ def include_code(preprocessor, tag, markup):
     open_tag = preprocessor.configs.htmlStash.store(open_tag, safe=True)
     close_tag = preprocessor.configs.htmlStash.store(close_tag, safe=True)
 
+    if lang:
+        lang_include = ':::' + lang + '\n    '
+    else:
+        lang_include = ''
+
     source = (open_tag
-              + '\n\n    ' + '\n    '.join(code.split('\n')) + '\n\n'
+              + '\n\n    '
+              + lang_include
+              + '\n    '.join(code.split('\n')) + '\n\n'
               + close_tag + '\n')
 
     return source
