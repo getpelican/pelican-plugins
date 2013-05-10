@@ -31,7 +31,7 @@ between the `<head>` parameters (for the NotMyIdea template, this file is base.h
         {{ article.latex }}
     {% endif %}
     {% if page and page.latex %}
-        {{ article.latex }}
+        {{ page.latex }}
     {% endif %}
 
 Usage
