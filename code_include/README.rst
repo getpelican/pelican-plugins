@@ -30,10 +30,35 @@ Example
 
 ./incfile.py:
 
-.. include:: test_content/incfile.py
-    :code: python
+.. code:: python
+
+    # These two comment lines will not
+    # be included in the output
+    import random
+
+    insults = ['I fart in your general direction',
+               'your mother was a hampster',
+               'your father smelt of elderberries']
+
+    def insult():
+        print random.choice(insults)
+    # This comment line will be included
+    # ...but this one won't
 
 ./yourfile.rst:
 
-.. include:: test_content/yourfile.rst
-    :code: rst
+.. code:: rst
+
+    How to Insult the English
+    =========================
+
+    :author: Pierre Devereaux
+
+    A function to help insult those silly English knnnnnnniggets:
+
+    .. code-include:: incfile.py
+        :lexer: python
+        :encoding: utf-8
+        :tab-width: 4
+        :start-line: 2
+        :end-line: 11

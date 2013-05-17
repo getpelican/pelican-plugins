@@ -4,6 +4,7 @@ import os
 import os.path
 import unittest
 import tempfile
+import textwrap
 import shutil
 from functools import partial
 
@@ -13,8 +14,19 @@ from pelican.utils import slugify
 from pelican.tests.support import mute
 
 
+def redent(text, levels=1):
+    return '\n'.join(
+        '    ' * levels + line if line.strip() else ''
+        for line in text.split('\n')
+    )
+
+
 PLUGIN_DIR_PATH = os.path.dirname(os.path.abspath(__file__))
+README_FILE_PATH = os.path.join(PLUGIN_DIR_PATH, 'README.rst')
+
 TEST_CONTENT_DIR_PATH = os.path.join(PLUGIN_DIR_PATH, 'test_content')
+INC_FILE_PATH = os.path.join(TEST_CONTENT_DIR_PATH, 'incfile.py')
+ARTICLE_FILE_PATH = os.path.join(TEST_CONTENT_DIR_PATH, 'yourfile.rst')
 
 NOT_INCLUDED_LINES = [
     "These two comment lines will not",
@@ -47,6 +59,16 @@ class TestCodeInclude(unittest.TestCase):
 
     def test_code_include_import(self):
         from code_include import CodeInclude
+
+    def test_code_include_readme_content_matches_test_content(self):
+        with io.open(INC_FILE_PATH, 'r', encoding='utf-8') as f:
+            inc_file_content = f.read()
+        with io.open(ARTICLE_FILE_PATH, 'r', encoding='utf-8') as f:
+            article_file_content = f.read()
+        with io.open(README_FILE_PATH, 'r', encoding='utf-8') as f:
+            readme_file_content = f.read()
+        self.assertIn(redent(inc_file_content), readme_file_content)
+        self.assertIn(redent(article_file_content), readme_file_content)
 
     def test_code_include(self):
         mute(True)(self.pelican.run)()
