@@ -6,7 +6,6 @@ Include Pygments highlighted code with reStructuredText
 Use this plugin to make writing coding tutorials easier! You can
 maintain the example source files separately from the actual article.
 
-
 Based heavily on ``docutils.parsers.rst.directives.Include``. Include
 a file and output as a code block formatted with pelican's Pygments
 directive.
