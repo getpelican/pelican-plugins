@@ -1,17 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-"""
-Include Pygments highlighted code with reStructuredText
-=======================================================
-
-:author: Colin Dunklau
-
-Use this plugin to make writing coding tutorials easier! You can
-maintain the example source files separately from the actual article.
-
-"""
-
 import os.path
 
 from docutils import io, nodes, statemachine, utils
@@ -22,16 +11,6 @@ from pelican.rstdirectives import Pygments
 
 
 class CodeInclude(Directive):
-    """
-    Include content read from a separate source file, and highlight
-    it with the given lexer (using pelican.rstdirectives.CodeBlock)
-
-    The encoding of the included file can be specified. Only a part
-    of the given file argument may be included by specifying start
-    and end line. Hard tabs will be replaced with ``tab-width``
-    spaces.
-    """
-
     required_arguments = 1
     optional_arguments = 0
     final_argument_whitespace = True
