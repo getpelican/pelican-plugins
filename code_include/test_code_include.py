@@ -9,7 +9,10 @@ import shutil
 import subprocess
 from functools import partial
 
+from pelican import Pelican
+from pelican.settings import read_settings
 from pelican.utils import slugify
+from pelican.tests.support import mute
 
 
 def dedent(text):
@@ -72,15 +75,6 @@ ARTICLE_FILE_CONTENT = dedent("""
 
 ARTICLE_OUTPUT_FILE_NAME = slugify('How to Insult the English') + '.html'
 
-CONFIG_FILE_NAME = 'pelicanconf.py'
-
-CONFIG_FILE_CONTENT = dedent("""
-    PLUGINS = ['code_include']
-    DEFAULT_DATE = 'fs'
-    SITEURL = 'http://www.example.com/blog'
-    TIMEZONE = 'UTC'
-    """)
-
 README_FILE = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
     'README.rst'
@@ -90,7 +84,6 @@ README_FILE = os.path.join(
 class TestCodeInclude(unittest.TestCase):
     def setUp(self):
         self.tempdir = tempfile.mkdtemp(prefix='pelican-plugins.')
-        self.config_file_path = os.path.join(self.tempdir, CONFIG_FILE_NAME)
         self.content_path = os.path.join(self.tempdir, 'content')
         self.output_path = os.path.join(self.tempdir, 'output')
         self.inc_file_path = os.path.join(self.content_path, INC_FILE_NAME)
@@ -102,8 +95,15 @@ class TestCodeInclude(unittest.TestCase):
             f.write(INC_FILE_CONTENT)
         with open_utf8(self.article_file_path, 'w') as f:
             f.write(ARTICLE_FILE_CONTENT)
-        with open_utf8(self.config_file_path, 'w') as f:
-            f.write(CONFIG_FILE_CONTENT)
+        settings = read_settings(path=None, override={
+            'PATH': self.content_path,
+            'OUTPUT_PATH': self.output_path,
+            'PLUGINS': ['code_include'],
+            'DEFAULT_DATE': 'fs',
+            'SITEURL': 'http://www.example.com/blog',
+            'TIMEZONE': 'UTC',
+        })
+        self.pelican = Pelican(settings=settings)
 
     def tearDown(self):
         shutil.rmtree(self.tempdir)
@@ -111,13 +111,14 @@ class TestCodeInclude(unittest.TestCase):
     def test_code_include_import(self):
         from code_include import CodeInclude
 
-    def test_code_include_plugin(self):
-        subprocess.check_output([
-            'pelican',
-            '-s', self.config_file_path,
-            '-o', self.output_path,
-            self.content_path,
-        ])
+    def test_code_include_readme_content_matches_test_content(self):
+        with open_utf8(README_FILE, 'r') as f:
+            readme_text = f.read()
+        self.assertIn(redent(INC_FILE_CONTENT), readme_text)
+        self.assertIn(redent(ARTICLE_FILE_CONTENT), readme_text)
+
+    def test_code_include(self):
+        mute(True)(self.pelican.run)()
         article_output_file_path = os.path.join(self.output_path,
                                                 ARTICLE_OUTPUT_FILE_NAME)
         with open_utf8(article_output_file_path, 'r') as f:
@@ -126,11 +127,3 @@ class TestCodeInclude(unittest.TestCase):
             self.assertNotIn(line, article_output_contents)
         for line in INCLUDED_LINES:
             self.assertIn(line, article_output_contents)
-
-    def test_code_include_readme_content_matches_test_content(self):
-        with open_utf8(README_FILE, 'r') as f:
-            readme_text = f.read()
-        self.assertIn(redent(INC_FILE_CONTENT), readme_text)
-        self.assertIn(redent(ARTICLE_FILE_CONTENT), readme_text)
-
-
