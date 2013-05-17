@@ -10,10 +10,6 @@ Based heavily on ``docutils.parsers.rst.directives.Include``. Include
 a file and output as a code block formatted with pelican's Pygments
 directive.
 
-Note that this is broken with the Docutils 0.10 release, there's a
-circular import. It was fixed in trunk:
-http://sourceforge.net/p/docutils/bugs/214/
-
 Directives
 ----------
 
