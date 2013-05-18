@@ -20,8 +20,11 @@ def add_ical(generator, metadata):
 		path = metadata['calendar']
 		cal = Calendar.from_ical(open(path,'rb').read())
 		for element in cal.walk():
+			eventdict = {}
 			if element.name == "VEVENT":
-				summ.append(element.get('summary'))
+				eventdict['summary'] = element.get('summary')
+				eventdict['description'] = element.get('description')
+				summ.append(eventdict)
 		generator.context['iCal'] = summ
 		
 def register():
