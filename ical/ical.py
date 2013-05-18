@@ -11,9 +11,9 @@ from pelican import signals
 import pytz
 import datetime
 
-
-
 def add_ical(generator, metadata):
+	"""Provides events list to templates
+	"""
 	
 	if 'calendar' in metadata.keys():
 		summ = []
@@ -23,9 +23,11 @@ def add_ical(generator, metadata):
 			eventdict = {}
 			if element.name == "VEVENT":
 				eventdict['summary'] = element.get('summary')
-				eventdict['description'] = element.get('description')
+				eventdict['description'] = element.get('description').replace('\n\n', '<br>')
+				eventdict['dtstart'] = element.get('dtstart').dt
+				eventdict['dtend'] = element.get('dtend').dt
 				summ.append(eventdict)
-		generator.context['iCal'] = summ
+		generator.context['events'] = summ
 		
 def register():
     signals.pages_generate_context.connect(add_ical)
