@@ -1,9 +1,9 @@
 ical
 --------
 
-This plugin read the camendar bla bla bla
+This plugin read the calendar in the page metadata :calendar:
 
-    {% if CALENDAR_FILE %}
+    {% if page.calendar %}
 		{% for machin in iCal %}
 			{{ machin}}<br/>
 		{% endfor %}
