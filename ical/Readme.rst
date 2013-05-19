@@ -16,4 +16,6 @@ Example of code that can be added in page template ::
 		{% endfor %}
     </dl>
     {% endif %}
+    
+this plugins needed icalendar module installed
 
