@@ -13,10 +13,12 @@ import pytz
 import datetime
 
 def init_cal(generator):
+	#initialisation of the dictionnary of calendar you ca add one calendar per page
 	calDict = {}
 	generator.context['events'] = calDict
 
 def add_ical(generator, metadata):
+	#check if a calendar is here
 	if 'calendar' in metadata.keys():
 		summ = []
 		path = metadata['calendar']
@@ -33,6 +35,7 @@ def add_ical(generator, metadata):
 				if element.get('dtend') != None :	
 					eventdict['dtend'] = element.get('dtend').dt
 				summ.append(eventdict)
+		#the id of the calendar is the slugify name of the page
 		calId = utils.slugify(metadata['title'])
 		generator.context['events'][calId] = summ
 
