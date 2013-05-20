@@ -21,5 +21,7 @@ Example of code that can be added in page template ::
     </dl>
     {% endif %}
     
-this plugins needed icalendar module installed and works only for pages
+this plugins needs icalendar module installed::
+
+	pip install icalendar
 
