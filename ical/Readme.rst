@@ -3,9 +3,9 @@ ical
 
 This plugin read the calendar defined in the page metadata : calendar :
 
-with
+with::
 
-: calendar : /path/to/your/ics/file
+	:calendar: /path/to/your/ics/file
 
 Example of code that can be added in page template ::
 
