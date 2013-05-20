@@ -8,8 +8,7 @@ This plugin read the calendar defined in the page metadata :calendar:
 """
 
 from icalendar import Calendar, Event
-from pelican import signals
-from pelican import utils
+from pelican import signals , utils
 import pytz
 import datetime
 
