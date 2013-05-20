@@ -32,6 +32,8 @@ def add_ical(generator, metadata):
 					eventdict['summary'] = element.get('summary')
 				if element.get('description') != None :
 					eventdict['description'] = element.get('description')
+				if element.get('url') != None :
+					eventdict['url'] = element.get('url')
 				if element.get('dtstart') != None :
 					eventdict['dtstart'] = element.get('dtstart').dt
 				if element.get('dtend') != None :	
