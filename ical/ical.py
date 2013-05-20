@@ -3,7 +3,8 @@
 ical plugin for Pelican
 ===========================
 
-This plugin read the calendar defined in the page metadata :calendar:
+This plugin parse the calendars defined in pages metadata :calendar:
+One calendar per page
 
 """
 
