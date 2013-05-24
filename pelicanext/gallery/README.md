@@ -13,7 +13,7 @@ Gallery
 	
 ###Articles
 
-Attach an album to an article/post by placing a gallery stub with the name of the album.
+Attach an album to an article/post by placing a gallery metadata tag with the name of the album.
 
 	gallery:album_name
     
