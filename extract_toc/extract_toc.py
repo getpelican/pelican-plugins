@@ -14,7 +14,7 @@ from pelican import signals, readers, contents
 def extract_toc(content):
     if isinstance(content, contents.Static):
         return
-    soup = BeautifulSoup(content._content)
+    soup = BeautifulSoup(content._content,'html.parser')
     filename = content.source_path
     extension = path.splitext(filename)[1][1:]
     toc = ''
