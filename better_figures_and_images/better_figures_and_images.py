@@ -6,7 +6,7 @@ This plugin:
 
 - Adds a style="width: ???px; height: auto;" to each image in the content
 - Also adds the width of the contained image to any parent div.figures.
-    - If RESPONSIVE_IMAGES == True, adds style="width: ???px; max-width: 100%; height: auto;" instead
+    - If RESPONSIVE_IMAGES == True, also adds style="max-width: 100%;"
 - Corrects alt text: if alt == image filename, set alt = ''
 
 TODO: Need to add a test.py for this plugin.
