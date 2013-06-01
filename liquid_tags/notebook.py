@@ -179,7 +179,7 @@ def notebook(preprocessor, tag, markup):
         raise ValueError("File {0} could not be found".format(nb_path))
 
     # Call the notebook converter
-    converter = ConverterBloggerHTML(nb_path)
+    converter = ConverterBloggerHTML(infile=nb_path)
     converter.read()
 
     header_lines = process_header(converter.header_body())
