@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 ical plugin for Pelican
-===========================
+=======================
 
-This plugin parse the calendars defined in pages metadata :calendar:
-One calendar per page
+This plugin looks for and parses an .ics file if it is defined in a given
+page's :calendar: metadata. One calendar can be defined per page.
 
 """
 
@@ -15,7 +15,7 @@ import datetime
 import os.path
 
 def init_cal(generator):
-    # initialisation of the dictionnary of calendar 
+    # initialisation of the calendar dictionary
     # you can add one calendar per page
     calDict = {}
     generator.context['events'] = calDict
@@ -42,7 +42,7 @@ def add_ical(generator, metadata):
                 if element.get('dtend') != None:
                     eventdict['dtend'] = element.get('dtend').dt
                 summ.append(eventdict)
-        # the id of the calendar is the slugify name of the page
+        # the id of the calendar is the slugified name of the page
         calId = utils.slugify(metadata['title'])
         generator.context['events'][calId] = summ
 
