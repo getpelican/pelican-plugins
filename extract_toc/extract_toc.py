@@ -8,11 +8,13 @@ and place it in its own article.toc variable.
 
 from os import path
 from bs4 import BeautifulSoup
-from pelican import signals, readers
+from pelican import signals, readers, contents
 
 
 def extract_toc(content):
-    soup = BeautifulSoup(content._content)
+    if isinstance(content, contents.Static):
+        return
+    soup = BeautifulSoup(content._content,'html.parser')
     filename = content.source_path
     extension = path.splitext(filename)[1][1:]
     toc = ''
