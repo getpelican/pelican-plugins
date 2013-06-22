@@ -3,30 +3,30 @@ import pelican
 from jinja2.utils import generate_lorem_ipsum
 
 # Copy into 'test_data' directory and run
-blog_relative_path = '.'
-config_file_path = blog_relative_path + '/pelican.conf.py'
-output_dir_path = blog_relative_path + '/output'
+blog_relative_path = '../test_data'
+config_file_path = 'pelican.conf.py'
 plugin_file_path = '..'
 
-def get_settings(config_file_path, output_dir_path, plugin_file_path, blog_relative_path):
+def get_settings(config_file_path, plugin_file_path, blog_relative_path):
 
 	# Read settings
 	_DEFAULT_CONFIG = pelican.settings._DEFAULT_CONFIG
-	settings = pelican.settings.get_settings_from_file(config_file_path, default_settings=_DEFAULT_CONFIG)
+	settings = pelican.settings.get_settings_from_file(blog_relative_path+'/'+config_file_path, default_settings=_DEFAULT_CONFIG)
 	settings = pelican.settings.configure_settings(settings)
 
-	# Fix the output path
-	settings['OUTPUT_PATH'] = output_dir_path
+	# Set the paths
+	settings['PATH'] = blog_relative_path
+	settings['OUTPUT_PATH'] = blog_relative_path+'/output'
+	settings['PLUGIN_PATH'] = plugin_file_path
 
 	# Add feed summary settings
-	settings['PLUGIN_PATH'] = plugin_file_path
 	settings['PLUGINS'] = ['feed_summary','summary']
 	settings['FEED_USE_SUMMARY'] = True
 	settings['FEED_SUMMARY_LENGTH'] = 150
 
 	# "Contents" file is missing from path, pelican doesn't run in any context without fixing this
-	settings['FILES_TO_COPY'] = ((blog_relative_path+'/content/extra/robots.txt', 'robots.txt'),)
-	settings['TEMPLATE_PAGES'] = {blog_relative_path+'/content/pages/jinja2_template.html': 'jinja2_template.html'}
+	settings['FILES_TO_COPY'] = (('content/extra/robots.txt', 'robots.txt'),)
+	settings['TEMPLATE_PAGES'] = {'content/pages/jinja2_template.html': 'jinja2_template.html'}
 
 	return settings
 
@@ -60,6 +60,6 @@ Slug: long_post2"""
 
 if __name__ == "__main__":
 	write_long_content(blog_relative_path)
-	settings = get_settings(config_file_path, output_dir_path, plugin_file_path, blog_relative_path)
+	settings = get_settings(config_file_path, plugin_file_path, blog_relative_path)
 	Pelican = pelican.Pelican(settings)
 	Pelican.run()
