@@ -68,6 +68,8 @@ def calculate_stats(instance):
         stats['wc'] = sum(word_count.values())
         # stats['read_minutes'] = math.ceil(float(stats['wc']) / float(WPM))
         stats['read_minutes'] = (stats['wc'] + WPM - 1) // WPM
+        if stats['read_minutes'] == 0:
+            stats['read_minutes'] = 1
 
         instance.stats = stats
         instance.raw_text = raw_text
