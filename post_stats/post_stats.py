@@ -11,7 +11,8 @@ word_count: frquency count of all the words in the article; can be used for tag/
 
 """
 
-from pelican import signals, contents
+from pelican import signals
+# import math
 
 # import nltk
 
@@ -26,6 +27,7 @@ from collections import Counter
 
 def calculate_stats(instance):
 
+    # How fast do average people read?
     WPM = 250
 
     if instance._content is not None:
@@ -64,7 +66,8 @@ def calculate_stats(instance):
 
         stats['word_counts'] = word_count
         stats['wc'] = sum(word_count.values())
-        stats['read_minutes'] = (stats['wc'] + WPM // 2) // WPM
+        # stats['read_minutes'] = math.ceil(float(stats['wc']) / float(WPM))
+        stats['read_minutes'] = (stats['wc'] + WPM - 1) // WPM
 
         instance.stats = stats
         instance.raw_text = raw_text
