@@ -3,11 +3,13 @@
 Post Statistics
 ========================
 
-This plugin calculates various Statistics about a post and stores them in an article.stats disctionary:
+This plugin calculates various statistics about a post and stores them in an article.stats dictionary:
 
 wc: how many words
 read_mins: how many minutes to read this article, based on 250 wpm (http://en.wikipedia.org/wiki/Words_per_minute#Reading_and_comprehension)
 word_counts: frquency count of all the words in the article; can be used for tag/word clouds/
+fi: Flesch-kincaid Index/ Reading Ease
+fk: Flesch-kincaid Grade Level
 
 """
 
@@ -15,6 +17,8 @@ from pelican import signals
 from bs4 import BeautifulSoup
 import re
 from collections import Counter
+
+from .readability import *
 
 
 def calculate_stats(instance):
@@ -26,17 +30,21 @@ def calculate_stats(instance):
         # How fast do average people read?
         WPM = 250
 
-        # Pre-process the text to remove entities
-        entities = r'\&\#?.+?;'
-        content = content.replace('&nbsp;', ' ')
-        content = re.sub(entities, '', content)
-
-        # Pre-process the text to remove punctuation
-        drop = u'.,?!@#$%^&*()_+-=\|/[]{}`~:;\'\"‘’—…“”'
-        content = content.translate(dict((ord(c), u'') for c in drop))
-
         # Use BeautifulSoup to get readable/visible text
         raw_text = BeautifulSoup(content).getText()
+
+        # Process the text to remove entities
+        entities = r'\&\#?.+?;'
+        raw_text = raw_text.replace('&nbsp;', ' ')
+        raw_text = re.sub(entities, '', raw_text)
+
+        # Flesch-kincaid readbility stats counts sentances,
+        # so save before removing punctuation
+        tmp = raw_text
+
+        # Process the text to remove punctuation
+        drop = u'.,?!@#$%^&*()_+-=\|/[]{}`~:;\'\"‘’—…“”'
+        raw_text = raw_text.translate(dict((ord(c), u'') for c in drop))
 
         # Count the words in the text
         words = raw_text.lower().split()
@@ -45,10 +53,16 @@ def calculate_stats(instance):
         # Return the stats
         stats['word_counts'] = word_count
         stats['wc'] = sum(word_count.values())
+
         # Calulate how long it'll take to read, rounding up
         stats['read_mins'] = (stats['wc'] + WPM - 1) // WPM
         if stats['read_mins'] == 0:
             stats['read_mins'] = 1
+
+        # Calculate Flesch-kincaid readbility stats
+        readability_stats = stcs, words, sbls = text_stats(tmp, stats['wc'])
+        stats['fi'] = "{:.2f}".format(flesch_index(readability_stats))
+        stats['fk'] = "{:.2f}".format(flesch_kincaid_level(readability_stats))
 
         instance.stats = stats
 
