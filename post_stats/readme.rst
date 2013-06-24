@@ -4,8 +4,8 @@ Post Statistics
 A Pelican plugin to calculate various statistics about a post and store them in an article.stats dictionary:
 
 - ``wc``: how many words
-- ``read_mins``: how many minutes to read this article, based on 250 wpm (http://en.wikipedia.org/wiki/Words_per_minute#Reading_and_comprehension)
-- ``word_counts``: frquency count of all the words in the article; can be used for tag/word clouds/
+- ``read_mins``: how many minutes would it take to read this article, based on 250 wpm (http://en.wikipedia.org/wiki/Words_per_minute#Reading_and_comprehension)
+- ``word_counts``: frquency count of all the words in the article; can be used for tag/word clouds
 - ``fi``: Flesch-kincaid Index/ Reading Ease (see: http://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests)
 - ``fk``: Flesch-kincaid Grade Level
 
@@ -31,16 +31,16 @@ This allows you to output these values in your templates, like this, for example
 	    <li>Flesch-kincaid Grade Level: {{ article.stats['fk'] }}</li>
 	</ul>
 
-The ``word_counts`` variable is a Counter dictionary and looks like this, with each unique word and it's frequency:
+The ``word_counts`` variable is a python ``Counter`` dictionary and looks something like this, with each unique word and it's frequency:
 
 .. code-block:: python
 
 	Counter({u'to': 98, u'a': 90, u'the': 83, u'of': 50, u'karma': 50, .....
 
-and could be used to create a tag/word cloud for a post.
+and can be used to create a tag/word cloud for a post.
 
 Requirements
-============
+----------------
 
 `post_stats` requires BeautifulSoup.
 
