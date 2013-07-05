@@ -9,7 +9,7 @@ Usage
 
 Place your head content somewhere in the article, surrounded by::
 
-    .. injecthead
+    .. injecthead::
 
 Example::
 
