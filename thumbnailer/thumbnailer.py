@@ -20,6 +20,8 @@ DEFAULT_THUMBNAIL_SIZES = {
     'thumbnail_wide': '150x?',
     'thumbnail_tall': '?x150',
 }
+DEFAULT_TEMPLATE = """<a href="{url}" rel="shadowbox" title="{filename}"><img src="{thumbnail}" alt="{filename}"></a>"""
+DEFAULT_GALLERY_THUMB = "thumbnail_square"
 
 class _resizer(object):
     """ Resizes based on a text specification, see readme """
@@ -83,7 +85,7 @@ class _resizer(object):
         logging.debug("Using resizer {0}".format(resizer.__name__))
         return resizer(targetw, targeth, image)
 
-    def _adjust_filename(self, in_path):
+    def get_thumbnail_name(self, in_path):
         new_filename = path.basename(in_path)
         (basename, ext) = path.splitext(new_filename)
         basename = "{0}_{1}".format(basename, self._name)
@@ -97,7 +99,7 @@ class _resizer(object):
         :param out_path: path to the directory root for the outputted thumbnails to be stored
         :return: None
         """
-        filename = path.join(out_path, self._adjust_filename(in_path))
+        filename = path.join(out_path, self.get_thumbnail_name(in_path))
         if not path.exists(out_path):
             os.makedirs(out_path)
         if not path.exists(filename):
@@ -117,8 +119,7 @@ def resize_thumbnails(pelican):
     if not enabled:
         return
 
-    in_path = path.join(pelican.settings['PATH'],
-                           pelican.settings.get('IMAGE_PATH', DEFAULT_IMAGE_DIR))
+    in_path = _image_path(pelican)
     out_path = path.join(pelican.settings['OUTPUT_PATH'],
                          pelican.settings.get('THUMBNAIL_DIR', DEFAULT_THUMBNAIL_DIR))
 
@@ -133,5 +134,44 @@ def resize_thumbnails(pelican):
                 resizer.resize_file_to(in_filename, out_path)
 
 
+def _image_path(pelican):
+    return path.join(pelican.settings['PATH'],
+                        pelican.settings.get("IMAGE_PATH", DEFAULT_IMAGE_DIR))
+
+
+def expand_gallery(generator, metadata):
+    """ Expand a gallery tag to include all of the files in a specific directory under IMAGE_PATH
+
+    :param pelican: The pelican instance
+    :return: None
+    """
+    if "gallery" not in metadata or metadata['gallery'] is None:
+        import pprint
+        pprint.pprint(metadata)
+        return  # If no gallery specified, we do nothing
+
+    lines = [ ]
+    base_path = _image_path(generator)
+    in_path = path.join(base_path, metadata['gallery'])
+    template = generator.settings.get('GALLERY_TEMPLATE', DEFAULT_TEMPLATE)
+    thumbnail_name = generator.settings.get("GALLERY_THUMBNAIL", DEFAULT_GALLERY_THUMB)
+    thumbnail_prefix = generator.settings.get("")
+    resizer = _resizer(thumbnail_name, '?x?')
+    for dirpath, _, filenames in os.walk(in_path):
+        for filename in filenames:
+            url = path.join(dirpath, filename).replace(base_path, "")[1:]
+            url = path.join('/static', generator.settings.get('IMAGE_PATH', DEFAULT_IMAGE_DIR), url).replace('\\', '/')
+            logger.debug("GALLERY: {0}".format(url))
+            thumbnail = resizer.get_thumbnail_name(filename)
+            thumbnail = path.join('/', generator.settings.get('THUMBNAIL_DIR', DEFAULT_THUMBNAIL_DIR), thumbnail).replace('\\', '/')
+            lines.append(template.format(
+                filename=filename,
+                url=url,
+                thumbnail=thumbnail,
+            ))
+    metadata['gallery_content'] = "\n".join(lines)
+
+
 def register():
     signals.finalized.connect(resize_thumbnails)
+    signals.article_generate_context.connect(expand_gallery)
