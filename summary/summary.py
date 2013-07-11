@@ -55,7 +55,7 @@ def content_object_init(instance):
                             if begin_summary != -1 else 0)
             end_summary = end_summary if end_summary != -1 else None
             # replace "|filename|" in summary
-            summary = instance._update_content(content[begin_summary:end_summary], '.')
+            summary = instance._update_content(content[begin_summary:end_summary], '')
             instance._summary = summary
 
 def register():
