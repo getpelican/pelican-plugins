@@ -17,136 +17,196 @@ config file:
 The cells[start:end] statement is optional, and can be used to specify which
 block of cells from the notebook to include.
 
+Requirements
+------------
+- The plugin requires IPython version 1.0 or above.  It no longer supports the
+  standalone nbconvert package, which has been deprecated.
+
 Details
 -------
-Because the conversion and formatting of notebooks is rather involved, there
-are a few extra steps required for this plugin:
+Because the notebook relies on some rather extensive custom CSS, the use of
+this plugin requires additional CSS to be inserted into the blog theme.
+After typing "make html" when using the notebook tag, a file called
+``_nb_header.html`` will be produced in the main directory.  The content
+of the file should be included in the header of the theme.  An easy way
+to accomplish this is to add the following lines within the header template
+of the theme you use:
 
-- First, the plugin requires that the nbconvert package [1]_ to be in the
-  python path. For example, in bash, this can be set via
+    {% if EXTRA_HEADER %}
+      {{ EXTRA_HEADER }}
+    {% endif %}
 
-      >$ export PYTHONPATH=/path/to/nbconvert/
+and in your ``pelicanconf.py`` file, include the line:
 
-- After typing "make html" when using the notebook tag, a file called
-  ``_nb_header.html`` will be produced in the main directory.  The content
-  of the file should be included in the header of the theme.  An easy way
-  to accomplish this is to add the following lines within the header template
-  of the theme you use:
+    EXTRA_HEADER = open('_nb_header.html').read().decode('utf-8')
 
-      {% if EXTRA_HEADER %}
-        {{ EXTRA_HEADER }}
-      {% endif %}
-
-  and in your ``pelicanconf.py`` file, include the line:
-
-      EXTRA_HEADER = open('_nb_header.html').read().decode('utf-8')
-
-[1] https://github.com/ipython/nbconvert
+this will insert the appropriate CSS.  All efforts have been made to ensure
+that this CSS will not override formats within the blog theme, but there may
+still be some conflicts.
 """
 import re
 import os
 from .mdx_liquid_tags import LiquidTags
 
-# nbconverters: part of the nbconvert package
-from converters import ConverterBloggerHTML  # requires nbconvert package
-separate_available = False
+try:
+    from IPython import nbconvert
+except ImportError:
+    raise ValueError("IPython version 1.0+ required for notebook tag")
 
+from IPython.nbconvert.filters.highlight import _pygment_highlight
+from pygments.formatters import HtmlFormatter
+
+from IPython.nbconvert.exporters import BasicHTMLExporter
+from IPython.config import Config
+
+from IPython.nbformat import current as nbformat
+from IPython.nbconvert.transformers import ActivatableTransformer
+
+from IPython.utils.traitlets import Integer
+from copy import deepcopy
+
+from jinja2 import DictLoader
+
+# assume not more than ten million cells in notebook
+# this shouldn't ever be a problem
+MAX_NB_CELLS = 9999999
+
+#----------------------------------------------------------------------
+# Some code that will be added to the header:
+#  Some of the following javascript/css include is adapted from
+#  IPython/nbconvert/templates/fullhtml.tpl, while some are custom tags
+#  specifically designed to make the results look good within the
+#  pelican-octopress theme.
+JS_INCLUDE = """
+<style type="text/css">
+/* Overrides of notebook CSS for static HTML export */
+div.entry-content {
+  overflow: visible;
+  padding: 8px;
+}
+.input_area {
+  padding: 0.2em;
+}
+
+a.heading-anchor {
+ white-space: normal;
+}
+
+.rendered_html
+code {
+ font-size: .8em;
+}
+
+pre.ipynb {
+  color: black;
+  background: #f7f7f7;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0px;
+  font-size: 13px;
+}
+
+img.anim_icon{padding:0; border:0; -webkit-box-shadow:none; -box-shadow:none}
+</style>
+
+<script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+"""
+
+# This, for some reason, results in paranthetical statements being rendered
+# in math mode.
+DONT_USE = """
+<script type="text/javascript">
+init_mathjax = function() {
+    if (window.MathJax) {
+        // MathJax loaded
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+            },
+            displayAlign: 'left', // Change this to 'center' to center equations.
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 0}}
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
+}
+init_mathjax();
+</script>
+"""
+
+CSS_WRAPPER = """
+<style type="text/css">
+{0}
+</style>
+"""
+
+
+#----------------------------------------------------------------------
+# Create a custom transformer
+class SubCell(ActivatableTransformer):
+    """A transformer to select a slice of the cells of a notebook"""
+    start = Integer(0, config=True,
+                    help="first cell of notebook to be converted")
+    end = Integer(MAX_NB_CELLS, config=True,
+                  help="last cell of notebook to be converted")
+    
+    def __call__(self, nb, resources):
+        nbc = deepcopy(nb)
+        for worksheet in nbc.worksheets :
+            cells = worksheet.cells[:]
+            end = min(len(cells), self.end)
+            worksheet.cells = cells[self.start:end]                    
+        return nbc, resources
+
+#----------------------------------------------------------------------
+# Customize the html template:
+#  This changes the <pre> tags in basic_html.tpl to <pre class="ipynb"
+pelican_loader = DictLoader({'pelicanhtml.tpl': 
+"""
+{%- extends 'basichtml.tpl' -%} 
+
+{% block stream_stdout -%}
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre class="ipynb">{{output.text |ansi2html}}</pre>
+</div>
+{%- endblock stream_stdout %}
+
+{% block stream_stderr -%}
+<div class="box-flex1 output_subarea output_stream output_stderr">
+<pre class="ipynb">{{output.text |ansi2html}}</pre>
+</div>
+{%- endblock stream_stderr %}
+
+{% block pyerr -%}
+<div class="box-flex1 output_subarea output_pyerr">
+<pre class="ipynb">{{super()}}</pre>
+</div>
+{%- endblock pyerr %}
+
+{%- block data_text %}
+<pre class="ipynb">{{output.text | ansi2html}}</pre>
+{%- endblock -%}
+"""})
+
+
+#----------------------------------------------------------------------
+# Custom highlighter:
+#  instead of using class='highlight', use class='highlight-ipynb'
+def custom_highlighter(source, language='ipython'):
+    formatter = HtmlFormatter(cssclass='highlight-ipynb')
+    output = _pygment_highlight(source, formatter, language)
+    return output.replace('<pre>', '<pre class="ipynb">')
+
+
+#----------------------------------------------------------------------
+# Below is the pelican plugin code.
+#
 SYNTAX = "{% notebook /path/to/notebook.ipynb [ cells[start:end] ] %}"
 FORMAT = re.compile(r"""^(\s+)?(?P<src>\S+)(\s+)?((cells\[)(?P<start>-?[0-9]*):(?P<end>-?[0-9]*)(\]))?(\s+)?$""")
-
-
-def process_body(body):
-    body = '\n'.join(body)
-
-    # replace the highlight tags
-    body = body.replace('highlight', 'highlight-ipynb')
-
-    # specify <pre> tags
-    body = body.replace('<pre', '<pre class="ipynb"')
-
-    # create a special div for notebook
-    body = '<div class="ipynb">\n\n' + body + "\n\n</div>"
-
-    # specialize headers
-    for h in '123456':
-        body = body.replace('<h%s' % h, '<h%s class="ipynb"' % h)
-    
-    return body.split('\n')
-
-
-def process_header(header):
-    header = '\n'.join(header)
-
-    # replace the highlight tags
-    header = header.replace('highlight', 'highlight-ipynb')
-
-    # specify pre tags
-    header = header.replace('html, body', '\n'.join(('pre.ipynb {',
-                                                     '  color: black;',
-                                                     '  background: #f7f7f7;',
-                                                     '  border: 0;',
-                                                     '  box-shadow: none;',
-                                                     '  margin-bottom: 0;',
-                                                     '  padding: 0;'
-                                                     '}\n',
-                                                     'html, body')))
-
-
-    # create a special div for notebook
-    R = re.compile(r'^body ?{', re.MULTILINE)
-    header = R.sub('div.ipynb {', header)
-
-    # specify all headers
-    R = re.compile(r'^(h[1-6])', re.MULTILINE)
-    repl = lambda match: '.ipynb ' + match.groups()[0]
-    header = R.sub(repl, header)
-
-    # substitude ipynb class for html and body modifiers
-    header = header.replace('html, body', '.ipynb div,')
-
-    return header.split('\n')
-
-
-def strip_divs(body, start=None, end=None):
-    """Strip divs from the body for partial notebook insertion
-
-    If L represents the list of parsed main divs, then this returns
-    the document corresponding to the divs L[start:end].
-
-    body should be a list of lines in the body of the html file.
-    """
-    # TODO: this is a bit hackish.  It would be better to add a PR to
-    #       nbconvert which does this at the source.
-    DIV = re.compile('<div')
-    UNDIV = re.compile('</div')
-
-    # remove ipynb div
-    body_lines = body[1:-1]
-    
-    # split divs
-    L = []
-    count = 0
-    div_start = 0
-    for i, line in enumerate(body_lines):
-        if not line:
-            continue
-        count += len(DIV.findall(line))
-        count -= len(UNDIV.findall(line))
-        
-        if count == 0:
-            L.append(body_lines[div_start:i + 1])
-            div_start = i + 1
-        elif count < 0:
-            raise ValueError("Fatal: parsing error -- lost a tag")
-
-    # check that we've parsed to the end
-    # the last line may be blank, so we check two conditions
-    if div_start not in [len(body_lines), len(body_lines) - 1]:
-        raise ValueError("parsing error: didn't find the end of the div")
-
-    body_lines = sum(L[start:end], [])
-
-    return body[:1] + body_lines + body[-1:]
 
 
 @LiquidTags.register('notebook')
@@ -164,12 +224,12 @@ def notebook(preprocessor, tag, markup):
     if start:
         start = int(start)
     else:
-        start = None
+        start = 0
 
     if end:
         end = int(end)
     else:
-        end = None
+        end = MAX_NB_CELLS
 
     settings = preprocessor.configs.config['settings']
     nb_dir =  settings.get('NOTEBOOK_DIR', 'notebooks')
@@ -178,29 +238,42 @@ def notebook(preprocessor, tag, markup):
     if not os.path.exists(nb_path):
         raise ValueError("File {0} could not be found".format(nb_path))
 
-    # Call the notebook converter
-    converter = ConverterBloggerHTML(infile=nb_path)
-    converter.read()
+    # Create the custom notebook converter
+    c = Config({'CSSHTMLHeaderTransformer':
+                    {'enabled':True, 'highlight_class':'.highlight-ipynb'},
+                'SubCell':
+                    {'start':start, 'end':end}})
 
-    header_lines = process_header(converter.header_body())
-    body_lines = process_body(converter.main_body('\n'))
-    
+    exporter = BasicHTMLExporter(config=c,
+                                 filters={'highlight': custom_highlighter},
+                                 transformers=[SubCell],
+                                 extra_loaders=[pelican_loader])
+
+    # read and parse the notebook
+    nb_text = open(nb_path).read()
+    nb_json = nbformat.reads_json(nb_text)
+    (body, resources) = exporter.from_notebook_node(nb_json)
+
+    # if we haven't already saved the header, save it here.
     if not notebook.header_saved:
-        notebook.header_saved = True
         print ("\n *** Writing styles to _nb_header.html: "
-               "this should be included in the theme.\n")
-        lines = '\n'.join(header_lines).encode('utf-8')
-        open('_nb_header.html', 'w').write(lines)
+               "this should be included in the theme. ***\n")
 
-    body_lines = strip_divs(body_lines, start, end)
+        header = '\n'.join(CSS_WRAPPER.format(css_line)
+                           for css_line in resources['inlining']['css'])
+        header += JS_INCLUDE
 
-    body = preprocessor.configs.htmlStash.store('\n'.join(body_lines),
-                                                safe=True)
+        open('_nb_header.html', 'w').write(header)
+        notebook.header_saved = True
+
+    # this will stash special characters so that they won't be transformed
+    # by subsequent processes.
+    body = preprocessor.configs.htmlStash.store(body, safe=True)
     return body
 
 notebook.header_saved = False
 
 
 #----------------------------------------------------------------------
-# This import allows image tag to be a Pelican plugin
+# This import allows notebook to be a Pelican plugin
 from liquid_tags import register
