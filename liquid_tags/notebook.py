@@ -60,7 +60,7 @@ from IPython.nbconvert.exporters import BasicHTMLExporter
 from IPython.config import Config
 
 from IPython.nbformat import current as nbformat
-from IPython.nbconvert.transformers import ActivatableTransformer
+from IPython.nbconvert.transformers import Transformer
 
 from IPython.utils.traitlets import Integer
 from copy import deepcopy
@@ -155,7 +155,7 @@ class SliceIndex(Integer):
             return super(SliceIndex, self).validate(obj, value)
 
 
-class SubCell(ActivatableTransformer):
+class SubCell(Transformer):
     """A transformer to select a slice of the cells of a notebook"""
     start = SliceIndex(0, config=True,
                        help="first cell of notebook to be converted")
