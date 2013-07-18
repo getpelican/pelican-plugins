@@ -67,9 +67,6 @@ from copy import deepcopy
 
 from jinja2 import DictLoader
 
-# assume not more than ten million cells in notebook
-# this shouldn't ever be a problem
-MAX_NB_CELLS = 9999999
 
 #----------------------------------------------------------------------
 # Some code that will be added to the header:
@@ -147,20 +144,31 @@ CSS_WRAPPER = """
 
 #----------------------------------------------------------------------
 # Create a custom transformer
+class SliceIndex(Integer):
+    """An integer trait that accepts None"""
+    default_value = None
+
+    def validate(self, obj, value):
+        if value is None:
+            return value
+        else:
+            return super(SliceIndex, self).validate(obj, value)
+
+
 class SubCell(ActivatableTransformer):
     """A transformer to select a slice of the cells of a notebook"""
-    start = Integer(0, config=True,
-                    help="first cell of notebook to be converted")
-    end = Integer(MAX_NB_CELLS, config=True,
-                  help="last cell of notebook to be converted")
-    
-    def __call__(self, nb, resources):
+    start = SliceIndex(0, config=True,
+                       help="first cell of notebook to be converted")
+    end = SliceIndex(None, config=True,
+                     help="last cell of notebook to be converted")
+
+    def call(self, nb, resources):
         nbc = deepcopy(nb)
         for worksheet in nbc.worksheets :
             cells = worksheet.cells[:]
-            end = min(len(cells), self.end)
-            worksheet.cells = cells[self.start:end]                    
+            worksheet.cells = cells[self.start:self.end]                    
         return nbc, resources
+
 
 #----------------------------------------------------------------------
 # Customize the html template:
@@ -229,7 +237,7 @@ def notebook(preprocessor, tag, markup):
     if end:
         end = int(end)
     else:
-        end = MAX_NB_CELLS
+        end = None
 
     settings = preprocessor.configs.config['settings']
     nb_dir =  settings.get('NOTEBOOK_DIR', 'notebooks')
@@ -242,7 +250,7 @@ def notebook(preprocessor, tag, markup):
     c = Config({'CSSHTMLHeaderTransformer':
                     {'enabled':True, 'highlight_class':'.highlight-ipynb'},
                 'SubCell':
-                    {'start':start, 'end':end}})
+                    {'enabled':True, 'start':start, 'end':end}})
 
     exporter = BasicHTMLExporter(config=c,
                                  filters={'highlight': custom_highlighter},
@@ -250,20 +258,22 @@ def notebook(preprocessor, tag, markup):
                                  extra_loaders=[pelican_loader])
 
     # read and parse the notebook
-    nb_text = open(nb_path).read()
+    with open(nb_path) as f:
+        nb_text = f.read()
     nb_json = nbformat.reads_json(nb_text)
     (body, resources) = exporter.from_notebook_node(nb_json)
 
     # if we haven't already saved the header, save it here.
     if not notebook.header_saved:
-        print ("\n *** Writing styles to _nb_header.html: "
-               "this should be included in the theme. ***\n")
+        print ("\n ** Writing styles to _nb_header.html: "
+               "this should be included in the theme. **\n")
 
         header = '\n'.join(CSS_WRAPPER.format(css_line)
                            for css_line in resources['inlining']['css'])
         header += JS_INCLUDE
 
-        open('_nb_header.html', 'w').write(header)
+        with open('_nb_header.html', 'w') as f:
+            f.write(header)
         notebook.header_saved = True
 
     # this will stash special characters so that they won't be transformed
