@@ -49,6 +49,14 @@ def create_assets_env(generator):
     if logging.getLevelName(logger.getEffectiveLevel()) == "DEBUG":
         generator.env.assets_environment.debug = True
 
+    if 'ASSET_SOURCE_PATHS' in generator.settings:
+        # the default load path gets overridden if additional paths are
+        # specified, add it back
+        generator.env.assets_environment.append_path(assets_src)
+        for path in generator.settings['ASSET_SOURCE_PATHS']:
+            full_path = os.path.join(generator.theme, path)
+            generator.env.assets_environment.append_path(full_path)
+
 
 def register():
     """Plugin registration."""
