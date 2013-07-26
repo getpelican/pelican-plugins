@@ -1,8 +1,22 @@
+"""
+HTML Entities for reStructured Text
+===================================
+
+Allows user to use HTML entities (&copy;, &#149;, etc.) in RST documents.
+
+Usage:
+:html_entity:`copy`
+:html_entity:`149`
+:html_entity:`#149`
+"""
+from __future__ import unicode_literals
 from docutils import nodes, utils
 from docutils.parsers.rst import roles
 from pelican.readers import PelicanHTMLTranslator
 
+
 class html_entity(nodes.Inline, nodes.Node):
+    # Subclassing Node directly since TextElement automatically appends the escaped element
     def __init__(self, rawsource, text):
         self.rawsource = rawsource
         self.text = text
