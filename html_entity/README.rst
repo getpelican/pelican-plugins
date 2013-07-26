@@ -26,5 +26,5 @@ produces:
 
 .. |copy|   unicode:: U+000A9 .. COPYRIGHT SIGN
 .. |lt|     unicode:: U+003C  .. LESS THAN
-.. |gt|     unicode:: U+003#  .. GREATER THAN
+.. |gt|     unicode:: U+003E  .. GREATER THAN
 .. |bullet| unicode:: U+2022  .. BULLET
