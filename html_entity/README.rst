@@ -9,12 +9,14 @@ Roles
 Adds one inline role:
 
 ::
+
     :html_entity:
 
 Usage
 =====
 
 ::
+
     :html_entity:`copy` 2013 :html_entity:`lt`Pelican:html_entity:`gt` Industries :html_entity:`149` All Rights Reserved
 
 produces
