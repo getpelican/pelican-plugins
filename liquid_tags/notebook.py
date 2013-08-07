@@ -56,7 +56,7 @@ except ImportError:
 from IPython.nbconvert.filters.highlight import _pygment_highlight
 from pygments.formatters import HtmlFormatter
 
-from IPython.nbconvert.exporters import BasicHTMLExporter
+from IPython.nbconvert.exporters import HTMLExporter
 from IPython.config import Config
 
 from IPython.nbformat import current as nbformat
@@ -252,10 +252,11 @@ def notebook(preprocessor, tag, markup):
                 'SubCell':
                     {'enabled':True, 'start':start, 'end':end}})
 
-    exporter = BasicHTMLExporter(config=c,
-                                 filters={'highlight': custom_highlighter},
-                                 transformers=[SubCell],
-                                 extra_loaders=[pelican_loader])
+    exporter = HTMLExporter(config=c,
+                            template_file='basic',
+                            filters={'highlight2html': custom_highlighter},
+                            transformers=[SubCell],
+                            extra_loaders=[pelican_loader])
 
     # read and parse the notebook
     with open(nb_path) as f:
