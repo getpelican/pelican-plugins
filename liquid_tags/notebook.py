@@ -109,19 +109,15 @@ img.anim_icon{padding:0; border:0; -webkit-box-shadow:none; -box-shadow:none}
 </style>
 
 <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
-"""
 
-# This, for some reason, results in paranthetical statements being rendered
-# in math mode.
-DONT_USE = """
 <script type="text/javascript">
 init_mathjax = function() {
     if (window.MathJax) {
         // MathJax loaded
         MathJax.Hub.Config({
             tex2jax: {
-                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-                displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+                inlineMath: [ ['$','$'] ],
+                displayMath: [ ['$$','$$'] ]
             },
             displayAlign: 'left', // Change this to 'center' to center equations.
             "HTML-CSS": {
