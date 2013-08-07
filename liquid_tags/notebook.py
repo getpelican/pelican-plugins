@@ -105,7 +105,7 @@ pre.ipynb {
   font-size: 13px;
 }
 
-img.anim_icon{padding:0; border:0; -webkit-box-shadow:none; -box-shadow:none}
+img.anim_icon{padding:0; border:0; vertical-align:middle; -webkit-box-shadow:none; -box-shadow:none}
 </style>
 
 <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
