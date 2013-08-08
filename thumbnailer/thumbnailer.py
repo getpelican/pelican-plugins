@@ -146,8 +146,6 @@ def expand_gallery(generator, metadata):
     :return: None
     """
     if "gallery" not in metadata or metadata['gallery'] is None:
-        import pprint
-        pprint.pprint(metadata)
         return  # If no gallery specified, we do nothing
 
     lines = [ ]
