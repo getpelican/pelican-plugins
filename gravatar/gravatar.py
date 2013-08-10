@@ -28,4 +28,4 @@ def add_gravatar(generator, metadata):
 
 
 def register():
-    signals.article_generate_context.connect(add_gravatar)
+    signals.article_generator_context.connect(add_gravatar)
