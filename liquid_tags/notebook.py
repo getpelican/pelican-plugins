@@ -74,7 +74,7 @@ from jinja2 import DictLoader
 #  IPython/nbconvert/templates/fullhtml.tpl, while some are custom tags
 #  specifically designed to make the results look good within the
 #  pelican-octopress theme.
-JS_INCLUDE = """
+JS_INCLUDE = r"""
 <style type="text/css">
 /* Overrides of notebook CSS for static HTML export */
 div.entry-content {
@@ -109,15 +109,14 @@ img.anim_icon{padding:0; border:0; vertical-align:middle; -webkit-box-shadow:non
 </style>
 
 <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
-
 <script type="text/javascript">
 init_mathjax = function() {
     if (window.MathJax) {
         // MathJax loaded
         MathJax.Hub.Config({
             tex2jax: {
-                inlineMath: [ ['$','$'] ],
-                displayMath: [ ['$$','$$'] ]
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
             },
             displayAlign: 'left', // Change this to 'center' to center equations.
             "HTML-CSS": {
