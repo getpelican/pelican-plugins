@@ -60,7 +60,11 @@ from IPython.nbconvert.exporters import HTMLExporter
 from IPython.config import Config
 
 from IPython.nbformat import current as nbformat
-from IPython.nbconvert.transformers import Transformer
+
+try:
+    from IPython.nbconvert.transformers import Transformer
+except ImportError:
+    raise ValueError("IPython version 2.0 is not yet supported")
 
 from IPython.utils.traitlets import Integer
 from copy import deepcopy
