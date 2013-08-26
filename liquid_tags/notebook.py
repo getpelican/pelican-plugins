@@ -48,10 +48,11 @@ import re
 import os
 from .mdx_liquid_tags import LiquidTags
 
-try:
-    from IPython import nbconvert
-except ImportError:
+import IPython
+if IPython.__version__.split('.')[0] != 1:
     raise ValueError("IPython version 1.0+ required for notebook tag")
+
+from IPython import nbconvert
 
 from IPython.nbconvert.filters.highlight import _pygment_highlight
 from pygments.formatters import HtmlFormatter
