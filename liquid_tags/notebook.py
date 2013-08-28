@@ -49,7 +49,7 @@ import os
 from .mdx_liquid_tags import LiquidTags
 
 import IPython
-if IPython.__version__.split('.')[0] != 1:
+if IPython.__version__.split('.')[0] != '1':
     raise ValueError("IPython version 1.0+ required for notebook tag")
 
 from IPython import nbconvert
