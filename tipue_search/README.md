@@ -1,7 +1,7 @@
-JSON Serializer
-===============
+Tipue Search
+============
 
-A Pelican plugin to serialize HTML output to JSON
+A Pelican plugin to serialize generated HTML to JSON that can be used by jQuery plugin - Tipue Search.
 
 Copyright (c) Talha Mansoor
 
@@ -25,16 +25,16 @@ Tipue's JSON search mode requires the textual content of site in JSON format.
 Requirements
 ============
 
-JSON Serializer requires BeautifulSoup.
+Tipue Search requires BeautifulSoup.
 
 ```bash
 pip install beautifulsoup4
 ```
 
-How JSON Serializer works
+How Tipue Search works
 =========================
 
-JSON Serializer serializes the generated HTML into JSON. Format of JSON is as follows
+Tipue Search serializes the generated HTML into JSON. Format of JSON is as follows
 
 ```python
 {
