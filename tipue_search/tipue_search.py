@@ -38,10 +38,13 @@ class Tipue_Search_JSON_Generator(object):
         soup = BeautifulSoup(page.content, 'html.parser')
         page_text = soup.get_text()
 
-        if getattr(page, 'category') == 'None':
+        try:
+            if getattr(page, 'category') == 'None':       
+                page_category = ''
+            else:
+                page_category = page.category.name
+        except AttributeError:
             page_category = ''
-        else:
-            page_category = page.category.name
 
         page_url = self.siteurl + '/' + page.url
 
