@@ -20,9 +20,9 @@ There are several options available
 
 ## Image Tag
 To insert a sized and labeled image in your document, enable the
-``liquid_tags.video`` plugin and use the following:
+``liquid_tags.img`` plugin and use the following:
 
-{% img [class name(s)] path/to/image [width [height]] [title text | "title text" ["alt text"]] %}
+    {% img [class name(s)] path/to/image [width [height]] [title text | "title text" ["alt text"]] %}
 
 
 ## Video Tag
