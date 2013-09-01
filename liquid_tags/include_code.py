@@ -18,7 +18,7 @@ Example
 -------
 {% include_code myscript.py %}
 
-This will import myscript.py from content/downloads/code/myscript.py
+This will import myscript.py from content/code/myscript.py
 and output the contents in a syntax highlighted code block inside a figure,
 with a figcaption listing the file name and download link.
 
