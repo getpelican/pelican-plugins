@@ -18,7 +18,7 @@ Example
 -------
 {% include_code myscript.py %}
 
-This will import myscript.py from content/downloads/code/myscript.py
+This will import myscript.py from content/code/myscript.py
 and output the contents in a syntax highlighted code block inside a figure,
 with a figcaption listing the file name and download link.
 
@@ -69,9 +69,7 @@ def include_code(preprocessor, tag, markup):
     else:
         title = os.path.basename(src)
 
-    static_dir = settings.get('STATIC_OUT_DIR', 'static')
-
-    url = '/{0}/{1}/{2}'.format(static_dir, code_dir, src)
+    url = '/{0}/{1}'.format(code_dir, src)
     url = re.sub('/+', '/', url)
 
     open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
