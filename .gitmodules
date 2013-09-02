@@ -4,3 +4,6 @@
 [submodule "pelican_vimeo"]
 	path = pelican_vimeo
 	url = git@github.com:kura/pelican_vimeo.git
+[submodule "extract_headings"]
+	path = extract_headings
+	url = https://github.com/wilbur-ma/extract_headings
