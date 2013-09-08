@@ -8,7 +8,7 @@ output/pdf/
 
 Requirements
 ------------
-You should ensure you have the ```rst2pdf`` module installed::
+You should ensure you have the ``rst2pdf`` module installed::
 
 	pip install rst2pdf
 	
