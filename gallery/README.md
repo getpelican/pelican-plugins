@@ -40,15 +40,13 @@ The dictionary key is the name of the album and the lists contain the filenames.
 
 ###article.html
 
-	{% for album, images in page.gallery.iteritems() %}
 	<h2><a href="{{ SITEURL }}/pages/gallery.html#{{ article.album }}">{{ article.album }}</a></h2>
 	    <ul>
 		{% for image in article.galleryimages %}
 		<li><a class="{{ article.album }} cboxElement" href="{{ SITEURL }}/static/images/gallery/{{ article.album }}/{{ image }}"><img src="{{ SITEURL }}/static/images/gallery200x200/{{ article.album }}/{{ image }}"></a></li>
 		{% endfor %}
 	    </ul>
-	{% endfor %}
-	
+		
 ###gallery.html
 
 	{% for album, images in page.gallery.iteritems() %}
