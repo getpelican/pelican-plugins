@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 '''
 Sitemap
 -------
@@ -16,6 +16,7 @@ from logging import warning, info
 from codecs import open
 
 from pelican import signals, contents
+from pelican.utils import get_date
 
 TXT_HEADER = """{0}/index.html
 {0}/archives.html
@@ -50,7 +51,6 @@ def format_date(date):
     else:
         tz = "-00:00"
     return date.strftime("%Y-%m-%dT%H:%M:%S") + tz
-
 
 class SitemapGenerator(object):
 
@@ -123,8 +123,6 @@ class SitemapGenerator(object):
                 warning("sitemap plugin: SITEMAP['changefreqs'] must be a dict")
                 warning("sitemap plugin: using the default values")
 
-
-
     def write_url(self, page, fd):
 
         if getattr(page, 'status', 'published') != 'published':
@@ -134,7 +132,13 @@ class SitemapGenerator(object):
         if not os.path.exists(page_path):
             return
 
-        lastmod = format_date(getattr(page, 'date', self.now))
+        lastdate = getattr(page, 'date', self.now)
+        try:
+            lastdate = self.get_date_modified(page, lastdate)
+        except ValueError:
+            warning("sitemap plugin: " + page.url + " has invalid modification date,")
+            warning("sitemap plugin: using date value as lastmod.")
+        lastmod = format_date(lastdate)
 
         if isinstance(page, contents.Article):
             pri = self.priorities['articles']
@@ -152,6 +156,24 @@ class SitemapGenerator(object):
         else:
             fd.write(self.siteurl + '/' + loc + '\n')
 
+    def get_date_modified(self, page, defalut):
+        if hasattr(page, 'modified'):
+            return get_date(getattr(page, 'modified'))
+        else:
+            return defalut
+
+    def set_url_wrappers_modification_date(self, wrappers):
+        for (wrapper, articles) in wrappers:
+            lastmod = datetime.min
+            for article in articles:
+                lastmod = max(lastmod, article.date)
+                try:
+                    modified = self.get_date_modified(article, datetime.min);
+                    lastmod = max(lastmod, modified)
+                except ValueError:
+                    # Supressed: user will be notified.
+                    pass
+            setattr(wrapper, 'modified', str(lastmod))
 
     def generate_output(self, writer):
         path = os.path.join(self.output_path, 'sitemap.{0}'.format(self.format))
@@ -161,6 +183,10 @@ class SitemapGenerator(object):
                 + [ t for (t, a) in self.context['tags']] \
                 + [ a for (a, b) in self.context['authors']]
 
+        self.set_url_wrappers_modification_date(self.context['categories'])
+        self.set_url_wrappers_modification_date(self.context['tags'])
+        self.set_url_wrappers_modification_date(self.context['authors'])
+                
         for article in self.context['articles']:
             pages += article.translations
 
