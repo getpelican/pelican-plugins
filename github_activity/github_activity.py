@@ -65,7 +65,7 @@ def register():
     """
     try:
         signals.article_generator_init.connect(feed_parser_initialization)
-        signals.article_generate_context.connect(fetch_github_activity)
+        signals.article_generator_context.connect(fetch_github_activity)
     except ImportError:
         logger.warning('`github_activity` failed to load dependency `feedparser`.'
                        '`github_activity` plugin not loaded.')

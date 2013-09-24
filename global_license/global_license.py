@@ -15,4 +15,4 @@ def add_license(generator, metadata):
             metadata['license'] = generator.settings['LICENSE']
 
 def register():
-    signals.article_generate_context.connect(add_license)
+    signals.article_generator_context.connect(add_license)
