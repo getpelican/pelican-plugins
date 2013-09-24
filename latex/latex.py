@@ -44,5 +44,5 @@ def register():
     """
         Plugin registration
     """
-    signals.article_generate_context.connect(addLatex)
+    signals.article_generator_context.connect(addLatex)
     signals.pages_generate_context.connect(addLatex)

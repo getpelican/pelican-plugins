@@ -172,4 +172,4 @@ def expand_gallery(generator, metadata):
 
 def register():
     signals.finalized.connect(resize_thumbnails)
-    signals.article_generate_context.connect(expand_gallery)
+    signals.article_generator_context.connect(expand_gallery)

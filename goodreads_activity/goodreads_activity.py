@@ -57,7 +57,7 @@ def initialize_feedparser(generator):
 def register():
     try:
         signals.article_generator_init.connect(initialize_feedparser)
-        signals.article_generate_context.connect(fetch_goodreads_activity)
+        signals.article_generator_context.connect(fetch_goodreads_activity)
     except ImportError:
         logger.warning('`goodreads_activity` failed to load dependency `feedparser`.'
                        '`goodreads_activity` plugin not loaded.')
