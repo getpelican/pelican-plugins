@@ -1,6 +1,6 @@
 [submodule "pelican_youtube"]
 	path = pelican_youtube
-	url = git@github.com:kura/pelican_youtube.git
+	url = https://github.com/kura/pelican_youtube.git
 [submodule "pelican_vimeo"]
 	path = pelican_vimeo
-	url = git@github.com:kura/pelican_vimeo.git
+	url = https://github.com/kura/pelican_vimeo.git
