@@ -48,5 +48,5 @@ def add_ical(generator, metadata):
 
 
 def register():
-    signals.pages_generator_init.connect(init_cal)
-    signals.pages_generate_context.connect(add_ical)
+    signals.page_generator_init.connect(init_cal)
+    signals.page_generator_context.connect(add_ical)

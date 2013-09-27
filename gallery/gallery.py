@@ -47,4 +47,4 @@ def generate_gallery_page(generator):
 
 def register():
     signals.article_generator_finalized.connect(add_gallery_post)
-    signals.pages_generator_finalized.connect(generate_gallery_page)
+    signals.page_generator_finalized.connect(generate_gallery_page)
