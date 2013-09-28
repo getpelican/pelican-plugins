@@ -1,5 +1,5 @@
 from pelican import signals
-from mdx_liquid_tags import LiquidTags
+from .mdx_liquid_tags import LiquidTags
 
 
 def addLiquidTags(gen):
