@@ -146,8 +146,6 @@ def expand_gallery(generator, metadata):
     :return: None
     """
     if "gallery" not in metadata or metadata['gallery'] is None:
-        import pprint
-        pprint.pprint(metadata)
         return  # If no gallery specified, we do nothing
 
     lines = [ ]
@@ -174,4 +172,4 @@ def expand_gallery(generator, metadata):
 
 def register():
     signals.finalized.connect(resize_thumbnails)
-    signals.article_generate_context.connect(expand_gallery)
+    signals.article_generator_context.connect(expand_gallery)

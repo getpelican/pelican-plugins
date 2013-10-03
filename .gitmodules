@@ -1,0 +1,9 @@
+[submodule "pelican_youtube"]
+	path = pelican_youtube
+	url = https://github.com/kura/pelican_youtube.git
+[submodule "pelican_vimeo"]
+	path = pelican_vimeo
+	url = https://github.com/kura/pelican_vimeo.git
+[submodule "cjk-auto-spacing"]
+	path = cjk-auto-spacing
+	url = https://github.com/yuex/cjk-auto-spacing.git
