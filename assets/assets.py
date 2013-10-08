@@ -46,6 +46,10 @@ def create_assets_env(generator):
         for item in generator.settings['ASSET_CONFIG']:
             generator.env.assets_environment.config[item[0]] = item[1]
 
+    if 'ASSET_BUNDLES' in generator.settings:
+        for name, args, kwargs in generator.settings['ASSET_BUNDLES']:
+            generator.env.assets_environment.register(name, *args, **kwargs)
+
     if logging.getLevelName(logger.getEffectiveLevel()) == "DEBUG":
         generator.env.assets_environment.debug = True
 
