@@ -89,6 +89,18 @@ LessCSS's binary:
     ASSET_CONFIG = (('closure_compressor_optimization', 'WHITESPACE_ONLY'),
                     ('less_bin', 'lessc.cmd'), )
 
+If you wish to place your assets in locations other than the theme output
+directory, you can use ``ASSET_SOURCE_PATHS`` in your settings file to provide
+webassets with a list of additional directories to search, relative to the
+theme's top-level directory. For example:
+
+.. code-block:: python
+
+   ASSET_SOURCE_PATHS = (
+       'vendor/css',
+       'scss',
+   )
+
 .. _Webassets: https://github.com/miracle2k/webassets
 .. _Webassets documentation: http://webassets.readthedocs.org/en/latest/builtin_filters.html
 .. _environment's register() method: http://webassets.readthedocs.org/en/latest/environment.html#registering-bundles
