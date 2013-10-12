@@ -26,9 +26,13 @@ import os
 import re
 from .mdx_liquid_tags import LiquidTags
 
-SYNTAX = "{% video url/to/video [url/to/video] [url/to/video] [width height] [url/to/poster] %}"
+SYNTAX = "{% video [http[s]://]path/to/video [[http[s]://]path/to/video] [[http[s]://]path/to/video] [width height] [[http[s]://]path/to/poster] %}"
 
-VIDEO = re.compile(r'(/\S+|https?:\S+)(\s+(/\S+|https?:\S+))?(\s+(/\S+|https?:\S+))?(\s+(\d+\%?)\s(\d+\%?))?(\s+(/\S+|https?:\S+))?')
+VIDEO = re.compile(
+    r'((?:https?://|/|\S+/)\S+)(\s+((?:https?://|/|\S+/)\S+))?(\s+((?:https?://|/|\S+/)\S+))?'  # Up to 3 videos
+    r'(\s+(\d+\%?)\s(\d+\%?))?'  # width and height
+    r'(\s+((?:https?://|/|\S+/)\S+))?'  # poster
+)
 
 VID_TYPEDICT = {'.mp4':"type='video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"'",
                 '.ogv':"type='video/ogg; codecs=theora, vorbis'",
