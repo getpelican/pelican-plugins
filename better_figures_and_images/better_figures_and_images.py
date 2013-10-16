@@ -20,6 +20,8 @@ from pelican import signals
 from bs4 import BeautifulSoup
 from PIL import Image
 
+import logging
+logger = logging.getLogger(__name__)
 
 def content_object_init(instance):
 
@@ -29,18 +31,13 @@ def content_object_init(instance):
 
         if 'img' in content:
             for img in soup('img'):
-                # TODO: Pretty sure this isn't the right way to do this, too hard coded.
-                # There must be a setting that I should be using?
+                # TODO: strip out {filename} explicitly, not using [10:]????
+                # Should probably strip off {filename}, |filename| or /static
+                src = instance.settings['PATH'] + os.path.split(img['src'])[0][10:] + '/' + os.path.split(img['src'])[1]
 
-                #src = instance.settings['PATH'] + '/images/' + os.path.split(img['src'])[1]
-
-                # The method mentioned above is only working if the images are really in the "images" folder.
-                # It's also not working on subdirectories inside the image folder
-                # Both issues are fixed:
-                # Changed the static "/images/" string to the proper path which is extracted from the 'split' tuple
-                # The first 7 letters are cutted ("/static") to get a valid link.
-                # Somehow the static folder isn't created in the output folder. It's only on the server after 'make ftp_upload'
-                src = instance.settings['PATH'] + os.path.split(img['src'])[0][7:] + '/' + os.path.split(img['src'])[1]
+                logger.debug('Better Fig. PATH: %s', instance.settings['PATH'])
+                logger.debug('Better Fig. img: %s', img['src'])
+                logger.debug('Better Fig. src: %s', src)
 
                 im = Image.open(src)
                 extra_style = 'width: {}px; height: auto;'.format(im.size[0])
