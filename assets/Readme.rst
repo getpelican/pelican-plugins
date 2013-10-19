@@ -64,6 +64,19 @@ The above will produce a minified and gzipped JS file:
 Pelican's debug mode is propagated to Webassets to disable asset packaging
 and instead work with the uncompressed assets.
 
+If you need to create named bundles (for example, if you need to compile SASS
+files before minifying with other CSS files), you can use the ``ASSET_BUNDLES``
+variable in your settings file. This is an ordered sequence of 3-tuples, where
+the 3-tuple is defined as ``(name, args, kwargs)``. This tuple is passed to the
+`environment's register() method`_. The following will compile two SCSS files
+into a named bundle, using the ``pyscss`` filter:
+
+.. code-block:: python
+
+    ASSET_BUNDLES = (
+        ('scss', ['colors.scss', 'main.scss'], {'filters': 'pyscss'}),
+    )
+
 Many of Webasset's available compilers have additional configuration options
 (i.e. 'Less', 'Sass', 'Stylus', 'Closure_js').  You can pass these options to
 Webassets using the ``ASSET_CONFIG`` in your settings file.
@@ -76,5 +89,18 @@ LessCSS's binary:
     ASSET_CONFIG = (('closure_compressor_optimization', 'WHITESPACE_ONLY'),
                     ('less_bin', 'lessc.cmd'), )
 
+If you wish to place your assets in locations other than the theme output
+directory, you can use ``ASSET_SOURCE_PATHS`` in your settings file to provide
+webassets with a list of additional directories to search, relative to the
+theme's top-level directory. For example:
+
+.. code-block:: python
+
+   ASSET_SOURCE_PATHS = (
+       'vendor/css',
+       'scss',
+   )
+
 .. _Webassets: https://github.com/miracle2k/webassets
 .. _Webassets documentation: http://webassets.readthedocs.org/en/latest/builtin_filters.html
+.. _environment's register() method: http://webassets.readthedocs.org/en/latest/environment.html#registering-bundles

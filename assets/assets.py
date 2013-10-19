@@ -46,8 +46,20 @@ def create_assets_env(generator):
         for item in generator.settings['ASSET_CONFIG']:
             generator.env.assets_environment.config[item[0]] = item[1]
 
+    if 'ASSET_BUNDLES' in generator.settings:
+        for name, args, kwargs in generator.settings['ASSET_BUNDLES']:
+            generator.env.assets_environment.register(name, *args, **kwargs)
+
     if logging.getLevelName(logger.getEffectiveLevel()) == "DEBUG":
         generator.env.assets_environment.debug = True
+
+    if 'ASSET_SOURCE_PATHS' in generator.settings:
+        # the default load path gets overridden if additional paths are
+        # specified, add it back
+        generator.env.assets_environment.append_path(assets_src)
+        for path in generator.settings['ASSET_SOURCE_PATHS']:
+            full_path = os.path.join(generator.theme, path)
+            generator.env.assets_environment.append_path(full_path)
 
 
 def register():
