@@ -13,7 +13,7 @@ TODO: Need to add a test.py for this plugin.
 
 """
 
-import os
+from os import path, access, R_OK
 
 from pelican import signals
 
@@ -31,14 +31,30 @@ def content_object_init(instance):
 
         if 'img' in content:
             for img in soup('img'):
-                # TODO: strip out {filename} explicitly, not using [10:]????
-                # Should probably strip off {filename}, |filename| or /static
-                src = instance.settings['PATH'] + os.path.split(img['src'])[0][10:] + '/' + os.path.split(img['src'])[1]
-
                 logger.debug('Better Fig. PATH: %s', instance.settings['PATH'])
-                logger.debug('Better Fig. img: %s', img['src'])
-                logger.debug('Better Fig. src: %s', src)
+                logger.debug('Better Fig. img.src: %s', img['src'])
 
+                img_path, img_filename = path.split(img['src'])
+
+                logger.debug('Better Fig. img_path: %s', img_path)
+                logger.debug('Better Fig. img_fname: %s', img_filename)
+
+                # Strip off {filename}, |filename| or /static
+                if img_path.startswith(('{filename}', '|filename|')):
+                    img_path = img_path[10:]
+                elif img_path.startswith('/static'):
+                    img_path = img_path[7:]
+                else:
+                    logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
+
+                # Build the source image filename
+                src = instance.settings['PATH'] + img_path + '/' + img_filename
+
+                logger.debug('Better Fig. src: %s', src)
+                if not (path.isfile(src) and access(src, R_OK)):
+                    logger.error('Better Fig. Error: image not found: {}'.format(src))
+
+                # Open the source image and query dimensions; build style string
                 im = Image.open(src)
                 extra_style = 'width: {}px; height: auto;'.format(im.size[0])
 
