@@ -14,7 +14,8 @@ First, in your pelicanconf.py file, add the plugins you want to  use:
 
     PLUGIN_PATH = '/path/to/pelican-plugins'
     PLUGINS = ['liquid_tags.img', 'liquid_tags.video',
-               'liquid_tags.include_code', 'liquid_tags.notebook']
+               'liquid_tags.youtube', 'liquid_tags.include_code',
+               'liquid_tags.notebook']
 
 There are several options available
 
@@ -24,6 +25,14 @@ To insert a sized and labeled image in your document, enable the
 
     {% img [class name(s)] path/to/image [width [height]] [title text | "title text" ["alt text"]] %}
 
+## Youtube Tag
+To insert youtube video into a post, enable the
+``liquid_tags.youtube`` plugin, and add to your document:
+
+    {% youtube youtube_id [width] [height] %}
+
+The width and height are in pixels, and can be optionally specified.  If they
+are not, then the dimensions will be 640 (wide) by 390 (tall).
 
 ## Video Tag
 To insert flash/HTML5-friendly video into a post, enable the
