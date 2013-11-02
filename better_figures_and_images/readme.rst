@@ -1,3 +1,8 @@
+Requirements
+------------
+
+* pip install pillow bs4
+
 Summary
 ===========
 
