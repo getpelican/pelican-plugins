@@ -17,3 +17,11 @@ For example::
         {% endfor %}
         </ul>
     {% endif %}
+
+
+You can also override related posts by using it as part of your post's meta data 'related_posts:'.
+The 'related_posts:' meta data works together with your existing slugs:
+
+    related_posts: slug1,slug2,slug3...slugN 
+
+N represents the RELATED_POSTS_MAX
