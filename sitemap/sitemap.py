@@ -158,6 +158,8 @@ class SitemapGenerator(object):
 
     def get_date_modified(self, page, defalut):
         if hasattr(page, 'modified'):
+            if isinstance(getattr(page, 'modified'), datetime):
+                return getattr(page, 'modified')
             return get_date(getattr(page, 'modified'))
         else:
             return defalut
