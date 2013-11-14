@@ -1,7 +1,7 @@
 Requirements
 ------------
 
-* pip install pillow bs4
+* pip install pillow beautifulsoup4
 
 Summary
 ===========
