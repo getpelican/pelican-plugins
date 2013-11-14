@@ -38,10 +38,10 @@ def add_jinja2_ext(pelican):
 def create_assets_env(generator):
     """Define the assets environment and pass it to the generator."""
 
-    assets_url = 'theme/'
     theme_static_dir = generator.settings['THEME_STATIC_DIR']
     assets_src = os.path.join(generator.output_path, theme_static_dir)
-    generator.env.assets_environment = Environment(assets_src, assets_url)
+    generator.env.assets_environment = Environment(
+        assets_src, theme_static_dir)
 
     if 'ASSET_CONFIG' in generator.settings:
         for item in generator.settings['ASSET_CONFIG']:
