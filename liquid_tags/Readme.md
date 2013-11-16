@@ -80,13 +80,7 @@ config file:
 Because the conversion and rendering of notebooks is rather involved, there
 are a few extra steps required for this plugin:
 
-- First, the plugin requires that the nbconvert package [1]_ to be in the
-  python path. For example, in bash, this can be set via
-
-      >$ export PYTHONPATH=/path/to/nbconvert/
-
-  The nbconvert package is still in development, so we recommend using the
-  most recent version.  
+- First, you will need to install IPython >= 1.0 [1]_
 
 - After typing "make html" when using the notebook tag, a file called
   ``_nb_header.html`` will be produced in the main directory.  The content
@@ -104,4 +98,4 @@ are a few extra steps required for this plugin:
 
   this will insert the proper css formatting into your document.
 
-[1] https://github.com/ipython/nbconvert
+[1] http://ipython.org/
