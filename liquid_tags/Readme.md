@@ -29,10 +29,12 @@ To insert a sized and labeled image in your document, enable the
 To insert youtube video into a post, enable the
 ``liquid_tags.youtube`` plugin, and add to your document:
 
-    {% youtube youtube_id [width] [height] %}
+    {% youtube youtube_id [width] [height] [align] %}
 
-The width and height are in pixels, and can be optionally specified.  If they
-are not, then the dimensions will be 640 (wide) by 390 (tall).
+The width and height are in pixels, and can be optionally specified. The align
+field is optional and follows the attributes of the [W3C text-align]
+specification. If they are not specified, then the dimensions will be
+640 (wide) by 390 (tall) and default to right alignment.
 
 ## Video Tag
 To insert flash/HTML5-friendly video into a post, enable the
@@ -105,3 +107,4 @@ are a few extra steps required for this plugin:
   this will insert the proper css formatting into your document.
 
 [1] https://github.com/ipython/nbconvert
+[W3C text-align]: http://www.w3.org/TR/CSS21/text.html
