@@ -32,9 +32,9 @@ To insert youtube video into a post, enable the
     {% youtube youtube_id [width] [height] [align] %}
 
 The width and height are in pixels, and can be optionally specified. The align
-field is optional and follows the attributes of the [W3C text-align]
+field is also optional and follows the attributes of the [W3C text-align]
 specification. If they are not specified, then the dimensions will be
-640 (wide) by 390 (tall) and default to right alignment.
+640 (wide) by 390 (tall) and default right alignment.
 
 ## Video Tag
 To insert flash/HTML5-friendly video into a post, enable the
