@@ -156,11 +156,13 @@ class SitemapGenerator(object):
         else:
             fd.write(self.siteurl + '/' + loc + '\n')
 
-    def get_date_modified(self, page, defalut):
+    def get_date_modified(self, page, default):
         if hasattr(page, 'modified'):
-            return get_date(getattr(page, 'modified'))
+            if isinstance(page.modified, datetime):
+                return page.modified
+            return get_date(page.modified)
         else:
-            return defalut
+            return default
 
     def set_url_wrappers_modification_date(self, wrappers):
         for (wrapper, articles) in wrappers:

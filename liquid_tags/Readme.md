@@ -14,7 +14,8 @@ First, in your pelicanconf.py file, add the plugins you want to  use:
 
     PLUGIN_PATH = '/path/to/pelican-plugins'
     PLUGINS = ['liquid_tags.img', 'liquid_tags.video',
-               'liquid_tags.include_code', 'liquid_tags.notebook']
+               'liquid_tags.youtube', 'liquid_tags.include_code',
+               'liquid_tags.notebook']
 
 There are several options available
 
@@ -24,6 +25,14 @@ To insert a sized and labeled image in your document, enable the
 
     {% img [class name(s)] path/to/image [width [height]] [title text | "title text" ["alt text"]] %}
 
+## Youtube Tag
+To insert youtube video into a post, enable the
+``liquid_tags.youtube`` plugin, and add to your document:
+
+    {% youtube youtube_id [width] [height] %}
+
+The width and height are in pixels, and can be optionally specified.  If they
+are not, then the dimensions will be 640 (wide) by 390 (tall).
 
 ## Video Tag
 To insert flash/HTML5-friendly video into a post, enable the
@@ -71,13 +80,7 @@ config file:
 Because the conversion and rendering of notebooks is rather involved, there
 are a few extra steps required for this plugin:
 
-- First, the plugin requires that the nbconvert package [1]_ to be in the
-  python path. For example, in bash, this can be set via
-
-      >$ export PYTHONPATH=/path/to/nbconvert/
-
-  The nbconvert package is still in development, so we recommend using the
-  most recent version.  
+- First, you will need to install IPython >= 1.0 [1]_
 
 - After typing "make html" when using the notebook tag, a file called
   ``_nb_header.html`` will be produced in the main directory.  The content
@@ -95,4 +98,4 @@ are a few extra steps required for this plugin:
 
   this will insert the proper css formatting into your document.
 
-[1] https://github.com/ipython/nbconvert
+[1] http://ipython.org/

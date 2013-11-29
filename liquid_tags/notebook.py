@@ -48,8 +48,9 @@ import re
 import os
 from .mdx_liquid_tags import LiquidTags
 
+from distutils.version import LooseVersion
 import IPython
-if IPython.__version__.split('.')[0] != '1':
+if not LooseVersion(IPython.__version__) >= '1.0':
     raise ValueError("IPython version 1.0+ required for notebook tag")
 
 from IPython import nbconvert
@@ -166,16 +167,16 @@ class SubCell(Transformer):
         nbc = deepcopy(nb)
         for worksheet in nbc.worksheets :
             cells = worksheet.cells[:]
-            worksheet.cells = cells[self.start:self.end]                    
+            worksheet.cells = cells[self.start:self.end]
         return nbc, resources
 
 
 #----------------------------------------------------------------------
 # Customize the html template:
 #  This changes the <pre> tags in basic_html.tpl to <pre class="ipynb"
-pelican_loader = DictLoader({'pelicanhtml.tpl': 
+pelican_loader = DictLoader({'pelicanhtml.tpl':
 """
-{%- extends 'basichtml.tpl' -%} 
+{%- extends 'basichtml.tpl' -%}
 
 {% block stream_stdout -%}
 <div class="box-flex1 output_subarea output_stream output_stdout">
