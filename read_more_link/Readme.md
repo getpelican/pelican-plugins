@@ -10,11 +10,11 @@ For more information, please visit: http://vuongnguyen.com/creating-inline-read-
 Requirements
 ---
 
-    `lxml` - for parsing html elements
+    lxml - for parsing html elements
 
 Settings
 ---
-    :::python
+    ```python
     # This settings indicates that you want to create summary at a certain length
     SUMMARY_MAX_LENGTH = 50
 
