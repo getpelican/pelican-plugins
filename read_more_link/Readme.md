@@ -14,7 +14,6 @@ Requirements
 
 Settings
 ---
-    ```python
     # This settings indicates that you want to create summary at a certain length
     SUMMARY_MAX_LENGTH = 50
 
