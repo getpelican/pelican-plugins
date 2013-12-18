@@ -19,7 +19,7 @@ An example (an article title)
 
 ## 2.0 Activation
 
-Add to the `'titlecase'`` to your ``PLUGINS`` directive in your ``pelicanconf.py``:
+Add to the ``'titlecase'`` to your ``PLUGINS`` directive in your ``pelicanconf.py``:
 
 	PLUGINS = ['titecase']
 	
