@@ -34,10 +34,10 @@ class Tipue_Search_JSON_Generator(object):
             return
 
         soup_title = BeautifulSoup(page.title.replace('&nbsp;', ' '))
-        page_title = soup_title.get_text(' ', strip=True).replace('“', '"').replace('”', '"').replace('’', "'")
+        page_title = soup_title.get_text(' ', strip=True).replace('“', '"').replace('”', '"').replace('’', "'").replace('^', '&#94;')
 
         soup_text = BeautifulSoup(page.content)
-        page_text = soup_text.get_text(' ', strip=True).replace('“', '"').replace('”', '"').replace('’', "'").replace('¶', ' ')
+        page_text = soup_text.get_text(' ', strip=True).replace('“', '"').replace('”', '"').replace('’', "'").replace('¶', ' ').replace('^', '&#94;')
         page_text = ' '.join(page_text.split())
 
         if getattr(page, 'category') == 'None':
