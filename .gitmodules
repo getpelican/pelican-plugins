@@ -7,3 +7,6 @@
 [submodule "cjk-auto-spacing"]
 	path = cjk-auto-spacing
 	url = https://github.com/yuex/cjk-auto-spacing.git
+[submodule "end_summary"]
+	path = end_summary
+	url = git@github.com:beresovskiy/end_origin.git
