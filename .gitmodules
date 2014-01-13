@@ -9,4 +9,4 @@
 	url = https://github.com/yuex/cjk-auto-spacing.git
 [submodule "pin_to_top"]
 	path = pin_to_top
-	url = https://github.com/Shaked/pin-to-top
+	url = https://github.com/Shaked/pin_to_top.git
