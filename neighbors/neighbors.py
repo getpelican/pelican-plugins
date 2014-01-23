@@ -18,10 +18,22 @@ def iter3(seq):
         nxt, cur = cur, prv
     yield nxt, cur, None
 
+def get_translation(article, prefered_language):
+    if not article:
+        return None
+    for translation in article.translations:
+        if translation.lang == prefered_language:
+            return translation
+    return article
+
 def neighbors(generator):
     for nxt, cur, prv in iter3(generator.articles):
         cur.next_article = nxt
         cur.prev_article = prv
+
+        for translation in cur.translations:
+            translation.next_article = get_translation(nxt, translation.lang)
+            translation.prev_article = get_translation(prv, translation.lang)
 
 def register():
     signals.article_generator_finalized.connect(neighbors)
