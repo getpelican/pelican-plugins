@@ -19,7 +19,7 @@ For example::
     {% endif %}
 
 
-You can also override related posts by using it as part of your post's meta data 'related_posts:'.
+Your related posts should share a common tag. You can also use ``related_posts:`` in your post's meta data.
 The 'related_posts:' meta data works together with your existing slugs:
 
     related_posts: slug1,slug2,slug3...slugN 
