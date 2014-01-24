@@ -63,15 +63,31 @@ def generate_subcategories(generator, writer):
     write = partial(writer.write_file,
             relative_urls=generator.settings['RELATIVE_URLS'])
     subcategory_template = generator.get_template('subcategory')
-    for sub_cat, articles in generator.subcategories.items():
+    for subcat, articles in generator.subcategories.items():
         articles.sort(key=attrgetter('date'), reverse=True)
         dates = [article for article in generator.dates if article in articles]
-        write(sub_cat.save_as, subcategory_template, generator.context, 
-                subcategory=sub_cat, articles=articles, dates=dates, 
+        write(subcat.save_as, subcategory_template, generator.context, 
+                subcategory=subcat, articles=articles, dates=dates, 
                 paginated={'articles': articles, 'dates': dates},
-                page_name=sub_cat.page_name, all_articles=generator.articles)
+                page_name=subcat.page_name, all_articles=generator.articles)
+
+def generate_subcategory_feeds(generator, writer):
+    for subcat, articles in generator.subcategories.items():
+        articles.sort(key=attrgetter('date'), reverse=True)
+        if generator.settings.get('SUBCATEGORY_FEED_ATOM'):
+            writer.write_feed(articles, generator.context,
+                    generator.settings['SUBCATEGORY_FEED_ATOM']
+                    % subcat.fullurl)
+        if generator.settings.get('SUBCATEGORY_FEED_RSS'):
+            writer.write_feed(articles, generator.context,
+                    generator.settings['SUBCATEGORY_FEED_RSS']
+                    % subcat.fullurl, feed_type='rss')
+
+def generate(generator, writer):
+    generate_subcategory_feeds(generator, writer)
+    generate_subcategories(generator, writer)
 
 def register():
     signals.article_generator_context.connect(get_subcategories)
     signals.article_generator_finalized.connect(organize_subcategories)
-    signals.article_writer_finalized.connect(generate_subcategories)
+    signals.article_writer_finalized.connect(generate)

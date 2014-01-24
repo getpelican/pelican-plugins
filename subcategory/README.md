@@ -7,6 +7,9 @@ regular category or another subcategory. Subcategories with the same name but
 different parents are not the same. Their articles won't be grouped together 
 under that name.
 
+Feeds can be generated for each subcategory just like categories and tags.
+
+
 ##Usage##
 
 Subcategories are an extension to categories. Add subcategories to an article's
@@ -49,3 +52,13 @@ url would be:
     category-slug/sub-category-slug/sub-sub-category-slug
 
 with `savepath` being similar but joined using `os.path.join`
+
+Similarily you can save a subcategory feeds by adding one of the following 
+to your pelicanconf file
+
+    SUBCATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
+    SUBCATEGORY_FEED_RSS = 'feeds/%s.rss.xml'
+
+and this will create a feed with `fullurl` of the subcategory. Eg.
+    
+    feeds/category/subcategory.atom.xml
