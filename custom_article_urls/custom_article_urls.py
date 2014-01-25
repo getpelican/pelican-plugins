@@ -8,10 +8,7 @@ using a dictionary stored in pelican settings file as
 {category: {article_url_structure: stirng, article_save_as: string}}
 """
 from pelican import signals
-from pelican import contents
-
 from pelican.contents import Content, Category
-from functools import partial
 from six import text_type
 
 def recursive_name(self):
