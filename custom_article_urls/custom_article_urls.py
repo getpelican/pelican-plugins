@@ -11,12 +11,6 @@ from pelican import signals
 from pelican.contents import Content, Category
 from six import text_type
 
-def recursive_name(self):
-    if type(self) is Category:
-        return self.name
-    else:
-        return '{}/{}'.format(recursive_name(self.parent), self.name)
-
 def custom_url(generator, metadata):
     if 'CUSTOM_ARTICLE_URLS' in generator.settings:
         custom_urls = generator.settings['CUSTOM_ARTICLE_URLS']
@@ -28,9 +22,8 @@ def custom_url(generator, metadata):
 
         if 'subcategories' in metadata: #using subcategory plugin
             for subcategory in metadata['subcategories']:
-                subcategory_name = recursive_name(subcategory)
-                if subcategory_name in custom_urls:
-                    pattern_matched = custom_urls[subcategory_name]
+                if subcategory in custom_urls:
+                    pattern_matched = custom_urls[subcategory]
 
         if pattern_matched:
             #only alter url if hasn't been set in the metdata
