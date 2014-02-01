@@ -3,9 +3,7 @@
 Adds support for subcategories in addition to article categories.
 
 Subcategories are heirachial. Each subcategory has a parent, which is either a
-regular category or another subcategory. Subcategories with the same name but 
-different parents are not the same. Their articles won't be grouped together 
-under that name.
+regular category or another subcategory.
 
 Feeds can be generated for each subcategory just like categories and tags.
 
@@ -27,16 +25,31 @@ breadcrumb style navigation you might try something like this:
     <nav class="breadcrumb">
     <ol>
         <li>
-            <a href="{{ SITEURL }}/{{ arcticle.categor.url }}">{{ article.category}}</a>
+            <a href="{{ SITEURL }}/{{ arcticle.category.url }}">{{ article.category}}</a>
         </li>
     {% for subcategory in article.subcategories %}
         <li>
-            <a href="{{ SITEURL }}/{{ category.url }}>{{ subcategory }}</a>
+            <a href="{{ SITEURL }}/{{ subcategory.url }}>{{ subcategory.shortname }}</a>
         </li>
     {% endfor %}
     </ol>
     </nav>
  
+##Subcategory Names##
+Each subcategory's name is a `/` seperated list of it parents and itself.
+This is neccesary to keep each subcategory unique. It means you can have 
+`Category 1/Foo` and `Category 2/Foo` and the won't intefere with each other. 
+Each subcategory has an attribute `shortname` which is just the name without 
+it's parents associated. For example if you had
+    
+    Category/Sub Category1/Sub Category2
+
+the name for Sub Category 2 would be `Category/Sub Category1/Sub Category2` and
+the shortname would be `Sub Category2`
+
+If you need to use the slug, it is generated from the short name, not the full
+name.
+
 
 ##Settings##
 
