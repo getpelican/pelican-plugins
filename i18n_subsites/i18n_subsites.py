@@ -149,7 +149,8 @@ def install_templates_translations(generator):
     generator.context['main_lang'] = _main_site_lang
     extra_siteurls = { lang: _main_siteurl + '/' + lang for lang in generator.settings.get('I18N_SUBSITES', {}).keys() }
     extra_siteurls[_main_site_lang] = _main_siteurl
-    extra_siteurls.pop(generator.settings['DEFAULT_LANG'])
+    current_def_lang = generator.settings['DEFAULT_LANG']
+    extra_siteurls.pop(current_def_lang)
     generator.context['extra_siteurls'] = extra_siteurls
     
     if 'jinja2.ext.i18n' not in generator.settings['JINJA_EXTENSIONS']:
@@ -158,12 +159,15 @@ def install_templates_translations(generator):
     localedir = generator.settings.get('I18N_GETTEXT_LOCALEDIR')
     if localedir is None:
         localedir = os.path.join(generator.theme, 'translations/')
-    languages = [generator.settings['DEFAULT_LANG']]
-    try:
-        translations = gettext.translation(domain, localedir, languages)
-    except (IOError, OSError):
-        logger.error("Cannot find translations for language '{}' in '{}' with domain '{}'. Installing NullTranslations.".format(languages[0], localedir, domain))
+    if current_def_lang == generator.settings.get('I18N_TEMPLATES_LANG', _main_site_lang):
         translations = gettext.NullTranslations()
+    else:
+        languages = [current_def_lang]
+        try:
+            translations = gettext.translation(domain, localedir, languages)
+        except (IOError, OSError):
+            logger.error("Cannot find translations for language '{}' in '{}' with domain '{}'. Installing NullTranslations.".format(languages[0], localedir, domain))
+            translations = gettext.NullTranslations()
     newstyle = generator.settings.get('I18N_GETTEXT_NEWSTYLE', True)
     generator.env.install_gettext_translations(translations, newstyle)    
 
