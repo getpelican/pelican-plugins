@@ -1,11 +1,11 @@
 #Subcategory Plugin#
 
-Adds support for subcategories in addition to article categories.
+This plugin adds support for subcategories in addition to article categories.
 
 Subcategories are hierarchical. Each subcategory has a parent, which is either a
 regular category or another subcategory.
 
-Feeds can be generated for each subcategory just like categories and tags.
+Feeds can be generated for each subcategory, just like categories and tags.
 
 ##Usage##
 
@@ -17,14 +17,14 @@ category metadata using a `/` like this:
 Then create a `subcategory.html` template in your theme, similar to the
 `category.html` or `tag.html` templates.
 
-In your templates `article.category` continues to act the same way. Your
+In your templates, `article.category` continues to act the same way. Your
 subcategories are stored in the `articles.subcategories` list. To create
 breadcrumb-style navigation you might try something like this:
 
     <nav class="breadcrumb">
     <ol>
         <li>
-            <a href="{{ SITEURL }}/{{ arcticle.category.url }}">{{ article.category}}</a>
+            <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category}}</a>
         </li>
     {% for subcategory in article.subcategories %}
         <li>
