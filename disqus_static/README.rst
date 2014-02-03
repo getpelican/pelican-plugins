@@ -15,7 +15,7 @@ We use disqus-python package for communication with disqus API:
 Put ``disqus_static.py`` plugin in ``plugins`` folder in pelican installation 
 and use the following in your settings::
 
-    PLUGINS = [u"pelican.plugins.disqus_static"]
+    PLUGINS = [u"disqus_static"]
 
     DISQUS_SITENAME = u'YOUR_SITENAME'
     DISQUS_SECRET_KEY = u'YOUR_SECRET_KEY'
