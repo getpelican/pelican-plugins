@@ -74,6 +74,7 @@ def create_lang_subsites(pelican_obj):
         pelican_obj = cls(settings)
         logger.debug("Generating i18n subsite for lang '{}' using class '{}'".format(lang, str(cls)))
         pelican_obj.run()
+    _main_site_generated = False          # for autoreload mode
 
 
 
@@ -148,7 +149,8 @@ def install_templates_translations(generator):
     generator.context['main_siteurl'] = _main_siteurl
     generator.context['main_lang'] = _main_site_lang
     extra_siteurls = { lang: _main_siteurl + '/' + lang for lang in generator.settings.get('I18N_SUBSITES', {}).keys() }
-    extra_siteurls[_main_site_lang] = _main_siteurl
+    # To be able to use url for main site root when SITEURL == '' (e.g. when developing)
+    extra_siteurls[_main_site_lang] = '/' if _main_siteurl == '' else _main_siteurl
     current_def_lang = generator.settings['DEFAULT_LANG']
     extra_siteurls.pop(current_def_lang)
     generator.context['extra_siteurls'] = extra_siteurls
@@ -158,7 +160,7 @@ def install_templates_translations(generator):
     domain = generator.settings.get('I18N_GETTEXT_DOMAIN', 'messages')
     localedir = generator.settings.get('I18N_GETTEXT_LOCALEDIR')
     if localedir is None:
-        localedir = os.path.join(generator.theme, 'translations/')
+        localedir = os.path.join(generator.theme, 'translations')
     if current_def_lang == generator.settings.get('I18N_TEMPLATES_LANG', _main_site_lang):
         translations = gettext.NullTranslations()
     else:
