@@ -118,12 +118,12 @@ def update_generator_contents(generator, *args):
     contents = generator.pages if is_pages_gen else generator.articles
     hidden_contents = generator.hidden_pages if is_pages_gen else generator.drafts
     default_lang = generator.settings['DEFAULT_LANG']
-    for content_object in contents:
+    for content_object in contents[:]:   # loop over copy for removing
         if content_object.lang != default_lang:
-            if isinstance(content_object, Page):
-                content_object.status = 'hidden'
-            elif isinstance(content_object, Article):
+            if isinstance(content_object, Article):
                 content_object.status = 'draft'
+            elif isinstance(content_object, Page):
+                content_object.status = 'hidden'
             contents.remove(content_object)
             hidden_contents.append(content_object)
     if not is_pages_gen: # regenerate categories, tags, etc. for articles
