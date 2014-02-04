@@ -12,6 +12,7 @@ import gettext
 
 from pelican import signals
 from pelican.contents import Page, Article
+from pelican.settings import configure_settings
 
 from ._regenerate_context_helpers import regenerate_context_articles
 
@@ -64,6 +65,7 @@ def create_lang_subsites(pelican_obj):
         settings['OUTPUT_PATH'] = os.path.join(orig_settings['OUTPUT_PATH'], lang, '')
         settings['DEFAULT_LANG'] = lang   # to change what is perceived as translations
         settings['DELETE_OUTPUT_DIRECTORY'] = False  # prevent deletion of previous runs
+        settings = configure_settings(settings)      # to set LOCALE, etc.
 
         cls = settings['PELICAN_CLASS']
         if isinstance(cls, six.string_types):
@@ -74,6 +76,7 @@ def create_lang_subsites(pelican_obj):
         pelican_obj = cls(settings)
         logger.debug("Generating i18n subsite for lang '{}' using class '{}'".format(lang, str(cls)))
         pelican_obj.run()
+    _main_site_generated = False          # for autoreload mode
 
 
 
@@ -118,12 +121,12 @@ def update_generator_contents(generator, *args):
     contents = generator.pages if is_pages_gen else generator.articles
     hidden_contents = generator.hidden_pages if is_pages_gen else generator.drafts
     default_lang = generator.settings['DEFAULT_LANG']
-    for content_object in contents:
+    for content_object in contents[:]:   # loop over copy for removing
         if content_object.lang != default_lang:
-            if isinstance(content_object, Page):
-                content_object.status = 'hidden'
-            elif isinstance(content_object, Article):
+            if isinstance(content_object, Article):
                 content_object.status = 'draft'
+            elif isinstance(content_object, Page):
+                content_object.status = 'hidden'
             contents.remove(content_object)
             hidden_contents.append(content_object)
     if not is_pages_gen: # regenerate categories, tags, etc. for articles
@@ -148,8 +151,10 @@ def install_templates_translations(generator):
     generator.context['main_siteurl'] = _main_siteurl
     generator.context['main_lang'] = _main_site_lang
     extra_siteurls = { lang: _main_siteurl + '/' + lang for lang in generator.settings.get('I18N_SUBSITES', {}).keys() }
-    extra_siteurls[_main_site_lang] = _main_siteurl
-    extra_siteurls.pop(generator.settings['DEFAULT_LANG'])
+    # To be able to use url for main site root when SITEURL == '' (e.g. when developing)
+    extra_siteurls[_main_site_lang] = '/' if _main_siteurl == '' else _main_siteurl
+    current_def_lang = generator.settings['DEFAULT_LANG']
+    extra_siteurls.pop(current_def_lang)
     generator.context['extra_siteurls'] = extra_siteurls
     
     if 'jinja2.ext.i18n' not in generator.settings['JINJA_EXTENSIONS']:
@@ -157,13 +162,16 @@ def install_templates_translations(generator):
     domain = generator.settings.get('I18N_GETTEXT_DOMAIN', 'messages')
     localedir = generator.settings.get('I18N_GETTEXT_LOCALEDIR')
     if localedir is None:
-        localedir = os.path.join(generator.theme, 'translations/')
-    languages = [generator.settings['DEFAULT_LANG']]
-    try:
-        translations = gettext.translation(domain, localedir, languages)
-    except (IOError, OSError):
-        logger.error("Cannot find translations for language '{}' in '{}' with domain '{}'. Installing NullTranslations.".format(languages[0], localedir, domain))
+        localedir = os.path.join(generator.theme, 'translations')
+    if current_def_lang == generator.settings.get('I18N_TEMPLATES_LANG', _main_site_lang):
         translations = gettext.NullTranslations()
+    else:
+        languages = [current_def_lang]
+        try:
+            translations = gettext.translation(domain, localedir, languages)
+        except (IOError, OSError):
+            logger.error("Cannot find translations for language '{}' in '{}' with domain '{}'. Installing NullTranslations.".format(languages[0], localedir, domain))
+            translations = gettext.NullTranslations()
     newstyle = generator.settings.get('I18N_GETTEXT_NEWSTYLE', True)
     generator.env.install_gettext_translations(translations, newstyle)    
 
