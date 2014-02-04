@@ -12,6 +12,7 @@ import gettext
 
 from pelican import signals
 from pelican.contents import Page, Article
+from pelican.settings import configure_settings
 
 from ._regenerate_context_helpers import regenerate_context_articles
 
@@ -64,6 +65,7 @@ def create_lang_subsites(pelican_obj):
         settings['OUTPUT_PATH'] = os.path.join(orig_settings['OUTPUT_PATH'], lang, '')
         settings['DEFAULT_LANG'] = lang   # to change what is perceived as translations
         settings['DELETE_OUTPUT_DIRECTORY'] = False  # prevent deletion of previous runs
+        settings = configure_settings(settings)      # to set LOCALE, etc.
 
         cls = settings['PELICAN_CLASS']
         if isinstance(cls, six.string_types):
