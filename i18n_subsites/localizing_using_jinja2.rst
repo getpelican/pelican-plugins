@@ -6,11 +6,15 @@ Localizing themes with Jinja2
 ---------------------
 
 To enable the |ext| extension in your templates, you must add it to 
-*JINJA_EXTENSIONS* in your Pelican configuration::
+*JINJA_EXTENSIONS* in your Pelican configuration
+
+.. code-block:: python
 
   JINJA_EXTENSIONS = ['jinja2.ext.i18n', ...]
 
-Then follow the `Jinja2 templating documentation for the I18N plugin <http://jinja.pocoo.org/docs/templates/#i18n>`_ to make your templates localizable. This usually means surrounding strings with the ``{% trans %}`` directive or using ``gettext()`` in expressions::
+Then follow the `Jinja2 templating documentation for the I18N plugin <http://jinja.pocoo.org/docs/templates/#i18n>`_ to make your templates localizable. This usually means surrounding strings with the ``{% trans %}`` directive or using ``gettext()`` in expressions
+
+.. code-block:: jinja
 
     {% trans %}translatable content{% endtrans %}
     {{ gettext('a translatable string') }}
@@ -33,7 +37,9 @@ The domain of the translations (the name of each translation file is ``domain.mo
 Example
 .......
 
-With the following in your Pelican settings file::
+With the following in your Pelican settings file
+
+.. code-block:: python
 
   I18N_GETTEXT_LOCALEDIR = 'some/path/'
   I18N_GETTEXT_DOMAIN = 'my_domain'
@@ -60,7 +66,9 @@ Let's assume that you are localizing a theme in ``themes/my_theme/`` and that yo
 
 It is up to you where to store babel mappings and translation files templates (``*.pot``), but a convenient place is to put them in ``themes/my_theme/`` and work in that directory. From now on let's assume that it will be our current working directory (CWD).
 
-To tell babel to extract translatable strings from the templates create a mapping file ``babel.cfg`` with the following line::
+To tell babel to extract translatable strings from the templates create a mapping file ``babel.cfg`` with the following line
+
+.. code-block:: cfg
 
     [jinja2: ./templates/**.html]
 
@@ -68,7 +76,9 @@ To tell babel to extract translatable strings from the templates create a mappin
 2. Extract translatable strings from templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Run the following command to create a ``messages.pot`` message catalog template file from extracted translatable strings::
+Run the following command to create a ``messages.pot`` message catalog template file from extracted translatable strings
+
+.. code-block:: bash
 
     pybabel extract --mapping babel.cfg --output messages.pot ./
 
@@ -77,7 +87,9 @@ Run the following command to create a ``messages.pot`` message catalog template 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to translate the template to language ``lang``, run the following command to create a message catalog
-``translations/lang/LC_MESSAGES/messages.po`` using the template ``messages.pot``::
+``translations/lang/LC_MESSAGES/messages.po`` using the template ``messages.pot``
+
+.. code-block:: bash
 
     pybabel init --input-file messages.pot --output-dir translations/ --locale lang --domain messages
 
@@ -86,7 +98,10 @@ babel expects ``lang`` to be a valid locale identifier, so if e.g. you are trans
 4. Fill the message catalogs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The message catalog files format is quite intuitive, it is fully documented in the `GNU gettext manual <http://www.gnu.org/software/gettext/manual/gettext.html#PO-Files>`_. Essentially, you fill in the ``msgstr`` strings::
+The message catalog files format is quite intuitive, it is fully documented in the `GNU gettext manual <http://www.gnu.org/software/gettext/manual/gettext.html#PO-Files>`_. Essentially, you fill in the ``msgstr`` strings
+
+
+.. code-block:: po
 
     msgid "just a simple string"
     msgstr "jenom jednoduchý řetězec"
@@ -103,7 +118,9 @@ You might also want to remove ``#,fuzzy`` flags once the translation is complete
 5. Compile the message catalogs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The message catalogs must be compiled into binary format using this command::
+The message catalogs must be compiled into binary format using this command
+
+.. code-block:: bash
 
     pybabel compile --directory translations/ --domain messages
 
@@ -113,9 +130,11 @@ This command might complain about "fuzzy" translations, which means you should r
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you add any translatable patterns into your templates, you have to update your message catalogs too.
-First you extract a new message catalog template as described in the 2. step. Then you run the following command [#pybabel_error]_::
+First you extract a new message catalog template as described in the 2. step. Then you run the following command [#pybabel_error]_
 
-  pybabel update --input-file messages.pot --output-dir translations/ --domain messages
+.. code-block:: bash
+
+   pybabel update --input-file messages.pot --output-dir translations/ --domain messages
 
 This will merge the new patterns with the old ones. Once you review and fill them, you have to recompile them as described in the 5. step.
 

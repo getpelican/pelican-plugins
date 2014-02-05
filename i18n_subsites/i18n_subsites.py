@@ -6,7 +6,7 @@ import os
 import six
 import logging
 from itertools import chain
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 import gettext
 
@@ -22,6 +22,7 @@ from ._regenerate_context_helpers import regenerate_context_articles
 _main_site_generated = False
 _main_site_lang = "en"
 _main_siteurl = ''
+_lang_siteurls = None
 logger = logging.getLogger(__name__)
 
 
@@ -32,7 +33,7 @@ def disable_lang_vars(pelican_obj):
     e.g. ARTICLE_LANG_URL = ARTICLE_URL
     They would conflict with this plugin otherwise
     """
-    global _main_site_lang, _main_siteurl
+    global _main_site_lang, _main_siteurl, _lang_siteurls
     s = pelican_obj.settings
     for content in ['ARTICLE', 'PAGE']:
         for meta in ['_URL', '_SAVE_AS']:
@@ -40,7 +41,11 @@ def disable_lang_vars(pelican_obj):
     if not _main_site_generated:
         _main_site_lang = s['DEFAULT_LANG']
         _main_siteurl = s['SITEURL']
-
+        _lang_siteurls = [(lang, _main_siteurl + '/' + lang) for lang in s.get('I18N_SUBSITES', {}).keys()]
+        # To be able to use url for main site root when SITEURL == '' (e.g. when developing)
+        _lang_siteurls = [(_main_site_lang, ('/' if _main_siteurl == '' else _main_siteurl))] + _lang_siteurls
+        _lang_siteurls = OrderedDict(_lang_siteurls)
+        
 
     
 def create_lang_subsites(pelican_obj):
@@ -61,7 +66,7 @@ def create_lang_subsites(pelican_obj):
     for lang, overrides in orig_settings.get('I18N_SUBSITES', {}).items():
         settings = orig_settings.copy()
         settings.update(overrides)
-        settings['SITEURL'] = _main_siteurl + '/' + lang
+        settings['SITEURL'] = _lang_siteurls[lang]
         settings['OUTPUT_PATH'] = os.path.join(orig_settings['OUTPUT_PATH'], lang, '')
         settings['DEFAULT_LANG'] = lang   # to change what is perceived as translations
         settings['DELETE_OUTPUT_DIRECTORY'] = False  # prevent deletion of previous runs
@@ -150,10 +155,9 @@ def install_templates_translations(generator):
     """
     generator.context['main_siteurl'] = _main_siteurl
     generator.context['main_lang'] = _main_site_lang
-    extra_siteurls = { lang: _main_siteurl + '/' + lang for lang in generator.settings.get('I18N_SUBSITES', {}).keys() }
-    # To be able to use url for main site root when SITEURL == '' (e.g. when developing)
-    extra_siteurls[_main_site_lang] = '/' if _main_siteurl == '' else _main_siteurl
+    generator.context['lang_siteurls'] = _lang_siteurls
     current_def_lang = generator.settings['DEFAULT_LANG']
+    extra_siteurls = _lang_siteurls.copy()
     extra_siteurls.pop(current_def_lang)
     generator.context['extra_siteurls'] = extra_siteurls
     
