@@ -8,7 +8,7 @@ What it does
 ============
 1. The *\*_LANG_URL* and *\*_LANG_SAVE_AS* variables are set to their normal counterparts (e.g. *ARTICLE_URL*) so they don't conflict with this scheme.
 2. While building the site for *DEFAULT_LANG* the translations of pages and articles are not generated, but their relations to the original content is kept via links to them.
-3. For each non-default language a "sub-site" with a modified config [#conf]_ is created [#run]_, linking the translations to the originals (if available). The configured language code is appended to the *OUTPUT_PATH* and *SITEURL* of each sub-site.
+3. For each non-default language a "sub-site" with a modified config [#conf]_ is created [#run]_, linking the translations to the originals (if available). The configured language code is appended to the *OUTPUT_PATH* and *SITEURL* of each sub-site. For each sub-site, *DEFAULT_LANG* is changed to the language of the sub-site so that articles in a different language are treated as translations.
 
 If *HIDE_UNTRANSLATED_CONTENT* is True (default), content without a translation for a language is generated as hidden (for pages) or draft (for articles) for the corresponding language sub-site.
 
@@ -18,7 +18,9 @@ If *HIDE_UNTRANSLATED_CONTENT* is True (default), content without a translation 
 Setting it up
 =============
 
-For each extra used language code, a language-specific variables overrides dictionary must be given (but can be empty) in the *I18N_SUBSITES* dictionary::
+For each extra used language code, a language-specific variables overrides dictionary must be given (but can be empty) in the *I18N_SUBSITES* dictionary
+
+.. code-block:: python
 
     PLUGINS = ['i18n_subsites', ...]
 
@@ -40,18 +42,24 @@ Most importantly, this plugin can use localized templates for each sub-site. The
 - You can set a different *THEME* override for each language in *I18N_SUBSITES*, e.g. by making a copy of a theme ``my_theme`` to ``my_theme_lang`` and then editing the templates in the new localized theme. This approach means you don't have to deal with gettext ``*.po`` files, but it is harder to maintain over time.
 - You use only one theme and localize the templates using the `jinja2.ext.i18n Jinja2 extension <http://jinja.pocoo.org/docs/templates/#i18n>`_. For a kickstart read this `guide <./localizing_using_jinja2.rst>`_.
 
-It may be convenient to add language buttons to your theme in addition to the translation links. These buttons could, for example, point to the *SITEURL* of each (sub-)site. For this reason the plugin adds these variables to the template context:
+It may be convenient to add language buttons to your theme in addition to the translation links of articles and pages. These buttons could, for example, point to the *SITEURL* of each (sub-)site. For this reason the plugin adds these variables to the template context:
 
-extra_siteurls
-  A dictionary mapping languages to their *SITEURL*. The *DEFAULT_LANG* language of the current sub-site is not included, so this dictionary serves as a complement to current *DEFAULT_LANG* and *SITEURL*. This dictionary is useful for implementing global language buttons.
 main_lang
   The language of the top-level site — the original *DEFAULT_LANG*
 main_siteurl
   The *SITEURL* of the top-level site — the original *SITEURL*
+lang_siteurls
+  An ordered dictionary, mapping all used languages to their *SITEURL*. The ``main_lang`` is the first key with ``main_siteurl`` as the value. This dictionary is useful for implementing global language buttons that show the language of the currently viewed (sub-)site too.
+extra_siteurls
+  An ordered dictionary, subset of ``lang_siteurls``, the current *DEFAULT_LANG* of the rendered (sub-)site is not included, so for each (sub-)site ``set(extra_siteurls) == set(lang_siteurls) - set([DEFAULT_LANG])``. This dictionary is useful for implementing global language buttons that do not show the current language.
+
+If you don't like the default ordering of the ordered dictionaries, use a Jinja2 filter to alter the ordering.
+
+This short `howto <./implementing_language_buttons.rst>`_ shows two example implementations of language buttons.
 
 Usage notes
 ===========
-- It is **mandatory** to specify *lang* metadata for each article and page as *DEFAULT_LANG* is later changed for each sub-site.
+- It is **mandatory** to specify *lang* metadata for each article and page as *DEFAULT_LANG* is later changed for each sub-site, so content without *lang* metadata woudl be rendered in every (sub-)site.
 - As with the original translations functionality, *slug* metadata is used to group translations. It is therefore often convenient to compensate for this by overriding the content URL (which defaults to slug) using the *URL* and *Save_as* metadata.
 
 Future plans
@@ -63,5 +71,3 @@ Development
 ===========
 
 - A demo and test site is in the ``gh-pages`` branch and can be seen at http://smartass101.github.io/pelican-plugins/
-
-..  LocalWords:  lang metadata
