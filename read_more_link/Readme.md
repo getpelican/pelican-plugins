@@ -21,6 +21,6 @@ Settings
     READ_MORE_LINK = None (ex: '<span>continue</span>')
 
     # This is the format of the read more link
-    READ_MORE_LINK_FORMAT = '<a class="read-more" href="/{url}">{text}</a>'
+    READ_MORE_LINK_FORMAT = '<a class="read-more" href="{url}">{text}</a>'
 
 

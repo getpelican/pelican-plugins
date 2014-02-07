@@ -52,10 +52,11 @@ def insert_read_more_link(instance):
     if type(instance) != contents.Article:
         return
 
+    SITEURL = instance.settings.get('SITEURL')
     SUMMARY_MAX_LENGTH = instance.settings.get('SUMMARY_MAX_LENGTH')
     READ_MORE_LINK = instance.settings.get('READ_MORE_LINK', None)
     READ_MORE_LINK_FORMAT = instance.settings.get(
-        'READ_MORE_LINK_FORMAT', '<a class="read-more" href="/{url}">{text}</a>'
+        'READ_MORE_LINK_FORMAT', '<a class="read-more" href="{url}">{text}</a>'
     )
 
     if not (SUMMARY_MAX_LENGTH and READ_MORE_LINK and READ_MORE_LINK_FORMAT):
@@ -67,7 +68,8 @@ def insert_read_more_link(instance):
         summary = truncate_html_words(instance.content, SUMMARY_MAX_LENGTH)
 
     if summary < instance.content:
-        read_more_link = READ_MORE_LINK_FORMAT.format(url=instance.url, text=READ_MORE_LINK)
+        instance_url = "{}/{}".format(SITEURL, instance.url)
+        read_more_link = READ_MORE_LINK_FORMAT.format(url=instance_url, text=READ_MORE_LINK)
         instance._summary = insert_into_last_element(summary, read_more_link)
 
 
