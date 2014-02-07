@@ -45,13 +45,14 @@ def neighbors(generator):
         articles.sort(key=(lambda x: x.date), reverse=(True))
         set_neighbors(
             articles, 'next_article_in_category', 'prev_article_in_category')
-    
-    for subcategory, articles in generator.subcategories:
-        articles.sort(key=(lambda x: x.date), reverse=(True))
-        index = subcategory.name.count('/')
-        next_name = 'next_article_in_subcategory{}'.format(index)
-        prev_name = 'prev_article_in_subcategory{}'.format(index)
-        set_neighbors(articles, next_name, prev_name)
+
+    if hasattr(generator, 'subcategories'):
+        for subcategory, articles in generator.subcategories:
+            articles.sort(key=(lambda x: x.date), reverse=(True))
+            index = subcategory.name.count('/')
+            next_name = 'next_article_in_subcategory{}'.format(index)
+            prev_name = 'prev_article_in_subcategory{}'.format(index)
+            set_neighbors(articles, next_name, prev_name)
 
 def register():
     signals.article_generator_finalized.connect(neighbors)
