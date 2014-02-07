@@ -54,6 +54,7 @@ def insert_read_more_link(instance):
 
     SITEURL = instance.settings.get('SITEURL')
     SUMMARY_MAX_LENGTH = instance.settings.get('SUMMARY_MAX_LENGTH')
+    READ_MORE_LINK_RELATIVE = instance.settings.get('READ_MORE_LINK_RELATIVE', True)
     READ_MORE_LINK = instance.settings.get('READ_MORE_LINK', None)
     READ_MORE_LINK_FORMAT = instance.settings.get(
         'READ_MORE_LINK_FORMAT', '<a class="read-more" href="{url}">{text}</a>'
@@ -68,7 +69,12 @@ def insert_read_more_link(instance):
         summary = truncate_html_words(instance.content, SUMMARY_MAX_LENGTH)
 
     if summary < instance.content:
-        instance_url = "{}/{}".format(SITEURL, instance.url)
+        # by default, we'll generate the url as a relative path
+        # however, READ_MORE_LINK_RELATIVE can be used to force an absolute url
+        # with SITEURL settings.
+        instance_url = instance.url if READ_MORE_LINK_RELATIVE else \
+            "{}/{}".format(SITEURL, instance.url)
+
         read_more_link = READ_MORE_LINK_FORMAT.format(url=instance_url, text=READ_MORE_LINK)
         instance._summary = insert_into_last_element(summary, read_more_link)
 
