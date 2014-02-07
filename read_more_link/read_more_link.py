@@ -69,9 +69,6 @@ def insert_read_more_link(instance):
         summary = truncate_html_words(instance.content, SUMMARY_MAX_LENGTH)
 
     if summary < instance.content:
-        # by default, we'll generate the url as a relative path
-        # however, READ_MORE_LINK_RELATIVE can be used to force an absolute url
-        # with SITEURL settings.
         instance_url = instance.url if READ_MORE_LINK_RELATIVE else \
             "{}/{}".format(SITEURL, instance.url)
 

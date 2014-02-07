@@ -23,4 +23,7 @@ Settings
     # This is the format of the read more link
     READ_MORE_LINK_FORMAT = '<a class="read-more" href="{url}">{text}</a>'
 
-
+    # By default, read more link are generated as a relative path url.
+    # However, READ_MORE_LINK_RELATIVE can be used to force an absolute url
+    # using the existing SITEURL settings
+    READ_MORE_LINK_RELATIVE = True
