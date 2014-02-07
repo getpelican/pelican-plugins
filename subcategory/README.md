@@ -1,14 +1,11 @@
 #Subcategory Plugin#
 
-Adds support for subcategories in addition to article categories.
+This plugin adds support for subcategories in addition to article categories.
 
-Subcategories are heirachial. Each subcategory has a parent, which is either a
-regular category or another subcategory. Subcategories with the same name but 
-different parents are not the same. Their articles won't be grouped together 
-under that name.
+Subcategories are hierarchical. Each subcategory has a parent, which is either a
+regular category or another subcategory.
 
-Feeds can be generated for each subcategory just like categories and tags.
-
+Feeds can be generated for each subcategory, just like categories and tags.
 
 ##Usage##
 
@@ -17,48 +14,63 @@ category metadata using a `/` like this:
 
     Category: Regular Category/Sub-Category/Sub-Sub-category
 
-then create a `subcategory.html` template in your theme similar to the 
-`category.html` or `tag.html`
+Then create a `subcategory.html` template in your theme, similar to the
+`category.html` or `tag.html` templates.
 
-In your templates `article.category` continues to act the same way. Your 
-subcategories are stored in a list `aricles.subcategories`. To create a 
-breadcrumb style navigation you might try something like this:
+In your templates, `article.category` continues to act the same way. Your
+subcategories are stored in the `articles.subcategories` list. To create
+breadcrumb-style navigation you might try something like this:
 
     <nav class="breadcrumb">
     <ol>
         <li>
-            <a href="{{ SITEURL }}/{{ arcticle.categor.url }}">{{ article.category}}</a>
+            <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category}}</a>
         </li>
     {% for subcategory in article.subcategories %}
         <li>
-            <a href="{{ SITEURL }}/{{ category.url }}>{{ subcategory }}</a>
+            <a href="{{ SITEURL }}/{{ subcategory.url }}>{{ subcategory.shortname }}</a>
         </li>
     {% endfor %}
     </ol>
     </nav>
- 
+
+##Subcategory Names##
+
+Each subcategory's full name is a `/`-separated list of it parents and itself.
+This is necessary to keep each subcategory unique. It means you can have
+`Category 1/Foo` and `Category 2/Foo` and they won't interfere with each other.
+Each subcategory has an attribute `shortname` which is just the name without
+its parents associated. For example if you had…
+
+    Category/Sub Category1/Sub Category2
+
+… the full name for Sub Category2 would be `Category/Sub Category1/Sub Category2` and
+the "short name" would be `Sub Category2`.
+
+If you need to use the slug, it is generated from the short name — not the full
+name.
 
 ##Settings##
 
-Consistent with the default settings for Tags and Categories, the default 
-settings for subcategoris are:
-    
+Consistent with the default settings for Tags and Categories, the default
+settings for subcategories are:
+
     'SUBCATEGORY_SAVE_AS' = os.path.join('subcategory', '{savepath}.html')
     'SUBCATEGORY_URL' = 'subcategory/(fullurl).html'
 
 `savepath` and `fullurl` are generated recursively, using slugs. So the full
-url would be:
-    
+URL would be:
+
     category-slug/sub-category-slug/sub-sub-category-slug
 
-with `savepath` being similar but joined using `os.path.join`
+… with `savepath` being similar but joined using `os.path.join`.
 
-Similarily you can save a subcategory feeds by adding one of the following 
-to your pelicanconf file
+Similarly, you can save subcategory feeds by adding one of the following
+to your Pelican configuration file:
 
     SUBCATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
     SUBCATEGORY_FEED_RSS = 'feeds/%s.rss.xml'
 
-and this will create a feed with `fullurl` of the subcategory. Eg.
-    
+… and this will create a feed with `fullurl` of the subcategory. For example:
+
     feeds/category/subcategory.atom.xml

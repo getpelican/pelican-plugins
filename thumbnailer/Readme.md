@@ -16,7 +16,8 @@ Configuration
 * IMAGE_PATH is the path to the image directory.  It should reside under content, and defaults to "pictures"
 * THUMBNAIL_DIR is the path to the output sub directory where the thumbnails are generated
 * THUMBNAIL_SIZES is a dictionary mapping name of size to size specifications.
-  The generated filename will be originalname_thumbnailname.ext
+  The generated filename will be originalname_thumbnailname.ext unless THUMBNAIL_KEEP_NAME is set.
+* THUMBNAIL_KEEP_NAME is a boolean which if set puts the file with the original name in a thumbnailname folder.
 
 Sizes can be specified using any of the following formats:
 
