@@ -23,21 +23,21 @@
 {%- endblock -%}
 
 {% block input %}
-{% if "#<!-- collapse=True -->" in cell.input %}
+{% if "# <!-- collapse=True -->" in cell.input %}
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area box-flex1" style="display:none">
-{{ cell.input.replace("#<!-- collapse=True -->\n", "") | highlight2html }}
+{{ cell.input.replace("# <!-- collapse=True -->\n", "") | highlight2html }}
 </div>
 </div>
-{% elif "#<!-- collapse=False -->" in cell.input %}
+{% elif "# <!-- collapse=False -->" in cell.input %}
 <div class="collapseheader box-flex1"><span style="font-weight: bold;">Collapse Code</span>
 <div class="input_area box-flex1">
-{{ cell.input.replace("#<!-- collapse=False -->\n", "") | highlight2html }}
+{{ cell.input.replace("# <!-- collapse=False -->\n", "") | highlight2html }}
 </div>
 </div>
 {% else %}
 <div class="input_area box-flex1">
-{{ cell.input.replace("#<!-- collapse=True -->\n", "") | highlight2html }}
+{{ cell.input | highlight2html }}
 </div>
 {% endif %}
 {%- endblock input %}
