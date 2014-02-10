@@ -9,6 +9,11 @@ For example, to track Pelican project activity, the setting would be::
 
      GITHUB_ACTIVITY_FEED = 'https://github.com/getpelican.atom'
 
+If you want to limit the amount of entries to a certain maximum set the
+``GITHUB_ACTIVITY_MAX_ENTRIES`` parameter.
+
+     GITHUB_ACTIVITY_MAX_ENTRIES = 10
+
 On the template side, you just have to iterate over the ``github_activity``
 variable, as in this example::
 
