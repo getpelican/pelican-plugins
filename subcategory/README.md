@@ -28,7 +28,7 @@ breadcrumb-style navigation you might try something like this:
         </li>
     {% for subcategory in article.subcategories %}
         <li>
-            <a href="{{ SITEURL }}/{{ subcategory.url }}>{{ subcategory.shortname }}</a>
+            <a href="{{ SITEURL }}/{{ subcategory.url }}">{{ subcategory.shortname }}</a>
         </li>
     {% endfor %}
     </ol>
