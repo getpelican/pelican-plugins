@@ -248,8 +248,12 @@ def notebook(preprocessor, tag, markup):
                 'SubCell':
                     {'enabled':True, 'start':start, 'end':end}})
 
+    if os.path.exists('pelicanhtml.tpl'):
+        template_file = 'pelicanhtml'
+    else:
+        template_file = 'basic'
     exporter = HTMLExporter(config=c,
-                            template_file='pelicanhtml',
+                            template_file=template_file,
                             filters={'highlight2html': custom_highlighter},
                             transformers=[SubCell])
 
