@@ -98,4 +98,15 @@ are a few extra steps required for this plugin:
 
   this will insert the proper css formatting into your document.
 
+### Collapsible Code in IPython Notebooks
+
+The plugin also enables collapsible code input boxes. For this to work
+you first need to copy the file ``pelicanhtml.tpl`` to the top level
+of your Pelican blog. Notebook input cells containing the comment line
+``# <!-- collapse=True -->`` will be collapsed when the html page is
+loaded and can be expanded by clicking on them. Cells containing the
+comment line ``# <!-- collapse=False -->`` will be open on load but
+can be collapsed by clicking on their header. Cells without collapse
+comments are rendered as standard code input cells.
+
 [1] http://ipython.org/
