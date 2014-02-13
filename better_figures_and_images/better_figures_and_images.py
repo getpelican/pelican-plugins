@@ -54,17 +54,34 @@ def content_object_init(instance):
                 if not (path.isfile(src) and access(src, R_OK)):
                     logger.error('Better Fig. Error: image not found: {}'.format(src))
 
-                # Open the source image and query dimensions; build style string
-                im = Image.open(src)
-                extra_style = 'width: {}px; height: auto;'.format(im.size[0])
-
                 if instance.settings['RESPONSIVE_IMAGES']:
-                    extra_style += ' max-width: 100%;'
-
-                if img.get('style'):
-                    img['style'] += extra_style
+                    new_style = 'max-width:100%;'
+                    extra_style = 'max-width:100%;'
                 else:
-                    img['style'] = extra_style
+                    new_style = ''
+                    extra_style = ''
+
+                # Pull all of the style tags out, so they can be modified
+                if img.get('style'):
+                    style_tags = dict([tag.replace(' ', '').split(':') for tag in img.get('style').split(';') if ':' in tag])
+                else:
+                    style_tags = dict()
+                
+                # Only open and decode the image if neither width nor height are given
+                if 'width' not in style_tags and 'height' not in style_tags:
+                    style_tags['width'] = '{}px'.format(Image.open(src).size[0])
+                    style_tags['height'] = 'auto'
+                elif 'height' not in style_tags:
+                    style_tags['height'] = 'auto'
+                elif 'width' not in style_tags:
+                    style_tags['width'] = 'auto'
+
+                for k, v in style_tags.iteritems():
+                    new_style += '%s;' % ':'.join([k, v])
+
+                extra_style += 'width:%s;height:%s;' % (style_tags['width'], style_tags['height'])
+
+                img['style'] = new_style
 
                 if img['alt'] == img['src']:
                     img['alt'] = ''
