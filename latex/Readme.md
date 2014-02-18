@@ -24,7 +24,7 @@ that at least version 2.07 is present and will fail without it.
 
 Usage
 -----
-### Bakcward Compatibility
+### Backward Compatibility
 This plugin is backward compatible in the sense that it
 accompishes what previous versions did without needing any setup in the
 metadata or settings files.
