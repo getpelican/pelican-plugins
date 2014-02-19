@@ -28,11 +28,12 @@ from pelican import contents
 import re
 
 # Global Variables
+_TYPOGRIFY = False  # used to determine if we should process typogrify
 _WRAP_TAG = None  # the tag to wrap mathjax in (needed to play nicely with typogrify or for template designers)
-_LATEX_REGEX = re.compile(r'(\$\$|\$|\\begin\{(.+?)\}).*?\1|\\end\{\2\}', re.DOTALL | re.IGNORECASE) #  used to detect latex
+_LATEX_REGEX = re.compile(r'(\$\$|\$|\\begin\{(.+?)\}|<(math).*?>).*?(\1|\\end\{\2\}|</\3>)', re.DOTALL | re.IGNORECASE) #  used to detect latex
 _LATEX_SUMMARY_REGEX = None  # used to match latex in summary
 _LATEX_PARTIAL_REGEX = None  # used to match latex that has been cut off in summary
-_MATHJAX_SETTINGS = {}  # Settings that can be specified by the user, used to control mathjax script settings
+_MATHJAX_SETTINGS = {}  # settings that can be specified by the user, used to control mathjax script settings
 _MATHJAX_SCRIPT="""
 <script type= "text/javascript">
     if (!document.getElementById('mathjaxscript_pelican')) {{
@@ -124,7 +125,11 @@ def wrap_latex(content, ignore_within):
         # determine if the tags are within <pre> and <code> blocks
         ignore = binary_search(match.span(1), ignore_within) and binary_search(match.span(2), ignore_within)
 
-        if ignore:
+        if ignore or match.group(3) == 'math':
+            if match.group(3) == 'math':
+                # Will detect mml, but not wrap anything around it
+                wrap_latex.foundlatex = True
+
             return match.group(0)
         else:
             wrap_latex.foundlatex = True
@@ -142,7 +147,7 @@ def process_summary(instance, ignore_within):
 
     process_summary.altered_summary = False
     insert_mathjax_script = False
-    endtag = '</%s>' % _WRAP_TAG if _WRAP_TAG != None else ''
+    end_tag = '</%s>' % _WRAP_TAG if _WRAP_TAG != None else ''
 
     # use content's _get_summary method to obtain summary
     summary = instance._get_summary()
@@ -158,23 +163,33 @@ def process_summary(instance, ignore_within):
 
     # Repair the latex if it was cut off mathitem will be the final latex
     # code  matched that is not within <pre> or <code> tags
-    if mathitem and mathitem.group(4) == ' ...':
-        end = r'\end{%s}' % mathitem.group(3) if mathitem.group(3) is not None else mathitem.group(2)
-        latex_match = re.search('%s.*?%s' % (re.escape(mathitem.group(1)), re.escape(end)), instance._content, re.DOTALL | re.IGNORECASE)
-        new_summary = summary.replace(mathitem.group(0), latex_match.group(0)+'%s ...' % endtag)
+    if mathitem and '...' in mathitem.group(6):
+        if mathitem.group(3) is not None:
+            end = r'\end{%s}' % mathitem.group(3)
+        elif mathitem.group(4) is not None:
+            end = r'</math>'
+        elif mathitem.group(2) is not None:
+            end = mathitem.group(2)
 
-        if new_summary != summary:
-            return new_summary+_MATHJAX_SCRIPT.format(**_MATHJAX_SETTINGS)
+        search_regex = r'%s(%s.*?%s)' % (re.escape(instance._content[0:mathitem.start(1)]), re.escape(mathitem.group(1)), re.escape(end))
+        latex_match = re.search(search_regex, instance._content, re.DOTALL | re.IGNORECASE)
+
+        if latex_match:
+            new_summary = summary.replace(mathitem.group(0), latex_match.group(1)+'%s ...' % end_tag)
+
+            if new_summary != summary:
+                return new_summary+_MATHJAX_SCRIPT.format(**_MATHJAX_SETTINGS)
 
     def partial_regex(match):
         """function for use in re.sub"""
-        if binary_search(match.span(), ignore_within):
+        if binary_search(match.span(3), ignore_within):
             return match.group(0)
 
         process_summary.altered_summary = True
         return match.group(1) + match.group(4)
 
     # check for partial latex tags at end. These must be removed
+
     summary = _LATEX_PARTIAL_REGEX.sub(partial_regex, summary)
 
     if process_summary.altered_summary:
@@ -252,9 +267,10 @@ def process_content(instance):
     # with latex, we set it to False. This means that the default reader will
     # not call typogrify, so it is called here, where we are able to control
     # logic for it ignore latex if necessary
-    if process_content.typogrify:
+    if _TYPOGRIFY:
         # Tell typogrify to ignore the tags that latex has been wrapped in
-        ignore_tags = [_WRAP_TAG] if _WRAP_TAG else None
+        # also, typogrify must always ignore mml (math) tags
+        ignore_tags = [_WRAP_TAG,'math'] if _WRAP_TAG else ['math']
 
         # Exact copy of the logic as found in the default reader
         from typogrify.filters import typogrify
@@ -278,6 +294,7 @@ def pelican_init(pelicanobj):
     False should it be set to True.
     """
 
+    global _TYPOGRIFY
     global _WRAP_TAG
     global _LATEX_SUMMARY_REGEX
     global _LATEX_PARTIAL_REGEX
@@ -298,7 +315,7 @@ def pelican_init(pelicanobj):
         if pelicanobj.settings['TYPOGRIFY'] == True:
             pelicanobj.settings['TYPOGRIFY'] = False
             _WRAP_TAG = 'mathjax' # default to wrap mathjax content inside of
-            process_content.typogrify = True
+            _TYPOGRIFY = True
     except KeyError:
         pass
 
@@ -311,10 +328,13 @@ def pelican_init(pelicanobj):
         pass
 
     # regular expressions that depend on _WRAP_TAG are set here
-    tagstart = r'<%s>' % _WRAP_TAG if not _WRAP_TAG is None else ''
-    tagend = r'</%s>' % _WRAP_TAG if not _WRAP_TAG is None else ''
-    latex_summary_regex = r'((\$\$|\$|\\begin\{(.+?)\}).+?)(\2|\\end\{\3\}|\s?\.\.\.)(%s)?' % tagend
-    latex_partial_regex = r'(.*)(%s)(\\.*?|\$.*?)(\s?\.\.\.)(%s)' % (tagstart, tagend)
+    tag_start= r'<%s>' % _WRAP_TAG if not _WRAP_TAG is None else ''
+    tag_end = r'</%s>' % _WRAP_TAG if not _WRAP_TAG is None else ''
+    latex_summary_regex = r'((\$\$|\$|\\begin\{(.+?)\}|<(math)(\s.*?)?>).+?)(\2|\\end\{\3\}|\s?\.\.\.)(%s|</\4>)?' % tag_end
+
+    # NOTE: The logic in _get_summary will handle <math> correctly because it
+    # is perceived as an html tag. Therefore we are only interested in handling non mml
+    latex_partial_regex = r'(.*)(%s)(\\\S*?|\$)\s*?(\s?\.\.\.)(%s)?$' % (tag_start, tag_end)
 
     _LATEX_SUMMARY_REGEX = re.compile(latex_summary_regex, re.DOTALL | re.IGNORECASE)
     _LATEX_PARTIAL_REGEX = re.compile(latex_partial_regex, re.DOTALL | re.IGNORECASE)
