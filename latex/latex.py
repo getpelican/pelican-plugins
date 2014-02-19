@@ -330,7 +330,7 @@ def pelican_init(pelicanobj):
     # regular expressions that depend on _WRAP_TAG are set here
     tag_start= r'<%s>' % _WRAP_TAG if not _WRAP_TAG is None else ''
     tag_end = r'</%s>' % _WRAP_TAG if not _WRAP_TAG is None else ''
-    latex_summary_regex = r'((\$\$|\$|\\begin\{(.+?)\}|<(math)(\s.*?)?>).+?)(\2|\\end\{\3\}|\s?\.\.\.)(%s|</\4>)?' % tag_end
+    latex_summary_regex = r'((\$\$|\$|\\begin\{(.+?)\}|<(math)(\s.*?)?>).+?)(\2|\\end\{\3\}|</\4>|\s?\.\.\.)(%s|</\4>)?' % tag_end
 
     # NOTE: The logic in _get_summary will handle <math> correctly because it
     # is perceived as an html tag. Therefore we are only interested in handling non mml
