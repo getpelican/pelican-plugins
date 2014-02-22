@@ -7,7 +7,7 @@ file, located under the Pelican "siteroot".
 
 ## Template Example ##
 
-{% include_markdown content/pages/foo/bar.md %}
+    {% include_markdown content/pages/foo/bar.md %}
 
 ## Installation ##
 
