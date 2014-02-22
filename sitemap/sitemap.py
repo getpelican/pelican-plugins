@@ -206,10 +206,13 @@ class SitemapGenerator(object):
                                                'date',
                                                'url'])
 
-            for standard_page_url in ['index.html',
-                                      'archives.html',
-                                      'tags.html',
-                                      'categories.html']:
+            standard_pages = ['index.html', 'archives.html',
+                              'tags.html', 'categories.html']
+
+            for i in range(100):
+                standard_pages.append('index'+str(i)+'.html')
+
+            for standard_page_url in standard_pages:
                 fake = FakePage(status='published',
                                 date=self.now,
                                 url=standard_page_url)
