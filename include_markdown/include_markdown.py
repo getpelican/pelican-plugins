@@ -6,7 +6,6 @@ Include Markdown
 This plugin allows you to include a Markdown file (which will be converted to HTML).
 
 TODO: Add tests for this plugin.
-
 """
 
 from jinja2 import nodes
@@ -24,6 +23,7 @@ class IncludeMarkdownExtension(Extension):
     tags = set(['include_markdown'])
     
     def __init__(self, environment):
+        self.env = environment
         super(IncludeMarkdownExtension, self).__init__(environment)
         
     def parse(self, parser):
@@ -40,7 +40,16 @@ class IncludeMarkdownExtension(Extension):
 
     def render_markdown(self, path):
         reader = readers.MarkdownReader(settings=DEFAULT_CONFIG)
-        content, metadata = reader.read(_path(path))        
+        content, metadata = reader.read(_path(path))
+
+        # XXX Hideaway for now, because PageGenerator dictates the
+        # template expects a page object.
+        page = metadata
+        page['content'] = content
+
+        if 'template' in metadata:
+            return self.env.get_template(metadata['template'] + 'html').render(page=page)
+        
         return content
 
 def registerExtension(gen):
