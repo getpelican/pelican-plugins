@@ -42,13 +42,11 @@ class IncludeMarkdownExtension(Extension):
         reader = readers.MarkdownReader(settings=DEFAULT_CONFIG)
         content, metadata = reader.read(_path(path))
 
-        # XXX Hideaway for now, because PageGenerator dictates the
-        # template expects a page object.
-        page = metadata
-        page['content'] = content
-
+        data = metadata
+        data['content'] = content
+        
         if 'template' in metadata:
-            return self.env.get_template(metadata['template'] + 'html').render(page=page)
+            return self.env.get_template(metadata['template'] + '.html').render(data)
         
         return content
 
