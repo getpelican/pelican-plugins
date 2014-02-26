@@ -3,9 +3,7 @@
         var mathjaxscript = document.createElement('script');
         mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
         mathjaxscript.type = 'text/javascript';
-        mathjaxscript.src = 'https:' == document.location.protocol
-		? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js'
-		: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+        mathjaxscript.src = {source};
         mathjaxscript[(window.opera ? "innerHTML" : "text")] =
             "MathJax.Hub.Config({{" +
             "    config: ['MMLorHTML.js']," +

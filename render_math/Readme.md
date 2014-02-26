@@ -106,6 +106,12 @@ sequences. **Default Value**: True
 rendering LaTex. If set to `Tex`, then the TeX code is used as the preview 
 (which will be visible until it is processed by MathJax). **Default Value**: `Tex`
  * `color`: controls the color of the mathjax rendered font. **Default Value**: `black`
+ * `ssl`: specifies if ssl should be used to load MathJax engine. Can be set to one
+of three things
+  * `auto`: **Default Value** will automatically determine what protodol to use 
+based on current protocol of the site. 
+  * `force`: will force ssl to be used.
+  * `off`: will ensure that ssl is not used
 
 For example, in settings.py, the following would make math render in blue and
 displaymath align to the left:
