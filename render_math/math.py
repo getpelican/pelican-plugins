@@ -167,7 +167,6 @@ def process_summary(instance, ignore_within):
         return match.group(1) + match.group(4)
 
     # check for partial math tags at end. These must be removed
-
     summary = _MATH_INCOMPLETE_TAG_REGEX.sub(incomplete_end_latex_tag, summary)
 
     if process_summary.altered_summary or insert_mathjax:
@@ -198,6 +197,11 @@ def process_settings(settings):
     _MATHJAX_SETTINGS['process_escapes'] = 'true'  # controls whether escapes are processed
     _MATHJAX_SETTINGS['latex_preview'] = 'TeX'  # controls what user sees while waiting for LaTex to render
     _MATHJAX_SETTINGS['color'] = 'black'  # controls color math is rendered in
+
+    # Source for MathJax: default (below) is to automatically determine what protocol to use
+    _MATHJAX_SETTINGS['source'] = """'https:' == document.location.protocol
+                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"""
 
     # This next setting controls whether the mathjax script should be automatically
     # inserted into the content. The mathjax script will not be inserted into
@@ -239,6 +243,12 @@ def process_settings(settings):
         if key == 'color' and isinstance(value, str):
             _MATHJAX_SETTINGS[key] = value
 
+        if key == 'ssl' and isinstance(value, str):
+            if value == 'off':
+                _MATHJAX_SETTINGS['source'] = "'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
+
+            if value == 'force':
+                _MATHJAX_SETTINGS['source'] = "'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
 
 def process_content(instance):
     """Processes content, with logic to ensure that typogrify does not clash
