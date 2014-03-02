@@ -38,7 +38,8 @@ in math that could not be rendered by MathJax. The only option was to ensure
 that Typogrify was disabled in the settings.
 
 The problem has been recitified in this plugin, but it requires [Typogrify version 2.04](https://pypi.python.org/pypi/typogrify)
-(or higher). In fact, this plugin will not work with lower versions of Typogrfrify.
+(or higher). If this version of Typogrify is not present, the plugin will inform that an incorrect
+version of Typogrify is not present and disable Typogrify for the entire site
 
 Usage
 -----

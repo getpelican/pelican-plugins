@@ -23,7 +23,7 @@ from pelican import contents
 import re, os
 
 # Global Variables
-_TYPOGRIFY = False  # used to determine if we should process typogrify
+_TYPOGRIFY = None  # if typogrify is enabled, this is set to the typogrify.filter function
 _WRAP_LATEX = None  # the tag to wrap LaTex math in (needed to play nicely with typogrify or for template designers)
 _MATH_REGEX = re.compile(r'(\$\$|\$|\\begin\{(.+?)\}|<(math)(?:\s.*?)?>).*?(\1|\\end\{\2\}|</\3>)', re.DOTALL | re.IGNORECASE) #  used to detect math
 _MATH_SUMMARY_REGEX = None  # used to match math in summary
@@ -278,9 +278,8 @@ def process_content(instance):
         ignore_tags = [_WRAP_LATEX,'math'] if _WRAP_LATEX else ['math']
 
         # Exact copy of the logic as found in the default reader
-        from typogrify.filters import typogrify
-        instance._content = typogrify(instance._content, ignore_tags)
-        instance.metadata['title'] = typogrify(instance.metadata['title'], ignore_tags)
+        instance._content = _TYPOGRIFY(instance._content, ignore_tags)
+        instance.metadata['title'] = _TYPOGRIFY(instance.metadata['title'], ignore_tags)
 
     if math:
         if _MATHJAX_SETTINGS['auto_insert']:
@@ -324,8 +323,24 @@ def pelican_init(pelicanobj):
     try:
         if pelicanobj.settings['TYPOGRIFY'] == True:
             pelicanobj.settings['TYPOGRIFY'] = False
-            _WRAP_LATEX = 'mathjax' # default to wrap mathjax content inside of
-            _TYPOGRIFY = True
+            try:
+                from typogrify.filters import typogrify
+
+                # Determine if this is the correct version of Typogrify to use
+                import inspect
+                typogrify_args = inspect.getargspec(typogrify).args
+                if len(typogrify_args) < 2 or 'ignore_tags' not in typogrify_args:
+                    raise TypeError('Incorrect version of typogrify')
+
+                # At this point, we are happy to use Typogrify, meaning
+                # it is installed and it is a recent enough version
+                # that can be used to ignore all math
+                _TYPOGRIFY = typogrify
+                _WRAP_LATEX = 'mathjax' # default to wrap mathjax content inside of
+            except ImportError:
+                print "\nTypogrify is not installed, so it is being ignored.\nPlease install it if you want to use it: pip install typogrify\n"
+            except TypeError:
+                print "\nA more recent versio of Typogrify is needed for the render_math module.\nPlease upgrade the typogrify to the latest version (anything above version 2.04 is okay).\nTypogrify will be turned off due to this reason\n"
     except KeyError:
         pass
 
