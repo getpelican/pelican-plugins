@@ -1,3 +1,4 @@
+from __future__ import print_function
 # -*- coding: utf-8 -*-
 """
 Math Render Plugin For Pelican
@@ -338,9 +339,9 @@ def pelican_init(pelicanobj):
                 _TYPOGRIFY = typogrify
                 _WRAP_LATEX = 'mathjax' # default to wrap mathjax content inside of
             except ImportError:
-                print "\nTypogrify is not installed, so it is being ignored.\nPlease install it if you want to use it: pip install typogrify\n"
+                print("\nTypogrify is not installed, so it is being ignored.\nPlease install it if you want to use it: pip install typogrify\n")
             except TypeError:
-                print "\nA more recent versio of Typogrify is needed for the render_math module.\nPlease upgrade the typogrify to the latest version (anything above version 2.04 is okay).\nTypogrify will be turned off due to this reason\n"
+                print("\nA more recent versio of Typogrify is needed for the render_math module.\nPlease upgrade the typogrify to the latest version (anything above version 2.04 is okay).\nTypogrify will be turned off due to this reason\n")
     except KeyError:
         pass
 
