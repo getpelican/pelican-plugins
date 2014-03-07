@@ -1,37 +1,41 @@
-from __future__ import print_function
 # -*- coding: utf-8 -*-
 """
-Math Render Plugin For Pelican
+Math Render Plugin for Pelican
 ==============================
-This plugin allows your site to render Math. It supports both LaTex and MathML
+This plugin allows your site to render Math. It supports both LaTeX and MathML
 using the MathJax JavaScript engine.
 
 Typogrify Compatibility
 -----------------------
-This plugin now plays nicely with typogrify, but it requires
-typogrify version 2.04 or above.
+This plugin now plays nicely with Typogrify, but it requires
+Typogrify version 2.04 or above.
 
 User Settings
 -------------
 Users are also able to pass a dictionary of settings in the settings file which
-will control how the mathjax library renders thing. This could be very useful
-for template builders that want to adjust look and feel of the math.
+will control how the MathJax library renders things. This could be very useful
+for template builders that want to adjust the look and feel of the math.
 See README for more details.
 """
 
+from __future__ import print_function
+import os
+import re
+
 from pelican import signals
 from pelican import contents
-import re, os
+
 
 # Global Variables
-_TYPOGRIFY = None  # if typogrify is enabled, this is set to the typogrify.filter function
-_WRAP_LATEX = None  # the tag to wrap LaTex math in (needed to play nicely with typogrify or for template designers)
-_MATH_REGEX = re.compile(r'(\$\$|\$|\\begin\{(.+?)\}|<(math)(?:\s.*?)?>).*?(\1|\\end\{\2\}|</\3>)', re.DOTALL | re.IGNORECASE) #  used to detect math
+_TYPOGRIFY = None  # if Typogrify is enabled, this is set to the typogrify.filter function
+_WRAP_LATEX = None  # the tag to wrap LaTeX math in (needed to play nicely with Typogrify or for template designers)
+_MATH_REGEX = re.compile(r'(\$\$|\$|\\begin\{(.+?)\}|<(math)(?:\s.*?)?>).*?(\1|\\end\{\2\}|</\3>)', re.DOTALL | re.IGNORECASE)  # used to detect math
 _MATH_SUMMARY_REGEX = None  # used to match math in summary
 _MATH_INCOMPLETE_TAG_REGEX = None  # used to match math that has been cut off in summary
 _MATHJAX_SETTINGS = {}  # settings that can be specified by the user, used to control mathjax script settings
 with open (os.path.dirname(os.path.realpath(__file__))+'/mathjax_script.txt', 'r') as mathjax_script:  # Read the mathjax javascript from file
     _MATHJAX_SCRIPT=mathjax_script.read()
+
 
 # Python standard library for binary search, namely bisect is cool but I need
 # specific business logic to evaluate my search predicate, so I am using my
@@ -82,7 +86,7 @@ def ignore_content(content):
 def wrap_math(content, ignore_within):
     """Wraps math in user specified tags.
 
-    This is needed for typogrify to play nicely with math but it can also be
+    This is needed for Typogrify to play nicely with math but it can also be
     styled by template providers
     """
 
@@ -116,7 +120,7 @@ def process_summary(instance, ignore_within):
 
     process_summary.altered_summary = False
     insert_mathjax = False
-    end_tag = '</%s>' % _WRAP_LATEX if _WRAP_LATEX != None else ''
+    end_tag = '</%s>' % _WRAP_LATEX if _WRAP_LATEX is not None else ''
 
     # use content's _get_summary method to obtain summary
     summary = instance._get_summary()
@@ -181,6 +185,7 @@ def process_summary(instance, ignore_within):
 
     return None  # Making it explicit that summary was not altered
 
+
 def process_settings(settings):
     """Sets user specified MathJax settings (see README for more details)"""
 
@@ -211,7 +216,7 @@ def process_settings(settings):
     # Setting this value to false means the template must be altered if this
     # plugin is to work, and so it is only recommended for the template
     # designer who wants maximum control.
-    _MATHJAX_SETTINGS['auto_insert'] = True # controls whether mathjax script is automatically inserted into the content
+    _MATHJAX_SETTINGS['auto_insert'] = True  # controls whether mathjax script is automatically inserted into the content
 
     if not isinstance(settings, dict):
         return
@@ -251,8 +256,9 @@ def process_settings(settings):
             if value == 'force':
                 _MATHJAX_SETTINGS['source'] = "'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
 
+
 def process_content(instance):
-    """Processes content, with logic to ensure that typogrify does not clash
+    """Processes content, with logic to ensure that Typogrify does not clash
     with math.
 
     In addition, mathjax script is inserted at the end of the content thereby
@@ -269,13 +275,13 @@ def process_content(instance):
     else:
         math = True if _MATH_REGEX.search(instance._content) else False
 
-    # The user initially set typogrify to be True, but since it would clash
+    # The user initially set Typogrify to be True, but since it would clash
     # with math, we set it to False. This means that the default reader will
-    # not call typogrify, so it is called here, where we are able to control
+    # not call Typogrify, so it is called here, where we are able to control
     # logic for it ignore math if necessary
     if _TYPOGRIFY:
-        # Tell typogrify to ignore the tags that math has been wrapped in
-        # also, typogrify must always ignore mml (math) tags
+        # Tell Typogrify to ignore the tags that math has been wrapped in
+        # also, Typogrify must always ignore mml (math) tags
         ignore_tags = [_WRAP_LATEX,'math'] if _WRAP_LATEX else ['math']
 
         # Exact copy of the logic as found in the default reader
@@ -295,7 +301,7 @@ def process_content(instance):
         # The summary needs special care because math math cannot just be cut
         # off
         summary = process_summary(instance, ignore_within)
-        if summary != None:
+        if summary is not None:
             instance._summary = summary
 
 
@@ -316,13 +322,13 @@ def pelican_init(pelicanobj):
 
     process_settings(settings)
 
-    # Allows mathjax script to be accessed from template should it be needed
+    # Allows MathJax script to be accessed from template should it be needed
     pelicanobj.settings['MATHJAXSCRIPT'] = _MATHJAX_SCRIPT.format(**_MATHJAX_SETTINGS)
 
-    # If typogrify set to True, then we need to handle it manually so it does
-    # not conflict with Latex
+    # If Typogrify set to True, then we need to handle it manually so it does
+    # not conflict with LaTeX
     try:
-        if pelicanobj.settings['TYPOGRIFY'] == True:
+        if pelicanobj.settings['TYPOGRIFY'] is True:
             pelicanobj.settings['TYPOGRIFY'] = False
             try:
                 from typogrify.filters import typogrify
@@ -331,7 +337,7 @@ def pelican_init(pelicanobj):
                 import inspect
                 typogrify_args = inspect.getargspec(typogrify).args
                 if len(typogrify_args) < 2 or 'ignore_tags' not in typogrify_args:
-                    raise TypeError('Incorrect version of typogrify')
+                    raise TypeError('Incorrect version of Typogrify')
 
                 # At this point, we are happy to use Typogrify, meaning
                 # it is installed and it is a recent enough version
@@ -339,9 +345,9 @@ def pelican_init(pelicanobj):
                 _TYPOGRIFY = typogrify
                 _WRAP_LATEX = 'mathjax' # default to wrap mathjax content inside of
             except ImportError:
-                print("\nTypogrify is not installed, so it is being ignored.\nPlease install it if you want to use it: pip install typogrify\n")
+                print("\nTypogrify is not installed, so it is being ignored.\nIf you want to use it, please install via: pip install typogrify\n")
             except TypeError:
-                print("\nA more recent versio of Typogrify is needed for the render_math module.\nPlease upgrade the typogrify to the latest version (anything above version 2.04 is okay).\nTypogrify will be turned off due to this reason\n")
+                print("\nA more recent version of Typogrify is needed for the render_math module.\nPlease upgrade Typogrify to the latest version (anything above version 2.04 is okay).\nTypogrify will be turned off due to this reason.\n")
     except KeyError:
         pass
 
