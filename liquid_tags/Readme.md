@@ -14,8 +14,8 @@ First, in your pelicanconf.py file, add the plugins you want to  use:
 
     PLUGIN_PATH = '/path/to/pelican-plugins'
     PLUGINS = ['liquid_tags.img', 'liquid_tags.video',
-               'liquid_tags.youtube', 'liquid_tags.include_code',
-               'liquid_tags.notebook']
+               'liquid_tags.youtube', 'liquid_tags.vimeo',
+               'liquid_tags.include_code', 'liquid_tags.notebook']
 
 There are several options available
 
@@ -30,6 +30,15 @@ To insert youtube video into a post, enable the
 ``liquid_tags.youtube`` plugin, and add to your document:
 
     {% youtube youtube_id [width] [height] %}
+
+The width and height are in pixels, and can be optionally specified.  If they
+are not, then the dimensions will be 640 (wide) by 390 (tall).
+
+## Vimeo Tag
+To insert a Vimeo video into a post, enable the
+``liquid_tags.vimeo`` plugin, and add to your document:
+
+    {% vimeo vimeo_id [width] [height] %}
 
 The width and height are in pixels, and can be optionally specified.  If they
 are not, then the dimensions will be 640 (wide) by 390 (tall).

@@ -25,6 +25,7 @@ class GitHubActivity():
         import feedparser
         self.activities = feedparser.parse(
             generator.settings['GITHUB_ACTIVITY_FEED'])
+        self.max_entries = generator.settings['GITHUB_ACTIVITY_MAX_ENTRIES'] 
 
     def fetch(self):
         """
@@ -37,7 +38,7 @@ class GitHubActivity():
                     [element for element in [activity['title'],
                         activity['content'][0]['value']]])
 
-        return entries
+        return entries[0:self.max_entries]
 
 
 def fetch_github_activity(gen, metadata):
