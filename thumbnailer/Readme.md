@@ -18,6 +18,7 @@ Configuration
 * THUMBNAIL_SIZES is a dictionary mapping name of size to size specifications.
   The generated filename will be originalname_thumbnailname.ext unless THUMBNAIL_KEEP_NAME is set.
 * THUMBNAIL_KEEP_NAME is a boolean which if set puts the file with the original name in a thumbnailname folder.
+* THUMBNAIL_KEEP_DIR_STRUCT is a boolean which if set conserve the image directory structure in a thumbnailname folder. It is usefull with the THUMBNAIL_KEEP_NAME parameter
 
 Sizes can be specified using any of the following formats:
 
