@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+"""
+Pelican Comment System
+======================
+
+A Pelican plugin, which allows you to add comments to your articles.
+
+Author: Bernhard Scheirle
+"""
 
 import logging
 import os
@@ -33,9 +41,9 @@ class Comment:
 	def __lt__(self, other):
 		return self.metadata['date'] < other.metadata['date']
 
-	def sort(self):
+	def sortReplies(self):
 		for r in self.replies:
-			r.sort()
+			r.sortReplies()
 		self.replies = sorted(self.replies)
 
 	def countReplies(self):
@@ -43,6 +51,7 @@ class Comment:
 		for r in self.replies:
 			amount += r.countReplies()
 		return amount + len(self.replies)
+
 
 def initialized(pelican):
 	from pelican.settings import DEFAULT_CONFIG
@@ -84,6 +93,7 @@ def add_static_comments(gen, metadata):
 			else:
 				comments.append( com )
 
+	#TODO: Fix this O(n²) loop
 	for reply in replies:
 		for comment in chain(comments, replies):
 			if comment.id == reply.metadata['replyto']:
@@ -91,7 +101,7 @@ def add_static_comments(gen, metadata):
 
 	count = 0
 	for comment in comments:
-		comment.sort()
+		comment.sortReplies()
 		count += comment.countReplies()
 
 	comments = sorted(comments)
