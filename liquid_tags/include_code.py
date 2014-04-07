@@ -29,13 +29,15 @@ in the STATIC_PATHS setting, e.g.:
 
 [1] https://github.com/imathis/octopress/blob/master/plugins/include_code.rb
 """
+from __future__ import unicode_literals
 import re
 import os
+import chardet, codecs
 from .mdx_liquid_tags import LiquidTags
 
 
 SYNTAX = "{% include_code /path/to/code.py [lang:python] [title] %}"
-FORMAT = re.compile(r"""^(?:\s+)?(?P<src>\S+)(?:\s+)?(?:(?:lang:)(?P<lang>\S+))?(?:\s+)?(?P<title>.+)?$""")
+FORMAT = re.compile(ur"""^(?:\s+)?(?P<src>\S+)(?:\s+)?(?:(?:lang:)(?P<lang>\S+))?(?:\s+)?(?P<title>.+)?$""")
 
 
 @LiquidTags.register('include_code')
@@ -62,7 +64,9 @@ def include_code(preprocessor, tag, markup):
     if not os.path.exists(code_path):
         raise ValueError("File {0} could not be found".format(code_path))
 
-    code = open(code_path).read()
+    # It is naive to think we can just open a file with code.
+    file_encoding = chardet.detect(open(code_path).read())['encoding']
+    code = codecs.open(code_path,'r',encoding=file_encoding).read()
 
     if title:
         title = "{0} {1}".format(title, os.path.basename(src))

@@ -63,6 +63,12 @@ document:
 
     {% include_code myscript.py [Title text] %}
 
+'chardet' package is required to detect encoding of the file. (Contrary
+to popular belief, not all source code is plain ascii.) You will want to
+install it before using this plugin:
+
+    pip install chardet
+	
 The script must be in the ``code`` subdirectory of your content folder:
 this default location can be changed by specifying
 
