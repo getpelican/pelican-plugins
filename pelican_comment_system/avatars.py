@@ -3,6 +3,8 @@
 
 """
 
+from __future__ import unicode_literals
+
 import logging
 import os
 
@@ -12,7 +14,7 @@ import hashlib
 logger = logging.getLogger(__name__)
 _log = "pelican_comment_system: avatars: "
 try:
-	from identicon import identicon
+	from . identicon import identicon
 	_identiconImported = True
 except ImportError as e:
 	logger.warning(_log + "identicon deactivated: " + str(e))
@@ -66,7 +68,7 @@ def getAvatarPath(comment_id, metadata):
 	for data in _identicon_data:
 		if data in metadata:
 			string = str(metadata[data])
-			md5.update(string)
+			md5.update(string.encode('utf-8'))
 			author += tuple([string])
 		else:
 			logger.warning(_log + data + " is missing in comment: " + comment_id)

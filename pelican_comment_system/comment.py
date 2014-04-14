@@ -2,7 +2,7 @@
 """
 
 """
-
+from __future__ import unicode_literals
 from pelican import contents
 from pelican.contents import Content
 

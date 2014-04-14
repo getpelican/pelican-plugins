@@ -46,10 +46,10 @@ class Matrix2D(list):
     def __mul__(self, other):
         r = []
         if isinstance(other, Matrix2D):
-            for y in xrange(3):
-                for x in xrange(3):
+            for y in range(3):
+                for x in range(3):
                     v = 0.0
-                    for i in xrange(3):
+                    for i in range(3):
                         v += (self[i * 3 + x] * other[y * 3 + i])
                     r.append(v)
         else:
@@ -119,7 +119,7 @@ class IdenticonRendererBase(object):
         
         # decode the code
         middle, corner, side, foreColor, backColor = self.decode(self.code)
-
+        size = int(size)
         # make image        
         image = Image.new("RGB", (size * 3, size * 3))
         draw = ImageDraw.Draw(image)
@@ -137,13 +137,13 @@ class IdenticonRendererBase(object):
 
         # side patch
         kwds['type'] = side[0]
-        for i in xrange(4):
+        for i in range(4):
             pos = [(1, 0), (2, 1), (1, 2), (0, 1)][i]
             self.drawPatch(pos, side[2] + 1 + i, side[1], **kwds)
         
         # corner patch
         kwds['type'] = corner[0]
-        for i in xrange(4):
+        for i in range(4):
             pos = [(0, 0), (2, 0), (2, 2), (0, 2)][i]
             self.drawPatch(pos, corner[2] + 1 + i, corner[1], **kwds)
         
@@ -203,9 +203,10 @@ class DonRenderer(IdenticonRendererBase):
     MIDDLE_PATCH_SET = [0, 4, 8, 15]
     
     # modify path set
-    for idx in xrange(len(PATH_SET)):
+    for idx in range(len(PATH_SET)):
         if PATH_SET[idx]:
             p = map(lambda vec: (vec[0] / 4.0, vec[1] / 4.0), PATH_SET[idx])
+            p = list(p)
             PATH_SET[idx] = p + p[:1]
     
     def decode(self, code):
@@ -240,7 +241,7 @@ if __name__ == '__main__':
     import sys
     
     if len(sys.argv) < 2:
-        print 'usage: python identicon.py [CODE]....'
+        print('usage: python identicon.py [CODE]....')
         raise SystemExit
     
     for code in sys.argv[1:]:

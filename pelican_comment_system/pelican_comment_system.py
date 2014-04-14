@@ -7,7 +7,7 @@ A Pelican plugin, which allows you to add comments to your articles.
 
 Author: Bernhard Scheirle
 """
-
+from __future__ import unicode_literals
 import logging
 import os
 import copy
@@ -19,8 +19,9 @@ from pelican import signals
 from pelican.readers import MarkdownReader
 from pelican.writers import Writer
 
-import avatars
-from comment import Comment
+from . comment import Comment
+from . import avatars
+
 
 def pelican_initialized(pelican):
 	from pelican.settings import DEFAULT_CONFIG
