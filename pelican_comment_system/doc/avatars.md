@@ -23,7 +23,7 @@ PELICAN_COMMENT_SYSTEM_AUTHORS = {
 ```
 
 ## Theme
-To display the avatars and identicons simply add the following in the "comment for loop" in you theme:
+To display the avatars and identicons simply add the following in the "comment for loop" in your theme:
 
 ```html
 <img src="{{ SITEURL }}/{{ comment.avatar }}"

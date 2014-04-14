@@ -10,51 +10,17 @@ Author: Bernhard Scheirle
 
 import logging
 import os
+import copy
 
 logger = logging.getLogger(__name__)
 
 from itertools import chain
 from pelican import signals
-from pelican.utils import strftime
 from pelican.readers import MarkdownReader
+from pelican.writers import Writer
 
 import avatars
-
-class Comment:
-	def __init__(self, id, metadata, content, avatar):
-		self.id = id
-		self.content = content
-		self.metadata = metadata
-		self.replies = []
-		self.avatar = avatar
-
-	def addReply(self, comment):
-		self.replies.append(comment)
-
-	def getReply(self, id):
-		for reply in self.replies:
-			if reply.id == id:
-				return reply
-			else:
-				deepReply = reply.getReply(id)
-				if deepReply != None:
-					return deepReply
-		return None
-
-	def __lt__(self, other):
-		return self.metadata['date'] < other.metadata['date']
-
-	def sortReplies(self):
-		for r in self.replies:
-			r.sortReplies()
-		self.replies = sorted(self.replies)
-
-	def countReplies(self):
-		amount = 0
-		for r in self.replies:
-			amount += r.countReplies()
-		return amount + len(self.replies)
-
+from comment import Comment
 
 def pelican_initialized(pelican):
 	from pelican.settings import DEFAULT_CONFIG
@@ -64,6 +30,8 @@ def pelican_initialized(pelican):
 	DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ())
 	DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72)
 	DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_AUTHORS', {})
+	DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml'))
+	DEFAULT_CONFIG.setdefault('COMMENT_URL', '#comment-{path}')
 	if pelican:
 		pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM', False)
 		pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_DIR', 'comments')
@@ -71,6 +39,8 @@ def pelican_initialized(pelican):
 		pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ())
 		pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72)
 		pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_AUTHORS', {})
+		pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml'))
+		pelican.settings.setdefault('COMMENT_URL', '#comment-{path}')
 
 
 def initialize(article_generator):
@@ -82,21 +52,26 @@ def initialize(article_generator):
 		article_generator.settings['PELICAN_COMMENT_SYSTEM_AUTHORS'],
 		)
 
-def add_static_comments(gen, metadata):
+def add_static_comments(gen, content):
 	if gen.settings['PELICAN_COMMENT_SYSTEM'] != True:
 		return
 
-	metadata['comments_count'] = 0
-	metadata['comments'] = []
+	content.comments_count = 0
+	content.comments = []
 
-	if not 'slug' in metadata:
-		logger.warning("pelican_comment_system: cant't locate comments files without slug tag in the article")
-		return
+	#Modify the local context, so we get proper values for the feed
+	context = copy.copy(gen.context)
+	context['SITEURL'] += "/" + content.url
+	context['SITENAME'] = "Comments for: " + content.title
+	context['SITESUBTITLE'] = ""
+	path = gen.settings['PELICAN_COMMENT_SYSTEM_FEED'] % content.slug
+	writer = Writer(gen.output_path, settings=gen.settings)
 
-	folder = os.path.join(gen.settings['PELICAN_COMMENT_SYSTEM_DIR'], metadata['slug'])
+	folder = os.path.join(gen.settings['PELICAN_COMMENT_SYSTEM_DIR'], content.slug)
 
 	if not os.path.isdir(folder):
-		logger.debug("No comments found for: " + metadata['slug'])
+		logger.debug("No comments found for: " + content.slug)
+		writer.write_feed( [], context, path)
 		return
 
 	reader = MarkdownReader(gen.settings)
@@ -106,16 +81,18 @@ def add_static_comments(gen, metadata):
 	for file in os.listdir(folder):
 		name, extension = os.path.splitext(file)
 		if extension[1:].lower() in reader.file_extensions:
-			content, meta = reader.read(os.path.join(folder, file))
-			meta['locale_date'] = strftime(meta['date'], gen.settings['DEFAULT_DATE_FORMAT'])
-
+			com_content, meta = reader.read(os.path.join(folder, file))
+			
 			avatar_path = avatars.getAvatarPath(name, meta)
-			com = Comment(name, meta, content, avatar_path)
+
+			com = Comment(file, avatar_path, com_content, meta, gen.settings, file, context)
 
 			if 'replyto' in meta:
 				replies.append( com )
 			else:
 				comments.append( com )
+
+	writer.write_feed( comments + replies, context, path)
 
 	#TODO: Fix this O(n²) loop
 	for reply in replies:
@@ -130,8 +107,8 @@ def add_static_comments(gen, metadata):
 
 	comments = sorted(comments)
 
-	metadata['comments_count'] = len(comments) + count
-	metadata['comments'] = comments
+	content.comments_count = len(comments) + count
+	content.comments = comments
 
 def writeIdenticonsToDisk(gen, writer):
 	avatars.generateAndSaveMissingAvatars()
@@ -139,5 +116,5 @@ def writeIdenticonsToDisk(gen, writer):
 def register():
 	signals.initialized.connect(pelican_initialized)
 	signals.article_generator_init.connect(initialize)
-	signals.article_generator_context.connect(add_static_comments)
+	signals.article_generator_write_article.connect(add_static_comments)
 	signals.article_writer_finalized.connect(writeIdenticonsToDisk)

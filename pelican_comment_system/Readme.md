@@ -6,6 +6,7 @@ The comments are stored in Markdown files. Each comment in it own file.
  - Static comments for each article
  - Replies to comments
  - Avatars and [Identicons](https://en.wikipedia.org/wiki/Identicon)
+ - Comment Atom Feed for each article
  - Easy styleable via the themes
 
 
@@ -18,6 +19,7 @@ Bernhard Scheirle  | <http://blog.scheirle.de> | <https://github.com/Scheirle>
 ## Instructions
  - [Installation and basic usage](doc/installation.md)
  - [Avatars and Identicons](doc/avatars.md)
+ - [Comment Atom Feed](doc/feed.md)
  - [Comment Form (aka: never gather Metadata)](doc/form.md)
  
 ## Requirements
