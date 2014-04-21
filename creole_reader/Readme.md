@@ -1,8 +1,12 @@
 # Creole Reader
 
 This plugins allows you to write your posts using the wikicreole syntax. Give to
-these files the creole extension. The medata are between <<header>> <</header>>
+these files the creole extension. The medata are between `<<header>> <</header>>`
 tags.
+
+## Dependency
+This plugin relies on [python-creole](https://pypi.python.org/pypi/python-creole/) to work. Install it with:
+`pip install python-creole`
 
 ## Syntax
 Use ** for strong, // for emphasis, one = for 1st level titles.
