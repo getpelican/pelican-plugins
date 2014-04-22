@@ -23,6 +23,7 @@ Output
 [1] https://github.com/imathis/octopress/blob/master/plugins/image_tag.rb
 """
 import re
+import six
 from .mdx_liquid_tags import LiquidTags
 
 SYNTAX = '{% img [class name(s)] [http[s]:/]/path/to/image [width [height]] [title text | "title text" ["alt text"]] %}'
@@ -56,8 +57,9 @@ def img(preprocessor, tag, markup):
             attrs['alt'] = attrs['title']
 
     # Return the formatted text
-    return "<img {0}>".format(' '.join('{0}="{1}"'.format(key, val)
-                                       for (key, val) in attrs.iteritems()))
+    img_attrs = [six.u('{0}="{1}"').format(key, val)
+                        for (key, val) in attrs.iteritems()]
+    return six.u("<img {0}>").format(' '.join(img_attrs))
 
 #----------------------------------------------------------------------
 # This import allows image tag to be a Pelican plugin
