@@ -54,7 +54,7 @@ def insert_read_more_link(instance):
 
     SITEURL = instance.settings.get('SITEURL')
     SUMMARY_MAX_LENGTH = instance.settings.get('SUMMARY_MAX_LENGTH')
-    READ_MORE_LINK_RELATIVE = instance.settings.get('READ_MORE_LINK_RELATIVE', True)
+    READ_MORE_LINK_RELATIVE = instance.settings.get('READ_MORE_LINK_RELATIVE', False)
     READ_MORE_LINK = instance.settings.get('READ_MORE_LINK', None)
     READ_MORE_LINK_FORMAT = instance.settings.get(
         'READ_MORE_LINK_FORMAT', '<a class="read-more" href="{url}">{text}</a>'
