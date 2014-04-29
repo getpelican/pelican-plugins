@@ -11,11 +11,11 @@ Alternatively, you can provide an email address from within article metadata.
 
 In ReSTructuredText::
 
-    ReSTructuredText: `:email:  john.doe@example.com`
+    :email:  john.doe@example.com
 
 In Markdown::
 
-    `Email:  john.doe@example.com`
+    Email:  john.doe@example.com
 
 If the email address is defined via at least one of the two methods above, the
 ``author_gravatar`` variable is added to the article's context. For markdown,
