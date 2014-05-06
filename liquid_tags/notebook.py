@@ -269,11 +269,14 @@ def notebook(preprocessor, tag, markup):
                 'SubCell':
                     {'enabled':True, 'start':start, 'end':end}})
 
-    if os.path.exists('pelicanhtml.tpl'):
-        template_file = 'pelicanhtml'
+    template_file = 'basic'
+    if LooseVersion(IPython.__version__) >= '2.0':
+        if os.path.exists('pelicanhtml_2.tpl'):
+            template_file = 'pelicanhtml_2'
     else:
-        template_file = 'basic'
-    
+        if os.path.exists('pelicanhtml_1.tpl'):
+            template_file = 'pelicanhtml_1'
+
     if LooseVersion(IPython.__version__) >= '2.0':
         subcell_kwarg = dict(preprocessors=[SubCell])
     else:
@@ -282,7 +285,6 @@ def notebook(preprocessor, tag, markup):
     exporter = HTMLExporter(config=c,
                             template_file=template_file,
                             filters={'highlight2html': custom_highlighter},
-                            extra_loaders=[pelican_loader],
                             **subcell_kwarg)
 
     # read and parse the notebook
