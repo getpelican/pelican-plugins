@@ -22,16 +22,17 @@ Output
 
 [1] https://github.com/imathis/octopress/blob/master/plugins/image_tag.rb
 """
+from __future__ import unicode_literals
 import re
 from .mdx_liquid_tags import LiquidTags
 
 SYNTAX = '{% img [class name(s)] [http[s]:/]/path/to/image [width [height]] [title text | "title text" ["alt text"]] %}'
 
 # Regular expression to match the entire syntax
-ReImg = re.compile("""(?P<class>\S.*\s+)?(?P<src>(?:https?:\/\/|\/|\S+\/)\S+)(?:\s+(?P<width>\d+))?(?:\s+(?P<height>\d+))?(?P<title>\s+.+)?""")
+ReImg = re.compile(ur"""(?P<class>\S.*\s+)?(?P<src>(?:https?:\/\/|\/|\S+\/)\S+)(?:\s+(?P<width>\d+))?(?:\s+(?P<height>\d+))?(?P<title>\s+.+)?""")
 
 # Regular expression to split the title and alt text
-ReTitleAlt = re.compile("""(?:"|')(?P<title>[^"']+)?(?:"|')\s+(?:"|')(?P<alt>[^"']+)?(?:"|')""")
+ReTitleAlt = re.compile(ur"""(?:"|')(?P<title>[^"']+)?(?:"|')\s+(?:"|')(?P<alt>[^"']+)?(?:"|')""")
 
 
 @LiquidTags.register('img')
