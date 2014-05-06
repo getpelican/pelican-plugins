@@ -129,6 +129,14 @@ div.text_cell_render {
 }
 
 img.anim_icon{padding:0; border:0; vertical-align:middle; -webkit-box-shadow:none; -box-shadow:none}
+
+div.collapseheader {
+    width=100%;
+    background-color:#d3d3d3;
+    padding: 2px;
+    cursor: pointer;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
 </style>
 
 <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
@@ -151,6 +159,23 @@ init_mathjax = function() {
 }
 init_mathjax();
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    $("div.collapseheader").click(function () {
+    $header = $(this).children("span").first();
+    $codearea = $(this).children(".input_area");
+    console.log($(this).children());
+    $codearea.slideToggle(500, function () {
+        $header.text(function () {
+            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+        });
+    });
+});
+});
+</script>
+
 """
 
 CSS_WRAPPER = """
@@ -189,36 +214,6 @@ class SubCell(Preprocessor):
 
     call = preprocess # IPython < 2.0
 
-
-#----------------------------------------------------------------------
-# Customize the html template:
-#  This changes the <pre> tags in basic_html.tpl to <pre class="ipynb"
-pelican_loader = DictLoader({'pelicanhtml.tpl':
-"""
-{%- extends 'basichtml.tpl' -%}
-
-{% block stream_stdout -%}
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre class="ipynb">{{output.text |ansi2html}}</pre>
-</div>
-{%- endblock stream_stdout %}
-
-{% block stream_stderr -%}
-<div class="box-flex1 output_subarea output_stream output_stderr">
-<pre class="ipynb">{{output.text |ansi2html}}</pre>
-</div>
-{%- endblock stream_stderr %}
-
-{% block pyerr -%}
-<div class="box-flex1 output_subarea output_pyerr">
-<pre class="ipynb">{{super()}}</pre>
-</div>
-{%- endblock pyerr %}
-
-{%- block data_text %}
-<pre class="ipynb">{{output.text | ansi2html}}</pre>
-{%- endblock -%}
-"""})
 
 
 #----------------------------------------------------------------------
@@ -273,16 +268,23 @@ def notebook(preprocessor, tag, markup):
                     {'enabled':True, 'highlight_class':'.highlight-ipynb'},
                 'SubCell':
                     {'enabled':True, 'start':start, 'end':end}})
-    
+
+    template_file = 'basic'
+    if LooseVersion(IPython.__version__) >= '2.0':
+        if os.path.exists('pelicanhtml_2.tpl'):
+            template_file = 'pelicanhtml_2'
+    else:
+        if os.path.exists('pelicanhtml_1.tpl'):
+            template_file = 'pelicanhtml_1'
+
     if LooseVersion(IPython.__version__) >= '2.0':
         subcell_kwarg = dict(preprocessors=[SubCell])
     else:
         subcell_kwarg = dict(transformers=[SubCell])
     
     exporter = HTMLExporter(config=c,
-                            template_file='basic',
+                            template_file=template_file,
                             filters={'highlight2html': custom_highlighter},
-                            extra_loaders=[pelican_loader],
                             **subcell_kwarg)
 
     # read and parse the notebook
