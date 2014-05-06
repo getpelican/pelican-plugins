@@ -25,7 +25,7 @@ def images_extraction(instance):
                 representativeImage = imageTag['src']
         
         # Set the attribute to content instance
-        instance.repImage = representativeImage
+        instance.featured_image = representativeImage
 
 def register():
     signals.content_object_init.connect(images_extraction)

@@ -29,7 +29,7 @@ class TestRepresentativeImage(unittest.TestCase):
         }
 
         article = Article(**args)
-        self.assertEqual(article.repImage, TEST_CONTENT_IMAGE_URL)
+        self.assertEqual(article.featured_image, TEST_CONTENT_IMAGE_URL)
 
     def test_extract_image_from_summary(self):
         args = {
@@ -40,7 +40,7 @@ class TestRepresentativeImage(unittest.TestCase):
         }
 
         article = Article(**args)
-        self.assertEqual(article.repImage, TEST_SUMMARY_IMAGE_URL)
+        self.assertEqual(article.featured_image, TEST_SUMMARY_IMAGE_URL)
         self.assertEqual(article.summary, TEST_SUMMARY_WITHOUTIMAGE)
 
 if __name__ == '__main__':
