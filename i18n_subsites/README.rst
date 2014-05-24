@@ -11,6 +11,7 @@ What it does
 3. For each non-default language a "sub-site" with a modified config [#conf]_ is created [#run]_, linking the translations to the originals (if available). The configured language code is appended to the *OUTPUT_PATH* and *SITEURL* of each sub-site. For each sub-site, *DEFAULT_LANG* is changed to the language of the sub-site so that articles in a different language are treated as translations.
 
 If *HIDE_UNTRANSLATED_CONTENT* is True (default), content without a translation for a language is generated as hidden (for pages) or draft (for articles) for the corresponding language sub-site.
+To hide only pages or articles, use *HIDE_UNTRANSLATED_PAGES* and *HIDE_UNTRANSLATED_ARTICLES* separately.
 
 .. [#conf] For each language a config override is given in the *I18N_SUBSITES* dictionary.
 .. [#run] Using a new *PELICAN_CLASS* instance and its ``run`` method, so each sub-site could even have a different *PELICAN_CLASS* if specified in *I18N_SUBSITES* conf overrides.
