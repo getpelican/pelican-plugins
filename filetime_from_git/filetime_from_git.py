@@ -16,6 +16,10 @@ except InvalidGitRepositoryError as e:
 def filetime_from_git(content):
     if isinstance(content, contents.Static) or repo is None:
         return
+    gittime = content.metadata.get('gittime', 'yes').lower()
+    gittime = gittime.replace("false", "no").replace("off", "no")
+    if gittime == "no":
+        return
     # 1. file is not managed by git
     #    date: fs time
     # 2. file is staged, but has no commits
@@ -25,33 +29,32 @@ def filetime_from_git(content):
     # 4. file is managed, but dirty
     #    date: first commit time, update: fs time
     path = content.source_path
-    metadata = content.metadata
     status, stdout, stderr = git.execute(['git', 'ls-files', path, '--error-unmatch'],
             with_extended_output=True, with_exceptions=False)
     if status != 0:
         # file is not managed by git
-        metadata['date'] = datetime.fromtimestamp(os.stat(path).st_ctime)
+        content.date = datetime.fromtimestamp(os.stat(path).st_ctime)
     else:
         # file is managed by git
         commits = repo.commits(path=path)
         if len(commits) == 0:
             # never commited, but staged
-            metadata['date'] = datetime.fromtimestamp(os.stat(path).st_ctime)
+            content.date = datetime.fromtimestamp(os.stat(path).st_ctime)
         else:
             # has commited
-            metadata['date'] = datetime.fromtimestamp(mktime(commits[-1].committed_date) - altzone)
+            content.date = datetime.fromtimestamp(mktime(commits[-1].committed_date) - altzone)
 
             status, stdout, stderr = git.execute(['git', 'diff', '--quiet', 'HEAD', path],
                     with_extended_output=True, with_exceptions=False)
             if status != 0:
                 # file has changed
-                metadata['updated'] = datetime.fromtimestamp(os.stat(path).st_ctime)
+                content.updated = datetime.fromtimestamp(os.stat(path).st_ctime)
             else:
                 # file is not changed
                 if len(commits) > 1:
-                    metadata['updated'] = datetime.fromtimestamp(mktime(commits[0].committed_date) - altzone)
-    if not metadata.has_key('updated'):
-        metadata['updated'] = metadata['date']
+                    content.updated = datetime.fromtimestamp(mktime(commits[0].committed_date) - altzone)
+    if not hasattr(content, 'updated'):
+        content.updated = content.date
 
 def register():
     signals.content_object_init.connect(filetime_from_git)

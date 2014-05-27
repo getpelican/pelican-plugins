@@ -23,6 +23,9 @@ When this module is enabled, ``date`` and ``updated`` will be set automatically
 by git status, no need to manually set in article/page's metadata. And
 operations like copy, move will not affect the generated results.
 
+If some article or page doesn't like to use git time, set a ``gittime: off``
+metadata to disable it.
+
 Some notes on git
 ~~~~~~~~~~~~~~~~~~
 
