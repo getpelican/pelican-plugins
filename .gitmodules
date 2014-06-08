@@ -1,3 +1,6 @@
+[submodule "pelican-fontawesome"]
+	path = pelican-fontawesome
+	url = https://github.com/kura/pelican-fontawesome.git
 [submodule "pelican_youtube"]
 	path = pelican_youtube
 	url = https://github.com/kura/pelican_youtube.git
