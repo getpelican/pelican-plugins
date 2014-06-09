@@ -16,3 +16,6 @@
 [submodule "pelicanfly"]
 	path = pelicanfly
 	url = https://github.com/bmcorser/pelicanfly.git
+[submodule "pelican-flickr"]
+	path = pelican-flickr
+	url = https://github.com/La0/pelican-flickr.git
