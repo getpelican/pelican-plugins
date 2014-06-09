@@ -19,3 +19,6 @@
 [submodule "pelican-flickr"]
 	path = pelican-flickr
 	url = https://github.com/La0/pelican-flickr.git
+[submodule "better_code_samples"]
+	path = better_code_samples
+	url = git@github.com:ChrislS/better_code_samples.git
