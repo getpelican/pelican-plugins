@@ -13,3 +13,6 @@
 [submodule "pelican-gist"]
 	path = pelican-gist
 	url = https://github.com/streeter/pelican-gist.git
+[submodule "pelicanfly"]
+	path = pelicanfly
+	url = https://github.com/bmcorser/pelicanfly.git
