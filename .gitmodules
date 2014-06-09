@@ -21,7 +21,7 @@
 	url = https://github.com/La0/pelican-flickr.git
 [submodule "better_code_samples"]
 	path = better_code_samples
-	url = git@github.com:ChrislS/better_code_samples.git
+	url = https://github.com/ChrislS/better_code_samples.git
 [submodule "pin_to_top"]
 	path = pin_to_top
 	url = https://github.com/Shaked/pin_to_top.git
