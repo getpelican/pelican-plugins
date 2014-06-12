@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup
 def images_extraction(instance):
     representativeImage = None
     if type(instance) == Article:
+        if 'image' in instance.metadata:
+            representativeImage = instance.metadata['image']
+
         # Process Summary:
         # If summary contains images, extract one to be the representativeImage and remove images from summary
         soup = BeautifulSoup(instance.summary, 'html.parser')
