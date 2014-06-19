@@ -293,6 +293,12 @@ def notebook(preprocessor, tag, markup):
     nb_json = nbformat.reads_json(nb_text)
     (body, resources) = exporter.from_notebook_node(nb_json)
 
+
+    for h in '123456':
+        body = body.replace('<h%s' % h, '<h%s class="ipynb"' % h)
+
+    body = '<div class="ipynb">\n\n' + body + "\n\n</div>"
+
     # if we haven't already saved the header, save it here.
     if not notebook.header_saved:
         print ("\n ** Writing styles to _nb_header.html: "
@@ -301,6 +307,41 @@ def notebook(preprocessor, tag, markup):
         header = '\n'.join(CSS_WRAPPER.format(css_line)
                            for css_line in resources['inlining']['css'])
         header += JS_INCLUDE
+
+        # # replace the highlight tags
+        header = header.replace('highlight', 'highlight-ipynb')
+        header = header.replace('html, body', '\n'.join(('pre.ipynb {',
+                                                         '  color: black;',
+                                                         '  background: #f7f7f7;',
+                                                         '  border: 0;',
+                                                         '  box-shadow: none;',
+                                                         '  margin-bottom: 0;',
+                                                         '  padding: 0;'
+                                                         '}\n',
+                                                         'html, body')))
+        # # create a special div for notebook
+        header = header.replace('body {', 'div.ipynb {')
+        # # specialize headers
+        header = header.replace('html, body,',
+                                '\n'.join((('h1.ipynb h2.ipynb h3.ipynb '
+                                            'h4.ipynb h5.ipynb h6.ipynb {'),
+                                           'h1.ipynb h2.ipynb ... {',
+                                           '  margin: 0;',
+                                           '  padding: 0;',
+                                           '  border: 0;',
+                                           '  font-size: 100%;',
+                                           '  font: inherit;',
+                                           '  vertical-align: baseline;',
+                                           '}\n',
+                                           'html, body,')))
+
+        #
+        #
+        # # comment out document-level formatting
+        header = header.replace('html, body,',
+                                '/*html, body,*/')
+        header = header.replace('h1, h2, h3, h4, h5, h6,',
+                                '/*h1, h2, h3, h4, h5, h6,*/')
 
         with open('_nb_header.html', 'w') as f:
             f.write(header)
