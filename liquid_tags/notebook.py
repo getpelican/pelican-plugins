@@ -149,7 +149,7 @@ init_mathjax = function() {
                 inlineMath: [ ['$','$'], ["\\(","\\)"] ],
                 displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
             },
-            displayAlign: 'left', // Change this to 'center' to center equations.
+            displayAlign: 'center', // Change this to 'center' to center equations.
             "HTML-CSS": {
                 styles: {'.MathJax_Display': {"margin": 0}}
             }
@@ -233,6 +233,7 @@ def custom_highlighter(source, language='ipython', metadata=None):
 SYNTAX = "{% notebook /path/to/notebook.ipynb [ cells[start:end] ] %}"
 FORMAT = re.compile(r"""^(\s+)?(?P<src>\S+)(\s+)?((cells\[)(?P<start>-?[0-9]*):(?P<end>-?[0-9]*)(\]))?(\s+)?$""")
 
+import re
 
 @LiquidTags.register('notebook')
 def notebook(preprocessor, tag, markup):
@@ -321,6 +322,8 @@ def notebook(preprocessor, tag, markup):
                                                          'html, body')))
         # # create a special div for notebook
         header = header.replace('body {', 'div.ipynb {')
+
+        header = header.replace('body{margin:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;line-height:20px;color:#000;background-color:#fff}', '')
         # # specialize headers
         header = header.replace('html, body,',
                                 '\n'.join((('h1.ipynb h2.ipynb h3.ipynb '
@@ -335,11 +338,17 @@ def notebook(preprocessor, tag, markup):
                                            '}\n',
                                            'html, body,')))
 
+
+
         #
         #
         # # comment out document-level formatting
         header = header.replace('html, body,',
                                 '/*html, body,*/')
+        header = header.replace('body{background-color:#fff}',
+                                '/*body{background-color:#fff}*/')
+        header = header.replace('body{background-color:#fff;position:absolute;left:0;right:0;top:0;bottom:0;overflow:visible}',
+                                '/*body{background-color:#fff;position:absolute;left:0;right:0;top:0;bottom:0;overflow:visible}*/')
         header = header.replace('h1, h2, h3, h4, h5, h6,',
                                 '/*h1, h2, h3, h4, h5, h6,*/')
 
