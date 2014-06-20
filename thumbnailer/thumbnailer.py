@@ -106,10 +106,13 @@ class _resizer(object):
         if not path.exists(out_path):
             os.makedirs(out_path)
         if not path.exists(filename):
-            image = Image.open(in_path)
-            thumbnail = self.resize(image)
-            thumbnail.save(filename)
-            logger.info("Generated Thumbnail {0}".format(path.basename(filename)))
+            try:
+                image = Image.open(in_path)
+                thumbnail = self.resize(image)
+                thumbnail.save(filename)
+                logger.info("Generated Thumbnail {0}".format(path.basename(filename)))
+            except IOError:
+                logger.info("Generating Thumbnail for {0} skipped".format(path.basename(filename)))
 
 
 def resize_thumbnails(pelican):
