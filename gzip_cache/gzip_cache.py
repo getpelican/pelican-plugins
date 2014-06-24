@@ -39,6 +39,7 @@ EXCLUDE_TYPES = [
     '.mp4',
 ]
 
+
 def create_gzip_cache(pelican):
     '''Create a gzip cache file for every file that a webserver would
     reasonably want to cache (e.g., text type files).
@@ -51,6 +52,7 @@ def create_gzip_cache(pelican):
                 filepath = os.path.join(dirpath, name)
                 create_gzip_file(filepath)
 
+
 def should_compress(filename):
     '''Check if the filename is a type of file that should be compressed.
 
@@ -62,6 +64,7 @@ def should_compress(filename):
 
     return True
 
+
 def create_gzip_file(filepath):
     '''Create a gzipped file in the same directory with a filepath.gz name.
 
@@ -70,14 +73,16 @@ def create_gzip_file(filepath):
     compressed_path = filepath + '.gz'
 
     with open(filepath, 'rb') as uncompressed:
-        try:
+        # Explicitly set mtime to 0 so gzip content is fully determined
+        # by file content (0 = "no timestamp" according to gzip spec)
+        with gzip.GzipFile(compressed_path, 'wb',
+                           compresslevel=9, mtime=0) as compressed:
             logger.debug('Compressing: %s' % filepath)
-            compressed = gzip.open(compressed_path, 'wb')
-            compressed.writelines(uncompressed)
-        except Exception as ex:
-            logger.critical('Gzip compression failed: %s' % ex)
-        finally:
-            compressed.close()
+            try:
+                compressed.writelines(uncompressed)
+            except Exception as ex:
+                logger.critical('Gzip compression failed: %s' % ex)
+
 
 def register():
     signals.finalized.connect(create_gzip_cache)
