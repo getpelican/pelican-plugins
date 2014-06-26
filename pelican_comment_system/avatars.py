@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-
+Author: Bernhard Scheirle
 """
 
 from __future__ import unicode_literals
@@ -44,6 +44,8 @@ def init(pelican_output_path, identicon_output_path, identicon_data, identicon_s
 	global _identicon_size
 	global _initialized
 	global _authors
+	if _initialized:
+		return
 	_identicon_save_path = os.path.join(pelican_output_path, identicon_output_path)
 	_identicon_output_path = identicon_output_path
 	_identicon_data = identicon_data

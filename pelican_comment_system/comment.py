@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-
+Author: Bernhard Scheirle
 """
 from __future__ import unicode_literals
 from pelican import contents
