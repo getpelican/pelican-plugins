@@ -53,6 +53,15 @@ def initialize(article_generator):
 		article_generator.settings['PELICAN_COMMENT_SYSTEM_AUTHORS'],
 		)
 
+def write_feed(gen, items, context, slug):
+	if gen.settings['PELICAN_COMMENT_SYSTEM_FEED'] == None:
+		return
+
+	path = gen.settings['PELICAN_COMMENT_SYSTEM_FEED'] % slug
+
+	writer = Writer(gen.output_path, settings=gen.settings)
+	writer.write_feed(items, context, path)
+
 def add_static_comments(gen, content):
 	if gen.settings['PELICAN_COMMENT_SYSTEM'] != True:
 		return
@@ -63,16 +72,14 @@ def add_static_comments(gen, content):
 	#Modify the local context, so we get proper values for the feed
 	context = copy.copy(gen.context)
 	context['SITEURL'] += "/" + content.url
-	context['SITENAME'] = "Comments for: " + content.title
+	context['SITENAME'] += " - Comments: " + content.title
 	context['SITESUBTITLE'] = ""
-	path = gen.settings['PELICAN_COMMENT_SYSTEM_FEED'] % content.slug
-	writer = Writer(gen.output_path, settings=gen.settings)
 
 	folder = os.path.join(gen.settings['PELICAN_COMMENT_SYSTEM_DIR'], content.slug)
 
 	if not os.path.isdir(folder):
 		logger.debug("No comments found for: " + content.slug)
-		writer.write_feed( [], context, path)
+		write_feed(gen, [], context, content.slug)
 		return
 
 	reader = MarkdownReader(gen.settings)
@@ -93,7 +100,7 @@ def add_static_comments(gen, content):
 			else:
 				comments.append( com )
 
-	writer.write_feed( comments + replies, context, path)
+	write_feed(gen, comments + replies, context, content.slug)
 
 	#TODO: Fix this O(n²) loop
 	for reply in replies:

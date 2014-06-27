@@ -23,6 +23,8 @@ Bernhard Scheirle  | <http://blog.scheirle.de> | <https://github.com/Scheirle>
  - [Comment Form (aka: never gather Metadata)](doc/form.md)
  
 ## Requirements
+Pelican 3.4 or newer is required.
+
 To create identicons the Python Image Library is needed. Therefore you either need PIL **or** Pillow (recommended).
 
 ##### Install Pillow
