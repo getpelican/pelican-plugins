@@ -52,6 +52,16 @@ def format_date(date):
         tz = "-00:00"
     return date.strftime("%Y-%m-%dT%H:%M:%S") + tz
 
+def date_max(a, b):
+    a_has_tz = a.tzinfo is not None
+    b_has_tz = b.tzinfo is not None
+    if a_has_tz != b_has_tz:
+        if a_has_tz:
+            b = b.replace(tzinfo=a.tzinfo)
+        else:
+            a = a.replace(tzinfo=b.tzinfo)
+    return max(a, b)
+
 class SitemapGenerator(object):
 
     def __init__(self, context, settings, path, theme, output_path, *null):
@@ -168,10 +178,10 @@ class SitemapGenerator(object):
         for (wrapper, articles) in wrappers:
             lastmod = datetime.min
             for article in articles:
-                lastmod = max(lastmod, article.date)
+                lastmod = date_max(lastmod, article.date)
                 try:
                     modified = self.get_date_modified(article, datetime.min);
-                    lastmod = max(lastmod, modified)
+                    lastmod = date_max(lastmod, modified)
                 except ValueError:
                     # Supressed: user will be notified.
                     pass
