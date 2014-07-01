@@ -3,7 +3,7 @@ This plugin allows article summaries to be used in ATOM and RSS feeds instead of
 built-in pelican `Summary:` metadata.
 
 The summary of an article can either be set explicitly with the `Summary:` metadata attribute as described in the
-[pelican getting started docs](http://docs.getpelican.com/en/latest/getting_started.html#file-metadata),
+[Pelican documentation](http://docs.getpelican.com/) (*Writing content* > *File metadata* section),
 or automatically generated using the number of words specified in the
 [SUMMARY_MAX_LENGTH](http://docs.getpelican.com/en/latest/settings.html) setting.
 
