@@ -6,7 +6,7 @@ notebook in a blog post.
 
 Syntax
 ------
-{% notebook filename.ipynb [ cells[start:end] ]%}
+{% notebook filename.ipynb [ cells[start:end] language[language] ]%}
 
 The file should be specified relative to the ``notebooks`` subdirectory of the
 content directory.  Optionally, this subdirectory can be specified in the
@@ -16,6 +16,9 @@ config file:
 
 The cells[start:end] statement is optional, and can be used to specify which
 block of cells from the notebook to include.
+
+The language statement is obvious and can be used to specify whether ipython2
+or ipython3 syntax highlighting should be used.
 
 Requirements
 ------------
