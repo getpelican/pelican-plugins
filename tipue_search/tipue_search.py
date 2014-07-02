@@ -15,7 +15,10 @@ import os.path
 import json
 from bs4 import BeautifulSoup
 from codecs import open
-from urlparse import urljoin
+try:
+    from urlparse import urljoin
+except ImportError:
+    from urllib.parse import urljoin
 
 from pelican import signals
 
