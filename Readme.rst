@@ -15,7 +15,7 @@ Easiest way to install and use these plugins is cloning this repo::
 
 and activating the ones you want in your settings file::
 
-    PLUGIN_PATH = 'path/to/pelican-plugins'
+    PLUGIN_PATHS = ['path/to/pelican-plugins']
     PLUGINS = ['assets', 'sitemap', 'gravatar']
 
 ``PLUGIN_PATH`` can be a path relative to your settings file or an absolute path.
