@@ -15,7 +15,7 @@ class Comment(Content):
 		self.id = id
 		self.replies = []
 		self.avatar = avatar
-		self.title = "Posted by:  " + str(metadata['author'])
+		self.title = "Posted by:  {}".format(metadata['author'])
 
 	def addReply(self, comment):
 		self.replies.append(comment)
