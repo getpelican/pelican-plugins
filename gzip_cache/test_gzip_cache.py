@@ -4,10 +4,12 @@
 import os
 import tempfile
 import unittest
+import time
 
 from contextlib import contextmanager
 from tempfile import mkdtemp
 from shutil import rmtree
+from hashlib import md5
 
 import gzip_cache
 
@@ -52,3 +54,22 @@ class TestGzipCache(unittest.TestCase):
             gzip_cache.create_gzip_file(a_html_filename)
             self.assertTrue(os.path.exists(a_html_filename + '.gz'))
 
+    def test_creates_same_gzip_file(self):
+        # Should create the same gzip file from the same contents.
+
+        # gzip will create a slightly different file because it includes
+        # a timestamp in the compressed file by default. This can cause
+        # problems for some caching strategies.
+        with temporary_folder() as tempdir:
+            _, a_html_filename = tempfile.mkstemp(suffix='.html', dir=tempdir)
+            a_gz_filename = a_html_filename + '.gz'
+            gzip_cache.create_gzip_file(a_html_filename)
+            gzip_hash = get_md5(a_gz_filename)
+            time.sleep(1)
+            gzip_cache.create_gzip_file(a_html_filename)
+            self.assertEqual(gzip_hash, get_md5(a_gz_filename))
+
+
+def get_md5(filepath):
+    with open(filepath, 'rb') as fh:
+        return md5(fh.read()).hexdigest()

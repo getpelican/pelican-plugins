@@ -128,7 +128,7 @@ class SitemapGenerator(object):
         if getattr(page, 'status', 'published') != 'published':
             return
 
-        page_path = os.path.join(self.output_path, page.url)
+        page_path = os.path.join(self.output_path, page.save_as)
         if not os.path.exists(page_path):
             return
 
@@ -136,7 +136,7 @@ class SitemapGenerator(object):
         try:
             lastdate = self.get_date_modified(page, lastdate)
         except ValueError:
-            warning("sitemap plugin: " + page.url + " has invalid modification date,")
+            warning("sitemap plugin: " + page.save_as + " has invalid modification date,")
             warning("sitemap plugin: using date value as lastmod.")
         lastmod = format_date(lastdate)
 
@@ -154,13 +154,15 @@ class SitemapGenerator(object):
         if self.format == 'xml':
             fd.write(XML_URL.format(self.siteurl, page.url, lastmod, chfreq, pri))
         else:
-            fd.write(self.siteurl + '/' + loc + '\n')
+            fd.write(self.siteurl + '/' + page.url + '\n')
 
-    def get_date_modified(self, page, defalut):
+    def get_date_modified(self, page, default):
         if hasattr(page, 'modified'):
-            return get_date(getattr(page, 'modified'))
+            if isinstance(page.modified, datetime):
+                return page.modified
+            return get_date(page.modified)
         else:
-            return defalut
+            return default
 
     def set_url_wrappers_modification_date(self, wrappers):
         for (wrapper, articles) in wrappers:
@@ -186,7 +188,7 @@ class SitemapGenerator(object):
         self.set_url_wrappers_modification_date(self.context['categories'])
         self.set_url_wrappers_modification_date(self.context['tags'])
         self.set_url_wrappers_modification_date(self.context['authors'])
-                
+
         for article in self.context['articles']:
             pages += article.translations
 
@@ -202,7 +204,8 @@ class SitemapGenerator(object):
             FakePage = collections.namedtuple('FakePage',
                                               ['status',
                                                'date',
-                                               'url'])
+                                               'url',
+                                               'save_as'])
 
             for standard_page_url in ['index.html',
                                       'archives.html',
@@ -210,7 +213,8 @@ class SitemapGenerator(object):
                                       'categories.html']:
                 fake = FakePage(status='published',
                                 date=self.now,
-                                url=standard_page_url)
+                                url=standard_page_url,
+                                save_as=standard_page_url)
                 self.write_url(fake, fd)
 
             for page in pages:

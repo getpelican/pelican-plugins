@@ -1,3 +1,8 @@
+Requirements
+------------
+
+* pip install pillow beautifulsoup4
+
 Summary
 ===========
 

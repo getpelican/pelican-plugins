@@ -1,7 +1,10 @@
 Interlinks
 =========================
 
-This plugin allows you to include "interwiki" or shortcuts links into the blog, as keyword>rest-of-url
+This plugin lets you add frequently used URLs to your markup using short keywords. Short URL format is 
+``keyword>rest-of-url`` where ``keyword`` is defined in the settings.py. Later it is replaced with acutal URL in
+the generated HTML output.
+
 
 Requirements
 --------------------

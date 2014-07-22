@@ -34,12 +34,24 @@ import os
 from .mdx_liquid_tags import LiquidTags
 
 
-SYNTAX = "{% include_code /path/to/code.py [lang:python] [title] %}"
-FORMAT = re.compile(r"""^(?:\s+)?(?P<src>\S+)(?:\s+)?(?:(?:lang:)(?P<lang>\S+))?(?:\s+)?(?P<title>.+)?$""")
+SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}"
+FORMAT = re.compile(r"""
+^(?:\s+)?                          # Allow whitespace at beginning
+(?P<src>\S+)                       # Find the path
+(?:\s+)?                           # Whitespace
+(?:(?:lang:)(?P<lang>\S+))?        # Optional language
+(?:\s+)?                           # Whitespace
+(?:(?:lines:)(?P<lines>\d+-\d+))?  # Optional lines
+(?:\s+)?                           # Whitespace
+(?P<hidefilename>:hidefilename:)?  # Hidefilename flag
+(?:\s+)?                           # Whitespace
+(?P<title>.+)?$                    # Optional title
+""", re.VERBOSE)
 
 
 @LiquidTags.register('include_code')
 def include_code(preprocessor, tag, markup):
+
     title = None
     lang = None
     src = None
@@ -47,8 +59,12 @@ def include_code(preprocessor, tag, markup):
     match = FORMAT.search(markup)
     if match:
         argdict = match.groupdict()
-        title = argdict['title']
+        title = argdict['title'] or ""
         lang = argdict['lang']
+        lines = argdict['lines']
+        hide_filename = bool(argdict['hidefilename'])
+        if lines:
+            first_line, last_line = map(int, lines.split("-"))
         src = argdict['src']
 
     if not src:
@@ -62,12 +78,23 @@ def include_code(preprocessor, tag, markup):
     if not os.path.exists(code_path):
         raise ValueError("File {0} could not be found".format(code_path))
 
-    code = open(code_path).read()
+    with open(code_path) as fh:
+        if lines:
+            code = fh.readlines()[first_line - 1: last_line]
+            code[-1] = code[-1].rstrip()
+            code = "".join(code)
+        else:
+            code = fh.read()
 
-    if title:
-        title = "{0} {1}".format(title, os.path.basename(src))
-    else:
-        title = os.path.basename(src)
+    if not title and hide_filename:
+        raise ValueError("Either title must be specified or filename must "
+                         "be available")
+
+    if not hide_filename:
+        title += " %s" % os.path.basename(src)
+    if lines:
+        title += " [Lines %s]" % lines
+    title = title.strip()
 
     url = '/{0}/{1}'.format(code_dir, src)
     url = re.sub('/+', '/', url)

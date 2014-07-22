@@ -30,7 +30,7 @@ def normalize(text):
 def text_stats(text, wc):
     text = normalize(text)
     stcs = [s.split(" ") for s in text.split(". ")]
-    stcs = filter(lambda s: len(s) >= 2, stcs)
+    stcs = [s for s in stcs if len(s) >= 2]
 
     if wc:
         words = wc
