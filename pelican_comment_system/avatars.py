@@ -69,7 +69,7 @@ def getAvatarPath(comment_id, metadata):
 	author = tuple()
 	for data in _identicon_data:
 		if data in metadata:
-			string = str(metadata[data])
+			string = "{}".format(metadata[data])
 			md5.update(string.encode('utf-8'))
 			author += tuple([string])
 		else:
