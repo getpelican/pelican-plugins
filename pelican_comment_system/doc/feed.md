@@ -4,14 +4,14 @@ Be sure that the id of the html tag containing the comment matches `COMMENT_URL`
 
 ##### pelicanconf.py
 ```python
-COMMENT_URL = "#my_own_comment_id_{path}"
+COMMENT_URL = "#my_own_comment_id_{slug}"
 ```
 
 ##### Theme
 ```html
 {% for comment in article.comments recursive %}
 	...
-	<article id="my_own_comment_id_{{comment.id}}">{{ comment.content }}</article>
+	<article id="my_own_comment_id_{{comment.slug}}">{{ comment.content }}</article>
 	...
 {% endfor %}
 ```
