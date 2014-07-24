@@ -20,7 +20,7 @@ class Comment(Content):
         name = os.path.split(source_path)[1]
 
         if not hasattr(self, 'slug'):
-            #compute the slug before initializing the base Content object, so
+            # compute the slug before initializing the base Content object, so
             # it doesn't get set there
             # This is required because we need a slug containing the file
             # extension.
