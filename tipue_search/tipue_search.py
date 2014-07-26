@@ -103,7 +103,7 @@ class Tipue_Search_JSON_Generator(object):
         root_node = {'pages': self.json_nodes}
 
         with open(path, 'w', encoding='utf-8') as fd:
-            json.dump(root_node, fd, separators=(',', ':'))
+            json.dump(root_node, fd, separators=(',', ':'), ensure_ascii=False)
 
 
 def get_generators(generators):
