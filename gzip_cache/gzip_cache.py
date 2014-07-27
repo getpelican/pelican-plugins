@@ -7,9 +7,9 @@ Gzip cache
 A plugin to create .gz cache files for optimization.
 '''
 
-import gzip
 import logging
 import os
+import zlib
 
 from pelican import signals
 
@@ -39,6 +39,18 @@ EXCLUDE_TYPES = [
     '.mp4',
 ]
 
+COMPRESSION_LEVEL = 9 # Best Compression
+
+""" According to zlib manual: 'Add 16 to
+windowBits to write a simple gzip header and trailer around the
+compressed data instead of a zlib wrapper. The gzip header will
+have no file name, no extra data, no comment, no modification
+time (set to zero), no header crc, and the operating system
+will be set to 255 (unknown)'
+"""
+WBITS = zlib.MAX_WBITS | 16
+
+
 def create_gzip_cache(pelican):
     '''Create a gzip cache file for every file that a webserver would
     reasonably want to cache (e.g., text type files).
@@ -51,6 +63,7 @@ def create_gzip_cache(pelican):
                 filepath = os.path.join(dirpath, name)
                 create_gzip_file(filepath)
 
+
 def should_compress(filename):
     '''Check if the filename is a type of file that should be compressed.
 
@@ -62,6 +75,7 @@ def should_compress(filename):
 
     return True
 
+
 def create_gzip_file(filepath):
     '''Create a gzipped file in the same directory with a filepath.gz name.
 
@@ -70,14 +84,19 @@ def create_gzip_file(filepath):
     compressed_path = filepath + '.gz'
 
     with open(filepath, 'rb') as uncompressed:
-        try:
+        gzip_compress_obj = zlib.compressobj(COMPRESSION_LEVEL,
+                                                zlib.DEFLATED, WBITS)
+
+        uncompressed_data = uncompressed.read()
+        gzipped_data = gzip_compress_obj.compress(uncompressed_data)
+        gzipped_data += gzip_compress_obj.flush()
+        with open(compressed_path, 'wb') as compressed:
             logger.debug('Compressing: %s' % filepath)
-            compressed = gzip.open(compressed_path, 'wb')
-            compressed.writelines(uncompressed)
-        except Exception as ex:
-            logger.critical('Gzip compression failed: %s' % ex)
-        finally:
-            compressed.close()
+            try:
+                compressed.write(gzipped_data)
+            except Exception as ex:
+                logger.critical('Gzip compression failed: %s' % ex)
+
 
 def register():
     signals.finalized.connect(create_gzip_cache)

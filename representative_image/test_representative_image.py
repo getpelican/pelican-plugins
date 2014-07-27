@@ -9,6 +9,7 @@ TEST_CONTENT = str(generate_lorem_ipsum(n=3, html=True)) + '<img src="' + TEST_C
 TEST_SUMMARY_IMAGE_URL = 'https://testimage.com/summary.jpg'
 TEST_SUMMARY_WITHOUTIMAGE = str(generate_lorem_ipsum(n=1, html=True))
 TEST_SUMMARY_WITHIMAGE = TEST_SUMMARY_WITHOUTIMAGE + '<img src="' + TEST_SUMMARY_IMAGE_URL + '"/>'
+TEST_CUSTOM_IMAGE_URL = 'https://testimage.com/custom.jpg' 
 
 
 from pelican.contents import Article
@@ -41,6 +42,19 @@ class TestRepresentativeImage(unittest.TestCase):
 
         article = Article(**args)
         self.assertEqual(article.featured_image, TEST_SUMMARY_IMAGE_URL)
+        self.assertEqual(article.summary, TEST_SUMMARY_WITHOUTIMAGE)
+
+    def test_extract_image_from_summary_with_custom_image(self):
+        args = {
+            'content': TEST_CONTENT,
+            'metadata': {
+                'summary': TEST_SUMMARY_WITHIMAGE,
+                'image': TEST_CUSTOM_IMAGE_URL,
+            },
+        }
+
+        article = Article(**args)
+        self.assertEqual(article.featured_image, TEST_CUSTOM_IMAGE_URL)
         self.assertEqual(article.summary, TEST_SUMMARY_WITHOUTIMAGE)
 
 if __name__ == '__main__':

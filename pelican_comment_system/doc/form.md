@@ -8,7 +8,7 @@ The resulting email contains a valid markdown block. Now you only have to copy t
 Add this in the "comment for loop" in your article theme, so your visitors can reply to a comment.
 
 ```html
-<button onclick="reply('{{comment.id | urlencode}}');">Reply</button>
+<button onclick="reply('{{comment.slug | urlencode}}');">Reply</button>
 ```
 
 #### Form
