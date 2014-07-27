@@ -131,13 +131,14 @@ def resize_thumbnails(pelican):
     logger.debug("Thumbnailer Started")
     for dirpath, _, filenames in os.walk(in_path):
         for filename in filenames:
-            for name, resizer in resizers.items():
-                in_filename = path.join(dirpath, filename)
-                logger.debug("Processing thumbnail {0}=>{1}".format(filename, name))
-                if pelican.settings.get('THUMBNAIL_KEEP_NAME', False):
-                    resizer.resize_file_to(in_filename, path.join(out_path, name), True)
-                else:
-                    resizer.resize_file_to(in_filename, out_path)
+	    if not filename.startswith('.'):
+		for name, resizer in resizers.items():
+		    in_filename = path.join(dirpath, filename)
+		    logger.debug("Processing thumbnail {0}=>{1}".format(filename, name))
+		    if pelican.settings.get('THUMBNAIL_KEEP_NAME', False):
+			resizer.resize_file_to(in_filename, path.join(out_path, name), True)
+		    else:
+			resizer.resize_file_to(in_filename, out_path)
 
 
 def _image_path(pelican):
@@ -163,16 +164,17 @@ def expand_gallery(generator, metadata):
     resizer = _resizer(thumbnail_name, '?x?')
     for dirpath, _, filenames in os.walk(in_path):
         for filename in filenames:
-            url = path.join(dirpath, filename).replace(base_path, "")[1:]
-            url = path.join('/static', generator.settings.get('IMAGE_PATH', DEFAULT_IMAGE_DIR), url).replace('\\', '/')
-            logger.debug("GALLERY: {0}".format(url))
-            thumbnail = resizer.get_thumbnail_name(filename)
-            thumbnail = path.join('/', generator.settings.get('THUMBNAIL_DIR', DEFAULT_THUMBNAIL_DIR), thumbnail).replace('\\', '/')
-            lines.append(template.format(
-                filename=filename,
-                url=url,
-                thumbnail=thumbnail,
-            ))
+	    if not filename.startswith('.'):
+		url = path.join(dirpath, filename).replace(base_path, "")[1:]
+		url = path.join('/static', generator.settings.get('IMAGE_PATH', DEFAULT_IMAGE_DIR), url).replace('\\', '/')
+		logger.debug("GALLERY: {0}".format(url))
+		thumbnail = resizer.get_thumbnail_name(filename)
+		thumbnail = path.join('/', generator.settings.get('THUMBNAIL_DIR', DEFAULT_THUMBNAIL_DIR), thumbnail).replace('\\', '/')
+		lines.append(template.format(
+		    filename=filename,
+		    url=url,
+		    thumbnail=thumbnail,
+		))
     metadata['gallery_content'] = "\n".join(lines)
 
 
