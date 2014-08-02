@@ -27,35 +27,48 @@ def pelican_initialized(pelican):
     from pelican.settings import DEFAULT_CONFIG
     DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM', False)
     DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_DIR', 'comments')
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH' 'images/identicon')
+    DEFAULT_CONFIG.setdefault(
+        'PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH' 'images/identicon')
     DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ())
     DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72)
     DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_AUTHORS', {})
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml'))
+    DEFAULT_CONFIG.setdefault(
+        'PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml'))
     DEFAULT_CONFIG.setdefault('COMMENT_URL', '#comment-{slug}')
-    DEFAULT_CONFIG['PAGE_EXCLUDES'].append(DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
-    DEFAULT_CONFIG['ARTICLE_EXCLUDES'].append(DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
+    DEFAULT_CONFIG['PAGE_EXCLUDES'].append(
+        DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
+    DEFAULT_CONFIG['ARTICLE_EXCLUDES'].append(
+        DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
     if pelican:
         pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM', False)
         pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_DIR', 'comments')
-        pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH', 'images/identicon')
-        pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ())
-        pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72)
+        pelican.settings.setdefault(
+            'PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH', 'images/identicon')
+        pelican.settings.setdefault(
+            'PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ())
+        pelican.settings.setdefault(
+            'PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72)
         pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_AUTHORS', {})
-        pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml'))
+        pelican.settings.setdefault(
+            'PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml'))
         pelican.settings.setdefault('COMMENT_URL', '#comment-{slug}')
 
-        pelican.settings['PAGE_EXCLUDES'].append(pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
-        pelican.settings['ARTICLE_EXCLUDES'].append(pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
+        pelican.settings['PAGE_EXCLUDES'].append(
+            pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
+        pelican.settings['ARTICLE_EXCLUDES'].append(
+            pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
+
 
 def initialize(article_generator):
     avatars.init(
         article_generator.settings['OUTPUT_PATH'],
-        article_generator.settings['PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH'],
+        article_generator.settings[
+            'PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH'],
         article_generator.settings['PELICAN_COMMENT_SYSTEM_IDENTICON_DATA'],
-        article_generator.settings['PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE']/3,
+        article_generator.settings[
+            'PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE'] / 3,
         article_generator.settings['PELICAN_COMMENT_SYSTEM_AUTHORS'],
-        )
+    )
 
 
 def warn_on_slug_collision(items):
@@ -92,7 +105,7 @@ def add_static_comments(gen, content):
     content.comments_count = 0
     content.comments = []
 
-    #Modify the local context, so we get proper values for the feed
+    # Modify the local context, so we get proper values for the feed
     context = copy.copy(gen.context)
     context['SITEURL'] += "/" + content.url
     context['SITENAME'] += " - Comments: " + content.title
@@ -129,7 +142,7 @@ def add_static_comments(gen, content):
 
     write_feed(gen, comments + replies, context, content.slug)
 
-    #TODO: Fix this O(n²) loop
+    # TODO: Fix this O(n²) loop
     for reply in replies:
         for comment in chain(comments, replies):
             if comment.slug == reply.replyto:
