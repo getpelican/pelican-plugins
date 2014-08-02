@@ -99,34 +99,34 @@ CSSJS_HEADER = r"""
 """
 JS_MATH = CSSJS_HEADER + r"""
 init_mathjax = function() {
-  if (window.MathJax) {
-    // MathJax loaded
-    MathJax.Hub.Config({
-      tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
-      },
-      displayAlign: 'left', // Change this to 'center' to center equations.
-      "HTML-CSS": {
-        styles: {'.MathJax_Display': {"margin": 0}}
-      }
-    });
-    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-  }
+    if (window.MathJax) {
+        // MathJax loaded
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+            },
+            displayAlign: 'left', // Change this to 'center' to center equations.
+            "HTML-CSS": {
+                styles: {'.MathJax_Display': {"margin": 0}}
+            }
+        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
 }
 init_mathjax();
 """
 JS_COLLAPSE = CSSJS_HEADER + r"""
 jQuery(document).ready(function($) {
-  $("div.collapseheader").click(function () {
-  $header = $(this).children("span").first();
-  $codearea = $(this).children(".input_area");
-  console.log($(this).children());
-  $codearea.slideToggle(500, function () {
-    $header.text(function () {
-      return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+    $("div.collapseheader").click(function () {
+    $header = $(this).children("span").first();
+    $codearea = $(this).children(".input_area");
+    console.log($(this).children());
+    $codearea.slideToggle(500, function () {
+        $header.text(function () {
+            return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+        });
     });
-  });
 });
 });
 """
