@@ -28,3 +28,6 @@
 [submodule "pelican-githubprojects"]
 	path = pelican-githubprojects
 	url = https://github.com/kura/pelican-githubprojects.git
+[submodule "pelicanthemes-generator"]
+	path = pelicanthemes-generator
+	url = https://github.com/badele/pelicanthemes-generator
