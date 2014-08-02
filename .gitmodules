@@ -25,3 +25,6 @@
 [submodule "pin_to_top"]
 	path = pin_to_top
 	url = https://github.com/Shaked/pin_to_top.git
+[submodule "pelican-githubprojects"]
+	path = pelican-githubprojects
+	url = https://github.com/kura/pelican-githubprojects.git
