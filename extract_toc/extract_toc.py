@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 """
 Extract Table of Content
 ========================
 
-This plugin allows you to extract table of contents (ToC) from article.content
-and place it in its own article.toc variable.
+A Pelican plugin to extract table of contents (ToC) from `article.content` and
+place it in its own `article.toc` variable for use in templates.
 """
 
 from os import path
@@ -14,16 +15,15 @@ from pelican import signals, readers, contents
 def extract_toc(content):
     if isinstance(content, contents.Static):
         return
+
     soup = BeautifulSoup(content._content,'html.parser')
-    filename = content.source_path
-    extension = path.splitext(filename)[1][1:]
-    toc = ''
-    # if it is a Markdown file
-    if extension in readers.MarkdownReader.file_extensions:
+    toc = None
+    if not toc:  # default Markdown reader
         toc = soup.find('div', class_='toc')
-    # else if it is a reST file
-    elif extension in readers.RstReader.file_extensions:
+    if not toc:  # default reStructuredText reader
         toc = soup.find('div', class_='contents topic')
+    if not toc:  # Pandoc reader
+        toc = soup.find('nav', id='TOC')
     if toc:
         toc.extract()
         content._content = soup.decode()
