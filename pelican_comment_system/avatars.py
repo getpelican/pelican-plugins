@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 _log = "pelican_comment_system: avatars: "
 try:
     from . identicon import identicon
-    identiconImported = True
+    _identiconImported = True
 except ImportError as e:
     logger.warning(_log + "identicon deactivated: " + str(e))
     _identiconImported = False
