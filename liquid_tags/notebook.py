@@ -30,7 +30,7 @@ After typing "make html" when using the `ipynb` tag, three files are
 produced and put into the theme directory:
 
     /theme/css/ipynb.css
-    /theme/js/collapsecode.js
+    /theme/js/collapse.js
     /theme/js/math.js
 
 In order to take effect, you have to include this additional header-entry in
@@ -43,7 +43,7 @@ the article-template:
   <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="{{ SITEURL }}/theme/js/math.js"></script>
-  <script src="{{ SITEURL }}/theme/js/collapsecode.js"></script>
+  <script src="{{ SITEURL }}/theme/js/collapse.js"></script>
   {% endif %}
 
 All efforts have been made to ensure that this CSS will not override formats
