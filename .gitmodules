@@ -31,3 +31,6 @@
 [submodule "pelicanthemes-generator"]
 	path = pelicanthemes-generator
 	url = https://github.com/badele/pelicanthemes-generator
+[submodule "pelican-page-hierarchy"]
+	path = pelican-page-hierarchy
+	url = git://github.com/akhayyat/pelican-page-hierarchy
