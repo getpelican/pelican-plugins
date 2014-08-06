@@ -107,11 +107,12 @@ def include_code(preprocessor, tag, markup):
     else:
         classes = ' '+classes
 
-    open_tag = ("<figure class='code{classes}'>\n<figcaption><span>{title}</span> "
-                "<a href='{url}'>download</a></figcaption>".format(title=title,
-                                                                   classes=classes,
-                                                                   url=url))
-    close_tag = "</figure>"
+    open_tag = (u'<div class="includefile{classes} panel panel-primary">'+
+                '<div class="includefilename panel-heading">'+
+                '{title} <a href="{url}">'+
+                '<span class="glyphicon glyphicon-download-alt pull-right">{download}'+
+                '</span></a></div><div class="includedfile panel-body">').format(title=title,url=url,classes=classes,download=settings.get('DOWNLOAD_STRING', u'Download'))
+    close_tag = "</div></div>"
 
     # store HTML tags in the stash.  This prevents them from being
     # modified by markdown.
