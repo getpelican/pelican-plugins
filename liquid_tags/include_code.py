@@ -32,7 +32,7 @@ in the STATIC_PATHS setting, e.g.:
 import re
 import os
 from .mdx_liquid_tags import LiquidTags
-
+import codecs
 
 SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}"
 FORMAT = re.compile(r"""
@@ -78,11 +78,11 @@ def include_code(preprocessor, tag, markup):
     if not os.path.exists(code_path):
         raise ValueError("File {0} could not be found".format(code_path))
 
-    with open(code_path) as fh:
+    with codecs.open(code_path, 'r', encoding='utf-8') as fh:
         if lines:
             code = fh.readlines()[first_line - 1: last_line]
             code[-1] = code[-1].rstrip()
-            code = "".join(code)
+            code = u"".join(code)
         else:
             code = fh.read()
 
