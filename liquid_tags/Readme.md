@@ -61,10 +61,10 @@ To include code from a file in your document with a link to the original
 file, enable the ``liquid_tags.include_code`` plugin, and add to your
 document:
 
-    {% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}
+    {% include_code /path/to/code.py [lang:python] [class:fancy,pinkish] [lines:X-Y] [:hidefilename:] [title] %}
 
 All arguments are optional but their order must be kept. `:hidefilename:` is
-only allowed if a title is also given.
+only allowed if a title is also given. The classes have to be defined in your style files.
 
     {% include_code /path/to/code.py lines:1-10 :hidefilename: Test Example %}
 

@@ -41,6 +41,8 @@ FORMAT = re.compile(r"""
 (?:\s+)?                           # Whitespace
 (?:(?:lang:)(?P<lang>\S+))?        # Optional language
 (?:\s+)?                           # Whitespace
+(?:(?:class:)(?P<class>\S+))?      # Optional class
+(?:\s+)?                           # Whitespace
 (?:(?:lines:)(?P<lines>\d+-\d+))?  # Optional lines
 (?:\s+)?                           # Whitespace
 (?P<hidefilename>:hidefilename:)?  # Hidefilename flag
@@ -55,12 +57,14 @@ def include_code(preprocessor, tag, markup):
     title = None
     lang = None
     src = None
+    classes = None
 
     match = FORMAT.search(markup)
     if match:
         argdict = match.groupdict()
         title = argdict['title'] or ""
         lang = argdict['lang']
+        classes = argdict['class'].replace(',', ' ')
         lines = argdict['lines']
         hide_filename = bool(argdict['hidefilename'])
         if lines:
@@ -98,9 +102,14 @@ def include_code(preprocessor, tag, markup):
 
     url = '/{0}/{1}'.format(code_dir, src)
     url = re.sub('/+', '/', url)
+    if not classes:
+        classes = ''
+    else:
+        classes = ' '+classes
 
-    open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
+    open_tag = ("<figure class='code{classes}'>\n<figcaption><span>{title}</span> "
                 "<a href='{url}'>download</a></figcaption>".format(title=title,
+                                                                   classes=classes,
                                                                    url=url))
     close_tag = "</figure>"
 
