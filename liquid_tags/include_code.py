@@ -32,7 +32,7 @@ in the STATIC_PATHS setting, e.g.:
 import re
 import os
 from .mdx_liquid_tags import LiquidTags
-
+import codecs
 
 SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}"
 FORMAT = re.compile(r"""
@@ -40,6 +40,8 @@ FORMAT = re.compile(r"""
 (?P<src>\S+)                       # Find the path
 (?:\s+)?                           # Whitespace
 (?:(?:lang:)(?P<lang>\S+))?        # Optional language
+(?:\s+)?                           # Whitespace
+(?:(?:class:)(?P<class>\S+))?      # Optional class
 (?:\s+)?                           # Whitespace
 (?:(?:lines:)(?P<lines>\d+-\d+))?  # Optional lines
 (?:\s+)?                           # Whitespace
@@ -55,12 +57,14 @@ def include_code(preprocessor, tag, markup):
     title = None
     lang = None
     src = None
+    classes = None
 
     match = FORMAT.search(markup)
     if match:
         argdict = match.groupdict()
         title = argdict['title'] or ""
         lang = argdict['lang']
+        classes = argdict['class'].replace(',', ' ')
         lines = argdict['lines']
         hide_filename = bool(argdict['hidefilename'])
         if lines:
@@ -78,11 +82,11 @@ def include_code(preprocessor, tag, markup):
     if not os.path.exists(code_path):
         raise ValueError("File {0} could not be found".format(code_path))
 
-    with open(code_path) as fh:
+    with codecs.open(code_path, 'r', encoding='utf-8') as fh:
         if lines:
             code = fh.readlines()[first_line - 1: last_line]
             code[-1] = code[-1].rstrip()
-            code = "".join(code)
+            code = u"".join(code)
         else:
             code = fh.read()
 
@@ -96,13 +100,19 @@ def include_code(preprocessor, tag, markup):
         title += " [Lines %s]" % lines
     title = title.strip()
 
-    url = '/{0}/{1}'.format(code_dir, src)
+    url = '{0}/{1}'.format(code_dir, src)
     url = re.sub('/+', '/', url)
+    if not classes:
+        classes = ''
+    else:
+        classes = ' '+classes
 
-    open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
-                "<a href='{url}'>download</a></figcaption>".format(title=title,
-                                                                   url=url))
-    close_tag = "</figure>"
+    open_tag = (u'<div class="includefile{classes} panel panel-primary">'+
+                '<div class="includefilename panel-heading">'+
+                '{title} <a href="{url}">'+
+                '<span class="glyphicon glyphicon-download-alt pull-right">{download}'+
+                '</span></a></div><div class="includedfile panel-body">').format(title=title,url=url,classes=classes,download=settings.get('DOWNLOAD_STRING', u'Download'))
+    close_tag = "</div></div>"
 
     # store HTML tags in the stash.  This prevents them from being
     # modified by markdown.
