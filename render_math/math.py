@@ -266,14 +266,15 @@ def process_content(instance):
 
     if not instance._content:
         return
-
     ignore_within = ignore_content(instance._content)
 
-    if _WRAP_LATEX:
-        instance._content, math = wrap_math(instance._content, ignore_within)
+    if (not 'latex' in instance.metadata and not 'mathjax' in instance.metadata) or ('latex' in instance.metadata and instance.metadata['latex'].lower() == 'yes') or (instance.metadata['mathjax'].lower() == 'yes'):
+        if _WRAP_LATEX:
+            instance._content, math = wrap_math(instance._content, ignore_within)
+        else:
+            math = True if _MATH_REGEX.search(instance._content) else False
     else:
-        math = True if _MATH_REGEX.search(instance._content) else False
-
+        math = False
     # The user initially set Typogrify to be True, but since it would clash
     # with math, we set it to False. This means that the default reader will
     # not call Typogrify, so it is called here, where we are able to control

@@ -76,6 +76,14 @@ For example, this code could be used:
 {% endif %}
 ```
 
+### Disable MathJax with metadata
+
+It is possible to disable MathJax processing on a per-page basis. If the
+metadata `mathjax` or `latex` is set to `yes` or `Yes`, or none of these
+are set, the MathJax processing will take place normally. However, if it
+is set to any value that is not `yes`, processing is disabled. It may be
+useful if you are including text with $ signs that confuses the parser.
+
 ### Settings
 Certain MathJax rendering options can be set. These options 
 are in a dictionary variable called `MATH` in the pelican
