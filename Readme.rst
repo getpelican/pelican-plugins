@@ -102,6 +102,8 @@ Pelican-flickr            Brings your Flickr photos & sets into your static webs
 
 Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 
+Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
+
 Pelican comment system    Allows you to add static comments to your articles
 
 Pelican Vimeo             Enables you to embed Vimeo videos in your pages and articles
