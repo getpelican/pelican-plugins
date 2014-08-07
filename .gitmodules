@@ -34,3 +34,6 @@
 [submodule "pelican-page-order"]
 	path = pelican-page-order
 	url = git://github.com/akhayyat/pelican-page-order
+[submodule "pelican-page-hierarchy"]
+	path = pelican-page-hierarchy
+	url = git://github.com/akhayyat/pelican-page-hierarchy
