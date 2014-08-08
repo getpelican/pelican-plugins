@@ -3,7 +3,7 @@ Sitemap
 
 The sitemap plugin generates plain-text or XML sitemaps. You can use the
 ``SITEMAP`` variable in your settings file to configure the behavior of the
-plugin.
+plugin. XML sitemaps generates also a GZIP sitemap, useful to save bandwidth.
 
 The ``SITEMAP`` variable must be a Python dictionary and can contain three keys:
 
