@@ -56,9 +56,14 @@ class AsciiDocReader(BaseReader):
             metadata['title'] = metadata['doctitle']
         return content, metadata
 
+def add_writer(self, content):
+    if hasattr(content, 'save_as'):
+        content.override_save_as=content.save_as.replace('-None', '')
+
 def add_reader(readers):
     for ext in AsciiDocReader.file_extensions:
         readers.reader_classes[ext] = AsciiDocReader
 
 def register():
     signals.readers_init.connect(add_reader)
+    signals.article_generator_write_article.connect(add_writer)
