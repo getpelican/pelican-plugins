@@ -10,6 +10,9 @@ File extension should be ``.asc``, ``.adoc``, or ``asciidoc``.
 from pelican.readers import BaseReader
 from pelican.utils import pelican_open
 from pelican import signals
+import logging
+
+logger = logging.getLogger(__name__)
 
 try:
     # asciidocapi won't import on Py3

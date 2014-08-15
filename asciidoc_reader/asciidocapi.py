@@ -53,6 +53,10 @@ under the terms of the GNU General Public License (GPL).
 """
 
 import sys,os,re,imp
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 API_VERSION = '0.1.2'
 MIN_ASCIIDOC_VERSION = '8.4.1'  # Minimum acceptable AsciiDoc version.
