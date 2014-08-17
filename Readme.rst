@@ -18,9 +18,9 @@ and activating the ones you want in your settings file::
     PLUGIN_PATHS = ['path/to/pelican-plugins']
     PLUGINS = ['assets', 'sitemap', 'gravatar']
 
-``PLUGIN_PATH`` can be a path relative to your settings file or an absolute path.
+``PLUGIN_PATHS`` can be a path relative to your settings file or an absolute path.
 
-Alternatively, if plugins are in an importable path, you can omit ``PLUGIN_PATH``
+Alternatively, if plugins are in an importable path, you can omit ``PLUGIN_PATHS``
 and list them::
 
     PLUGINS = ['assets', 'sitemap', 'gravatar']
