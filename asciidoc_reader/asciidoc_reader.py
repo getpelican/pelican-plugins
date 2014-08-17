@@ -68,7 +68,12 @@ def add_writer(self, content):
           whoami(), dir(content), content.save_as, content.url)
 
     if hasattr(content, 'save_as'):
-        content.override_save_as=content.save_as.replace('-None', '')
+        content.override_save_as = content.save_as.replace('-None', '')
+    if hasattr(content, 'url'):
+        content.override_url = content.url.replace('-None', '')
+
+    logger.debug("AFTER: asciidoc_reader=%s save_as=%s url=%s",
+        whoami(), content.save_as, content.url)
 
 def add_reader(readers):
     logger.debug("asciidoc_reader=%s readers.settings=%s", whoami(), dir(readers))
