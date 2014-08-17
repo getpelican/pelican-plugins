@@ -38,8 +38,6 @@ class AsciiDocReader(BaseReader):
     def oread(self, source_path):
         """Parse content and metadata of asciidoc files"""
 
-        logger.debug("asciidoc_reader=%s source_path=%s", whoami(), source_path)
-
         from cStringIO import StringIO
         with pelican_open(source_path) as source:
             text = StringIO(source)
@@ -63,21 +61,14 @@ class AsciiDocReader(BaseReader):
             metadata['title'] = metadata['doctitle']
         return content, metadata
 
-def add_writer(self, content):
-    logger.debug("BEFORE: asciidoc_reader=%s content=%s save_as=%s url=%s",
-          whoami(), dir(content), content.save_as, content.url)
 
+def add_writer(self, content):
     if hasattr(content, 'save_as'):
         content.override_save_as = content.save_as.replace('-None', '')
     if hasattr(content, 'url'):
         content.override_url = content.url.replace('-None', '')
 
-    logger.debug("AFTER: asciidoc_reader=%s save_as=%s url=%s",
-        whoami(), content.save_as, content.url)
-
 def add_reader(readers):
-    logger.debug("asciidoc_reader=%s readers.settings=%s", whoami(), dir(readers))
-    readers.reader_classes['asciidoc'] = AsciiDocReader
     for ext in AsciiDocReader.file_extensions:
         readers.reader_classes[ext] = AsciiDocReader
 
