@@ -16,7 +16,7 @@ def add_gallery_post(generator):
 
             if(os.path.isdir(articlegallerypath)):
                 for i in os.listdir(articlegallerypath):
-                    if os.path.isfile(os.path.join(os.path.join(gallerycontentpath, album), i)):
+                    if not a.startswith('.') and os.path.isfile(os.path.join(os.path.join(gallerycontentpath, album), i)):
                         galleryimages.append(i)
 
             article.album = album
@@ -33,10 +33,10 @@ def generate_gallery_page(generator):
             gallery = dict()
 
             for a in os.listdir(gallerycontentpath):
-                if os.path.isdir(os.path.join(gallerycontentpath, a)):
+                if not a.startswith('.') and os.path.isdir(os.path.join(gallerycontentpath, a)):
 
                     for i in os.listdir(os.path.join(gallerycontentpath, a)):
-                        if os.path.isfile(os.path.join(os.path.join(gallerycontentpath, a), i)):
+                        if not a.startswith('.') and os.path.isfile(os.path.join(os.path.join(gallerycontentpath, a), i)):
                             gallery.setdefault(a, []).append(i)
                     gallery[a].sort()
 
