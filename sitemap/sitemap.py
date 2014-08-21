@@ -65,7 +65,7 @@ class SitemapGenerator(object):
 
         self.default_timezone = settings.get('TIMEZONE', 'UTC')
         self.timezone = getattr(self, 'timezone', self.default_timezone)
-	    self.timezone = timezone(self.timezone)
+        self.timezone = timezone(self.timezone)
 
         self.format = 'xml'
 
