@@ -37,3 +37,6 @@
 [submodule "pelican-page-hierarchy"]
 	path = pelican-page-hierarchy
 	url = git://github.com/akhayyat/pelican-page-hierarchy
+[submodule "multi_neighbors"]
+	path = multi_neighbors
+	url = git@github.com:davidlesieur/multi_neighbors.git
