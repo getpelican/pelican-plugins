@@ -44,19 +44,16 @@ def content_object_init(instance):
                     img_path = img_path[10:]
                 elif img_path.startswith('/static'):
                     img_path = img_path[7:]
-                else:
-                    logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
-
                 # Build the source image filename
-                src = instance.settings['PATH'] + img_path + '/' + img_filename
+                if img_path.startswith('http'):
+                    src = img_path + '/' + img_filename
+                else:
+                    src = instance.settings['PATH'] + img_path + '/' + img_filename
 
                 logger.debug('Better Fig. src: %s', src)
-                if not (path.isfile(src) and access(src, R_OK)):
-                    logger.error('Better Fig. Error: image not found: {}'.format(src))
 
                 # Open the source image and query dimensions; build style string
-                im = Image.open(src)
-                extra_style = 'width: {}px; height: auto;'.format(im.size[0])
+                extra_style = ' height: auto;'
 
                 if instance.settings['RESPONSIVE_IMAGES']:
                     extra_style += ' max-width: 100%;'
