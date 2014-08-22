@@ -174,7 +174,8 @@ class SitemapGenerator(object):
         for (wrapper, articles) in wrappers:
             lastmod = datetime.min.replace(tzinfo=self.timezone)
             for article in articles:
-                lastmod = max(lastmod, article.date)
+                lastmod = max(lastmod, 
+                    article.date.min.replace(tzinfo=self.timezone))
                 try:
                     modified = self.get_date_modified(article, datetime.min.replace(tzinfo=self.timezone));
                     lastmod = max(lastmod, modified)
