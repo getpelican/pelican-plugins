@@ -33,10 +33,10 @@
 	url = https://github.com/badele/pelicanthemes-generator
 [submodule "pelican-page-order"]
 	path = pelican-page-order
-	url = git://github.com/akhayyat/pelican-page-order
+	url = https://github.com/akhayyat/pelican-page-order.git
 [submodule "pelican-page-hierarchy"]
 	path = pelican-page-hierarchy
-	url = git://github.com/akhayyat/pelican-page-hierarchy
+	url = https://github.com/akhayyat/pelican-page-hierarchy.git
 [submodule "multi_neighbors"]
 	path = multi_neighbors
-	url = git@github.com:davidlesieur/multi_neighbors.git
+	url = https://github.com/davidlesieur/multi_neighbors.git
