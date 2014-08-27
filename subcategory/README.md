@@ -55,8 +55,8 @@ name.
 Consistent with the default settings for Tags and Categories, the default
 settings for subcategories are:
 
-    'SUBCATEGORY_SAVE_AS' = os.path.join('subcategory', '{savepath}.html')
-    'SUBCATEGORY_URL' = 'subcategory/(fullurl).html'
+    SUBCATEGORY_SAVE_AS = os.path.join('subcategory', '{savepath}.html')
+    SUBCATEGORY_URL = 'subcategory/{fullurl}.html'
 
 `savepath` and `fullurl` are generated recursively, using slugs. So the full
 URL would be:
