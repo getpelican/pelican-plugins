@@ -55,8 +55,8 @@ name.
 Consistent with the default settings for Tags and Categories, the default
 settings for subcategories are:
 
-    SUBCATEGORY_SAVE_AS = os.path.join('subcategory', '{savepath}.html')
-    SUBCATEGORY_URL = 'subcategory/{fullurl}.html'
+    'SUBCATEGORY_SAVE_AS' = os.path.join('subcategory', '{savepath}.html')
+    'SUBCATEGORY_URL' = 'subcategory/(fullurl).html'
 
 `savepath` and `fullurl` are generated recursively, using slugs. So the full
 URL would be:
@@ -74,3 +74,10 @@ to your Pelican configuration file:
 … and this will create a feed with `fullurl` of the subcategory. For example:
 
     feeds/category/subcategory.atom.xml
+
+Article paths can use new metadata values: subpath & suburl
+
+    ARTICLE_SAVE_AS = '{subpath}/articles/{slug}.html'
+    ARTICLE_URL = '{suburl}/articles/{slug}.html'
+
+    
