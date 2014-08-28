@@ -59,6 +59,7 @@ def get_subcategories(generator, metadata):
     parent_name = category.name
     parent = category
     sub_path = parent.slug
+    sub_url = parent.slug
     for subcategory in category_list:
         subcategory.strip()
         subcategory = parent_name + '/' + subcategory
@@ -67,8 +68,10 @@ def get_subcategories(generator, metadata):
         parent_name = subcategory
         parent = new_sub
         sub_path = os.path.join(sub_path, parent.slug)
+        sub_url = sub_url + '/' + parent.slug
     metadata['subcategories'] = sub_list
     metadata['subpath'] = sub_path
+    metadata['suburl'] = sub_url
 
 def create_subcategories(generator):
     generator.subcategories = []
