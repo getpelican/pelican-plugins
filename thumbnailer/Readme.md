@@ -8,7 +8,11 @@ doesn't already exists (to save processing time).
 Installation
 -------------
 
-Setup up like a normal plugin by setting PLUGIN_PATHS, and adding "thumbnailer" to the PLUGINS list
+Set up like a normal plugin by setting PLUGIN_PATH, and adding "thumbnailer" to the PLUGINS list.
+
+[PIL](http://www.pythonware.com/products/pil/) or [Pillow](http://pillow.readthedocs.org/en/latest/installation.html#)
+is required. If you go with Pillow, you need to install some additional
+[external libraries](http://www.pythonware.com/products/pil/) to add support for image types like `jpg`.
 
 Configuration
 -------------
