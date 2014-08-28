@@ -40,3 +40,6 @@
 [submodule "multi_neighbors"]
 	path = multi_neighbors
 	url = https://github.com/davidlesieur/multi_neighbors.git
+[submodule "pelican-langcategory"]
+	path = pelican-langcategory
+	url = https://github.com/CNBorn/pelican-langcategory.git
