@@ -134,6 +134,10 @@ class SitemapGenerator(object):
         if getattr(page, 'status', 'published') != 'published':
             return
 
+        # We can disable categories/authors/etc by using False instead of ''
+        if not page.save_as:
+            return
+
         page_path = os.path.join(self.output_path, page.save_as)
         if not os.path.exists(page_path):
             return
