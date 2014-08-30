@@ -20,7 +20,6 @@ def add_footer(content):
         'slug': content.slug,
         'category': content.category,
         'summary': content.summary,
-        'authors': ','.join([x.name for x in content.tags]),
     }
     if hasattr(content, 'date'):
         data_dict['date'] = content.date
