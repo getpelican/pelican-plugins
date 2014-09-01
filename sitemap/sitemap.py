@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 
 import collections
 import os.path
+import gzip
 
 from datetime import datetime
 from logging import warning, info
@@ -166,6 +167,18 @@ class SitemapGenerator(object):
         else:
             fd.write(self.siteurl + '/' + page.url + '\n')
 
+    def write_compressed_sitemap(self, filename):
+        """ It writes a gzip compressed sitemap """
+        try:
+            fd = file(filename)
+            content = fd.read()
+            gz = gzip.GzipFile(filename=filename+'.gz', mode='w', compresslevel=9)
+            gz.write(content)
+        except (IOError, os.error), why:
+            print 'Failed to write the file', filename, '\n Exception:', why
+            if gz:
+                gz.close()
+
     def get_date_modified(self, page, default):
         if hasattr(page, 'modified'):
             if isinstance(page.modified, datetime):
@@ -233,6 +246,9 @@ class SitemapGenerator(object):
             if self.format == 'xml':
                 fd.write(XML_FOOTER)
 
+        self.write_compressed_sitemap(fd.name)
+        
+
 
 def get_generators(generators):
     return SitemapGenerator
@@ -240,3 +256,4 @@ def get_generators(generators):
 
 def register():
     signals.get_generators.connect(get_generators)
+
