@@ -43,3 +43,6 @@
 [submodule "pelican-langcategory"]
 	path = pelican-langcategory
 	url = https://github.com/CNBorn/pelican-langcategory.git
+[submodule "sort_tags"]
+	path = sort_tags
+	url = https://github.com/ingwinlu/sort_tags.git
