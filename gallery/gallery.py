@@ -16,7 +16,7 @@ def add_gallery_post(generator):
 
             if(os.path.isdir(articlegallerypath)):
                 for i in os.listdir(articlegallerypath):
-                    if not a.startswith('.') and os.path.isfile(os.path.join(os.path.join(gallerycontentpath, album), i)):
+                    if not i.startswith('.') and os.path.isfile(os.path.join(os.path.join(gallerycontentpath, album), i)):
                         galleryimages.append(i)
 
             article.album = album
