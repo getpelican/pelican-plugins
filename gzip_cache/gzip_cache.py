@@ -37,6 +37,7 @@ EXCLUDE_TYPES = [
     '.avi',
     '.mov',
     '.mp4',
+    '.webm',
 ]
 
 COMPRESSION_LEVEL = 9 # Best Compression
