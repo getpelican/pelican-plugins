@@ -43,9 +43,11 @@ Asset management          Use the Webassets module to manage assets such as CSS 
 Better code samples       Wraps all `table` blocks with a class attribute `.codehilitetable` in an additional `div` of class `.hilitewrapper`. It thus permits to style codeblocks better, especially to make them scrollable.
                     
 Better figures/samples    Adds a `style="width: ???px; height: auto;"` attribute to any `<img>` tags in the content
-           
+
+bootstrapify              Automatically add bootstraps default classes to your content, usefull for md generated tables
+
 CJK auto spacing          Inserts spaces between Chinese/Japanese/Korean characters and English words
-                
+
 Clean summary             Cleans your summary of excess images
 
 Code include              Includes Pygments highlighted code in reStructuredText
@@ -133,6 +135,8 @@ Share post                Creates share URLs of article
 Simple footnotes          Adds footnotes to blog posts
 
 Sitemap                   Generates plain-text or XML sitemaps
+
+sort_tags                 Provides `tags_sorted_by_article_length` to templates, which contains all tags, sorted by how many articles it contains first, and alphabetically second.
 
 Static comments           Allows you to add static comments to an article
 
