@@ -47,7 +47,7 @@ XML_FOOTER = """
 
 def format_date(date):
     if date.tzinfo:
-        tz = date.strftime('%s')
+        tz = date.strftime('%z')
         tz = tz[:-2] + ':' + tz[-2:]
     else:
         tz = "-00:00"
