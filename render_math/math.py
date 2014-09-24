@@ -5,8 +5,8 @@ Math Render Plugin for Pelican
 This plugin allows your site to render Math. It uses
 the MathJax JavaScript engine.
 
-For markdown, the plugin works by creating a Markdown 
-extension which is used during the markdown compilation stage. 
+For markdown, the plugin works by creating a Markdown
+extension which is used during the markdown compilation stage.
 Math therefore gets treated like a "first class citizen" in Pelican
 
 For reStructuredText, the plugin instructs the rst engine
@@ -53,7 +53,7 @@ def process_settings(pelicanobj):
 
     # Source for MathJax: Works boths for http and https (see http://docs.mathjax.org/en/latest/start.html#secure-access-to-the-cdn)
     mathjax_settings['source'] = "'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
-    
+
     # Get the user specified settings
     try:
         settings = pelicanobj.settings['MATH_JAX']
@@ -94,7 +94,7 @@ def process_settings(pelicanobj):
 def configure_typogrify(pelicanobj, mathjax_settings):
     """Instructs Typogrify to ignore math tags - which allows Typogfrify
     to play nicely with math related content"""
-    
+
     # If Typogrify is not being used, then just exit
     if not pelicanobj.settings.get('TYPOGRIFY', False):
         return
@@ -102,7 +102,7 @@ def configure_typogrify(pelicanobj, mathjax_settings):
     try:
         import typogrify
         from distutils.version import LooseVersion
-        
+
         if LooseVersion(typogrify.__version__) < LooseVersion('2.0.7'):
             raise TypeError('Incorrect version of Typogrify')
 
@@ -141,14 +141,16 @@ def mathjax_for_markdown(pelicanobj, mathjax_settings):
 
     # Create the configuration for the markdown template
     config = {}
-    config['mathjax_script'] = [process_mathjax_script(mathjax_settings),'Mathjax JavaScript script']
-    config['math_tag_class'] = ['math', 'The class of the tag in which mathematics is wrapped']
-    
+    config['mathjax_script'] = process_mathjax_script(mathjax_settings)
+    config['math_tag_class'] = 'math'
+
     # Instantiate markdown extension and append it to the current extensions
     try:
         pelicanobj.settings['MD_EXTENSIONS'].append(PelicanMathJaxExtension(config))
     except:
-        print("\nError - the pelican mathjax markdown extension was not configured, so mathjax will not be work.\nThe error message was as follows - [%s]" % sys.exc_info()[0])
+        sys.excepthook(*sys.exc_info())
+        sys.stderr.write("\nError - the pelican mathjax markdown extension failed to configure. MathJax is non-functional.\n")
+        sys.stderr.flush()
 
 def mathjax_for_rst(pelicanobj, mathjax_settings):
     pelicanobj.settings['DOCUTILS_SETTINGS'] = {'math_output': 'MathJax'}
