@@ -2,6 +2,7 @@
 
 This plugin allows you to insert a `FEED_FOOTER_INSERT_HTML` to the end of the blog.
 
+eg. add some author / blog / ad to the atom/rss feed.
 
 ## Usage
 
