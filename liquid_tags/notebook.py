@@ -81,6 +81,27 @@ from copy import deepcopy
 
 from jinja2 import DictLoader
 
+from pelican.readers import BaseReader
+
+class NotebookReader(BaseReader):
+
+    """Class that do nothing!
+    , but it permits to watch changes on ipynb files when using the
+    --autoreload argument of pelican command
+    """
+    enabled = True
+    file_extensions = ['static']
+    extensions = 'ipynb'
+
+    def __init__(self, settings):
+        self.settings = settings
+
+    def process_metadata(self, name, value):
+        pass
+
+    def read(self, source_path):
+        pass
+
 
 #----------------------------------------------------------------------
 # Some code that will be added to the header:

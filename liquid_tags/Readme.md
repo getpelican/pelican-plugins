@@ -94,6 +94,12 @@ config file:
 
     NOTEBOOK_DIR = 'notebooks'
 
+In order to watch changes to your `ipynb` files, add the NotebookReader to your
+readers in your configuration file.
+
+    from liquid_tags.notebook import NotebookReader
+    READERS = {'html': None, 'ipynb': NotebookReader}
+
 Because the conversion and rendering of notebooks is rather involved, there
 are a few extra steps required for this plugin:
 
