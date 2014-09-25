@@ -2,6 +2,7 @@
 
 This plugin allows you to insert a `FOOTER_INSERT_HTML` to the end of the blog.
 
+eg.  add authors / blog infomation to every blog.
 
 ## Usage
 
