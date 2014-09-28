@@ -34,11 +34,12 @@ def spotify(preprocessor, tag, markup):
         spotify_id = groups[0]
 
     if spotify_id:
-        spotify_out = "<iframe src='https://embed.spotify.com/?uri=spotify:track:{}'
-        width='300'
-        height='380'
-        frameborder='0'
-        allowtransparency='true'></iframe>".format(spotify_id).strip()
+        spotify_out = """
+        <iframe src='https://embed.spotify.com/?uri=spotify:track:{}'
+          width='300'
+          height='380'
+          frameborder='0'
+          allowtransparency='true'></iframe>""".format(spotify_id).strip()
     else:
         raise ValueError("Error processing input, "
                          "expected syntax: {0}".format(SYNTAX))
