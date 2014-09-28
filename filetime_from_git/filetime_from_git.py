@@ -6,6 +6,7 @@ from git import Git, Repo, InvalidGitRepositoryError
 from pelican import signals, contents
 from datetime import datetime
 from time import mktime, altzone
+from pelican.utils import  strftime
 
 try:
     repo = Repo(os.path.abspath('.'))
@@ -48,13 +49,21 @@ def filetime_from_git(content):
                     with_extended_output=True, with_exceptions=False)
             if status != 0:
                 # file has changed
-                content.updated = datetime.fromtimestamp(os.stat(path).st_ctime)
+                content.modified = datetime.fromtimestamp(os.stat(path).st_ctime)
             else:
                 # file is not changed
                 if len(commits) > 1:
-                    content.updated = datetime.fromtimestamp(mktime(commits[0].committed_date) - altzone)
-    if not hasattr(content, 'updated'):
-        content.updated = content.date
+                    content.modified = datetime.fromtimestamp(mktime(commits[0].committed_date) - altzone)
+    if not hasattr(content, 'modified'):
+        content.modified = content.date
+    if hasattr(content, 'date'):
+        content.locale_date = strftime(content.date, content.date_format)
+    if hasattr(content, 'modified'):
+        content.locale_modified = strftime(content.modified, content.date_format)
+
+
+
+
 
 def register():
     signals.content_object_init.connect(filetime_from_git)

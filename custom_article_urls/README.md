@@ -14,10 +14,10 @@ would like *Category 1* saved as `category-1/article-slug/` and *Category 2*
 saved as `/year/month/article-slug/`, you would add:
 
     CUSTOM_ARTICLE_URLS = {
-        'Category 1': {'URL': '{category}/{slug}/,
-            'SAVE_AS': '{category}/{slug}/index.html},
-        'Category 2': {'URL': '{date:%Y}/{date:%B}/{slug}/,
-            'SAVE_AS': '{date:%Y}/{date:%B}/{slug}/index.html},
+        'Category 1': {'URL': '{category}/{slug}/',
+            'SAVE_AS': '{category}/{slug}/index.html}',
+        'Category 2': {'URL': '{date:%Y}/{date:%B}/{slug}/',
+            'SAVE_AS': '{date:%Y}/{date:%B}/{slug}/index.html}',
         }
 
 If you had any other categories, they would use the default `ARTICLE_SAVE_AS`

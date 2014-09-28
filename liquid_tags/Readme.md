@@ -74,7 +74,7 @@ filename.
 The script must be in the ``code`` subdirectory of your content folder:
 this default location can be changed by specifying
 
-   CODE_DIR = 'code'
+    CODE_DIR = 'code'
 
 within your configuration file. Additionally, in order for the resulting
 hyperlink to work, this directory must be listed under the STATIC_PATHS
@@ -97,7 +97,7 @@ config file:
 Because the conversion and rendering of notebooks is rather involved, there
 are a few extra steps required for this plugin:
 
-- First, you will need to install IPython >= 1.0 [1]_
+- First, you will need to install IPython >= 1.0 [[1](#1)]
 
 - After typing "make html" when using the notebook tag, a file called
   ``_nb_header.html`` will be produced in the main directory.  The content
@@ -115,6 +115,31 @@ are a few extra steps required for this plugin:
 
   this will insert the proper css formatting into your document.
 
+### Optional Arguments for Notebook Tags
+
+The notebook tag also has two optional arguments: ``cells`` and ``language``.
+
+- You can specify a slice of cells to include:
+
+  ``{% notebook filename.ipynb cells[2:8] %}``
+
+- You can also specify the name of a language which Pygments should use for
+  highlighting code cells. A list of the short names for languages that Pygments
+  will highlight can be found [here](http://www.pygments.org/docs/lexers/).
+
+  ``{% notebook filename.ipynb language[julia] %}``
+
+  This may be helpful for those using [IJulia](https://github.com/JuliaLang/IJulia.jl)
+  or notebooks in any other language, especially as the IPython project [broadens its
+  scope](https://github.com/ipython/ipython/wiki/Roadmap:-IPython) of [language
+  compatibility](http://jupyter.org/). By default, the language for highlighting
+  will be ``ipython``.
+
+- These options can be used separately, together, or not at all. However,
+  if both tags are used then ``cells`` must come before ``language``:
+
+  ``{% notebook filename.ipynb cells[2:8] language[julia] %}``
+
 ### Collapsible Code in IPython Notebooks
 
 The plugin also enables collapsible code input boxes. For this to work
@@ -127,4 +152,4 @@ comment line ``# <!-- collapse=False -->`` will be open on load but
 can be collapsed by clicking on their header. Cells without collapse
 comments are rendered as standard code input cells.
 
-[1] http://ipython.org/
+[<a name="1">1</a>] http://ipython.org/

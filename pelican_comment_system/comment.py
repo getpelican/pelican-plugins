@@ -1,45 +1,64 @@
 # -*- coding: utf-8 -*-
 """
-
+Author: Bernhard Scheirle
 """
 from __future__ import unicode_literals
-from pelican import contents
+import os
+
 from pelican.contents import Content
+from pelican.utils import slugify
+
+from . import avatars
+
 
 class Comment(Content):
-	mandatory_properties = ('author', 'date')
-	default_template = 'None'
+    mandatory_properties = ('author', 'date')
+    default_template = 'None'
 
-	def __init__(self, id, avatar, content, metadata, settings, source_path, context):
-		super(Comment,self).__init__( content, metadata, settings, source_path, context )
-		self.id = id
-		self.replies = []
-		self.avatar = avatar
-		self.title = "Posted by:  " + str(metadata['author'])
+    def __init__(self, content, metadata, settings, source_path, context):
+        # Strip the path off the full filename.
+        name = os.path.split(source_path)[1]
 
-	def addReply(self, comment):
-		self.replies.append(comment)
+        if not hasattr(self, 'slug'):
+            # compute the slug before initializing the base Content object, so
+            # it doesn't get set there
+            # This is required because we need a slug containing the file
+            # extension.
+            self.slug = slugify(name, settings.get('SLUG_SUBSTITUTIONS', ()))
 
-	def getReply(self, id):
-		for reply in self.replies:
-			if reply.id == id:
-				return reply
-			else:
-				deepReply = reply.getReply(id)
-				if deepReply != None:
-					return deepReply
-		return None
+        super(Comment, self).__init__(content, metadata, settings, source_path,
+                                      context)
 
-	def __lt__(self, other):
-		return self.metadata['date'] < other.metadata['date']
+        self.replies = []
 
-	def sortReplies(self):
-		for r in self.replies:
-			r.sortReplies()
-		self.replies = sorted(self.replies)
+        # Strip the extension from the filename.
+        name = os.path.splitext(name)[0]
+        self.avatar = avatars.getAvatarPath(name, metadata)
+        self.title = "Posted by:  {}".format(metadata['author'])
 
-	def countReplies(self):
-		amount = 0
-		for r in self.replies:
-			amount += r.countReplies()
-		return amount + len(self.replies)
+    def addReply(self, comment):
+        self.replies.append(comment)
+
+    def getReply(self, slug):
+        for reply in self.replies:
+            if reply.slug == slug:
+                return reply
+            else:
+                deepReply = reply.getReply(slug)
+                if deepReply is not None:
+                    return deepReply
+        return None
+
+    def __lt__(self, other):
+        return self.metadata['date'] < other.metadata['date']
+
+    def sortReplies(self):
+        for r in self.replies:
+            r.sortReplies()
+        self.replies = sorted(self.replies)
+
+    def countReplies(self):
+        amount = 0
+        for r in self.replies:
+            amount += r.countReplies()
+        return amount + len(self.replies)

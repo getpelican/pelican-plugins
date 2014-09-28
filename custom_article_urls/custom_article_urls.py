@@ -8,7 +8,7 @@ using a dictionary stored in pelican settings file as
 {category: {article_url_structure: stirng, article_save_as: string}}
 """
 from pelican import signals
-from pelican.contents import Content, Category
+from pelican.contents import Article, Category
 from six import text_type
 
 def custom_url(generator, metadata):
@@ -33,7 +33,7 @@ def custom_url(generator, metadata):
                 """
                 pass
             else:
-                temp_article = Content(None, metadata=metadata)
+                temp_article = Article("", metadata=metadata)
                 url_format = pattern_matched['URL']
                 save_as_format = pattern_matched['SAVE_AS']
                 url = url_format.format(**temp_article.url_format)
