@@ -22,30 +22,23 @@ import os
 import re
 from .mdx_liquid_tags import LiquidTags
 
-SYNTAX = "{% youtube id [width height] %}"
+SYNTAX = "{% spotifylist id %}"
 
-YOUTUBE = re.compile(r'(\w+)(\s+(\d+)\s(\d+))?')
+SPOTIFY = re.compile(r'\[A-Za-z0-9,\]+')
 
-@LiquidTags.register('youtube')
-def youtube(preprocessor, tag, markup):
-    width = 640
-    height = 390
-    youtube_id = None
+@LiquidTags.register('spotifylist')
+def spotifylist(preprocessor, tag, markup):
+    spotify_id = None
 
-    match = YOUTUBE.search(markup)
-    if match:
-        groups = match.groups()
-        youtube_id = groups[0]
-        width = groups[2] or width
-        height = groups[3] or height
+    spotify_id = markup
 
-    if youtube_id:
-        youtube_out = "<div class='videoWrapper'><iframe width='{width}' height='{height}' src='http://www.youtube.com/embed/{youtube_id}' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>".format(width=width, height=height, youtube_id=youtube_id)
+    if spotify_id:
+        spotify_out = "<iframe src='https://embed.spotify.com/?uri=spotify:trackset:{}' width='300' height='380' frameborder='0' allowtransparency='true'></iframe>".format(spotify_id)
     else:
         raise ValueError("Error processing input, "
                          "expected syntax: {0}".format(SYNTAX))
 
-    return youtube_out
+    return spotify_out
 
 
 #----------------------------------------------------------------------

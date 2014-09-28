@@ -41,7 +41,7 @@ def vimeo(preprocessor, tag, markup):
         height = groups[3] or height
 
     if vimeo_id:
-        vimeo_out = '<div style="width:{width}px; height:{height}px;"><iframe src="//player.vimeo.com/video/{vimeo_id}?title=0&amp;byline=0&amp;portrait=0" width="{width}" height="{height}" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>'.format(width=width, height=height, vimeo_id=vimeo_id)
+        vimeo_out = "<div class='videoWrapper'><iframe src='//player.vimeo.com/video/{vimeo_id}?title=0&amp;byline=0&amp;portrait=0' width='{width}' height='{height}' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>".format(width=width, height=height, vimeo_id=vimeo_id)
     else:
         raise ValueError("Error processing input, "
                          "expected syntax: {0}".format(SYNTAX))
