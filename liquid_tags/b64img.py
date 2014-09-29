@@ -2,17 +2,17 @@
 Image Tag
 ---------
 This implements a Liquid-style image tag for Pelican,
-based on the octopress image tag [1]_
+based on the liquid img tag which is based on the octopress image tag [1]_
 
 Syntax
 ------
-{% img [class name(s)] [http[s]:/]/path/to/image [width [height]] [title text | "title text" ["alt text"]] %}
+{% b64img [class name(s)] [http[s]:/]/path/to/image [width [height]] [title text | "title text" ["alt text"]] %}
 
 Examples
 --------
-{% img /images/ninja.png Ninja Attack! %}
-{% img left half http://site.com/images/ninja.png Ninja Attack! %}
-{% img left half http://site.com/images/ninja.png 150 150 "Ninja Attack!" "Ninja in attack posture" %}
+{% b64img /images/ninja.png Ninja Attack! %}
+{% b64img left half http://site.com/images/ninja.png Ninja Attack! %}
+{% b64img left half http://site.com/images/ninja.png 150 150 "Ninja Attack!" "Ninja in attack posture" %}
 
 Output
 ------
@@ -27,7 +27,7 @@ import base64
 import urllib2
 from .mdx_liquid_tags import LiquidTags
 
-SYNTAX = '{% img [class name(s)] [http[s]:/]/path/to/image [width [height]] [title text | "title text" ["alt text"]] %}'
+SYNTAX = '{% b64img [class name(s)] [http[s]:/]/path/to/image [width [height]] [title text | "title text" ["alt text"]] %}'
 
 # Regular expression to match the entire syntax
 ReImg = re.compile("""(?P<class>\S.*\s+)?(?P<src>(?:https?:\/\/|\/|\S+\/)\S+)(?:\s+(?P<width>\d+))?(?:\s+(?P<height>\d+))?(?P<title>\s+.+)?""")
@@ -85,4 +85,3 @@ def b64img(preprocessor, tag, markup):
 #----------------------------------------------------------------------
 # This import allows image tag to be a Pelican plugin
 from liquid_tags import register
-
