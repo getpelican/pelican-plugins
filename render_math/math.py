@@ -68,7 +68,7 @@ def process_settings(pelicanobj):
     for key, value in ((key, settings[key]) for key in settings):
         # Iterate over dictionary in a way that is compatible with both version 2
         # and 3 of python
-        if key == 'align' and isinstance(value, str):
+        if key == 'align' and isinstance(value, basestring):
             if value == 'left' or value == 'right' or value == 'center':
                 mathjax_settings[key] = value
             else:
@@ -83,10 +83,10 @@ def process_settings(pelicanobj):
         if key == 'process_escapes' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
 
-        if key == 'latex_preview' and isinstance(value, str):
+        if key == 'latex_preview' and isinstance(value, basestring):
             mathjax_settings[key] = value
 
-        if key == 'color' and isinstance(value, str):
+        if key == 'color' and isinstance(value, basestring):
             mathjax_settings[key] = value
 
     return mathjax_settings
