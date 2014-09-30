@@ -27,7 +27,6 @@ class DeliciousBookmarks():
         import feedparser
         self.channel = feedparser.parse(
             generator.settings['DELICIOUS_BOOKMARKS_FEED'])
-        self.max_entries = generator.settings['DELICIOUS_BOOKMARKS_MAX_ENTRIES'] 
 
     def fetch(self):
         """
@@ -38,7 +37,7 @@ class DeliciousBookmarks():
             'description': self.channel.feed.description,
             'bookmarks': []
         }
-        for bookmark in self.channel['entries'][0:self.max_entries]:
+        for bookmark in self.channel['entries']:
             delicious_bookmark = {
                 'title': bookmark.title,
                 'description': bookmark.description,
