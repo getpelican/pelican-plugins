@@ -61,7 +61,7 @@ To include code from a file in your document with a link to the original
 file, enable the ``liquid_tags.include_code`` plugin, and add to your
 document:
 
-    {% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}
+    {% include_code /path/to/code.py [lang:python] [lines:X-Y] [classes:fancy,pinkish] [:hidefilename:] [title] %}
 
 All arguments are optional but their order must be kept. `:hidefilename:` is
 only allowed if a title is also given.
@@ -81,6 +81,18 @@ hyperlink to work, this directory must be listed under the STATIC_PATHS
 setting, e.g.:
 
     STATIC_PATHS = ['images', 'code']
+
+Theming the inclusion snippet is possible through the following lines
+
+  * CODE_OPENTAG: Opening template for include_code subplugin
+  * CODE_CLOSETAG: Closing template for include_code subplugin
+  * CODE_DOWNLOADSTRING: The "download" helper string for include_code subplugin
+    
+in the configuration files. Example:
+
+    CODE_OPENTAG = '<div class="includefile{classes} panel panel-primary"><div class="includefilename panel-heading">{title} <a href="{url}"><span class="glyphicon glyphicon-download-alt pull-right">{download}</span></a></div><div class="includedfile panel-body">'
+    CODE_CLOSETAG = "</div></div>"
+    CODE_DOWNLOADSTRING = u'Téléchargement'
 
 ## IPython notebooks
 To insert an ipython notebook into your post, enable the
