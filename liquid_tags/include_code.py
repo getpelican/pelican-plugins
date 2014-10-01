@@ -31,6 +31,7 @@ in the STATIC_PATHS setting, e.g.:
 """
 import re
 import os
+import codecs
 from .mdx_liquid_tags import LiquidTags
 
 
@@ -40,6 +41,8 @@ FORMAT = re.compile(r"""
 (?P<src>\S+)                       # Find the path
 (?:\s+)?                           # Whitespace
 (?:(?:lang:)(?P<lang>\S+))?        # Optional language
+(?:\s+)?                           # Whitespace
+(?:(?:charset:)(?P<charset>\S+))?  # Optional charset
 (?:\s+)?                           # Whitespace
 (?:(?:lines:)(?P<lines>\d+-\d+))?  # Optional lines
 (?:\s+)?                           # Whitespace
@@ -54,6 +57,7 @@ def include_code(preprocessor, tag, markup):
 
     title = None
     lang = None
+    charset = None
     src = None
 
     match = FORMAT.search(markup)
@@ -61,6 +65,7 @@ def include_code(preprocessor, tag, markup):
         argdict = match.groupdict()
         title = argdict['title'] or ""
         lang = argdict['lang']
+        charset = argdict['charset']
         lines = argdict['lines']
         hide_filename = bool(argdict['hidefilename'])
         if lines:
@@ -72,16 +77,22 @@ def include_code(preprocessor, tag, markup):
                          "expected syntax: {0}".format(SYNTAX))
 
     code_dir = preprocessor.configs.getConfig('CODE_DIR')
+    code_charset = preprocessor.configs.getConfig('CODE_CHARSET')
+    if charset:
+        code_charset = charset
     code_path = os.path.join('content', code_dir, src)
 
     if not os.path.exists(code_path):
         raise ValueError("File {0} could not be found".format(code_path))
 
-    with open(code_path) as fh:
+    with codecs.open(code_path, 'r', encoding = code_charset) as fh:
         if lines:
             code = fh.readlines()[first_line - 1: last_line]
             code[-1] = code[-1].rstrip()
-            code = "".join(code)
+            if code_charset == 'utf-8':
+                code = u"".join(code)
+            else:
+                code = "".join(code)
         else:
             code = fh.read()
 
