@@ -96,7 +96,7 @@ def include_code(preprocessor, tag, markup):
         title += " [Lines %s]" % lines
     title = title.strip()
 
-    url = '/{0}/{1}'.format(code_dir, src)
+    url = '{0}/{1}'.format(code_dir, src)
     url = re.sub('/+', '/', url)
 
     open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
