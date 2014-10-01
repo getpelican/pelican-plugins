@@ -34,7 +34,7 @@ import os
 from .mdx_liquid_tags import LiquidTags
 
 
-SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}"
+SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] [classes:fancy,pinkish] [:hidefilename:] [title] %}"
 FORMAT = re.compile(r"""
 ^(?:\s+)?                          # Allow whitespace at beginning
 (?P<src>\S+)                       # Find the path
@@ -42,6 +42,8 @@ FORMAT = re.compile(r"""
 (?:(?:lang:)(?P<lang>\S+))?        # Optional language
 (?:\s+)?                           # Whitespace
 (?:(?:lines:)(?P<lines>\d+-\d+))?  # Optional lines
+(?:\s+)?                           # Whitespace
+(?:(?:classes:)(?P<classes>\S+))?  # Optional classes
 (?:\s+)?                           # Whitespace
 (?P<hidefilename>:hidefilename:)?  # Hidefilename flag
 (?:\s+)?                           # Whitespace
@@ -54,6 +56,7 @@ def include_code(preprocessor, tag, markup):
 
     title = None
     lang = None
+    classes = ''
     src = None
 
     match = FORMAT.search(markup)
@@ -62,6 +65,8 @@ def include_code(preprocessor, tag, markup):
         title = argdict['title'] or ""
         lang = argdict['lang']
         lines = argdict['lines']
+        if argdict['classes']:
+            classes = ' '+argdict['classes'].replace(',', ' ')
         hide_filename = bool(argdict['hidefilename'])
         if lines:
             first_line, last_line = map(int, lines.split("-"))
@@ -72,6 +77,9 @@ def include_code(preprocessor, tag, markup):
                          "expected syntax: {0}".format(SYNTAX))
 
     code_dir = preprocessor.configs.getConfig('CODE_DIR')
+    code_opentag = preprocessor.configs.getConfig('CODE_OPENTAG')
+    code_closetag = preprocessor.configs.getConfig('CODE_CLOSETAG')
+    code_download = preprocessor.configs.getConfig('CODE_DOWNLOADSTRING')
     code_path = os.path.join('content', code_dir, src)
 
     if not os.path.exists(code_path):
@@ -98,10 +106,8 @@ def include_code(preprocessor, tag, markup):
     url = '/{0}/{1}'.format(code_dir, src)
     url = re.sub('/+', '/', url)
 
-    open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
-                "<a href='{url}'>download</a></figcaption>".format(title=title,
-                                                                   url=url))
-    close_tag = "</figure>"
+    open_tag = code_opentag.format(title=title,url=url,classes=classes,download=code_download)
+    close_tag = code_closetag.format(title=title,url=url,classes=classes,download=code_download)
 
     # store HTML tags in the stash.  This prevents them from being
     # modified by markdown.

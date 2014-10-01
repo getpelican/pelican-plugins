@@ -20,9 +20,15 @@ from functools import wraps
 LIQUID_TAG = re.compile(r'\{%.*?%\}')
 EXTRACT_TAG = re.compile(r'(?:\s*)(\S+)(?:\s*)')
 LT_CONFIG = { 'CODE_DIR': 'code',
+              'CODE_OPENTAG': "<figure class='code{classes}'><figcaption><span>{title}</span><a href='{url}'>{download}</a></figcaption>",
+              'CODE_CLOSETAG': "</figure>",
+              'CODE_DOWNLOADSTRING' : u'download',
               'NOTEBOOK_DIR': 'notebooks'
 }
-LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin', 
+LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin',
+            'CODE_OPENTAG' : 'Opening template for include_code subplugin',
+            'CODE_CLOSETAG' : 'Closing template for include_code subplugin',
+            'CODE_DOWNLOADSTRING' : 'The `download` helper string for include_code subplugin',
             'NOTEBOOK_DIR' : 'Notebook directory for notebook subplugin'
 }
 
