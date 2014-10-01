@@ -68,9 +68,6 @@ class LiquidTags(markdown.Extension):
                 config[key] = [config[key],LT_HELP[key]]
             super(LiquidTags,self).__init__(config)
 
-        # Used as a flag to determine if javascript
-        # needs to be injected into a document
-
     @classmethod
     def register(cls, tag):
         """Decorator to register a new include tag"""

@@ -1,11 +1,12 @@
-from __future__ import unicode_literals, print_function
 from pelican import signals
 from .mdx_liquid_tags import LiquidTags, LT_CONFIG
+
 
 def addLiquidTags(gen):
     if not gen.settings.get('MD_EXTENSIONS'):
         from pelican.settings import DEFAULT_CONFIG
         gen.settings['MD_EXTENSIONS'] = DEFAULT_CONFIG['MD_EXTENSIONS']
+
     if LiquidTags not in gen.settings['MD_EXTENSIONS']:
         configs = dict()
         for key,value in LT_CONFIG.iteritems():
@@ -18,4 +19,3 @@ def addLiquidTags(gen):
 
 def register():
     signals.initialized.connect(addLiquidTags)
-    
