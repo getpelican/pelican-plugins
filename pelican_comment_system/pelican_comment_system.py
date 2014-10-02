@@ -106,6 +106,11 @@ def write_feed_all(gen, writer):
     global _all_comments
     _all_comments = sorted(_all_comments)
     _all_comments.reverse()
+
+    for com in _all_comments:
+        com.title = com.article.title + " - " + com.title
+        com.override_url = com.article.url + com.url
+
     writer = Writer(gen.output_path, settings=gen.settings)
     writer.write_feed(_all_comments, context, path)
 
@@ -157,6 +162,7 @@ def add_static_comments(gen, content):
                 base_path=folder, path=file,
                 content_class=Comment, context=context)
 
+            com.article = content
             _all_comments.append(com)
 
             if hasattr(com, 'replyto'):
