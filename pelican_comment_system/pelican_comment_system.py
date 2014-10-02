@@ -23,36 +23,38 @@ from . comment import Comment
 from . import avatars
 
 
+def setdefault(pelican, settings):
+    from pelican.settings import DEFAULT_CONFIG
+    for key, value in settings:
+        DEFAULT_CONFIG.setdefault(key, value)
+
+    if not pelican:
+        return
+
+    for key, value in settings:
+        pelican.settings.setdefault(key, value)
+
+
 def pelican_initialized(pelican):
     from pelican.settings import DEFAULT_CONFIG
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM', False)
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_DIR', 'comments')
-    DEFAULT_CONFIG.setdefault(
-        'PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH' 'images/identicon')
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ())
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72)
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_AUTHORS', {})
-    DEFAULT_CONFIG.setdefault(
-        'PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml'))
-    DEFAULT_CONFIG.setdefault('COMMENT_URL', '#comment-{slug}')
+    settings = [
+        ('PELICAN_COMMENT_SYSTEM', False),
+        ('PELICAN_COMMENT_SYSTEM_DIR', 'comments'),
+        ('PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH', 'images/identicon'),
+        ('PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ()),
+        ('PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72),
+        ('PELICAN_COMMENT_SYSTEM_AUTHORS', {}),
+        ('PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml')),
+        ('COMMENT_URL', '#comment-{slug}')
+    ]
+
+    setdefault(pelican, settings)
+
     DEFAULT_CONFIG['PAGE_EXCLUDES'].append(
         DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
     DEFAULT_CONFIG['ARTICLE_EXCLUDES'].append(
         DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
     if pelican:
-        pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM', False)
-        pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_DIR', 'comments')
-        pelican.settings.setdefault(
-            'PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH', 'images/identicon')
-        pelican.settings.setdefault(
-            'PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ())
-        pelican.settings.setdefault(
-            'PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72)
-        pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_AUTHORS', {})
-        pelican.settings.setdefault(
-            'PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml'))
-        pelican.settings.setdefault('COMMENT_URL', '#comment-{slug}')
-
         pelican.settings['PAGE_EXCLUDES'].append(
             pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
         pelican.settings['ARTICLE_EXCLUDES'].append(
