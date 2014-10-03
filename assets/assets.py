@@ -39,7 +39,7 @@ def create_assets_env(generator):
     """Define the assets environment and pass it to the generator."""
 
     theme_static_dir = generator.settings['THEME_STATIC_DIR']
-    assets_src = os.path.join(generator.output_path, theme_static_dir)
+    assets_src = generator.theme
     generator.env.assets_environment = Environment(
         assets_src, theme_static_dir)
 
