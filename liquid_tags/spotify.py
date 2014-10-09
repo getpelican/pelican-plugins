@@ -1,11 +1,7 @@
 """
 Spotify Tag
 ---------
-<<<<<<< HEAD
 This implements a Liquid-style spotify tag for Pelican,
-=======
-This implements a Liquid-style youtube tag for Pelican,
->>>>>>> a784d12... Add spotify liquid tag
 based on the jekyll / octopress youtube tag [1]_
 
 Syntax
