@@ -1,7 +1,7 @@
 """
 Spotify Tag
 ---------
-This implements a Liquid-style youtube tag for Pelican,
+This implements a Liquid-style spotify tag for Pelican,
 based on the jekyll / octopress youtube tag [1]_
 
 Syntax
