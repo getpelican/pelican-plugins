@@ -163,4 +163,13 @@ comment line ``# <!-- collapse=False -->`` will be open on load but
 can be collapsed by clicking on their header. Cells without collapse
 comments are rendered as standard code input cells.
 
+### Run unitests
+
+The file `test_notebook.py` contains tests that can be run using [nose](https://nose.readthedocs.org/en/latest/index.html)
+
+```
+cd path/to/liquid_tags
+nosetests
+```
+
 [<a name="1">1</a>] http://ipython.org/
