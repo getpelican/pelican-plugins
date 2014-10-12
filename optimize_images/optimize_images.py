@@ -9,8 +9,8 @@ Copyright (c) 2012 Irfan Ahmad (http://i.com.pk)
 """
 
 import logging
-import os
 from os import path
+import os
 from shutil import copyfile
 import hashlib
 import mmap
@@ -69,6 +69,7 @@ def optimize(dirpath, filename):
     if is_cached(checksum):
         # copy optimized image from cache
         copyfile(os.path.join(CACHE, checksum), filepath)
+        logger.info('read %s from cache', filepath)
     else:
         logger.info('optimizing %s', filepath)
     ext = os.path.splitext(filename)[1]
@@ -76,8 +77,8 @@ def optimize(dirpath, filename):
     flags = verbose if SHOW_OUTPUT else silent
     command = command.format(filename=filepath, flags=flags)
     call(command, shell=True)
-        # copy optimized image to cache
-        copyfile(filepath, os.path.join(CACHE, checksum))
+    # copy optimized image to cache
+    copyfile(filepath, os.path.join(CACHE, checksum))
 
 
 def register():
