@@ -10,20 +10,23 @@ Syntax
 
 Examples
 --------
+{% img /images/ninja.png %}
 {% img /images/ninja.png Ninja Attack! %}
 {% img left half http://site.com/images/ninja.png Ninja Attack! %}
-{% img left half http://site.com/images/ninja.png 150 150 "Ninja Attack!" "Ninja in attack posture" %}
+{% img left half http://site.com/images/ninja.png 300 150 "Ninja Attack!" "Ninja in attack posture" %}
 
 Output
 ------
 <img src="/images/ninja.png">
-<img class="left half" src="http://site.com/images/ninja.png" title="Ninja Attack!" alt="Ninja Attack!">
-<img class="left half" src="http://site.com/images/ninja.png" width="150" height="150" title="Ninja Attack!" alt="Ninja in attack posture">
+<img alt="Ninja Attack!" src="/images/ninja.png" title="Ninja Attack!">
+<img alt="Ninja Attack!" class="left half" src="http://site.com/images/ninja.png" title="Ninja Attack!">
+<img alt="Ninja in attack posture" class="left half" height="150" src="http://site.com/images/ninja.png" title="Ninja Attack!" width="300">
 
 [1] https://github.com/imathis/octopress/blob/master/plugins/image_tag.rb
 """
 import re
 from .mdx_liquid_tags import LiquidTags
+from collections import OrderedDict
 import six
 
 SYNTAX = '{% img [class name(s)] [http[s]:/]/path/to/image [width [height]] [title text | "title text" ["alt text"]] %}'
@@ -55,6 +58,9 @@ def img(preprocessor, tag, markup):
             attrs.update(match.groupdict())
         if not attrs.get('alt'):
             attrs['alt'] = attrs['title']
+
+    # Sort the dictionnary for test facilities
+    attrs = OrderedDict(sorted(attrs.items(), key=lambda t: t[0]))
 
     # Return the formatted text
     return "<img {0}>".format(' '.join('{0}="{1}"'.format(key, val)
