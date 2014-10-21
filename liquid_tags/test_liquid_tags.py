@@ -5,9 +5,41 @@ import markdown
 import re
 
 from pelican.tests.support import unittest
-from . import mdx_liquid_tags
-from . import img
-from . import notebook
+from . import (mdx_liquid_tags, img, notebook)
+
+
+# ------------------------------------------------------------------------------
+# Tests for mdx_liquid_tags
+# ------------------------------------------------------------------------------
+
+class TestLiquidTagRegex(unittest.TestCase):
+    """ Test if liquid tags are correctly parsed."""
+    def get_liquid_tags(self, markup):
+        liquid_tags = mdx_liquid_tags.LIQUID_TAG.findall(markup)
+        if liquid_tags:
+            for i, markup in enumerate(liquid_tags):
+                # remove {% %}
+                markup = markup[2:-2]
+                self.tag = mdx_liquid_tags.EXTRACT_TAG.match(markup).groups()[0]
+                self.markup = mdx_liquid_tags.EXTRACT_TAG.sub('', markup, 1)
+                return self.tag, self.markup
+        return None
+
+    def test_basic_liquid_tag(self):
+        markup = '{% tag arg1 arg2 ... argn %}'
+        self.get_liquid_tags(markup)
+        self.assertEqual(self.tag, 'tag')
+        self.assertEqual(self.markup, 'arg1 arg2 ... argn ')
+
+    def test_liquid_tag_in_text(self):
+        markup = 'Some text, {% tag1 arg1 arg2 ... argn %}, and some more text'
+        self.get_liquid_tags(markup)
+        self.assertEqual(self.tag, 'tag1')
+        self.assertEqual(self.markup, 'arg1 arg2 ... argn ')
+
+# ------------------------------------------------------------------------------
+# Tests for img
+# ------------------------------------------------------------------------------
 
 
 class TestImgTag(unittest.TestCase):
@@ -44,11 +76,13 @@ class TestImgTag(unittest.TestCase):
         output = self.md_img(markup)
         self.assertEqual(output, expected)
 
-
+# ------------------------------------------------------------------------------
+# Tests for notebook
+# ------------------------------------------------------------------------------
 
 
 class TestNotebookTagRegex(unittest.TestCase):
-
+    """ Test if notebook tags are correctly parsed."""
     def get_argdict(self, markup):
 
         match = notebook.FORMAT.search(markup)
