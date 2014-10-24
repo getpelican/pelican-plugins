@@ -75,7 +75,6 @@ class AsciiDocReaderTest(unittest.TestCase):
 
 
     def test_pygments_source_highlighter(self):
-        # tests pygments, but also the wrangling of options involving "-a key=val"
         page = self.read_file(
             path='article_for_pygments_highlighting.asc',
             ASCIIDOC_OPTIONS=['-a source-highlighter=pygments']
@@ -87,7 +86,28 @@ class AsciiDocReaderTest(unittest.TestCase):
                     '<span class="k">And </span><span class="nf">source-highlight doesnt recognise gherkin</span>\n'
                     '<span class="k">Then </span><span class="nf">this should work</span>\n'
                     '</pre></div></div></div>\n'
+                    '</div>\n'
                     '</div>\n')
 
-        self.assertEqual(page.content, expected)
+        self.assertMultiLineEqual(page.content, expected)
+
+
+    def test_images(self):
+        page = self.read_file(
+            path='article_with_image.asc',
+        )
+        expected = (u'<div id="preamble">\n'
+                    '<div class="sectionbody">\n'
+                    '<div class="imageblock">\n'
+                    '<div class="content">\n'
+                    '<img src="images/image.png" alt="alt text">\n'
+                    '</div>\n'
+                    '<div class="title">Figure 1. An image</div>\n'
+                    '</div>\n'
+                    '</div>\n'
+                    '</div>\n')
+
+        self.assertMultiLineEqual(page.content, expected)
+
+
 
