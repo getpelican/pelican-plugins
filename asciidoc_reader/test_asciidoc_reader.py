@@ -63,7 +63,6 @@ class AsciiDocReaderTest(unittest.TestCase):
 
 
     def test_unicode(self):
-        # test to ensure the ASCIIDOC_OPTIONS is being used
         page = self.read_file(
             path='article_with_utf8.asc',
         )
@@ -73,3 +72,22 @@ class AsciiDocReaderTest(unittest.TestCase):
                     '<p>A utf-8 euro sign: \u20ac</p>'
                     '</div>\n</div>\n</div>\n')
         self.assertEqual(page.content, expected)
+
+
+    def test_pygments_source_highlighter(self):
+        # tests pygments, but also the wrangling of options involving "-a key=val"
+        page = self.read_file(
+            path='article_for_pygments_highlighting.asc',
+            ASCIIDOC_OPTIONS=['-a source-highlighter=pygments']
+        )
+        expected = (u'<div id="preamble">\n'
+                    '<div class="sectionbody">\n'
+                    '<div class="listingblock">\n'
+                    '<div class="content"><div class="highlight"><pre><span class="k">Given </span><span class="nf">we are using pygments</span>\n'
+                    '<span class="k">And </span><span class="nf">source-highlight doesnt recognise gherkin</span>\n'
+                    '<span class="k">Then </span><span class="nf">this should work</span>\n'
+                    '</pre></div></div></div>\n'
+                    '</div>\n')
+
+        self.assertEqual(page.content, expected)
+
