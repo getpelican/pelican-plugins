@@ -498,6 +498,7 @@ def parse_attributes(attrs,dict):
 
     if not attrs:
         return
+    attrs = ''.join(attrs)
     dict['0'] = attrs
     # Replace line separators with spaces so line spanning works.
     s = re.sub(r'\s', ' ', attrs)
@@ -3969,6 +3970,7 @@ class Macro:
                 result = result.replace(chr(0), a0)
             return result
 
+        text = ''.join(text)
         return self.reo.sub(subs_func, text)
 
     def translate(self):
@@ -6045,6 +6047,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 message.stderr('-'*60)
             else:
                 message.stderr('%sunexpected error: %s' % (msg,str(e)))
+        traceback.print_exc()
         sys.exit(1)
 
 def usage(msg=''):
