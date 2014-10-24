@@ -45,8 +45,10 @@ class AsciiDocReaderTest(unittest.TestCase):
 
     def test_article_with_asc_options(self):
         # test to ensure the ASCIIDOC_OPTIONS is being used
-        page = self.read_file(path='article_with_asc_options.asc',
-            ASCIIDOC_OPTIONS=["-a revision=1.0.42"])
+        page = self.read_file(
+            path='article_with_asc_options.asc',
+            ASCIIDOC_OPTIONS=["-a revision=1.0.42"]
+        )
         expected = ('<div class="sect1">\n'
                     '<h2 id="_used_for_pelican_test">'
                     'Used for pelican test</h2>\n'
@@ -56,5 +58,18 @@ class AsciiDocReaderTest(unittest.TestCase):
                     '<div class="paragraph">'
                     '<p>The quick brown fox jumped over '
                     'the lazy dog&#8217;s back.</p>'
+                    '</div>\n</div>\n</div>\n')
+        self.assertEqual(page.content, expected)
+
+
+    def test_unicode(self):
+        # test to ensure the ASCIIDOC_OPTIONS is being used
+        page = self.read_file(
+            path='article_with_utf8.asc',
+        )
+        expected = (u'<div id="preamble">\n'
+                    '<div class="sectionbody">\n'
+                    '<div class="paragraph">'
+                    '<p>A utf-8 euro sign: \u20ac</p>'
                     '</div>\n</div>\n</div>\n')
         self.assertEqual(page.content, expected)
