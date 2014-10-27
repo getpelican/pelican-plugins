@@ -110,6 +110,8 @@ def update_generator_contents(generator, *args):
 
     Hide content without a translation for current DEFAULT_LANG
     if HIDE_UNTRANSLATED_CONTENT is True
+    Hide separately pages and articles in the same way with HIDE_UNTRANSLATED_PAGES
+    and HIDE_UNTRANSLATED_ARTICLES
     """
     generator.translations = []
     is_pages_gen = hasattr(generator, 'pages')
@@ -122,6 +124,10 @@ def update_generator_contents(generator, *args):
             move_translations_links(article)
 
     if not generator.settings.get('HIDE_UNTRANSLATED_CONTENT', True):
+        return
+    if is_pages_gen and not generator.settings.get('HIDE_UNTRANSLATED_PAGES', True):
+        return
+    if not is_pages_gen and not generator.settings.get('HIDE_UNTRANSLATED_ARTICLES', True):
         return
     contents = generator.pages if is_pages_gen else generator.articles
     hidden_contents = generator.hidden_pages if is_pages_gen else generator.drafts
