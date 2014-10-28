@@ -7,7 +7,7 @@ Adds related_posts variable to article's context
 
 from pelican import signals
 from collections import Counter
-
+from operator import attrgetter
 
 def add_related_posts(generator):
     # get the max number of entries from settings
@@ -45,6 +45,8 @@ def add_related_posts(generator):
 
             article.related_posts = [other for other, count 
                 in scores.most_common(numentries)]
+
+        article.related_posts.sort(key=attrgetter('slug'))
 
 def register():
     signals.article_generator_finalized.connect(add_related_posts)
