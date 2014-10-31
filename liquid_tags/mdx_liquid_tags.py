@@ -61,12 +61,12 @@ class LiquidTags(markdown.Extension):
     def __init__(self, config):
         try:
             # Needed for markdown versions >= 2.5
-            for key,value in LT_CONFIG.iteritems():
+            for key,value in LT_CONFIG.items():
                 self.config[key] = [value,LT_HELP[key]]
             super(LiquidTags,self).__init__(**config)
         except AttributeError:
             # Markdown versions < 2.5
-            for key,value in LT_CONFIG.iteritems():
+            for key,value in LT_CONFIG.items():
                 config[key] = [config[key],LT_HELP[key]]
             super(LiquidTags,self).__init__(config)
 
