@@ -1,6 +1,8 @@
 Multi parts posts
 -----------------
 
+**This plugin has been deprecated. See the series plugin for a better support of multi part articles.**
+
 The multi-part posts plugin allow you to write multi-part posts.
 
 In order to mark posts as part of a multi-part post, use the `:parts:` metadata:
