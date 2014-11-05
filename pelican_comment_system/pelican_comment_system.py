@@ -202,6 +202,7 @@ def pelican_finalized(pelican):
         return
     global _all_comments
     print('Processed %s comment(s)' % len(_all_comments))
+    _all_comments = []
 
 
 def register():
