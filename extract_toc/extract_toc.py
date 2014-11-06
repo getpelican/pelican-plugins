@@ -17,12 +17,25 @@ def extract_toc(content):
         return
 
     soup = BeautifulSoup(content._content,'html.parser')
+    filename = content.source_path
+    extension = path.splitext(filename)[1][1:]
     toc = None
-    if not toc:  # default Markdown reader
+    # if it is a Markdown file
+    if extension in readers.MarkdownReader.file_extensions:
         toc = soup.find('div', class_='toc')
-    if not toc:  # default reStructuredText reader
+        toc.extract()
+    # else if it is a reST file
+    elif extension in readers.RstReader.file_extensions:
         toc = soup.find('div', class_='contents topic')
-    if not toc:  # Pandoc reader
+        if toc: toc.extract()
+        if toc:
+            tag=BeautifulSoup(str(toc))
+            tag.div['class']='toc'
+            tag.div['id']=''
+            p=tag.find('p', class_='topic-title first')
+            if p:p.extract()
+            toc=tag
+    elif not toc:  # Pandoc reader
         toc = soup.find('nav', id='TOC')
     if toc:
         toc.extract()
