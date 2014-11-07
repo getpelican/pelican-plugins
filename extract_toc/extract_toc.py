@@ -23,7 +23,7 @@ def extract_toc(content):
     # if it is a Markdown file
     if extension in readers.MarkdownReader.file_extensions:
         toc = soup.find('div', class_='toc')
-        toc.extract()
+        if toc: toc.extract()
     # else if it is a reST file
     elif extension in readers.RstReader.file_extensions:
         toc = soup.find('div', class_='contents topic')
