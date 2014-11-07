@@ -29,7 +29,7 @@ def insert_into_last_element(html, element):
     """
     try:
         item = fragment_fromstring(element)
-    except ParserError, TypeError:
+    except (ParserError, TypeError) as e:
         item = fragment_fromstring('<span></span>')
 
     try:
@@ -37,7 +37,7 @@ def insert_into_last_element(html, element):
         doc[-1].append(item)
 
         return ''.join(tostring(e) for e in doc)
-    except ParserError, TypeError:
+    except (ParserError, TypeError) as e:
         return ''
 
 def insert_read_more_link(instance):
