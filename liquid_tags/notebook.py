@@ -261,8 +261,7 @@ def notebook(preprocessor, tag, markup):
 
     language_applied_highlighter = partial(custom_highlighter, language=language)
 
-    settings = preprocessor.configs.config['settings']
-    nb_dir =  settings.get('NOTEBOOK_DIR', 'notebooks')
+    nb_dir =  preprocessor.configs.getConfig('NOTEBOOK_DIR')
     nb_path = os.path.join('content', nb_dir, src)
 
     if not os.path.exists(nb_path):
