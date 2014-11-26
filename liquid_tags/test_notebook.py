@@ -2,7 +2,7 @@ import re
 
 from pelican.tests.support import unittest
 
-import notebook
+from . import notebook
 
 
 class TestNotebookTagRegex(unittest.TestCase):
