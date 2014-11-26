@@ -74,7 +74,6 @@ def include_code(preprocessor, tag, markup):
     code_dir = preprocessor.configs.getConfig('CODE_DIR')
     code_path = os.path.join('content', code_dir, src)
     siteurl = preprocessor.configs.getConfig('SITEURL')
-    print siteurl+"aHHHHH"
 
     if not os.path.exists(code_path):
         raise ValueError("File {0} could not be found".format(code_path))
