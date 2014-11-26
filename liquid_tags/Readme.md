@@ -25,6 +25,17 @@ To insert a sized and labeled image in your document, enable the
 
     {% img [class name(s)] path/to/image [width [height]] [title text | "title text" ["alt text"]] %}
 
+### Base64 Image (inline image) tag
+
+There is one more tag for image: ``b64img``. It is based on ``img`` tag, but instead of inserting link on image it acutally reads image and inserts it as base64 text into ``<img src=`` attribute.
+
+To use it:
+
+1. Enable ``liquid_tags.b64img``
+1. Insert tag as you'd insert image one: ``{% b64img [class name(s)] path/to/image [width [height]] [title text | "title text" ["alt text"]] %}``
+
+Images are read on compilation phase so you can use any local path (just be sure that image will remain there on next compilation)
+
 ## Youtube Tag
 To insert youtube video into a post, enable the
 ``liquid_tags.youtube`` plugin, and add to your document:
@@ -151,5 +162,14 @@ loaded and can be expanded by clicking on them. Cells containing the
 comment line ``# <!-- collapse=False -->`` will be open on load but
 can be collapsed by clicking on their header. Cells without collapse
 comments are rendered as standard code input cells.
+
+### Run unitests
+
+The file `test_notebook.py` contains tests that can be run using [nose](https://nose.readthedocs.org/en/latest/index.html)
+
+```
+cd path/to/liquid_tags
+nosetests
+```
 
 [<a name="1">1</a>] http://ipython.org/
