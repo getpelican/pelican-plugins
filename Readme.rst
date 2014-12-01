@@ -60,6 +60,8 @@ Custom article URLs       Adds support for defining different default URLs for d
 
 Disqus static comments    Adds a disqus_comments property to all articles. Comments are fetched at generation time using disqus API
 
+Entities                  Allow the definition of arbitrary content types (e.g: projects, events) and associated settings. Similar to Drupal's node types.
+
 Extract table of content  Extracts table of contents (ToC) from `article.content`
 
 Feed Summary              Allows article summaries to be used in ATOM and RSS feeds instead of the entire article
