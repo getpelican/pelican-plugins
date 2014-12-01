@@ -58,3 +58,6 @@
 [submodule "pelican-md-yaml"]
 	path = pelican-md-yaml
 	url = https://github.com/joachimneu/pelican-md-yaml.git
+[submodule "pelican-autostatic"]
+	path = pelican-autostatic
+	url = https://github.com/AlexJF/pelican-autostatic.git
