@@ -36,6 +36,7 @@ Plugin descriptions
 ========================  ===========================================================
 Plugin                    Description
 ========================  ===========================================================
+Advanced thumbnailer      Create thumbnails for image files with specially crafted filenames.
 AsciiDoc reader           Use AsciiDoc to write your posts.
 
 Asset management          Use the Webassets module to manage assets such as CSS and JS files.
