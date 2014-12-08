@@ -38,13 +38,13 @@ def share_post(content):
     url = article_url(content)
     summary = article_summary(content)
 
-    tweet = '%s %s' % (title, url)
+    tweet = '%s%%20%s' % (title, url)
     facebook_link = 'http://www.facebook.com/sharer/sharer.php?s=100' \
                     '&p[url]=%s&p[images][0]=&p[title]=%s&p[summary]=%s' \
                     % (url, title, summary)
     gplus_link = 'https://plus.google.com/share?url=%s' % url
     twitter_link = 'http://twitter.com/home?status=%s' % tweet
-    mail_link = 'mailto:?subject=%s&body=%s' % (title, url)
+    mail_link = 'mailto:?subject=%s&amp;body=%s' % (title, url)
 
     share_links = {'twitter': twitter_link,
                    'facebook': facebook_link,
