@@ -62,7 +62,7 @@ For use with the Pyhton-Markdown_ syntax, the UML block must be enclose with ``:
 
     ::uml:: [format=...] [classes=...] [alt=...]
        PlantUML script
-    ::uml::
+    ::end-uml::
 
 See Examples_ for more details.
 
@@ -130,7 +130,7 @@ Same diagram with Pyhton-Markdown_ syntax:
       deactivate A
       A -> User: Done
       deactivate A
-    ::uml::
+    ::end-uml::
 
 Another example from PlantUML_ site (activity diagram):
 
