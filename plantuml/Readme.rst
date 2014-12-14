@@ -1,11 +1,11 @@
-=========================================
-PlantUML plugin for Pelican rst documents
-=========================================
+================================================
+PlantUML plugin for Pelican rst and md documents
+================================================
 
 This plugin allows you to define UML diagrams directly into rst or md documents using the great
 PlantUML_ tool.
 
-This plugin gets the content of ``uml`` directive, passes it to the external
+It gets the content of ``uml`` directive, passes it to the external
 program PlantUML_ and then links the generated image to the document.
 
 .. contents::
@@ -74,6 +74,7 @@ order ``format``, ``classes`` anmd ``alt``. The general syntax for option is
     option="value"
 
 Option can be enclosed with single or double quotes, as you like.
+Options defaults are the same as for the rst plugin.
   
 Examples
 ========
@@ -106,6 +107,7 @@ Output:
 
 .. image:: http://plantuml.sourceforge.net/imgp/sequence_022.png
    :alt: Sample sequence diagram
+
 
 Same diagram with Pyhton-Markdown_ syntax:
 
