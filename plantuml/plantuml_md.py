@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 """
    PlantUML_ Extension for Python-Markdown_
-   =======================================
+   ========================================
 
    Syntax:
 
-      ::uml:: [format="png|svg"] [classes="class1 class2 ..."] [alt="text for alt"]
+       ::uml:: [format="png|svg"] [classes="class1 class2 ..."] [alt="text for alt"]
           PlantUML script diagram
-      ::uml::
+       ::end-uml::
 
    Example:
 
-      ::uml:: format="png" classes="uml myDiagram" alt="My super diagram"
+       ::uml:: format="png" classes="uml myDiagram" alt="My super diagram"
           Goofy ->  MickeyMouse: calls
           Goofy <-- MickeyMouse: responds
-      ::uml::
+       ::end-uml::
 
    Options are optional, but if present must be specified in the order format, classes, alt.
    The option value may be enclosed in single or double quotes.
@@ -22,7 +22,6 @@
 .. _Python-Markdown: http://pythonhosted.org/Markdown/
 .. _PlantUML: http://plantuml.sourceforge.net/
 """
-
 import os
 import re
 import markdown
@@ -75,7 +74,7 @@ class PlantUMLBlockProcessor(markdown.blockprocessors.BlockProcessor):
 # For details see https://pythonhosted.org/Markdown/extensions/api.html#extendmarkdown
 class PlantUMLMarkdownExtension(markdown.Extension):
     # For details see https://pythonhosted.org/Markdown/extensions/api.html#configsettings
-    def __init__(self, kwargs):
+    def __init__(self, *args, **kwargs):
         self.config = {
             'classes': ["uml","Space separated list of classes for the generated image. Default uml."],
             'alt'    : ["uml diagram", "Text to show when image is not available."],
@@ -83,12 +82,12 @@ class PlantUMLMarkdownExtension(markdown.Extension):
             'SITEURL': ["", "URL of document, used as a prefix for the image diagram."]
         }
 
-        super(PlantUMLMarkdownExtension, self).__init__(**kwargs)
+        super(PlantUMLMarkdownExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
         blockprocessor = PlantUMLBlockProcessor(md.parser)
         blockprocessor.config = self.getConfigs()
-        md.parser.blockprocessors.add('plantuml', blockprocessor, '_begin')
+        md.parser.blockprocessors.add('plantuml', blockprocessor, '>code')
 
 def makeExtension(**kwargs):
     return PlantUMLMarkdownExtension(**kwargs)
