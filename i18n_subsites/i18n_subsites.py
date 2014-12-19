@@ -297,6 +297,7 @@ def add_variables_to_context(generator):
     context['main_lang'] = _MAIN_LANG
     context['lang_siteurls'] = _SITE_DB
     current_lang = generator.settings['DEFAULT_LANG']
+    context['current_lang'] = current_lang
     extra_siteurls = _SITE_DB.copy()
     extra_siteurls.pop(current_lang)
     context['extra_siteurls'] = extra_siteurls
