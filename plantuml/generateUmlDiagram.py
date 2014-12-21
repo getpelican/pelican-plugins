@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import logging
 import os
 import tempfile
 from zlib import adler32
@@ -12,6 +13,8 @@ def generate_uml_image(path, plantuml_code, imgformat):
     tf.write(plantuml_code.encode('utf8'))
     tf.write('\n@enduml')
     tf.flush()
+
+    logger.debug("[plantuml] Temporary PlantUML source at "+(tf.name))
 
     if imgformat == 'png':
         imgext = ".png"
@@ -30,14 +33,16 @@ def generate_uml_image(path, plantuml_code, imgformat):
     cmdline = ['plantuml', '-o', path, outopt, tf.name]
 
     try:
+        logger.debug("[plantuml] About to execute "+" ".join(cmdline))
         p = Popen(cmdline, stdout=PIPE, stderr=PIPE)
         out, err = p.communicate()
     except Exception as exc:
         raise Exception('Failed to run plantuml: %s' % exc)
     else:
         if p.returncode == 0:
-            # diagram was correctly generated, we can remove the temporary file
-            os.remove(tf.name)
+            # diagram was correctly generated, we can remove the temporary file (if not debugging)
+            if not logger.isEnabledFor(logging.DEBUG):
+                os.remove(tf.name)
             # renaming output image using an hash code, just to not pullate
             # output directory with a growing number of images
             name = os.path.join(path, os.path.basename(name))
@@ -52,4 +57,4 @@ def generate_uml_image(path, plantuml_code, imgformat):
             return 'images/' + os.path.basename(newname)
         else:
             # the temporary file is still available as aid understanding errors
-            raise Exception('Error calling plantuml: %s' % err)
+            raise RuntimeError('Error calling plantuml: %s' % err)

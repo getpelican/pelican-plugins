@@ -28,7 +28,6 @@ import markdown
 from markdown.util import etree
 from generateUmlDiagram import generate_uml_image
 
-
 # For details see https://pythonhosted.org/Markdown/extensions/api.html#blockparser
 class PlantUMLBlockProcessor(markdown.blockprocessors.BlockProcessor):
     # Regular expression inspired by the codehilite Markdown plugin
@@ -54,9 +53,12 @@ class PlantUMLBlockProcessor(markdown.blockprocessors.BlockProcessor):
         alt     = m.group('alt')     if m.group('alt')     else self.config['alt']
 
         # Read blocks until end marker found
-        while not self.RE_END.search(block):
+        while blocks and not self.RE_END.search(block):
             block = blocks.pop(0)
             text = text + '\n' + block
+        else:
+            if not blocks:
+                raise RuntimeError("[plantuml] UML block not closed, text is:\n"+text)
 
         # Remove block header and footer
         text = re.sub(self.RE, "", re.sub(self.RE_END, "", text))
@@ -66,7 +68,7 @@ class PlantUMLBlockProcessor(markdown.blockprocessors.BlockProcessor):
             os.makedirs(path)
 
         # Generate image from PlantUML script
-        imageurl = self.config['SITEURL']+'/'+generate_uml_image(path, text, format)
+        imageurl = self.config['siteurl']+'/'+generate_uml_image(path, text, format)
         # Create image tag and append to the document
         etree.SubElement(parent, "img", src=imageurl, alt=alt, classes=classes)
 
@@ -79,7 +81,7 @@ class PlantUMLMarkdownExtension(markdown.Extension):
             'classes': ["uml","Space separated list of classes for the generated image. Default uml."],
             'alt'    : ["uml diagram", "Text to show when image is not available."],
             'format' : ["png", "Format of image to generate (png or svg). Default png."],
-            'SITEURL': ["", "URL of document, used as a prefix for the image diagram."]
+            'siteurl': ["", "URL of document, used as a prefix for the image diagram."]
         }
 
         super(PlantUMLMarkdownExtension, self).__init__(*args, **kwargs)

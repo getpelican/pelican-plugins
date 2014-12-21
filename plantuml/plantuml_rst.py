@@ -11,7 +11,7 @@ import os
 
 from docutils.nodes import image, literal_block
 from docutils.parsers.rst import Directive, directives
-from pelican import signals
+from pelican import signals, logger
 
 from generateUmlDiagram import generate_uml_image
 
@@ -43,9 +43,9 @@ class PlantUML_rst(Directive):
 
         try:
             url = global_siteurl+'/'+generate_uml_image(path, body, "png")
-        except Exception, exc:
+        except Exception as exc:
             error = self.state_machine.reporter.error(
-                'Failed to run plantuml: %s' % (exc, ),
+                'Failed to run plantuml: %s' % exc,
                 literal_block(self.block_text, self.block_text),
                 line=self.lineno)
             nodes.append(error)
@@ -59,6 +59,7 @@ class PlantUML_rst(Directive):
 
 
 def custom_url(generator, metadata):
+    """ Saves globally the value of SITEURL configuration parameter """
     global global_siteurl
     global_siteurl = generator.settings['SITEURL']
 
@@ -70,17 +71,16 @@ def pelican_init(pelicanobj):
         from plantuml_md import PlantUMLMarkdownExtension
     except:
         # Markdown not available
+        logger.debug("[plantuml] Markdown support not available")
         return
 
     # Register the Markdown plugin
-    config = { 'SITEURL': pelicanobj.settings['SITEURL'] }
+    config = { 'siteurl': pelicanobj.settings['SITEURL'] }
 
     try:
         pelicanobj.settings['MD_EXTENSIONS'].append(PlantUMLMarkdownExtension(config))
     except:
-        sys.excepthook(*sys.exc_info())
-        sys.stderr.write("\nError - unable to configure plantuml markdown extension\n")
-        sys.stderr.flush()
+        logger.error("[plantuml] Unable to configure plantuml markdown extension")
 
 
 def register():

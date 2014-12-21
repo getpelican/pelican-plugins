@@ -64,6 +64,8 @@ For use with the Pyhton-Markdown_ syntax, the UML block must be enclose with ``:
        PlantUML script
     ::end-uml::
 
+Please keep a blank line before ``::uml::`` and after ``::end-uml::`` to be sure that the UML code will be correctly
+recognized.
 See Examples_ for more details.
 
 With MD syntax options must be specified in the same line as the opening ``:uml::``, with the
@@ -75,6 +77,16 @@ order ``format``, ``classes`` anmd ``alt``. The general syntax for option is
 
 Option can be enclosed with single or double quotes, as you like.
 Options defaults are the same as for the rst plugin.
+
+Debugging
+---------
+The plugin can produce debugging informations to help to locate errors. To enable debugging
+execute ``pelican`` in debug mode:
+
+ .. code-block:: console
+
+     make DEBUG=1 html
+
   
 Examples
 ========
