@@ -51,7 +51,9 @@ def create_assets_env(generator):
         for name, args, kwargs in generator.settings['ASSET_BUNDLES']:
             generator.env.assets_environment.register(name, *args, **kwargs)
 
-    if logging.getLevelName(logger.getEffectiveLevel()) == "DEBUG":
+    if 'ASSET_DEBUG' in generator.settings:
+        generator.env.assets_environment.debug = generator.settings['ASSET_DEBUG']
+    elif logging.getLevelName(logger.getEffectiveLevel()) == "DEBUG":
         generator.env.assets_environment.debug = True
 
     if 'ASSET_SOURCE_PATHS' in generator.settings:
