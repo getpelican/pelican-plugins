@@ -38,7 +38,7 @@ def share_post(content):
     url = article_url(content)
     summary = article_summary(content)
 
-    tweet = quote(('%s %s' % (title, url)).encode('utf-8'))
+    tweet = ('%s%s%s' % (title, quote(' '), url)).encode('utf-8')
     facebook_link = 'http://www.facebook.com/sharer/sharer.php?s=100&amp;p%%5Burl%%5D=%s' % url
     gplus_link = 'https://plus.google.com/share?url=%s' % url
     twitter_link = 'http://twitter.com/home?status=%s' % tweet
