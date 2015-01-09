@@ -58,3 +58,6 @@
 [submodule "pelican-md-yaml"]
 	path = pelican-md-yaml
 	url = https://github.com/joachimneu/pelican-md-yaml.git
+[submodule "pelican-entities"]
+	path = pelican-entities
+	url = https://github.com/AlexJF/pelican-entities.git
