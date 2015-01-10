@@ -96,12 +96,14 @@ make sure it is executable (``chmod +x pandoc-plantuml``).
 In the ``pelicanconf.py`` configure the needed plugins:
 
 .. code-block:: python
+
     PLUGINS = ['pandoc_reader'] // Yes, plantuml plugin non necessary
     PANDOC_ARGS = ['--filter=pandoc-plantuml']
 
 In Markdown posts use the following syntax to include PlantUML_ diagrams:
 
 .. code-block:: markdown
+
     ```plantuml
     @startuml
       Alice -> Bob: Authentication Request
