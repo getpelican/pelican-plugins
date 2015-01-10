@@ -78,6 +78,42 @@ order ``format``, ``classes`` anmd ``alt``. The general syntax for option is
 Option can be enclosed with single or double quotes, as you like.
 Options defaults are the same as for the rst plugin.
 
+For pandoc_reader plugin users
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The plugin ``pandoc_reader`` sends the Markdown body to the pandoc_ tool which has it's own Markdown parser, written
+in Haskell_ language: Python_ plugins manipulating Markdown posts (such this) are not used because the entire body
+id passed to pandoc_ without any iteraction by Pelican_.
+
+For those who are using the ``pandoc_reader`` plugin and wants to include PlantUML_ diagrams, use the
+``pandoc-plantuml`` script (only *nix, sorry): it is a wrapper for filtering the code blocks parsed by pandoc_ before
+writing out the converted file.
+It is an adaption of the great work by Kurt Bonne for his
+`pandoc-plantuml-filter <https://github.com/kbonne/pandoc-plantuml-filter.git>`_.
+
+To use it, copy the ``pandoc-plantuml`` file in your pelican project, in the same directory of ``pelicanconf.py``, and
+make sure it is executable (``chmod +x pandoc-plantuml``).
+
+In the ``pelicanconf.py`` configure the needed plugins:
+
+.. code-block:: python
+    PLUGINS = ['pandoc_reader'] // Yes, plantuml plugin non necessary
+    PANDOC_ARGS = ['--filter=pandoc-plantuml']
+
+In Markdown posts use the following syntax to include PlantUML_ diagrams:
+
+.. code-block:: markdown
+    ```plantuml
+    @startuml
+      Alice -> Bob: Authentication Request
+      Bob --> Alice: Authentication Response
+
+      Alice -> Bob: Another authentication Request
+      Alice <-- Bob: another authentication Response
+    @enduml
+    ```
+
+  Rendered images will bu put in the output/images folder.
+
 Debugging
 ---------
 The plugin can produce debugging informations to help to locate errors. To enable debugging
@@ -196,3 +232,7 @@ Generated image:
 .. _layman: http://wiki.gentoo.org/wiki/Layman
 .. _Graphviz: http://www.graphviz.org
 .. _Pyhton-Markdown: http://pythonhosted.org/Markdown
+.. _pandoc: http://johnmacfarlane.net/pandoc
+.. _Haskell: http://www.haskell.org/haskellwiki/Haskell
+.. _Python:: http://www.python.org
+.. _Pelican: http://docs.getpelican.com/en
