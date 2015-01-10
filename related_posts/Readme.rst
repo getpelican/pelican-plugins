@@ -20,8 +20,15 @@ For example::
 
 
 Your related posts should share a common tag. You can also use ``related_posts:`` in your post's meta data.
-The 'related_posts:' meta data works together with your existing slugs:
+The 'related_posts:' meta data works together with your existing slugs::
 
-    related_posts: slug1,slug2,slug3...slugN 
+    related_posts: slug1, slug2, slug3, ... slugN
 
-N represents the RELATED_POSTS_MAX
+``N`` represents the ``RELATED_POSTS_MAX``.
+
+Additionally, you can specify::
+
+    RELATED_POSTS_SKIP_SAME_CATEGORY = True
+
+in your settings file. With this setting, ``article.related_posts`` will
+contain only related posts from categories other than the original article's.
