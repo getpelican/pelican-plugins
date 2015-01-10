@@ -90,15 +90,15 @@ writing out the converted file.
 It is an adaption of the great work by Kurt Bonne for his
 `pandoc-plantuml-filter <https://github.com/kbonne/pandoc-plantuml-filter.git>`_.
 
-To use it, copy the ``pandoc-plantuml`` file in your pelican project, in the same directory of ``pelicanconf.py``, and
-make sure it is executable (``chmod +x pandoc-plantuml``).
+To use it, copy the ``pandoc-plantuml`` file in a subdirectory of your pelican project (for example `pandoc_extensions`)
+and make sure it is executable (``chmod +x pandoc-plantuml``).
 
 In the ``pelicanconf.py`` configure the needed plugins:
 
 .. code-block:: python
 
     PLUGINS = ['pandoc_reader'] // Yes, plantuml plugin non necessary
-    PANDOC_ARGS = ['--filter=pandoc-plantuml']
+    PANDOC_ARGS = ['--filter=pandoc_extensions/pandoc-plantuml']
 
 In Markdown posts use the following syntax to include PlantUML_ diagrams:
 
