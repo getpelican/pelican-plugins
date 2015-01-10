@@ -48,10 +48,8 @@ def generate_uml_image(path, plantuml_code, imgformat):
             name = os.path.join(path, os.path.basename(name))
             newname = os.path.join(path, "%08x" % (adler32(plantuml_code) & 0xffffffff))+imgext
 
-            try:        # for Windows
+            if os.path.exists(newname):
                 os.remove(newname)
-            except OSError:
-                logger.debug('File '+newname+' does not exist, not deleted')
 
             os.rename(name, newname)
             return 'images/' + os.path.basename(newname)
