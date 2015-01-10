@@ -114,7 +114,7 @@ In Markdown posts use the following syntax to include PlantUML_ diagrams:
     @enduml
     ```
 
-  Rendered images will bu put in the output/images folder.
+Rendered images will bu put in the output/images folder.
 
 Debugging
 ---------
