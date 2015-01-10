@@ -14,7 +14,7 @@ Example
 
 Output
 ------
-<iframe width="640" height="480" src="http://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+<iframe width="640" height="480" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 
 [1] https://gist.github.com/jamieowen/2063748
 """
@@ -43,7 +43,7 @@ def youtube(preprocessor, tag, markup):
         youtube_out = """
             <div class="videobox">
                 <iframe width="{width}" height="{height}"
-                        src='http://www.youtube.com/v/{youtube_id}'
+                        src='https://www.youtube.com/embed/{youtube_id}'
                         frameborder='0'
                         webkitAllowFullScreen mozallowfullscreen allowFullScreen>
                 </iframe>
