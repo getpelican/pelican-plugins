@@ -14,15 +14,18 @@ Example
 
 Output
 ------
-<iframe src='https://embed.spotify.com/?uri=spotify:track:1HNZcRFlIKwHAJD3LxvX4d' width='300' height='380' frameborder='0' allowtransparency='true'></iframe>
+<iframe
+    src='https://embed.spotify.com/?uri=spotify:track:1HNZcRFlIKwHAJD3LxvX4d'
+    width='300' height='380' frameborder='0' allowtransparency='true'>
+</iframe>
 """
-import os
 import re
 from .mdx_liquid_tags import LiquidTags
 
 SYNTAX = "{% spotify id %}"
 
 SPOTIFY = re.compile(r'(\w+)(\s+(\d+)\s(\d+))?')
+
 
 @LiquidTags.register('spotify')
 def spotify(preprocessor, tag, markup):
@@ -47,6 +50,6 @@ def spotify(preprocessor, tag, markup):
     return spotify_out
 
 
-#----------------------------------------------------------------------
+# ---------------------------------------------------
 # This import allows image tag to be a Pelican plugin
-from liquid_tags import register
+from liquid_tags import register  # noqa
