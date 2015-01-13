@@ -19,7 +19,7 @@ validated.
 
 ## Instructions
 
-Add `w3c_validate` to your config file's plugins after installing dependencies - `plugins = ['w3c_validate']`
+Add `w3c_validate` to your config file's plugins after installing dependencies - `PLUGINS = ['w3c_validate']`
 
 ## Dependencies
 
