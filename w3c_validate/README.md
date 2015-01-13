@@ -17,6 +17,10 @@ are displayed. For example:
 flag. Otherwise, you will see errors (if any) but not the file currently being
 validated.
 
+## Instructions
+
+Add `w3c_validate` to your config file's plugins after installing dependencies - `PLUGINS = ['w3c_validate']`
+
 ## Dependencies
 
 * [py_w3c](https://pypi.python.org/pypi/py_w3c/0.1.0), which can be installed with pip:
