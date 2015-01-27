@@ -51,6 +51,8 @@ Template Example
 <section>
     <p id="post-share-links">
         Share on:
+        <a href="{{article.share_post['diaspora']}}" target="_blank" title="Share on Diaspora">Diaspora*</a>
+        ❄
         <a href="{{article.share_post['twitter']}}" target="_blank" title="Share on Twitter">Twitter</a>
         ❄
         <a href="{{article.share_post['facebook']}}" target="_blank" title="Share on Facebook">Facebook</a>

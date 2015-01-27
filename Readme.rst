@@ -18,9 +18,9 @@ and activating the ones you want in your settings file::
     PLUGIN_PATHS = ['path/to/pelican-plugins']
     PLUGINS = ['assets', 'sitemap', 'gravatar']
 
-``PLUGIN_PATH`` can be a path relative to your settings file or an absolute path.
+``PLUGIN_PATHS`` can be a path relative to your settings file or an absolute path.
 
-Alternatively, if plugins are in an importable path, you can omit ``PLUGIN_PATH``
+Alternatively, if plugins are in an importable path, you can omit ``PLUGIN_PATHS``
 and list them::
 
     PLUGINS = ['assets', 'sitemap', 'gravatar']
@@ -43,9 +43,11 @@ Asset management          Use the Webassets module to manage assets such as CSS 
 Better code samples       Wraps all `table` blocks with a class attribute `.codehilitetable` in an additional `div` of class `.hilitewrapper`. It thus permits to style codeblocks better, especially to make them scrollable.
                     
 Better figures/samples    Adds a `style="width: ???px; height: auto;"` attribute to any `<img>` tags in the content
-           
+
+bootstrapify              Automatically add bootstraps default classes to your content, usefull for md generated tables
+
 CJK auto spacing          Inserts spaces between Chinese/Japanese/Korean characters and English words
-                
+
 Clean summary             Cleans your summary of excess images
 
 Code include              Includes Pygments highlighted code in reStructuredText
@@ -102,6 +104,8 @@ Pelican-flickr            Brings your Flickr photos & sets into your static webs
 
 Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 
+Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
+
 Pelican comment system    Allows you to add static comments to your articles
 
 Pelican Vimeo             Enables you to embed Vimeo videos in your pages and articles
@@ -131,6 +135,8 @@ Share post                Creates share URLs of article
 Simple footnotes          Adds footnotes to blog posts
 
 Sitemap                   Generates plain-text or XML sitemaps
+
+sort_tags                 Provides `tags_sorted_by_article_length` to templates, which contains all tags, sorted by how many articles it contains first, and alphabetically second.
 
 Static comments           Allows you to add static comments to an article
 

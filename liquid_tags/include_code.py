@@ -71,8 +71,7 @@ def include_code(preprocessor, tag, markup):
         raise ValueError("Error processing input, "
                          "expected syntax: {0}".format(SYNTAX))
 
-    settings = preprocessor.configs.config['settings']
-    code_dir = settings.get('CODE_DIR', 'code')
+    code_dir = preprocessor.configs.getConfig('CODE_DIR')
     code_path = os.path.join('content', code_dir, src)
 
     if not os.path.exists(code_path):

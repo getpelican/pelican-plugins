@@ -1,6 +1,6 @@
 # Pelican comment system
 The pelican comment system allows you to add static comments to your articles.
-The comments are stored in Markdown files. Each comment in it own file.
+The comments are stored in files which can be processed by Pelican (e.g.: Markdown, reStructuredText, ...). Each comment in its own file.
 
 #### Features
  - Static comments for each article
