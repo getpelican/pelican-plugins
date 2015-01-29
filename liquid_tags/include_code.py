@@ -33,6 +33,9 @@ import re
 import os
 from .mdx_liquid_tags import LiquidTags
 
+import sys
+reload(sys) 
+sys.setdefaultencoding('utf8')
 
 SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}"
 FORMAT = re.compile(r"""
