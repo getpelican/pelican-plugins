@@ -29,6 +29,9 @@ in the STATIC_PATHS setting, e.g.:
 
 [1] https://github.com/imathis/octopress/blob/master/plugins/include_code.rb
 """
+from __future__ import unicode_literals
+
+from io import open
 import re
 import os
 from .mdx_liquid_tags import LiquidTags
