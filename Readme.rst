@@ -92,6 +92,8 @@ Interlinks                Lets you add frequently used URLs to your markup using
 
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
 
+Metadata parsing          Allows easy definition of custom metadata parsers.
+
 Multi parts posts         Allows you to write multi-part posts
 
 Neighbor articles         Adds ``next_article`` (newer) and ``prev_article`` (older) variables to the article's context
