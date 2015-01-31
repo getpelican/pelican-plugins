@@ -128,6 +128,8 @@ Related posts             Adds the ``related_posts`` variable to the article's c
 
 Math Render               Gives pelican the ability to render mathematics
 
+Panorama                  Creates charts from posts metadata
+
 Representative image      Extracts a representative image (i.e, featured image) from the article's summary or content
 
 Share post                Creates share URLs of article
