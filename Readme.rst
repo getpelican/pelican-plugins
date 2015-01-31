@@ -40,6 +40,8 @@ AsciiDoc reader           Use AsciiDoc to write your posts.
 
 Asset management          Use the Webassets module to manage assets such as CSS and JS files.
                     
+Autostatic                Automatically handle the copying of referenced static files regardless of location.
+
 Better code samples       Wraps all `table` blocks with a class attribute `.codehilitetable` in an additional `div` of class `.hilitewrapper`. It thus permits to style codeblocks better, especially to make them scrollable.
                     
 Better figures/samples    Adds a `style="width: ???px; height: auto;"` attribute to any `<img>` tags in the content
