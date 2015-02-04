@@ -19,7 +19,7 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
         "        preview: '{latex_preview}'," +
         "    }}, " +
         "    'HTML-CSS': {{ " +
-        "        styles: {{ '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {{color: '{color} ! important'}} }}" +
+        "        styles: {{ '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {{color: '{color} ! important'}} }}, linebreaks: {{ automatic: {linebreak_automatic}, width: 'container' }}" +
         "    }} " +
         "}}); ";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);

@@ -50,6 +50,7 @@ def process_settings(pelicanobj):
     mathjax_settings['process_escapes'] = 'true'  # controls whether escapes are processed
     mathjax_settings['latex_preview'] = 'TeX'  # controls what user sees while waiting for LaTex to render
     mathjax_settings['color'] = 'black'  # controls color math is rendered in
+    mathjax_settings['linebreak_automatic'] = 'false'  # Set to false by default for performance reasons (see http://docs.mathjax.org/en/latest/output.html#automatic-line-breaking)
 
     # Source for MathJax: Works boths for http and https (see http://docs.mathjax.org/en/latest/start.html#secure-access-to-the-cdn)
     mathjax_settings['source'] = "'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
@@ -87,6 +88,9 @@ def process_settings(pelicanobj):
             mathjax_settings[key] = value
 
         if key == 'color' and isinstance(value, basestring):
+            mathjax_settings[key] = value
+        
+        if key == 'linebreak_automatic' and isinstance(value, basestring):
             mathjax_settings[key] = value
 
     return mathjax_settings

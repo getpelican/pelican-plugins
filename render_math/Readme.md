@@ -54,6 +54,9 @@ sequences. **Default Value**: True
 rendering LaTex. If set to `Tex`, then the TeX code is used as the preview 
 (which will be visible until it is processed by MathJax). **Default Value**: `Tex`
  * `color`: controls the color of the mathjax rendered font. **Default Value**: `black`
+ * `linebreak_automatic`: Mathjax will try to *intelligently* break up any displayed math
+(Note: It will not work for inline math). This is very useful for a responsive site. It
+is turned off by default due to it potentially being CPU expensive. **Default Value**: False
 
 For example, in settings.py, the following would make math render in blue and
 displaymath align to the left:
