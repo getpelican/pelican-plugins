@@ -61,3 +61,6 @@
 [submodule "panorama"]
 	path = panorama
 	url = git://github.com/romainx/panorama.git
+[submodule "image_process"]
+	path = image_process
+	url = https://github.com/whiskyechobravo/image_process.git
