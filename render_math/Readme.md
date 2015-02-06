@@ -42,26 +42,33 @@ settings file.
 
 The dictionary can be set with the following keys:
 
- * `align`: controls how displayed math will be aligned. Can be set to either
-`left`, `right` or `center`. **Default Value**: `center`.
- * `indent`: if `align` not set to `center`, then this controls the indent
-level. **Default Value**: `0em`.
- * `show_menu`: a boolean value that controls whether the mathjax contextual 
-menu is shown. **Default Value**: True
- * `process_escapes`: a boolean value that controls whether mathjax processes escape 
-sequences. **Default Value**: True
- * `latex_preview`: controls the preview message users are seen while mathjax is
-rendering LaTex. If set to `Tex`, then the TeX code is used as the preview 
-(which will be visible until it is processed by MathJax). **Default Value**: `Tex`
- * `color`: controls the color of the mathjax rendered font. **Default Value**: `black`
- * `linebreak_automatic`: Mathjax will try to *intelligently* break up any displayed math
+ * `align`: [string] controls how displayed math will be aligned. Can be set to either
+`'left'`, `'right'` or `'center'`. **Default Value**: `'center'`.
+ * `indent`: [string] if `align` not set to `'center'`, then this controls the indent
+level. **Default Value**: `'0em'`.
+ * `show_menu`: [boolean] controls whether the mathjax contextual menu is shown.
+**Default Value**: `True`
+ * `process_escapes`: [boolean] controls whether mathjax processes escape sequences.
+**Default Value**: `True`
+ * `latex_preview`: [string] controls the preview message users are shown while mathjax is
+rendering LaTex. If set to `'Tex'`, then the TeX code is used as the preview 
+(which will be visible until it is processed by MathJax). **Default Value**: `'Tex'`
+ * `color`: [string] controls the color of the mathjax rendered font. **Default Value**: `'inherit'`
+ * `linebreak_automatic`: [boolean] If set, Mathjax will try to *intelligently* break up displayed math
 (Note: It will not work for inline math). This is very useful for a responsive site. It
-is turned off by default due to it potentially being CPU expensive. **Default Value**: False
+is turned off by default due to it potentially being CPU expensive. **Default Value**: `False`
+ * `tex_extensions`: [list] a list of [latex extensions](http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-extensions)
+accepted by mathjax. **Default Value**: `[]` (empty list)
 
-For example, in settings.py, the following would make math render in blue and
-displaymath align to the left:
+#### Settings Examples
+Make math render in blue and displaymath align to the left:
 
     MATH_JAX = {'color':'blue','align':left}
+
+Use the [color](http://docs.mathjax.org/en/latest/tex.html#color) and
+[mhchem](http://docs.mathjax.org/en/latest/tex.html#mhchem) extensions:
+    
+    MATH_JAX = {'tex_extensions': ['color.js','mhchem.js']}
 
 #### Resulting HTML
 Inlined math is wrapped in `span` tags, while displayed math is wrapped in `div` tags.
