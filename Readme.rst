@@ -80,6 +80,8 @@ Gravatar                  Assigns the ``author_gravatar`` variable to the Gravat
 
 Gzip cache                Enables certain web servers (e.g., Nginx) to use a static cache of gzip-compressed files to prevent the server from compressing files during an HTTP call
 
+Headerid                  This plugin adds an anchor to each heading so you can deeplink to headers in reStructuredText articles.
+
 HTML entities             Allows you to enter HTML entities such as &copy;, &lt;, &#149; inline in a RST document
 
 HTML tags for rST         Allows you to use HTML tags from within reST documents
