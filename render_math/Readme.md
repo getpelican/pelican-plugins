@@ -59,6 +59,11 @@ rendering LaTex. If set to `'Tex'`, then the TeX code is used as the preview
 is turned off by default due to it potentially being CPU expensive. **Default Value**: `False`
  * `tex_extensions`: [list] a list of [latex extensions](http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-extensions)
 accepted by mathjax. **Default Value**: `[]` (empty list)
+ * `responsive`: [boolean] tries to make displayed math render responsively. It does by determining if the width
+is less than `responsive_break` (see below) and if so, sets `align` to `left`, `indent` to `0em` and `linebreak_automatic` to `True`.
+**Default Value**: `False` (defaults to `False` for backward compatibility)
+ * `responsive_break`: [integer] a number (in pixels) representing the width breakpoint that is used
+when setting `responsive_align` to `True`. **Default Value**: 768
 
 #### Settings Examples
 Make math render in blue and displaymath align to the left:
