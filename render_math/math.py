@@ -52,6 +52,8 @@ def process_settings(pelicanobj):
     mathjax_settings['color'] = 'inherit'  # controls color math is rendered in
     mathjax_settings['linebreak_automatic'] = 'false'  # Set to false by default for performance reasons (see http://docs.mathjax.org/en/latest/output.html#automatic-line-breaking)
     mathjax_settings['tex_extensions'] = ''  # latex extensions that can be embedded inside mathjax (see http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-extensions)
+    mathjax_settings['responsive'] = 'false'  # Tries to make displayed math responsive
+    mathjax_settings['responsive_break'] = '768'  # The break point at which it math is responsively aligned (in pixels)
 
     # Source for MathJax: Works boths for http and https (see http://docs.mathjax.org/en/latest/start.html#secure-access-to-the-cdn)
     mathjax_settings['source'] = "'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
@@ -93,6 +95,12 @@ def process_settings(pelicanobj):
         
         if key == 'linebreak_automatic' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
+        
+        if key == 'responsive' and isinstance(value, bool):
+            mathjax_settings[key] = 'true' if value else 'false'
+        
+        if key == 'responsive_break' and isinstance(value, int):
+            mathjax_settings[key] = str(value)
 
         if key == 'tex_extensions' and isinstance(value, list):
             # filter string values, then add '' to them
