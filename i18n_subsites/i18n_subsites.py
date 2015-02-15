@@ -248,6 +248,10 @@ def filter_contents_translations(generator):
     hiding_func = inspector.hiding_function()
     untrans_policy = inspector.untranslated_policy(default='hide')
     for (contents, other_contents) in inspector.contents_list_pairs():
+        for content in other_contents: # save any hidden native content first
+            if content.lang == current_lang: # in native lang
+                # save the native URL attr formatted in the current locale
+                _NATIVE_CONTENT_URL_DB[content.source_path] = content.url
         for content in contents[:]:        # copy for removing in loop
             if content.lang == current_lang: # in native lang
                 # save the native URL attr formatted in the current locale
