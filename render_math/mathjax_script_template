@@ -1,4 +1,14 @@
 if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
+    var align = "{align}",
+        indent = "{indent}",
+        linebreak = "{linebreak_automatic}";
+
+    if ({responsive}) {{
+        align = (screen.width < {responsive_break}) ? "left" : align;
+        indent = (screen.width < {responsive_break}) ? "0em" : indent;
+        linebreak = (screen.width < {responsive_break}) ? 'true' : linebreak;
+    }}
+    
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
@@ -9,8 +19,8 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
         "    TeX: {{ extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'{tex_extensions}], equationNumbers: {{ autoNumber: 'AMS' }} }}," +
         "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
         "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '{align}'," +
-        "    displayIndent: '{indent}'," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
         "    showMathMenu: {show_menu}," +
         "    tex2jax: {{ " +
         "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
@@ -19,8 +29,9 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
         "        preview: '{latex_preview}'," +
         "    }}, " +
         "    'HTML-CSS': {{ " +
-        "        styles: {{ '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {{color: '{color} ! important'}} }}, linebreaks: {{ automatic: {linebreak_automatic}, width: 'container' }}" +
-        "    }} " +
+        "        styles: {{ '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {{color: '{color} ! important'}} }}," +
+        "        linebreaks: {{ automatic: "+ linebreak +", width: '90% container' }}," +
+        "    }}, " +
         "}}); ";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }}
