@@ -126,6 +126,8 @@ Read More link            Inserts an inline "read more" or "continue" link into 
 
 Related posts             Adds the ``related_posts`` variable to the article's context
 
+Markdown-metaYAML         Pelican reader to enable YAML-style metadata in markdown articles
+
 Math Render               Gives pelican the ability to render mathematics
 
 Panorama                  Creates charts from posts metadata
