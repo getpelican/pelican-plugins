@@ -68,6 +68,8 @@ Filetime from git         Uses git commit to determine page date
 
 Gallery                   Allows an article to contain an album of pictures
 
+Gist directive            This plugin adds a ``gist`` reStructuredText directive.
+
 GitHub activity           On the template side, you just have to iterate over the ``github_activity`` variable
 
 Global license            Allows you to define a ``LICENSE`` setting and adds the contents of that license variable to the article's context
