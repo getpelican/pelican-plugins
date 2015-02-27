@@ -144,7 +144,12 @@ def resize_thumbnails(pelican):
                     in_filename = path.join(dirpath, filename)
                     logger.debug("Processing thumbnail {0}=>{1}".format(filename, name))
                     if pelican.settings.get('THUMBNAIL_KEEP_NAME', False):
-                        resizer.resize_file_to(in_filename, path.join(out_path, name), True)
+                        if pelican.settings.get('THUMBNAIL_KEEP_TREE', False):
+                            resizer.resize_file_to(
+                                in_filename, 
+                                path.join(out_path, name, path.dirname(path.relpath(in_filename, in_path))), True)
+                        else:
+                            resizer.resize_file_to(in_filename, path.join(out_path, name), True)
                     else:
                         resizer.resize_file_to(in_filename, out_path)
 

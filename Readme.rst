@@ -68,6 +68,8 @@ Filetime from git         Uses git commit to determine page date
 
 Gallery                   Allows an article to contain an album of pictures
 
+Gist directive            This plugin adds a ``gist`` reStructuredText directive.
+
 GitHub activity           On the template side, you just have to iterate over the ``github_activity`` variable
 
 Global license            Allows you to define a ``LICENSE`` setting and adds the contents of that license variable to the article's context
@@ -79,6 +81,8 @@ GooglePlus comments       Adds GooglePlus comments to Pelican
 Gravatar                  Assigns the ``author_gravatar`` variable to the Gravatar URL and makes the variable available within the article's context
 
 Gzip cache                Enables certain web servers (e.g., Nginx) to use a static cache of gzip-compressed files to prevent the server from compressing files during an HTTP call
+
+Headerid                  This plugin adds an anchor to each heading so you can deeplink to headers in reStructuredText articles.
 
 HTML entities             Allows you to enter HTML entities such as &copy;, &lt;, &#149; inline in a RST document
 
@@ -126,7 +130,11 @@ Read More link            Inserts an inline "read more" or "continue" link into 
 
 Related posts             Adds the ``related_posts`` variable to the article's context
 
+Markdown-metaYAML         Pelican reader to enable YAML-style metadata in markdown articles
+
 Math Render               Gives pelican the ability to render mathematics
+
+Panorama                  Creates charts from posts metadata
 
 Representative image      Extracts a representative image (i.e, featured image) from the article's summary or content
 

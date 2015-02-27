@@ -8,16 +8,17 @@ Activate the plugin by adding it to your `pelicanconf.py`
 And modify your `article.html` theme (see below).
 
 ## Settings
-Name                                           | Type      | Default                    | Description
------------------------------------------------|-----------|----------------------------|-------
-`PELICAN_COMMENT_SYSTEM`                       | `boolean` | `False`                    | Activates or deactivates the comment system
-`PELICAN_COMMENT_SYSTEM_DIR`                   | `string`  | `comments`                 | Folder where the comments are stored, relative to `PATH`
-`PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH` | `string`  | `images/identicon`         | Relative URL to the output folder where the identicons are stored
-`PELICAN_COMMENT_SYSTEM_IDENTICON_DATA`        | `tuple`   | `()`                       | Contains all Metadata tags, which in combination identifies a comment author (like `('author', 'email')`)
-`PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE`        | `int`     | `72`                       | Width and height of the identicons. Has to be a multiple of 3.
-`PELICAN_COMMENT_SYSTEM_AUTHORS`               | `dict`    | `{}`                       | Comment authors, which should have a specific avatar. More info [here](avatars.md)
-`PELICAN_COMMENT_SYSTEM_FEED`                  | `string`  |`feeds/comment.%s.atom.xml` | Relative URL to output the Atom feed for each article.`%s` gets replaced with the slug of the article. More info [here](http://docs.getpelican.com/en/latest/settings.html#feed-settings)
-`COMMENT_URL`                                  | `string`  | `#comment-{slug}`          | `{slug}` gets replaced with the slug of the comment. More info [here](feed.md)
+Name                                           | Type      | Default                      | Description
+-----------------------------------------------|-----------|------------------------------|-------
+`PELICAN_COMMENT_SYSTEM`                       | `boolean` | `False`                      | Activates or deactivates the comment system
+`PELICAN_COMMENT_SYSTEM_DIR`                   | `string`  | `comments`                   | Folder where the comments are stored, relative to `PATH`
+`PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH` | `string`  | `images/identicon`           | Relative URL to the output folder where the identicons are stored
+`PELICAN_COMMENT_SYSTEM_IDENTICON_DATA`        | `tuple`   | `()`                         | Contains all Metadata tags, which in combination identifies a comment author (like `('author', 'email')`)
+`PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE`        | `int`     | `72`                         | Width and height of the identicons. Has to be a multiple of 3.
+`PELICAN_COMMENT_SYSTEM_AUTHORS`               | `dict`    | `{}`                         | Comment authors, which should have a specific avatar. More info [here](avatars.md)
+`PELICAN_COMMENT_SYSTEM_FEED`                  | `string`  |`feeds/comment.%s.atom.xml`   | Relative URL to output the Atom feed for each article.`%s` gets replaced with the slug of the article. More info [here](http://docs.getpelican.com/en/latest/settings.html#feed-settings)
+`PELICAN_COMMENT_SYSTEM_FEED_ALL`              | `string`  |`feeds/comments.all.atom.xml` | Relative URL to output the Atom feed which contains all comments of all articles. More info [here](http://docs.getpelican.com/en/latest/settings.html#feed-settings)
+`COMMENT_URL`                                  | `string`  | `#comment-{slug}`            | `{slug}` gets replaced with the slug of the comment. More info [here](feed.md)
 
 ## Folder structure
 Every comment file has to be stored in a sub folder of `PELICAN_COMMENT_SYSTEM_DIR`.
