@@ -12,7 +12,7 @@ macros = None
 def load_template(generator):
     try:
         global macros
-        macros = generator.get_template("feed").module
+        macros = generator.get_template("feed").make_module(generator.context)
     except Exception:
         pass
 
@@ -37,11 +37,11 @@ class FeedCustomizationWriter(Writer):
         content = item.get_content(self.site_url)
         feed.add_item(
             title=macros.title(item) if hasattr(macros, 'title') else title,
-            link=macros.link(item, self.site_url) if hasattr(macros, 'link') else link,
+            link=macros.link(item) if hasattr(macros, 'link') else link,
             unique_id='tag:%s,%s:%s' % (urlparse(link).netloc,
                                         item.date.date(),
                                         urlparse(link).path.lstrip('/')),
-            description=macros.description(item, self.site_url) if hasattr(macros, 'description') else content,
+            description=macros.description(item) if hasattr(macros, 'description') else content,
             categories=item.tags if hasattr(item, 'tags') else None,
             author_name=getattr(item, 'author', ''),
             pubdate=set_date_tzinfo(
