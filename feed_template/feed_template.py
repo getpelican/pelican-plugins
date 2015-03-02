@@ -36,7 +36,7 @@ class FeedCustomizationWriter(Writer):
         content = item.get_content(self.site_url)
         feed.add_item(
             title=self.macros.title(item) if hasattr(self.macros, 'title') else title,
-            link=self.macros.link(item) if hasattr(self.macros, 'link') else link,
+            link=self.macros.link(item).strip() if hasattr(self.macros, 'link') else link,
             unique_id='tag:%s,%s:%s' % (urlparse(link).netloc,
                                         item.date.date(),
                                         urlparse(link).path.lstrip('/')),
