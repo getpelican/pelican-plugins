@@ -31,7 +31,10 @@ import os
 import sys
 
 from pelican import signals
-from . pelican_mathjax_markdown_extension import PelicanMathJaxExtension
+try:
+    from . pelican_mathjax_markdown_extension import PelicanMathJaxExtension
+except ImportError:
+    PelicanMathJaxExtension = None
 
 def process_settings(pelicanobj):
     """Sets user specified MathJax settings (see README for more details)"""
@@ -92,13 +95,13 @@ def process_settings(pelicanobj):
 
         if key == 'color' and isinstance(value, basestring):
             mathjax_settings[key] = value
-        
+
         if key == 'linebreak_automatic' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
-        
+
         if key == 'responsive' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
-        
+
         if key == 'responsive_break' and isinstance(value, int):
             mathjax_settings[key] = str(value)
 
@@ -165,7 +168,8 @@ def mathjax_for_markdown(pelicanobj, mathjax_settings):
 
     # Instantiate markdown extension and append it to the current extensions
     try:
-        pelicanobj.settings['MD_EXTENSIONS'].append(PelicanMathJaxExtension(config))
+        if PelicanMathJaxExtension:
+            pelicanobj.settings['MD_EXTENSIONS'].append(PelicanMathJaxExtension(config))
     except:
         sys.excepthook(*sys.exc_info())
         sys.stderr.write("\nError - the pelican mathjax markdown extension failed to configure. MathJax is non-functional.\n")
