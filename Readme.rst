@@ -92,6 +92,8 @@ I18N Sub-sites            Extends the translations functionality by creating int
 
 ical                      Looks for and parses an ``.ics`` file if it is defined in a given page's ``calendar`` metadata.
 
+Image Process             Automates the processing of images based on their class attributes
+
 Interlinks                Lets you add frequently used URLs to your markup using short keywords
 
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
