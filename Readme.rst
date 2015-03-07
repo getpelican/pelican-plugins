@@ -114,6 +114,8 @@ Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is
 
 Pelican comment system    Allows you to add static comments to your articles
 
+Pelican TextBundle        Create posts from TextBundles
+
 Pelican Vimeo             Enables you to embed Vimeo videos in your pages and articles
 
 Pelican YouTube           Enables you to embed YouTube videos in your pages and articles
