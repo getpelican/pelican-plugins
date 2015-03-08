@@ -64,3 +64,6 @@
 [submodule "pelican-genealogy"]
 	path = pelican-genealogy
 	url = https://github.com/zappala/pelican-genealogy
+[submodule "image_process"]
+	path = image_process
+	url = https://github.com/whiskyechobravo/image_process

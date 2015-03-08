@@ -41,6 +41,8 @@ def extract_toc(content):
         toc.extract()
         content._content = soup.decode()
         content.toc = toc.decode()
+        if content.toc.startswith('<html>'):
+            content.toc = content.toc[12:-14]
 
 
 def register():

@@ -31,7 +31,13 @@ import os
 import sys
 
 from pelican import signals
-from . pelican_mathjax_markdown_extension import PelicanMathJaxExtension
+
+try:
+    from . pelican_mathjax_markdown_extension import PelicanMathJaxExtension
+except ImportError as e:
+    PelicanMathJaxExtension = None
+    print("\nMarkdown is not installed, so math only works in reStructuredText.\n")
+
 
 def process_settings(pelicanobj):
     """Sets user specified MathJax settings (see README for more details)"""
@@ -187,7 +193,8 @@ def pelican_init(pelicanobj):
     configure_typogrify(pelicanobj, mathjax_settings)
 
     # Configure Mathjax For Markdown
-    mathjax_for_markdown(pelicanobj, mathjax_settings)
+    if PelicanMathJaxExtension:
+        mathjax_for_markdown(pelicanobj, mathjax_settings)
 
     # Configure Mathjax For RST
     mathjax_for_rst(pelicanobj, mathjax_settings)

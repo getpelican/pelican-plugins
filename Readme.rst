@@ -92,6 +92,8 @@ I18N Sub-sites            Extends the translations functionality by creating int
 
 ical                      Looks for and parses an ``.ics`` file if it is defined in a given page's ``calendar`` metadata.
 
+Image Process             Automates the processing of images based on their class attributes
+
 Interlinks                Lets you add frequently used URLs to your markup using short keywords
 
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
@@ -111,6 +113,8 @@ Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
 
 Pelican comment system    Allows you to add static comments to your articles
+
+Pelican TextBundle        Create posts from TextBundles
 
 Pelican Vimeo             Enables you to embed Vimeo videos in your pages and articles
 

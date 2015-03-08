@@ -98,7 +98,8 @@ setting, e.g.:
     STATIC_PATHS = ['images', 'code']
 
 ## IPython notebooks
-To insert an ipython notebook into your post, enable the
+
+To insert an [IPython][] notebook into your post, enable the
 ``liquid_tags.notebook`` plugin and add to your document:
 
     {% notebook filename.ipynb %}
@@ -112,7 +113,9 @@ config file:
 Because the conversion and rendering of notebooks is rather involved, there
 are a few extra steps required for this plugin:
 
-- First, you will need to install IPython >= 1.0 [[1](#1)]
+- First, you will need to install IPython:
+
+      pip install ipython==2.4.1
 
 - After typing "make html" when using the notebook tag, a file called
   ``_nb_header.html`` will be produced in the main directory.  The content
@@ -176,4 +179,4 @@ cd path/to/liquid_tags
 nosetests
 ```
 
-[<a name="1">1</a>] http://ipython.org/
+[IPython]: http://ipython.org/
