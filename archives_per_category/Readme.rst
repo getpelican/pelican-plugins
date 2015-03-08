@@ -8,6 +8,7 @@ Settings
 --------
 
 .. code:: python
+
     PLUGIN_PATHS = ('plugins',)
     PLUGINS = ('archives_per_category',)
 
@@ -30,6 +31,7 @@ Plugin looks for templates in this order 1. 'archives_per_category',
 2. 'period_archives', 3. 'archives'.
 
 .. code:: html
+
     {% extends "base.html" %}
     {% block content %}
       <h1>Archives for {{ category }} {{ period | reverse | join(' ') }}</h1>
