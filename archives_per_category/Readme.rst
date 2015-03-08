@@ -25,7 +25,7 @@ Template
 --------
 
 Template is quite similiar to period archive's template. You could use the same
-variables, plus `category` and `category-slug`.
+variables, plus :code:`{{ category }}` and :code:`{{ category-slug }}`.
 
 Plugin looks for templates in this order 1. 'archives_per_category',
 2. 'period_archives', 3. 'archives'.
