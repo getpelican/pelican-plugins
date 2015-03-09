@@ -102,6 +102,8 @@ Multi parts posts         Allows you to write multi-part posts
 
 Neighbor articles         Adds ``next_article`` (newer) and ``prev_article`` (older) variables to the article's context
 
+Open graph                Generates Open Graph tags for your articles
+
 Optimize images           Applies lossless compression on JPEG and PNG images
 
 PDF generator             Automatically exports RST articles and pages as PDF files
