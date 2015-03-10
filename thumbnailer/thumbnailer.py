@@ -147,21 +147,21 @@ def resize_thumbnails(pelican):
 
 
 def get_out_path(pelican, in_path, in_filename, name):
-    out_path = path.join(pelican.settings['OUTPUT_PATH'],
+    base_out_path = path.join(pelican.settings['OUTPUT_PATH'],
                          pelican.settings.get('THUMBNAIL_DIR', DEFAULT_THUMBNAIL_DIR))
     logger.debug("Processing thumbnail {0}=>{1}".format(in_filename, name))
     if pelican.settings.get('THUMBNAIL_KEEP_NAME', False):
         if pelican.settings.get('THUMBNAIL_KEEP_TREE', False):
-            return path.join(out_path, name, path.dirname(path.relpath(in_filename, in_path)))
+            return path.join(base_out_path, name, path.dirname(path.relpath(in_filename, in_path)))
         else:
-            return path.join(out_path, name)
+            return path.join(base_out_path, name)
     else:
-        return out_path
+        return base_out_path
 
 
 def _image_path(pelican):
     return path.join(pelican.settings['PATH'],
-        pelican.settings.get("IMAGE_PATH", DEFAULT_IMAGE_DIR))
+        pelican.settings.get("IMAGE_PATH", DEFAULT_IMAGE_DIR)).rstrip('/')
 
 
 def expand_gallery(generator, metadata):
