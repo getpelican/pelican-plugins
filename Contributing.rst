@@ -28,4 +28,6 @@ released under. If there is an absence of LICENSE then it defaults to the
 
 Please refer to the ``LICENSE`` file for the full text of the license.
 
+Create a pull request to have your plugin added to pelican-plugins as a submodule. See  https://github.com/getpelican/pelican-plugins/pull/348/files as an example.
+
 .. _docs: http://docs.getpelican.com/en/latest/plugins.html#how-to-create-plugins
