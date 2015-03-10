@@ -146,7 +146,7 @@ def resize_thumbnails(pelican):
                     if pelican.settings.get('THUMBNAIL_KEEP_NAME', False):
                         if pelican.settings.get('THUMBNAIL_KEEP_TREE', False):
                             resizer.resize_file_to(
-                                in_filename, 
+                                in_filename,
                                 path.join(out_path, name, path.dirname(path.relpath(in_filename, in_path))), True)
                         else:
                             resizer.resize_file_to(in_filename, path.join(out_path, name), True)
@@ -173,8 +173,8 @@ def expand_gallery(generator, metadata):
     in_path = path.join(base_path, metadata['gallery'])
     template = generator.settings.get('GALLERY_TEMPLATE', DEFAULT_TEMPLATE)
     thumbnail_name = generator.settings.get("GALLERY_THUMBNAIL", DEFAULT_GALLERY_THUMB)
-    thumbnail_prefix = generator.settings.get("")
-    resizer = _resizer(thumbnail_name, '?x?')
+    root = _image_path(generator)
+    resizer = _resizer(thumbnail_name, '?x?', root)
     for dirpath, _, filenames in os.walk(in_path):
         for filename in filenames:
             if not filename.startswith('.'):
