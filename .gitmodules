@@ -67,3 +67,6 @@
 [submodule "image_process"]
 	path = image_process
 	url = https://github.com/whiskyechobravo/image_process
+[submodule "pelican-open_graph"]
+	path = pelican-open_graph
+	url = https://github.com/whiskyechobravo/pelican-open_graph.git
