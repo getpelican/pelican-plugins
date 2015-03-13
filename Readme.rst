@@ -142,6 +142,8 @@ Math Render               Gives pelican the ability to render mathematics
 
 Panorama                  Creates charts from posts metadata
 
+Replacer                  Replace a text of a generated HTML
+
 Representative image      Extracts a representative image (i.e, featured image) from the article's summary or content
 
 Share post                Creates share URLs of article
