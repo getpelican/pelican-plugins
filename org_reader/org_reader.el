@@ -1,3 +1,4 @@
+(require 'json)
 (require 'org)
 (defun org->pelican (filename backend)
   (progn
