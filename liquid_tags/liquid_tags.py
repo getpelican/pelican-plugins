@@ -9,11 +9,11 @@ def addLiquidTags(gen):
 
     if LiquidTags not in gen.settings['MD_EXTENSIONS']:
         configs = dict()
-        for key,value in LT_CONFIG.items():
-            configs[key]=value
-        for key,value in gen.settings.items():
+        for key, value in LT_CONFIG.items():
+            configs[key] = value
+        for key, value in gen.settings.items():
             if key in LT_CONFIG:
-                configs[key]=value
+                configs[key] = value
         gen.settings['MD_EXTENSIONS'].append(LiquidTags(configs))
 
 

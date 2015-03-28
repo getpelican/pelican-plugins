@@ -60,7 +60,11 @@ class TestNotebookTagRegex(unittest.TestCase):
         self.assertEqual(language, u'python3')
 
     def test_notebook_tag_with_symbol_in_name_language(self):
-        for short_name in [u'c++', u'cpp-objdump', u'c++-objdumb', u'cxx-objdump']:
+        for short_name in [
+                u'c++',
+                u'cpp-objdump',
+                u'c++-objdumb',
+                u'cxx-objdump']:
             markup = u'path/to/thing.ipynb language[{}]'.format(short_name)
             src, start, end, language = self.get_argdict(markup)
 
