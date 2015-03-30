@@ -68,7 +68,7 @@ from pygments.formatters import HtmlFormatter
 from IPython.nbconvert.exporters import HTMLExporter
 from IPython.config import Config
 
-from IPython.nbformat import current as nbformat
+from IPython.nbformat import reader as nbformat
 
 try:
     from IPython.nbconvert.preprocessors import Preprocessor
@@ -82,7 +82,7 @@ from copy import deepcopy
 from jinja2 import DictLoader
 
 
-# ---------------------------------------------------------------------
+#----------------------------------------------------------------------
 # Some code that will be added to the header:
 #  Some of the following javascript/css include is adapted from
 #  IPython/nbconvert/templates/fullhtml.tpl, while some are custom tags
@@ -187,10 +187,9 @@ CSS_WRAPPER = """
 """
 
 
-# ---------------------------------------------------------------------
+#----------------------------------------------------------------------
 # Create a custom preprocessor
 class SliceIndex(Integer):
-
     """An integer trait that accepts None"""
     default_value = None
 
@@ -202,7 +201,6 @@ class SliceIndex(Integer):
 
 
 class SubCell(Preprocessor):
-
     """A transformer to select a slice of the cells of a notebook"""
     start = SliceIndex(0, config=True,
                        help="first cell of notebook to be converted")
@@ -211,15 +209,21 @@ class SubCell(Preprocessor):
 
     def preprocess(self, nb, resources):
         nbc = deepcopy(nb)
-        for worksheet in nbc.worksheets:
-            cells = worksheet.cells[:]
-            worksheet.cells = cells[self.start:self.end]
+
+        if LooseVersion(IPython.__version__) < '3.0':
+            for worksheet in nbc.worksheets:
+                cells = worksheet.cells[:]
+                worksheet.cells = cells[self.start:self.end]
+        else:
+            nbc.cells = nbc.cells[self.start:self.end]
+
         return nbc, resources
 
-    call = preprocess  # IPython < 2.0
+    call = preprocess # IPython < 2.0
 
 
-# ---------------------------------------------------------------------
+
+#----------------------------------------------------------------------
 # Custom highlighter:
 #  instead of using class='highlight', use class='highlight-ipynb'
 def custom_highlighter(source, language='ipython', metadata=None):
@@ -230,12 +234,11 @@ def custom_highlighter(source, language='ipython', metadata=None):
     return output.replace('<pre>', '<pre class="ipynb">')
 
 
-# ---------------------------------------------------------------------
+#----------------------------------------------------------------------
 # Below is the pelican plugin code.
 #
 SYNTAX = "{% notebook /path/to/notebook.ipynb [ cells[start:end] ] [ language[language] ] %}"
-FORMAT = re.compile(
-    r"""^(\s+)?(?P<src>\S+)(\s+)?((cells\[)(?P<start>-?[0-9]*):(?P<end>-?[0-9]*)(\]))?(\s+)?((language\[)(?P<language>-?[a-z0-9\+\-]*)(\]))?(\s+)?$""")
+FORMAT = re.compile(r"""^(\s+)?(?P<src>\S+)(\s+)?((cells\[)(?P<start>-?[0-9]*):(?P<end>-?[0-9]*)(\]))?(\s+)?((language\[)(?P<language>-?[a-z0-9\+\-]*)(\]))?(\s+)?$""")
 
 
 @LiquidTags.register('notebook')
@@ -261,10 +264,9 @@ def notebook(preprocessor, tag, markup):
     else:
         end = None
 
-    language_applied_highlighter = partial(
-        custom_highlighter, language=language)
+    language_applied_highlighter = partial(custom_highlighter, language=language)
 
-    nb_dir = preprocessor.configs.getConfig('NOTEBOOK_DIR')
+    nb_dir =  preprocessor.configs.getConfig('NOTEBOOK_DIR')
     nb_path = os.path.join('content', nb_dir, src)
 
     if not os.path.exists(nb_path):
@@ -272,9 +274,9 @@ def notebook(preprocessor, tag, markup):
 
     # Create the custom notebook converter
     c = Config({'CSSHTMLHeaderTransformer':
-                {'enabled': True, 'highlight_class': '.highlight-ipynb'},
+                    {'enabled':True, 'highlight_class':'.highlight-ipynb'},
                 'SubCell':
-                    {'enabled': True, 'start': start, 'end': end}})
+                    {'enabled':True, 'start':start, 'end':end}})
 
     template_file = 'basic'
     if LooseVersion(IPython.__version__) >= '2.0':
@@ -289,23 +291,20 @@ def notebook(preprocessor, tag, markup):
     else:
         subcell_kwarg = dict(transformers=[SubCell])
 
-    exporter = HTMLExporter(
-        config=c,
-        template_file=template_file,
-        filters={
-            'highlight2html': language_applied_highlighter},
-        **subcell_kwarg)
+    exporter = HTMLExporter(config=c,
+                            template_file=template_file,
+                            filters={'highlight2html': language_applied_highlighter},
+                            **subcell_kwarg)
 
     # read and parse the notebook
     with open(nb_path) as f:
-        nb_text = f.read()
-    nb_json = nbformat.reads_json(nb_text)
+        nb_json = nbformat.read(f)
     (body, resources) = exporter.from_notebook_node(nb_json)
 
     # if we haven't already saved the header, save it here.
     if not notebook.header_saved:
-        print("\n ** Writing styles to _nb_header.html: "
-              "this should be included in the theme. **\n")
+        print ("\n ** Writing styles to _nb_header.html: "
+               "this should be included in the theme. **\n")
 
         header = '\n'.join(CSS_WRAPPER.format(css_line)
                            for css_line in resources['inlining']['css'])
@@ -323,6 +322,6 @@ def notebook(preprocessor, tag, markup):
 notebook.header_saved = False
 
 
-# ---------------------------------------------------------------------
+#----------------------------------------------------------------------
 # This import allows notebook to be a Pelican plugin
 from liquid_tags import register

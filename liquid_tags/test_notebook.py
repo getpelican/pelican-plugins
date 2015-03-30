@@ -1,6 +1,7 @@
-import re
+# -*- coding: utf-8 -*-
+from __future__ import print_function
 
-from pelican.tests.support import unittest
+import unittest
 
 from . import notebook
 
@@ -90,7 +91,3 @@ class TestNotebookTagRegex(unittest.TestCase):
         self.assertEqual(start, u'1')
         self.assertEqual(end, u'5')
         self.assertEqual(language, u'julia')
-
-
-if __name__ == '__main__':
-    unittest.main()
