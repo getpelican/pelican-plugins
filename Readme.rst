@@ -11,7 +11,7 @@ How to use plugins
 
 Easiest way to install and use these plugins is cloning this repo::
 
-    git clone https://github.com/getpelican/pelican-plugins
+    git clone --recursive https://github.com/getpelican/pelican-plugins
 
 and activating the ones you want in your settings file::
 
