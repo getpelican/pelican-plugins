@@ -10,12 +10,10 @@ manage the series in the template.
 """
 
 from collections import defaultdict
+from logging import warning
+from operator import itemgetter
 
 from pelican import signals
-
-from logging import warning
-
-from operator import itemgetter
 
 
 def aggregate_series(generator):

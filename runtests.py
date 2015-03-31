@@ -4,9 +4,8 @@
 from __future__ import print_function
 import subprocess
 
-PLUGINS = ['liquid_tags']
-
-failed = []
+PLUGINS = ['liquid_tags',
+           'series']
 
 if __name__ == "__main__":
     for plugin in PLUGINS:
