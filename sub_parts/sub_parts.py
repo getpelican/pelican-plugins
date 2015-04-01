@@ -36,12 +36,12 @@ def patch_subparts(generator):
                         'sub_part: Cannot remove sub-part from category %s',
                         article.category)
             if (hasattr(article, 'subphotos') or
-                    hasattr(article, 'photos_gallery')):
+                    hasattr(article, 'photo_gallery')):
                 parent.subphotos = (
                     getattr(parent, 'subphotos',
-                            len(getattr(parent, 'photos_gallery', []))) +
+                            len(getattr(parent, 'photo_gallery', []))) +
                     getattr(article, 'subphotos', 0) +
-                    len(getattr(article, 'photos_gallery', [])))
+                    len(getattr(article, 'photo_gallery', [])))
         else:
             logger.error('sub_part: No parent for %s', pslug)
         generator._update_context(('articles', 'dates', 'subparts'))

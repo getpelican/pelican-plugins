@@ -104,7 +104,7 @@ class TestSubPartsPhotos(unittest.TestCase):
         cls.generator.generate_context()
         cls.all_articles = list(cls.generator.articles)
         for a in cls.all_articles:
-            a.photos_gallery = [('i.jpg', 'i.jpg', 'it.jpg', '', '')]
+            a.photo_gallery = [('i.jpg', 'i.jpg', 'it.jpg', '', '')]
         sub_parts.patch_subparts(cls.generator)
 
     def test_subphotos(self):
