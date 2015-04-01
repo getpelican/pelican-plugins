@@ -7,7 +7,8 @@ Publish Emacs Org files alongside the rest of your website or blag.
 - `ORG_READER_EMACS_SETTINGS`: Optional. An absolute path to an Elisp file, to
   run per invocation. Useful for initializing the `package` Emacs library if
   that's where your Org mode comes from, or any modifications to Org Export-
-  related variables.
+  related variables. If you want to use your standard emacs init file, you 
+  can ignore this variable.
 
 - `ORG_READER_BACKEND`: Optional. A custom backend to provide to Org. Defaults
   to 'html.

@@ -34,7 +34,7 @@ The plugin provides the following variables to your templates
 For example:
 
     {% if article.series %}
-        <p>This post is part {{ article.series.index }} of the "{{ article.series.series }}" series:</p>
+        <p>This post is part {{ article.series.index }} of the "{{ article.series.name }}" series:</p>
         <ol class="parts">
             {% for part_article in article.series.all %}
                 <li {% if part_article == article %}class="active"{% endif %}>
