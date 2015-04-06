@@ -1,6 +1,7 @@
 from CommonMark import DocParser, HTMLRenderer
 from pelican.readers import BaseReader, MarkdownReader
 from pelican.utils import pelican_open
+from pelican import signals
 
 
 class CommonMarkReader(BaseReader):
@@ -28,5 +29,11 @@ class CommonMarkReader(BaseReader):
             return content, metadata
 
 
+def replace_markdown_reader(readers):
+    for ext, reader in readers.reader_classes.items():
+        if reader == MarkdownReader:
+            readers.reader_classes[ext] = CommonMarkReader
+
+
 def register():
-    pass
+    signals.readers_init.connect(replace_markdown_reader)
