@@ -22,7 +22,7 @@ def process_settings(pelicanobj):
 
     # Default settings
     inline_settings = {}
-    inline_settings['config'] = {'[*]':('', 'pelican-inline')}
+    inline_settings['config'] = {'[]':('', 'pelican-inline')}
 
     # Get the user specified settings
     try:
