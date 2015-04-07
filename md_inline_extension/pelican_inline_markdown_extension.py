@@ -66,4 +66,4 @@ class PelicanInlineMarkdownExtension(markdown.Extension):
         inline_regex = r'(?P<prefix>%s)(?P<text>.+?)\2' % ('|'.join(patterns))
 
         # Process after escapes
-        md.inlinePatterns.add('texthighlight_inlined', PelicanInlineMarkdownExtensionPattern(self, 'span', inline_regex), '>escape')
+        md.inlinePatterns.add('texthighlight_inlined', PelicanInlineMarkdownExtensionPattern(self, 'span', inline_regex), '>emphasis2')

@@ -12,10 +12,10 @@ Then add the following to settings.py:
 
 Usage
 -----
-By default, any Markdown text inside `[*]...[*]` will get wrapped in
+By default, any Markdown text inside `[]...[]` will get wrapped in
 `span` tags with a class of `pelican-inline`. For example:
 
-`[*]Lorem ipsum dolor sit amet, consectetur adipiscing elit[*]` will
+`[]Lorem ipsum dolor sit amet, consectetur adipiscing elit[]` will
 become `<span class="pelican-inline">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>`
 
 You can create your own inline patterns and associate them with
@@ -41,3 +41,8 @@ The above defines three new inline patterns:
 `<span style="color:blue;">...</span>`. Note - no class is present.
  3. **&^**: Text within `&^` will be wrapped in
 `<span class="my-other-text-class">...</span>`. Note - no style present.
+
+In order to work seamlessly with default inline patterns such as `*` and
+`**`, it is important that your pattern not contain these characters. So
+do not create patterns that are already part of a default Markdown
+[span element](http://daringfireball.net/projects/markdown/syntax#span).
