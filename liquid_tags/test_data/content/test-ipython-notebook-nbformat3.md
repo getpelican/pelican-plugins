@@ -1,4 +1,4 @@
-Title: test ipython notebook
+Title: test ipython notebook nb format 3
 Date: 2015-03-03
 Authors: Testing Man
 
@@ -11,7 +11,3 @@ no sea takimata sanctus est Lorem ipsum dolor sit amet.
 #Loading a notebook nbformat = 3.0
 
 {% notebook test_nbformat3.ipynb %}
-
-#Loading a notebook nbformat = 4.0
-
-{% notebook test_nbformat4.ipynb %}
