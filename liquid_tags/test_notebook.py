@@ -1,6 +1,7 @@
-import re
+# -*- coding: utf-8 -*-
+from __future__ import print_function
 
-from pelican.tests.support import unittest
+import unittest
 
 from . import notebook
 
@@ -60,7 +61,11 @@ class TestNotebookTagRegex(unittest.TestCase):
         self.assertEqual(language, u'python3')
 
     def test_notebook_tag_with_symbol_in_name_language(self):
-        for short_name in [u'c++', u'cpp-objdump', u'c++-objdumb', u'cxx-objdump']:
+        for short_name in [
+                u'c++',
+                u'cpp-objdump',
+                u'c++-objdumb',
+                u'cxx-objdump']:
             markup = u'path/to/thing.ipynb language[{}]'.format(short_name)
             src, start, end, language = self.get_argdict(markup)
 
@@ -86,7 +91,3 @@ class TestNotebookTagRegex(unittest.TestCase):
         self.assertEqual(start, u'1')
         self.assertEqual(end, u'5')
         self.assertEqual(language, u'julia')
-
-
-if __name__ == '__main__':
-    unittest.main()

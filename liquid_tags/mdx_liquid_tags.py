@@ -19,15 +19,17 @@ from functools import wraps
 # Define some regular expressions
 LIQUID_TAG = re.compile(r'\{%.*?%\}')
 EXTRACT_TAG = re.compile(r'(?:\s*)(\S+)(?:\s*)')
-LT_CONFIG = { 'CODE_DIR': 'code',
-              'NOTEBOOK_DIR': 'notebooks'
-}
-LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin', 
-            'NOTEBOOK_DIR' : 'Notebook directory for notebook subplugin'
-}
+LT_CONFIG = {'CODE_DIR': 'code',
+             'NOTEBOOK_DIR': 'notebooks'
+             }
+LT_HELP = {'CODE_DIR': 'Code directory for include_code subplugin',
+           'NOTEBOOK_DIR': 'Notebook directory for notebook subplugin'
+           }
+
 
 class _LiquidTagsPreprocessor(markdown.preprocessors.Preprocessor):
     _tags = {}
+
     def __init__(self, configs):
         self.configs = configs
 
@@ -42,10 +44,10 @@ class _LiquidTagsPreprocessor(markdown.preprocessors.Preprocessor):
             markup = EXTRACT_TAG.sub('', markup, 1)
             if tag in self._tags:
                 liquid_tags[i] = self._tags[tag](self, tag, markup.strip())
-                
+
         # add an empty string to liquid_tags so that chaining works
         liquid_tags.append('')
- 
+
         # reconstruct string
         page = ''.join(itertools.chain(*zip(LIQUID_TAG.split(page),
                                             liquid_tags)))
@@ -55,18 +57,20 @@ class _LiquidTagsPreprocessor(markdown.preprocessors.Preprocessor):
 
 
 class LiquidTags(markdown.Extension):
+
     """Wrapper for MDPreprocessor"""
+
     def __init__(self, config):
         try:
             # Needed for markdown versions >= 2.5
-            for key,value in LT_CONFIG.items():
-                self.config[key] = [value,LT_HELP[key]]
-            super(LiquidTags,self).__init__(**config)
+            for key, value in LT_CONFIG.items():
+                self.config[key] = [value, LT_HELP[key]]
+            super(LiquidTags, self).__init__(**config)
         except AttributeError:
             # Markdown versions < 2.5
-            for key,value in LT_CONFIG.items():
-                config[key] = [config[key],LT_HELP[key]]
-            super(LiquidTags,self).__init__(config)
+            for key, value in LT_CONFIG.items():
+                config[key] = [config[key], LT_HELP[key]]
+            super(LiquidTags, self).__init__(config)
 
     @classmethod
     def register(cls, tag):

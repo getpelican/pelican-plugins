@@ -26,11 +26,12 @@ from .mdx_liquid_tags import LiquidTags
 
 SYNTAX = "{% video url/to/video [url/to/video] [url/to/video] [width height] [url/to/poster] %}"
 
-VIDEO = re.compile(r'(/\S+|https?:\S+)(\s+(/\S+|https?:\S+))?(\s+(/\S+|https?:\S+))?(\s+(\d+)\s(\d+))?(\s+(/\S+|https?:\S+))?')
+VIDEO = re.compile(
+    r'(/\S+|https?:\S+)(\s+(/\S+|https?:\S+))?(\s+(/\S+|https?:\S+))?(\s+(\d+)\s(\d+))?(\s+(/\S+|https?:\S+))?')
 
-VID_TYPEDICT = {'.mp4':"type='video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"'",
-                '.ogv':"type='video/ogg; codecs=theora, vorbis'",
-                '.webm':"type='video/webm; codecs=vp8, vorbis'"}
+VID_TYPEDICT = {'.mp4': "type='video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"'",
+                '.ogv': "type='video/ogg; codecs=theora, vorbis'",
+                '.webm': "type='video/webm; codecs=vp8, vorbis'"}
 
 
 @LiquidTags.register('video')
@@ -69,6 +70,6 @@ def video(preprocessor, tag, markup):
     return video_out
 
 
-#----------------------------------------------------------------------
+# ---------------------------------------------------------------------
 # This import allows image tag to be a Pelican plugin
 from liquid_tags import register

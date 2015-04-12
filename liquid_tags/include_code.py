@@ -122,6 +122,6 @@ def include_code(preprocessor, tag, markup):
     return source
 
 
-#----------------------------------------------------------------------
+# ---------------------------------------------------------------------
 # This import allows image tag to be a Pelican plugin
 from liquid_tags import register
