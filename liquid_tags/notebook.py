@@ -50,14 +50,11 @@ from functools import partial
 
 from .mdx_liquid_tags import LiquidTags
 
-from distutils.version import LooseVersion
 import IPython
 IPYTHON_VERSION = IPython.version_info[0]
 
 if not IPYTHON_VERSION >= 1:
     raise ValueError("IPython version 1.0+ required for notebook tag")
-
-from IPython import nbconvert
 
 try:
     from IPython.nbconvert.filters.highlight import _pygments_highlight
@@ -70,8 +67,6 @@ from pygments.formatters import HtmlFormatter
 from IPython.nbconvert.exporters import HTMLExporter
 from IPython.config import Config
 
-from IPython.nbformat import current as nbformat
-
 try:
     from IPython.nbconvert.preprocessors import Preprocessor
 except ImportError:
@@ -80,9 +75,6 @@ except ImportError:
 
 from IPython.utils.traitlets import Integer
 from copy import deepcopy
-
-from jinja2 import DictLoader
-
 
 #----------------------------------------------------------------------
 # Some code that will be added to the header:
@@ -211,9 +203,13 @@ class SubCell(Preprocessor):
 
     def preprocess(self, nb, resources):
         nbc = deepcopy(nb)
-        for worksheet in nbc.worksheets:
-            cells = worksheet.cells[:]
-            worksheet.cells = cells[self.start:self.end]
+        if IPYTHON_VERSION < 3:
+            for worksheet in nbc.worksheets:
+                cells = worksheet.cells[:]
+                worksheet.cells = cells[self.start:self.end]
+        else:
+            nbc.cells = nbc.cells[self.start:self.end]
+        
         return nbc, resources
 
     call = preprocess # IPython < 2.0
@@ -296,7 +292,11 @@ def notebook(preprocessor, tag, markup):
     # read and parse the notebook
     with open(nb_path) as f:
         nb_text = f.read()
-    nb_json = nbformat.reads_json(nb_text)
+        if IPYTHON_VERSION < 3:
+            nb_json = IPython.nbformat.current.reads_json(nb_text)
+        else:
+            nb_json = IPython.nbformat.reads(nb_text, as_version=4)
+
     (body, resources) = exporter.from_notebook_node(nb_json)
 
     # if we haven't already saved the header, save it here.
