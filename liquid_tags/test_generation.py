@@ -87,6 +87,8 @@ class TestFullRun(unittest.TestCase):
         # test existence
         assert os.path.exists(os.path.join(self.temp_path,
                                            'test-ipython-notebook-nb-format-3.html'))
+        assert os.path.exists(os.path.join(self.temp_path,
+                                           'test-ipython-notebook-nb-format-4.html'))
 
         # test differences
         #assert filecmp.cmp(os.path.join(output_path,
