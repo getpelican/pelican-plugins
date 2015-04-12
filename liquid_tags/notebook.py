@@ -272,7 +272,10 @@ def notebook(preprocessor, tag, markup):
                     {'enabled':True, 'start':start, 'end':end}})
 
     template_file = 'basic'
-    if IPYTHON_VERSION >= 2:
+    if IPYTHON_VERSION >= 3:
+        if os.path.exists('pelicanhtml_3.tpl'):
+            template_file = 'pelicanhtml_3'
+    elif IPYTHON_VERSION == 2:
         if os.path.exists('pelicanhtml_2.tpl'):
             template_file = 'pelicanhtml_2'
     else:
