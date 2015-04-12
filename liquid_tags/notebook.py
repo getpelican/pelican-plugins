@@ -52,7 +52,9 @@ from .mdx_liquid_tags import LiquidTags
 
 from distutils.version import LooseVersion
 import IPython
-if not LooseVersion(IPython.__version__) >= '1.0':
+IPYTHON_VERSION = IPython.version_info[0]
+
+if not IPYTHON_VERSION >= 1:
     raise ValueError("IPython version 1.0+ required for notebook tag")
 
 from IPython import nbconvert
@@ -274,18 +276,18 @@ def notebook(preprocessor, tag, markup):
                     {'enabled':True, 'start':start, 'end':end}})
 
     template_file = 'basic'
-    if LooseVersion(IPython.__version__) >= '2.0':
+    if IPYTHON_VERSION >= 2:
         if os.path.exists('pelicanhtml_2.tpl'):
             template_file = 'pelicanhtml_2'
     else:
         if os.path.exists('pelicanhtml_1.tpl'):
             template_file = 'pelicanhtml_1'
 
-    if LooseVersion(IPython.__version__) >= '2.0':
+    if IPYTHON_VERSION >= 2:
         subcell_kwarg = dict(preprocessors=[SubCell])
     else:
         subcell_kwarg = dict(transformers=[SubCell])
-    
+
     exporter = HTMLExporter(config=c,
                             template_file=template_file,
                             filters={'highlight2html': language_applied_highlighter},
