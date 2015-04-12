@@ -8,6 +8,10 @@ tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
 vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
 no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-#Loading a notebook nbformat = 4.0
+#Loading an entire notebook nbformat = 4.0
 
 {% notebook test_nbformat4.ipynb %}
+
+#Loading selected cells from a notebook nbformat = 4.0
+
+{% notebook test_nbformat4.ipynb cells[1:5] %}
