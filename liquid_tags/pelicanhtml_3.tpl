@@ -34,13 +34,13 @@
 
 {% block input %}
 {% if "# <!-- collapse=True -->" in cell.source %}
-<div class="inner_cell"><span style="font-weight: bold;">Expand Code</span>
+<div class="collapseheader inner_cell"><span style="font-weight: bold;">Expand Code</span>
 <div class="input_area" style="display:none">
 {{ cell.source.replace("# <!-- collapse=True -->\n", "") | highlight2html(metadata=cell.metadata) }}
 </div>
 </div>
 {% elif "# <!-- collapse=False -->" in cell.source %}
-<div class="inner_cell"><span style="font-weight: bold;">Collapse Code</span>
+<div class="collapseheader inner_cell"><span style="font-weight: bold;">Collapse Code</span>
 <div class="input_area">
 {{ cell.source.replace("# <!-- collapse=False -->\n", "") | highlight2html(metadata=cell.metadata) }}
 </div>

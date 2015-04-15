@@ -161,8 +161,8 @@ The notebook tag also has two optional arguments: ``cells`` and ``language``.
 ### Collapsible Code in IPython Notebooks
 
 The plugin also enables collapsible code input boxes. For this to work
-you first need to copy the file ``pelicanhtml_1.tpl`` (for IPython
-1.x) ``pelicanhtml_2.tpl`` (for IPython 2.x) to the top level of your
+you first need to copy the file ``pelicanhtml_3.tpl`` (for IPython
+3.x, ``pelicanhtml_2.tpl`` (for IPython 2.x)...) to the top level of your
 Pelican blog. Notebook input cells containing the comment line ``#
 <!-- collapse=True -->`` will be collapsed when the html page is
 loaded and can be expanded by clicking on them. Cells containing the
