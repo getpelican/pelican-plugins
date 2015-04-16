@@ -73,3 +73,7 @@
 [submodule "replacer"]
 	path = replacer
 	url = https://github.com/narusemotoki/replacer
+[submodule "pelican-toc"]
+	path = pelican-toc
+	url = https://github.com/ingwinlu/pelican-toc
+
