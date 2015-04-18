@@ -125,11 +125,13 @@ class PelicanMathJaxExtension(markdown.Extension):
             # Needed for markdown versions >= 2.5
             self.config['mathjax_script'] = ['', 'Mathjax JavaScript script']
             self.config['math_tag_class'] = ['math', 'The class of the tag in which mathematics is wrapped']
+            self.config['auto_insert'] = [True, 'Determines if mathjax script is automatically inserted into content']
             super(PelicanMathJaxExtension,self).__init__(**config)
         except AttributeError:
             # Markdown versions < 2.5
             config['mathjax_script'] = [config['mathjax_script'], 'Mathjax JavaScript script']
             config['math_tag_class'] = [config['math_tag_class'], 'The class of the tag in which mathematic is wrapped']
+            config['auto_insert'] = [config['auto_insert'], 'Determines if mathjax script is automatically inserted into content']
             super(PelicanMathJaxExtension,self).__init__(config)
 
         # Used as a flag to determine if javascript
@@ -152,4 +154,5 @@ class PelicanMathJaxExtension(markdown.Extension):
 
         # If necessary, add the JavaScript Mathjax library to the document. This must
         # be last in the ordered dict (hence it is given the position '_end')
-        md.treeprocessors.add('mathjax_addjavascript', PelicanMathJaxAddJavaScript(self), '_end')
+        if self.getConfig('auto_insert'):
+            md.treeprocessors.add('mathjax_addjavascript', PelicanMathJaxAddJavaScript(self), '_end')
