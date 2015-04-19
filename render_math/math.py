@@ -50,6 +50,7 @@ def process_settings(pelicanobj):
     # will be used for
 
     # Default settings
+    mathjax_settings['auto_insert'] = True  # if set to true, it will insert mathjax script automatically into content without needing to alter the template. 
     mathjax_settings['align'] = 'center'  # controls alignment of of displayed equations (values can be: left, right, center)
     mathjax_settings['indent'] = '0em'  # if above is not set to 'center', then this setting acts as an indent
     mathjax_settings['show_menu'] = 'true'  # controls whether to attach mathjax contextual menu
@@ -60,6 +61,7 @@ def process_settings(pelicanobj):
     mathjax_settings['tex_extensions'] = ''  # latex extensions that can be embedded inside mathjax (see http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-extensions)
     mathjax_settings['responsive'] = 'false'  # Tries to make displayed math responsive
     mathjax_settings['responsive_break'] = '768'  # The break point at which it math is responsively aligned (in pixels)
+    mathjax_settings['mathjax_font'] = 'default'  # forces mathjax to use the specified font.
 
     # Source for MathJax: Works boths for http and https (see http://docs.mathjax.org/en/latest/start.html#secure-access-to-the-cdn)
     mathjax_settings['source'] = "'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
@@ -78,7 +80,16 @@ def process_settings(pelicanobj):
     for key, value in ((key, settings[key]) for key in settings):
         # Iterate over dictionary in a way that is compatible with both version 2
         # and 3 of python
-        if key == 'align' and isinstance(value, basestring):
+
+        if key == 'align':
+            try:
+                typeVal = isinstance(value, basestring)
+            except NameError:
+                typeVal = isinstance(value, str)
+
+            if not typeVal:
+                continue
+
             if value == 'left' or value == 'right' or value == 'center':
                 mathjax_settings[key] = value
             else:
@@ -90,13 +101,32 @@ def process_settings(pelicanobj):
         if key == 'show_menu' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
 
-        if key == 'process_escapes' and isinstance(value, bool):
-            mathjax_settings[key] = 'true' if value else 'false'
-
-        if key == 'latex_preview' and isinstance(value, basestring):
+        if key == 'auto_insert' and isinstance(value, bool):
             mathjax_settings[key] = value
 
-        if key == 'color' and isinstance(value, basestring):
+        if key == 'process_escapes' and isinstance(value, bool):
+            mathjax_settings[key] = 'true' if value else 'false'
+        
+        if key == 'latex_preview':
+            try:
+                typeVal = isinstance(value, basestring)
+            except NameError:
+                typeVal = isinstance(value, str)
+
+            if not typeVal:
+                continue
+
+            mathjax_settings[key] = value
+        
+        if key == 'color':
+            try:
+                typeVal = isinstance(value, basestring)
+            except NameError:
+                typeVal = isinstance(value, str)
+
+            if not typeVal:
+                continue
+
             mathjax_settings[key] = value
         
         if key == 'linebreak_automatic' and isinstance(value, bool):
@@ -110,9 +140,35 @@ def process_settings(pelicanobj):
 
         if key == 'tex_extensions' and isinstance(value, list):
             # filter string values, then add '' to them
-            value = filter(lambda string: isinstance(string, basestring), value)
+            try:
+                value = filter(lambda string: isinstance(string, basestring), value)
+            except NameError:
+                value = filter(lambda string: isinstance(string, str), value)
+
             value = map(lambda string: "'%s'" % string, value)
             mathjax_settings[key] = ',' + ','.join(value)
+
+        if key == 'mathjax_font':
+            try:
+                typeVal = isinstance(value, basestring)
+            except NameError:
+                typeVal = isinstance(value, str)
+
+            if not typeVal:
+                continue
+
+            value = value.lower()
+
+            if value == 'sanserif':
+                value = 'SansSerif'
+            elif value == 'fraktur':
+                value = 'Fraktur'
+            elif value == 'typewriter':
+                value = 'Typewriter'
+            else:
+                value = 'default'
+
+            mathjax_settings[key] = value
 
     return mathjax_settings
 
@@ -168,6 +224,7 @@ def mathjax_for_markdown(pelicanobj, mathjax_settings):
     config = {}
     config['mathjax_script'] = process_mathjax_script(mathjax_settings)
     config['math_tag_class'] = 'math'
+    config['auto_insert'] = mathjax_settings['auto_insert']
 
     # Instantiate markdown extension and append it to the current extensions
     try:
