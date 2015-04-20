@@ -1,0 +1,2 @@
+best.jpg: EXIF-best
+night.png: EXIF-night

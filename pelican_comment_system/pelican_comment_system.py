@@ -23,36 +23,41 @@ from . comment import Comment
 from . import avatars
 
 
+_all_comments = []
+
+def setdefault(pelican, settings):
+    from pelican.settings import DEFAULT_CONFIG
+    for key, value in settings:
+        DEFAULT_CONFIG.setdefault(key, value)
+
+    if not pelican:
+        return
+
+    for key, value in settings:
+        pelican.settings.setdefault(key, value)
+
+
 def pelican_initialized(pelican):
     from pelican.settings import DEFAULT_CONFIG
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM', False)
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_DIR', 'comments')
-    DEFAULT_CONFIG.setdefault(
-        'PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH' 'images/identicon')
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ())
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72)
-    DEFAULT_CONFIG.setdefault('PELICAN_COMMENT_SYSTEM_AUTHORS', {})
-    DEFAULT_CONFIG.setdefault(
-        'PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml'))
-    DEFAULT_CONFIG.setdefault('COMMENT_URL', '#comment-{slug}')
+    settings = [
+        ('PELICAN_COMMENT_SYSTEM', False),
+        ('PELICAN_COMMENT_SYSTEM_DIR', 'comments'),
+        ('PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH', 'images/identicon'),
+        ('PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ()),
+        ('PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72),
+        ('PELICAN_COMMENT_SYSTEM_AUTHORS', {}),
+        ('PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml')),
+        ('PELICAN_COMMENT_SYSTEM_FEED_ALL', os.path.join('feeds', 'comments.all.atom.xml')),
+        ('COMMENT_URL', '#comment-{slug}')
+    ]
+
+    setdefault(pelican, settings)
+
     DEFAULT_CONFIG['PAGE_EXCLUDES'].append(
         DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
     DEFAULT_CONFIG['ARTICLE_EXCLUDES'].append(
         DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
     if pelican:
-        pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM', False)
-        pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_DIR', 'comments')
-        pelican.settings.setdefault(
-            'PELICAN_COMMENT_SYSTEM_IDENTICON_OUTPUT_PATH', 'images/identicon')
-        pelican.settings.setdefault(
-            'PELICAN_COMMENT_SYSTEM_IDENTICON_DATA', ())
-        pelican.settings.setdefault(
-            'PELICAN_COMMENT_SYSTEM_IDENTICON_SIZE', 72)
-        pelican.settings.setdefault('PELICAN_COMMENT_SYSTEM_AUTHORS', {})
-        pelican.settings.setdefault(
-            'PELICAN_COMMENT_SYSTEM_FEED', os.path.join('feeds', 'comment.%s.atom.xml'))
-        pelican.settings.setdefault('COMMENT_URL', '#comment-{slug}')
-
         pelican.settings['PAGE_EXCLUDES'].append(
             pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
         pelican.settings['ARTICLE_EXCLUDES'].append(
@@ -82,10 +87,32 @@ def warn_on_slug_collision(items):
     for slug, itemList in slugs.items():
         len_ = len(itemList)
         if len_ > 1:
-            logger.warning('There are %s comments with the same slug: %s' %
-                           (len_, slug))
+            logger.warning('There are %s comments with the same slug: %s', len_, slug)
             for x in itemList:
-                logger.warning('    %s' % x.source_path)
+                logger.warning('    %s', x.source_path)
+
+
+def write_feed_all(gen, writer):
+    if gen.settings['PELICAN_COMMENT_SYSTEM'] is not True:
+        return
+    if gen.settings['PELICAN_COMMENT_SYSTEM_FEED_ALL'] is None:
+        return
+
+    context = copy.copy(gen.context)
+    context['SITENAME'] += " - All Comments"
+    context['SITESUBTITLE'] = ""
+    path = gen.settings['PELICAN_COMMENT_SYSTEM_FEED_ALL']
+
+    global _all_comments
+    _all_comments = sorted(_all_comments)
+    _all_comments.reverse()
+
+    for com in _all_comments:
+        com.title = com.article.title + " - " + com.title
+        com.override_url = com.article.url + com.url
+
+    writer = Writer(gen.output_path, settings=gen.settings)
+    writer.write_feed(_all_comments, context, path)
 
 
 def write_feed(gen, items, context, slug):
@@ -101,6 +128,8 @@ def write_feed(gen, items, context, slug):
 def add_static_comments(gen, content):
     if gen.settings['PELICAN_COMMENT_SYSTEM'] is not True:
         return
+
+    global _all_comments
 
     content.comments_count = 0
     content.comments = []
@@ -118,7 +147,7 @@ def add_static_comments(gen, content):
     )
 
     if not os.path.isdir(folder):
-        logger.debug("No comments found for: " + content.slug)
+        logger.debug("No comments found for: %s", content.slug)
         write_feed(gen, [], context, content.slug)
         return
 
@@ -133,14 +162,19 @@ def add_static_comments(gen, content):
                 base_path=folder, path=file,
                 content_class=Comment, context=context)
 
+            com.article = content
+            _all_comments.append(com)
+
             if hasattr(com, 'replyto'):
                 replies.append(com)
             else:
                 comments.append(com)
 
-    warn_on_slug_collision(comments + replies)
+    feed_items = sorted(comments + replies)
+    feed_items.reverse()
+    warn_on_slug_collision(feed_items)
 
-    write_feed(gen, comments + replies, context, content.slug)
+    write_feed(gen, feed_items, context, content.slug)
 
     # TODO: Fix this O(n²) loop
     for reply in replies:
@@ -163,8 +197,18 @@ def writeIdenticonsToDisk(gen, writer):
     avatars.generateAndSaveMissingAvatars()
 
 
+def pelican_finalized(pelican):
+    if pelican.settings['PELICAN_COMMENT_SYSTEM'] is not True:
+        return
+    global _all_comments
+    print('Processed %s comment(s)' % len(_all_comments))
+    _all_comments = []
+
+
 def register():
     signals.initialized.connect(pelican_initialized)
     signals.article_generator_init.connect(initialize)
     signals.article_generator_write_article.connect(add_static_comments)
     signals.article_writer_finalized.connect(writeIdenticonsToDisk)
+    signals.article_writer_finalized.connect(write_feed_all)
+    signals.finalized.connect(pelican_finalized)
