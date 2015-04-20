@@ -156,13 +156,13 @@ Simple footnotes          Adds footnotes to blog posts
 
 Sitemap                   Generates plain-text or XML sitemaps
 
-sort_tags                 Provides `tags_sorted_by_article_length` to templates, which contains all tags, sorted by how many articles it contains first, and alphabetically second.
-
 Static comments           Allows you to add static comments to an article
 
 Subcategory               Adds support for subcategories
 
 Summary                   Allows easy, variable length summaries directly embedded into the body of your articles
+
+tag_cloud                 Provides a tag_cloud
 
 Thumbnailer               Creates thumbnails for all of the images found under a specific directory
 
