@@ -7,7 +7,6 @@ from glob import glob
 
 from pelican import readers
 from pelican import signals
-#from pelican.utils import pelican_open
 from markdown import Markdown
 
 logger = logging.getLogger(__name__)
@@ -41,6 +40,10 @@ def copy_page_assets(generator):
 
 
 def inspect_content_items(content_items, output_path):
+    """
+    Check if there are files in the assets/ foldr of a textbundle have to be
+    copied to the output folder.
+    """
     for item in content_items:
         foldername = os.path.join(
             output_path,
@@ -53,6 +56,9 @@ def inspect_content_items(content_items, output_path):
 
 
 def copy_assets_to_outputfolder(assets, foldername):
+    """
+    Copy all files from the assets/ folder of a textbundle to the output folder.
+    """
     if not os.path.exists(foldername):
         os.makedirs(foldername)
     for asset in assets:
