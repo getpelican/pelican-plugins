@@ -26,6 +26,18 @@ operations like copy, move will not affect the generated results.
 If some article or page doesn't like to use git time, set a ``gittime: off``
 metadata to disable it.
 
+You can also set GIT_FILETIME_FOLLOW to True in your pelican config to 
+make the plugin follow file renames i.e. ensure the creation date matches
+the original file creation date, not the date is was renamed.
+
+FAQ
+---
+
+### Q. I get a GitCommandError: 'git rev-list ...' when I run the plugin. What's up?
+Be sure to use the correct gitpython module for your distros git binary.
+Using the GIT_FILETIME_FOLLOW option to True may also make your problem go away as it uses
+a different method to find commits.
+
 Some notes on git
 ~~~~~~~~~~~~~~~~~~
 
