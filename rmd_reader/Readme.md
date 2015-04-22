@@ -4,7 +4,7 @@ This plugin helps you creating posts with knitr's RMarkdown files.
 [knitr](http://yihui.name/knitr/) is a template engine which executes and displays embedded R code.
 So, being short you can write an executable paper with codes, formulas and graphics.
 
-## Dependency
+## Dependencies
 
 This plugin needs [rpy2](https://pypi.python.org/pypi/rpy2) to work.
 Install it with:
@@ -42,3 +42,4 @@ The code below must be pasted inside the `.Rmd` file in order to correctly set t
 	```
 
 I usually paste it just after the Markdown header.
+There is a R [template](https://github.com/almartin82/pelicanRMD) available that has the base elements needed by `rmd_reader`.
