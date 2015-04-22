@@ -96,6 +96,8 @@ Image Process             Automates the processing of images based on their clas
 
 Interlinks                Lets you add frequently used URLs to your markup using short keywords
 
+Just table                Easily create tables in your Pelican articles.
+
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
 
 Multi parts posts         Allows you to write multi-part posts
