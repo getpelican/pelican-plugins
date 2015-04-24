@@ -196,7 +196,7 @@ def process_summary(instance):
         if len(last_math_text) > 3 and last_math_text[-3:] == '...':
             content_parsed = BeautifulSoup(instance._content, 'html.parser')
             full_text = content_parsed.find_all(class_='math')[len(math)-1].get_text()
-            math[-1].replace_with("%s\ \ldots\)" % full_text[:-2])
+            math[-1].string = "%s ..." % full_text
             summary = summary_parsed.encode('ascii')
   
         instance._summary = "%s<script type='text/javascript'>%s</script>" % (summary, process_summary.mathjax_script)
