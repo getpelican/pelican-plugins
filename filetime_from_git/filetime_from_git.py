@@ -45,7 +45,7 @@ def filetime_from_git(content):
         content.date = datetime_from_timestamp(os.stat(path).st_ctime, content)
     else:
         # file is managed by git
-        commits = repo.commits(path=path)
+        commits = list(repo.iter_commits(path=path))
         if len(commits) == 0:
             # never commited, but staged
             content.date = datetime_from_timestamp(os.stat(path).st_ctime, content)
