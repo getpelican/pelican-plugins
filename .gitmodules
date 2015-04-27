@@ -74,6 +74,6 @@
 	path = pelican-toc
 	url = https://github.com/ingwinlu/pelican-toc
 
-[submodule "just_table"]
-	path = just_table
-	url = https://github.com/burakkose/just_table.git
+[submodule "multimarkdown_reader"]
+	path = multimarkdown_reader
+	url = git@github.com:dames57/multimarkdown_reader.git
