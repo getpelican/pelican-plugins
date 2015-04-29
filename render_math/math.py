@@ -183,23 +183,23 @@ def process_settings(pelicanobj):
 
     return mathjax_settings
 
-def process_summary(instance):
+def process_summary(article):
     """Ensures summaries are not cut off. Also inserts
     mathjax script so that math will be rendered"""
 
-    summary = instance._get_summary()
+    summary = article._get_summary()
     summary_parsed = BeautifulSoup(summary, 'html.parser')
     math = summary_parsed.find_all(class_='math')
 
     if len(math) > 0:
         last_math_text = math[-1].get_text()
         if len(last_math_text) > 3 and last_math_text[-3:] == '...':
-            content_parsed = BeautifulSoup(instance._content, 'html.parser')
+            content_parsed = BeautifulSoup(article._content, 'html.parser')
             full_text = content_parsed.find_all(class_='math')[len(math)-1].get_text()
             math[-1].string = "%s ..." % full_text
-            summary = summary_parsed.encode('ascii')
+            summary = summary_parsed.decode()
   
-        instance._summary = "%s<script type='text/javascript'>%s</script>" % (summary, process_summary.mathjax_script)
+        article._summary = "%s<script type='text/javascript'>%s</script>" % (summary, process_summary.mathjax_script)
 
 def configure_typogrify(pelicanobj, mathjax_settings):
     """Instructs Typogrify to ignore math tags - which allows Typogfrify
@@ -295,26 +295,29 @@ def pelican_init(pelicanobj):
     if mathjax_settings['process_summary']:
         process_summary.mathjax_script = mathjax_script
 
-def rst_add_mathjax(instance):
+def rst_add_mathjax(article):
     """Adds mathjax script for RST"""
-    _, ext = os.path.splitext(os.path.basename(instance.source_path))
+
+    # This is only value for .rst files
+    _, ext = os.path.splitext(os.path.basename(article.source_path))
     if ext != '.rst':
         return
 
     # If math class is present in text, add the javascript
-    if 'class="math"' in instance._content:
-        instance._content += "<script type='text/javascript'>%s</script>" % rst_add_mathjax.mathjax_script
+    if 'class="math"' in article._content:
+        article._content += "<script type='text/javascript'>%s</script>" % rst_add_mathjax.mathjax_script
 
-def pelican_connect(instance):
+def parse_articles(article_generator):
     """Adds mathjax script to RST and processes summaries"""
 
-    if instance._content:
-        rst_add_mathjax(instance)
+    for article in article_generator.articles:
+        
+        rst_add_mathjax(article)
 
         if process_summary.mathjax_script is not None:
-            process_summary(instance)
+            process_summary(article)
 
 def register():
     """Plugin registration"""
     signals.initialized.connect(pelican_init)
-    signals.content_object_init.connect(pelican_connect)
+    signals.article_generator_finalized.connect(parse_articles)
