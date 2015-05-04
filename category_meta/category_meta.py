@@ -111,13 +111,13 @@ def pretaxonomy_hook(generator):
         re.compile("^(" +
                    "|".join(re.escape(prefix)
                             for prefix in category_objects.keys()) +
-                   ")/")
+                   ")(/|\\\\)")
 
     for article in real_articles:
         m = category_assignment.match(article.source_path)
         if not m or m.group(1) not in category_objects:
-            logger.error("No category assignment for %s (%s)",
-                         article, article.source_path)
+            logger.error("No category assignment for %s (%s) [%s]",
+                         article, article.source_path, m)
             continue
 
         article.category = category_objects[m.group(1)]
