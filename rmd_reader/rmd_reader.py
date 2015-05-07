@@ -22,6 +22,8 @@ class RmdReader(readers.BaseReader):
     # some content and the associated metadata.
     def read(self, filename):
         """Parse content and metadata of markdown files"""
+        # replace single backslashes with double backslashes
+        filename = filename.replace('\\', '\\\\')        
         # parse Rmd file - generate md file
         md_filename = filename.replace('.Rmd', '.aux').replace('.rmd', '.aux')
         robjects.r("""
