@@ -40,7 +40,7 @@ AsciiDoc reader           Use AsciiDoc to write your posts.
 
 Asset management          Use the Webassets module to manage assets such as CSS and JS files.
                     
-Author Pages              Generate custom content for generated Author pages (e.g. author biography)
+Auto Pages                Generate custom content for generated Author, Category, and Tag pages (e.g. author biography)
 
 Better code samples       Wraps all `table` blocks with a class attribute `.codehilitetable` in an additional `div` of class `.hilitewrapper`. It thus permits to style codeblocks better, especially to make them scrollable.
                     
