@@ -36,6 +36,13 @@ To use it:
 
 Images are read on compilation phase so you can use any local path (just be sure that image will remain there on next compilation)
 
+## Instagram Tag
+To insert a sized and labeled Instagram image in your document by its shortcode (such as ``pFI0CAIZna``), enable the ``liquid_tags.gram`` plugin and use the following:
+
+    {% gram shortcode [size] [width] [class name(s)] [title text | "title text" ["alt text"]] %}
+
+You can specify a size with `t`, `m`, or `l`.
+
 ## Youtube Tag
 To insert youtube video into a post, enable the
 ``liquid_tags.youtube`` plugin, and add to your document:
