@@ -209,13 +209,15 @@ class SubCell(Preprocessor):
 
     def preprocess(self, nb, resources):
         nbc = deepcopy(nb)
-        for worksheet in nbc.worksheets:
-            cells = worksheet.cells[:]
-            worksheet.cells = cells[self.start:self.end]
+        if LooseVersion(IPython.__version__) < '3.0':         
+            for worksheet in nbc.worksheets:
+                cells = worksheet.cells[:]
+                worksheet.cells = cells[self.start:self.end]
+        else:
+            nbc.cells = nbc.cells[self.start:self.end]
         return nbc, resources
 
     call = preprocess # IPython < 2.0
-
 
 
 #----------------------------------------------------------------------
