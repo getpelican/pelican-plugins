@@ -72,14 +72,27 @@ class TestLibravatarURL (unittest.TestCase):
                 break
         assert found
 
-
 class TestLibravatarMissing (TestLibravatarURL):
     """Class for testing the Libravatar "missing picture" option"""
 
     def setUp (self, override = None):
         self.library = 'wavatar'
         TestLibravatarURL.setUp (self,
-                                  override = {'LIBRAVATAR_MISSING': 'wavatar'})
+                                  override = {'LIBRAVATAR_MISSING':
+                                              self.library})
 
     def test_url (self):
         TestLibravatarURL.test_url (self, '\?d=' + self.library)
+
+
+class TestLibravatarSize (TestLibravatarURL):
+    """Class for testing the Libravatar size option"""
+
+    def setUp (self, override = None):
+        self.size = 100
+        TestLibravatarURL.setUp (self,
+                                  override = {'LIBRAVATAR_SIZE': self.size})
+
+    def test_url (self):
+        TestLibravatarURL.test_url (self, '\?s=' + str (self.size))
+

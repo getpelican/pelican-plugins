@@ -29,7 +29,7 @@ def initialize (pelicanobj):
 def add_libravatar (generator, metadata):
     """Article generator connector for the Libravatar plugin"""
     missing = generator.settings.get ('LIBRAVATAR_MISSING')
-    size = str (generator.settings.get ('LIBRAVATAR_SIZE'))
+    size = generator.settings.get ('LIBRAVATAR_SIZE')
 
     ## Check the presence of the Email header
     if 'email' not in metadata.keys ():
@@ -53,7 +53,7 @@ def add_libravatar (generator, metadata):
                 if size:
                     url = url + '&'
             if size:
-                url = url + 's=' + size
+                url = url + 's=' + str (size)
 
         ## Add URL to the article's metadata
         metadata ['author_libravatar'] = url
