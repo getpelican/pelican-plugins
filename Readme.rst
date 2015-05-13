@@ -100,6 +100,8 @@ Interlinks                Lets you add frequently used URLs to your markup using
 
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
 
+Libravatar                Allows inclusion of user profile pictures from libravatar.org
+
 Multi parts posts         Allows you to write multi-part posts
 
 Markdown Inline Extend    Enables you to add customize inline patterns to your markdown
