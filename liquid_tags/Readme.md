@@ -36,6 +36,13 @@ To use it:
 
 Images are read on compilation phase so you can use any local path (just be sure that image will remain there on next compilation)
 
+## Instagram Tag
+To insert a sized and labeled Instagram image in your document by its shortcode (such as ``pFI0CAIZna``), enable the ``liquid_tags.gram`` plugin and use the following:
+
+    {% gram shortcode [size] [width] [class name(s)] [title text | "title text" ["alt text"]] %}
+
+You can specify a size with `t`, `m`, or `l`.
+
 ## Youtube Tag
 To insert youtube video into a post, enable the
 ``liquid_tags.youtube`` plugin, and add to your document:
@@ -161,8 +168,8 @@ The notebook tag also has two optional arguments: ``cells`` and ``language``.
 ### Collapsible Code in IPython Notebooks
 
 The plugin also enables collapsible code input boxes. For this to work
-you first need to copy the file ``pelicanhtml_1.tpl`` (for IPython
-1.x) ``pelicanhtml_2.tpl`` (for IPython 2.x) to the top level of your
+you first need to copy the file ``pelicanhtml_3.tpl`` (for IPython
+3.x, ``pelicanhtml_2.tpl`` (for IPython 2.x)...) to the top level of your
 Pelican blog. Notebook input cells containing the comment line ``#
 <!-- collapse=True -->`` will be collapsed when the html page is
 loaded and can be expanded by clicking on them. Cells containing the
@@ -170,13 +177,13 @@ comment line ``# <!-- collapse=False -->`` will be open on load but
 can be collapsed by clicking on their header. Cells without collapse
 comments are rendered as standard code input cells.
 
-### Run unitests
+## Testing
 
-The file `test_notebook.py` contains tests that can be run using [nose](https://nose.readthedocs.org/en/latest/index.html)
+To test the plugin in multiple environments we use [tox](http://tox.readthedocs.org/en/latest/), to run the entire test suite, just type:
 
 ```
 cd path/to/liquid_tags
-nosetests
+tox
 ```
 
 [IPython]: http://ipython.org/
