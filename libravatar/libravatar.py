@@ -42,7 +42,9 @@ def add_libravatar (generator, metadata):
     if metadata ['email']:
 
         ## Compose URL using the MD5 hash
-        md5 = hashlib.md5 (metadata ['email'].lower ()).hexdigest ()
+        ## (the ascii encoding is necessary for Python3)
+        email = metadata ['email'].lower ().encode ('ascii')
+        md5 = hashlib.md5 (email).hexdigest ()
         url = 'http://cdn.libravatar.org/avatar/' + md5
 
         ## Add eventual "missing picture" option
