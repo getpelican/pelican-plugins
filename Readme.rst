@@ -3,8 +3,8 @@ Pelican Plugins
 
 Beginning with version 3.0, Pelican supports plugins. Plugins are a way to add
 features to Pelican without having to directly modify the Pelican core. Starting
-with 3.2, all plugins (including the ones previously in the core) are 
-moved here, so this is the central place for all plugins. 
+with 3.2, all plugins (including the ones previously in the core) are
+moved here, so this is the central place for all plugins.
 
 How to use plugins
 ==================
@@ -39,11 +39,11 @@ Plugin                    Description
 AsciiDoc reader           Use AsciiDoc to write your posts.
 
 Asset management          Use the Webassets module to manage assets such as CSS and JS files.
-                    
+
 Auto Pages                Generate custom content for generated Author, Category, and Tag pages (e.g. author biography)
 
 Better code samples       Wraps all `table` blocks with a class attribute `.codehilitetable` in an additional `div` of class `.hilitewrapper`. It thus permits to style codeblocks better, especially to make them scrollable.
-                    
+
 Better figures/samples    Adds a `style="width: ???px; height: auto;"` attribute to any `<img>` tags in the content
 
 bootstrapify              Automatically add bootstraps default classes to your content, usefull for md generated tables
@@ -54,7 +54,7 @@ Clean summary             Cleans your summary of excess images
 
 Code include              Includes Pygments highlighted code in reStructuredText
 
-Collate content           Makes categories of content available to the template as lists through a `collations` attribute 
+Collate content           Makes categories of content available to the template as lists through a `collations` attribute
 
 Creole reader             Allows you to write your posts using the wikicreole syntax
 
@@ -124,8 +124,6 @@ Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is
 
 Pelican comment system    Allows you to add static comments to your articles
 
-Pelican TextBundle        Create posts from TextBundles
-
 Pelican Vimeo             Enables you to embed Vimeo videos in your pages and articles
 
 Pelican YouTube           Enables you to embed YouTube videos in your pages and articles
@@ -180,7 +178,7 @@ W3C validate              Submits generated HTML content to the W3C Markup Valid
 ========================  ===========================================================
 
 
-Please refer to the ``Readme`` file in a plugin's folder for detailed information about 
+Please refer to the ``Readme`` file in a plugin's folder for detailed information about
 that plugin.
 
 Contributing a plugin
