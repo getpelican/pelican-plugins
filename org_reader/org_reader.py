@@ -68,7 +68,7 @@ class OrgReader(readers.BaseReader):
 
         LOG.debug("OrgReader: running command `{0}`".format(cmd))
 
-        json_result = subprocess.check_output(cmd)
+        json_result = subprocess.check_output(cmd, universal_newlines=True)
         json_output = json.loads(json_result)
 
         slug, e = os.path.splitext(os.path.basename(filename))
