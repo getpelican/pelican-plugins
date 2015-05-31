@@ -17,7 +17,7 @@ The ``SITEMAP`` variable must be a Python dictionary and can contain three keys:
   - ``pages``, the priority for the URLs of the static pages
 
   - ``indexes``, the priority for the URLs of the index pages, such as tags,
-     author pages, categories indexes, archives, etc...
+     author pages, categories indexes, archives, etc... If explicitly set to 0 - they are excluded from sitemap.
 
   All the values of this dictionary must be decimal numbers between ``0`` and ``1``.
 
@@ -31,8 +31,8 @@ The ``SITEMAP`` variable must be a Python dictionary and can contain three keys:
 
   Valid frequency values are ``always``, ``hourly``, ``daily``, ``weekly``, ``monthly``,
   ``yearly`` and ``never``.
-  
-You can exclude URLs from being included in the sitemap by adding them to the sitemapExclude array in format 'sitemapExclude = ['login.html', 'signup.html']`.  
+
+You can exclude URLs from being included in the sitemap by adding them to the sitemapExclude array in format 'sitemapExclude = ['login.html', 'signup.html']`.
 
 If a key is missing or a value is incorrect, it will be replaced with the
 default value.

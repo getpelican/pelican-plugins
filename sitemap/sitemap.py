@@ -33,7 +33,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 XML_URL = """
 <url>
-<loc>{0}/{1}</loc>
+<loc>{0}{1}</loc>
 <lastmod>{2}</lastmod>
 <changefreq>{3}</changefreq>
 <priority>{4}</priority>
@@ -115,6 +115,8 @@ class SitemapGenerator(object):
                 warning("sitemap plugin: SITEMAP['priorities'] must be a dict")
                 warning("sitemap plugin: using the default values")
 
+            self.exclude_indexes = self.priorities.get('indexes') == 0
+
             if isinstance(chfreqs, dict):
                 # .items() for py3k compat.
                 for k, v in chfreqs.items():
@@ -161,15 +163,15 @@ class SitemapGenerator(object):
             chfreq = self.changefreqs['indexes']
 
         pageurl = '' if page.url == 'index.html' else page.url
-        
-        #Exclude URLs from the sitemap:
-        sitemapExclude = []
 
-        if self.format == 'xml':
-            if pageurl not in sitemapExclude:
+        if pageurl:
+            if not pageurl[0] == '/':
+                pageurl = '/' + pageurl
+
+            if self.format == 'xml':
                 fd.write(XML_URL.format(self.siteurl, pageurl, lastmod, chfreq, pri))
-        else:
-            fd.write(self.siteurl + '/' + pageurl + '\n')
+            else:
+                fd.write(self.siteurl + '/' + pageurl + '\n')
 
     def get_date_modified(self, page, default):
         if hasattr(page, 'modified'):
@@ -195,14 +197,16 @@ class SitemapGenerator(object):
     def generate_output(self, writer):
         path = os.path.join(self.output_path, 'sitemap.{0}'.format(self.format))
 
-        pages = self.context['pages'] + self.context['articles'] \
+        pages = self.context['pages'] + self.context['articles']
+        if not self.exclude_indexes:
+            pages = pages \
                 + [ c for (c, a) in self.context['categories']] \
                 + [ t for (t, a) in self.context['tags']] \
                 + [ a for (a, b) in self.context['authors']]
 
-        self.set_url_wrappers_modification_date(self.context['categories'])
-        self.set_url_wrappers_modification_date(self.context['tags'])
-        self.set_url_wrappers_modification_date(self.context['authors'])
+            self.set_url_wrappers_modification_date(self.context['categories'])
+            self.set_url_wrappers_modification_date(self.context['tags'])
+            self.set_url_wrappers_modification_date(self.context['authors'])
 
         for article in self.context['articles']:
             pages += article.translations
@@ -216,21 +220,22 @@ class SitemapGenerator(object):
             else:
                 fd.write(TXT_HEADER.format(self.siteurl))
 
-            FakePage = collections.namedtuple('FakePage',
-                                              ['status',
-                                               'date',
-                                               'url',
-                                               'save_as'])
+            if not self.exclude_indexes:
+                FakePage = collections.namedtuple('FakePage',
+                                                  ['status',
+                                                   'date',
+                                                   'url',
+                                                   'save_as'])
 
-            for standard_page_url in ['index.html',
-                                      'archives.html',
-                                      'tags.html',
-                                      'categories.html']:
-                fake = FakePage(status='published',
-                                date=self.now,
-                                url=standard_page_url,
-                                save_as=standard_page_url)
-                self.write_url(fake, fd)
+                for standard_page_url in ['index.html',
+                                          'archives.html',
+                                          'tags.html',
+                                          'categories.html']:
+                    fake = FakePage(status='published',
+                                    date=self.now,
+                                    url=standard_page_url,
+                                    save_as=standard_page_url)
+                    self.write_url(fake, fd)
 
             for page in pages:
                 self.write_url(page, fd)
