@@ -3,8 +3,8 @@ Contributing a plugin
 
 Details regarding how to write a plugin are explained in the Pelican `docs`_.
 
-If you want to contribute, **please be sure to read our general contributing
-`guidelines`_ first**. Then you can fork this repository, create a new branch,
+If you want to contribute, **please be sure** to read our general contributing
+`guidelines`_ first. Then you can fork this repository, create a new branch,
 make your changes, squash your commits, and issue your pull request from your
 new branch (i.e., **not** the ``master`` branch).
 
