@@ -1,11 +1,11 @@
 from pelican import signals
-from pelican.contents import Content, Article
+from pelican.contents import Article, Draft, Page
 from bs4 import BeautifulSoup
 
 
 def images_extraction(instance):
     representativeImage = None
-    if type(instance) == Article:
+    if type(instance) in (Article, Draft, Page):
         if 'image' in instance.metadata:
             representativeImage = instance.metadata['image']
 
