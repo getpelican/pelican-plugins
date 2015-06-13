@@ -75,6 +75,8 @@ is less than `responsive_break` (see below) and if so, sets `align` to `left`, `
 **Default Value**: `False` (defaults to `False` for backward compatibility)
  * `responsive_break`: [integer] a number (in pixels) representing the width breakpoint that is used
 when setting `responsive_align` to `True`. **Default Value**: 768
+ * `process_summary`: [boolean] ensures math will render in summaries and fixes math in that were cut off.
+Requires [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) be installed. **Default Value**: `True`
 
 #### Settings Examples
 Make math render in blue and displaymath align to the left:

@@ -38,6 +38,14 @@ def content_object_init(instance):
 				if name in interlinks:
 					hi = url.replace(name+">",interlinks[name])
 					link['href'] = hi
+		if 'img' in content:
+			for img in text.find_all('img', src=re.compile("(.+?)>")):
+				url = img.get('src')
+				m = re.search(r"(.+?)>", url).groups()
+				name = m[0]
+				if name in interlinks:
+					hi = url.replace(name+">",interlinks[name])
+					img['src'] = hi
 
 		instance._content = text.decode()
 
