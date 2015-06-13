@@ -13,6 +13,7 @@ TODO: Need to add a test.py for this plugin.
 
 """
 
+from __future__ import unicode_literals
 from os import path, access, R_OK
 
 from pelican import signals
@@ -52,13 +53,13 @@ def content_object_init(instance):
 
                 logger.debug('Better Fig. src: %s', src)
                 if not (path.isfile(src) and access(src, R_OK)):
-                    logger.error('Better Fig. Error: image not found: {}'.format(src))
+                    logger.error('Better Fig. Error: image not found: %s', src)
 
                 # Open the source image and query dimensions; build style string
                 im = Image.open(src)
                 extra_style = 'width: {}px; height: auto;'.format(im.size[0])
 
-                if instance.settings['RESPONSIVE_IMAGES']:
+                if 'RESPONSIVE_IMAGES' in instance.settings and instance.settings['RESPONSIVE_IMAGES']:
                     extra_style += ' max-width: 100%;'
 
                 if img.get('style'):

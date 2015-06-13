@@ -2,12 +2,11 @@
 Summary
 -------
 
-This plugin allows easy, variable length summaries directly embedded into the 
+This plugin allows easy, variable length summaries directly embedded into the
 body of your articles.
 """
 
-import types
-
+from __future__ import unicode_literals
 from pelican import signals
 
 def initialized(pelican):
@@ -24,37 +23,51 @@ def initialized(pelican):
 
 def content_object_init(instance):
     # if summary is already specified, use it
-    if 'summary' in instance.metadata:
+    # if there is no content, there's nothing to do
+    if hasattr(instance, '_summary'):
+        instance.has_summary = True
         return
 
-    def _get_content(self):
-        content = self._content
-        if self.settings['SUMMARY_BEGIN_MARKER']:
-            content = content.replace(
-                self.settings['SUMMARY_BEGIN_MARKER'], '', 1)
-        if self.settings['SUMMARY_END_MARKER']:
-            content = content.replace(
-                self.settings['SUMMARY_END_MARKER'], '', 1)
-        return content
-    instance._get_content = types.MethodType(_get_content, instance)
+    if not instance._content:
+        instance.has_summary = False
+        return
+
+    begin_marker = instance.settings['SUMMARY_BEGIN_MARKER']
+    end_marker   = instance.settings['SUMMARY_END_MARKER']
 
     # extract out our summary
-    if not hasattr(instance, '_summary') and instance._content is not None:
-        content = instance._content
-        begin_summary = -1
-        end_summary = -1
-        if instance.settings['SUMMARY_BEGIN_MARKER']:
-            begin_summary = content.find(instance.settings['SUMMARY_BEGIN_MARKER'])
-        if instance.settings['SUMMARY_END_MARKER']:
-            end_summary = content.find(instance.settings['SUMMARY_END_MARKER'])
-        if begin_summary != -1 or end_summary != -1:
-            # the beginning position has to take into account the length
-            # of the marker
-            begin_summary = (begin_summary +
-                            len(instance.settings['SUMMARY_BEGIN_MARKER'])
-                            if begin_summary != -1 else 0)
-            end_summary = end_summary if end_summary != -1 else None
-            instance._summary = instance._update_content(content[begin_summary:end_summary], instance._context.get('localsiteurl', ''))
+    content = instance._content
+    begin_summary = -1
+    end_summary = -1
+    if begin_marker:
+        begin_summary = content.find(begin_marker)
+    if end_marker:
+        end_summary = content.find(end_marker)
+
+    if begin_summary == -1 and end_summary == -1:
+        instance.has_summary = False
+        return
+
+    # skip over the begin marker, if present
+    if begin_summary == -1:
+        begin_summary = 0
+    else:
+        begin_summary = begin_summary + len(begin_marker)
+
+    if end_summary == -1:
+        end_summary = None
+
+    summary = content[begin_summary:end_summary]
+
+    # remove the markers from the content
+    if begin_summary:
+        content = content.replace(begin_marker, '', 1)
+    if end_summary:
+        content = content.replace(end_marker, '', 1)
+
+    instance._content = content
+    instance._summary = summary
+    instance.has_summary = True
 
 def register():
     signals.initialized.connect(initialized)

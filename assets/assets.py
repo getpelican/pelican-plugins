@@ -39,9 +39,9 @@ def create_assets_env(generator):
     """Define the assets environment and pass it to the generator."""
 
     theme_static_dir = generator.settings['THEME_STATIC_DIR']
-    assets_src = os.path.join(generator.output_path, theme_static_dir)
+    assets_destination = os.path.join(generator.output_path, theme_static_dir)
     generator.env.assets_environment = Environment(
-        assets_src, theme_static_dir)
+        assets_destination, theme_static_dir)
 
     if 'ASSET_CONFIG' in generator.settings:
         for item in generator.settings['ASSET_CONFIG']:
@@ -51,16 +51,15 @@ def create_assets_env(generator):
         for name, args, kwargs in generator.settings['ASSET_BUNDLES']:
             generator.env.assets_environment.register(name, *args, **kwargs)
 
-    if logging.getLevelName(logger.getEffectiveLevel()) == "DEBUG":
+    if 'ASSET_DEBUG' in generator.settings:
+        generator.env.assets_environment.debug = generator.settings['ASSET_DEBUG']
+    elif logging.getLevelName(logger.getEffectiveLevel()) == "DEBUG":
         generator.env.assets_environment.debug = True
 
-    if 'ASSET_SOURCE_PATHS' in generator.settings:
-        # the default load path gets overridden if additional paths are
-        # specified, add it back
-        generator.env.assets_environment.append_path(assets_src)
-        for path in generator.settings['ASSET_SOURCE_PATHS']:
-            full_path = os.path.join(generator.theme, path)
-            generator.env.assets_environment.append_path(full_path)
+    for path in (generator.settings['THEME_STATIC_PATHS'] +
+                 generator.settings.get('ASSET_SOURCE_PATHS', [])):
+        full_path = os.path.join(generator.theme, path)
+        generator.env.assets_environment.append_path(full_path)
 
 
 def register():
