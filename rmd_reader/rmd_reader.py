@@ -15,7 +15,6 @@ except ImportError:
 
 class RmdReader(readers.BaseReader):
     enabled = rmd
-    runtime_settings = None
     file_extensions = ['Rmd', 'rmd']
 
     # You need to have a read method, which takes a filename and returns
@@ -31,18 +30,13 @@ require(knitr);
 opts_knit$set(base.dir='{2}/content');
 knit('{0}', '{1}', quiet=TRUE, encoding='UTF-8');
 """.format(filename, md_filename, settings.DEFAULT_CONFIG.get('PATH')))
-        _settings = self.runtime_settings or settings.DEFAULT_CONFIG
-        md_reader = readers.MarkdownReader(_settings)
+        md_reader = readers.MarkdownReader(self.settings)
         content, metadata = md_reader.read(md_filename)
         os.remove(md_filename)
         return content, metadata
-
-def pelican_init(pelicanobj):
-    RmdReader.runtime_settings = pelicanobj.settings
 
 def add_reader(readers):
     readers.reader_classes['rmd'] = RmdReader
 
 def register():
-    signals.initialized.connect(pelican_init)
     signals.readers_init.connect(add_reader)
