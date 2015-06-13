@@ -11,7 +11,7 @@ How to use plugins
 
 Easiest way to install and use these plugins is cloning this repo::
 
-    git clone --recursive https://github.com/getpelican/pelican-plugins
+    git clone https://github.com/getpelican/pelican-plugins
 
 and activating the ones you want in your settings file::
 
@@ -43,11 +43,9 @@ Asset management          Use the Webassets module to manage assets such as CSS 
 Better code samples       Wraps all `table` blocks with a class attribute `.codehilitetable` in an additional `div` of class `.hilitewrapper`. It thus permits to style codeblocks better, especially to make them scrollable.
                     
 Better figures/samples    Adds a `style="width: ???px; height: auto;"` attribute to any `<img>` tags in the content
-
-bootstrapify              Automatically add bootstraps default classes to your content, usefull for md generated tables
-
+           
 CJK auto spacing          Inserts spaces between Chinese/Japanese/Korean characters and English words
-
+                
 Clean summary             Cleans your summary of excess images
 
 Code include              Includes Pygments highlighted code in reStructuredText
@@ -68,8 +66,6 @@ Filetime from git         Uses git commit to determine page date
 
 Gallery                   Allows an article to contain an album of pictures
 
-Gist directive            This plugin adds a ``gist`` reStructuredText directive.
-
 GitHub activity           On the template side, you just have to iterate over the ``github_activity`` variable
 
 Global license            Allows you to define a ``LICENSE`` setting and adds the contents of that license variable to the article's context
@@ -82,8 +78,6 @@ Gravatar                  Assigns the ``author_gravatar`` variable to the Gravat
 
 Gzip cache                Enables certain web servers (e.g., Nginx) to use a static cache of gzip-compressed files to prevent the server from compressing files during an HTTP call
 
-Headerid                  This plugin adds an anchor to each heading so you can deeplink to headers in reStructuredText articles.
-
 HTML entities             Allows you to enter HTML entities such as &copy;, &lt;, &#149; inline in a RST document
 
 HTML tags for rST         Allows you to use HTML tags from within reST documents
@@ -92,19 +86,13 @@ I18N Sub-sites            Extends the translations functionality by creating int
 
 ical                      Looks for and parses an ``.ics`` file if it is defined in a given page's ``calendar`` metadata.
 
-Image Process             Automates the processing of images based on their class attributes
-
 Interlinks                Lets you add frequently used URLs to your markup using short keywords
 
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
 
 Multi parts posts         Allows you to write multi-part posts
 
-Markdown Inline Extend    Enables you to add customize inline patterns to your markdown
-
 Neighbor articles         Adds ``next_article`` (newer) and ``prev_article`` (older) variables to the article's context
-
-Open graph                Generates Open Graph tags for your articles
 
 Optimize images           Applies lossless compression on JPEG and PNG images
 
@@ -112,15 +100,11 @@ PDF generator             Automatically exports RST articles and pages as PDF fi
 
 Pelican-flickr            Brings your Flickr photos & sets into your static website
 
-pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
-
 Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
 
 Pelican comment system    Allows you to add static comments to your articles
-
-Pelican TextBundle        Create posts from TextBundles
 
 Pelican Vimeo             Enables you to embed Vimeo videos in your pages and articles
 
@@ -140,13 +124,7 @@ Read More link            Inserts an inline "read more" or "continue" link into 
 
 Related posts             Adds the ``related_posts`` variable to the article's context
 
-Markdown-metaYAML         Pelican reader to enable YAML-style metadata in markdown articles
-
 Math Render               Gives pelican the ability to render mathematics
-
-Panorama                  Creates charts from posts metadata
-
-Replacer                  Replace a text of a generated HTML
 
 Representative image      Extracts a representative image (i.e, featured image) from the article's summary or content
 
@@ -155,8 +133,6 @@ Share post                Creates share URLs of article
 Simple footnotes          Adds footnotes to blog posts
 
 Sitemap                   Generates plain-text or XML sitemaps
-
-sort_tags                 Provides `tags_sorted_by_article_length` to templates, which contains all tags, sorted by how many articles it contains first, and alphabetically second.
 
 Static comments           Allows you to add static comments to an article
 

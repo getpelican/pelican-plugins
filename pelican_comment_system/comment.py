@@ -15,8 +15,6 @@ class Comment(Content):
     mandatory_properties = ('author', 'date')
     default_template = 'None'
 
-    article = None
-
     def __init__(self, content, metadata, settings, source_path, context):
         # Strip the path off the full filename.
         name = os.path.split(source_path)[1]

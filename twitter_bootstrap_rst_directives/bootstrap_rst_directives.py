@@ -345,9 +345,9 @@ class Alert(rst.Directive):
 
         *example:*
 
-            .. alert-warning::
+            .. alert-default::
 
-                This is a warning alert content
+                This is a default alert content
 
     """
     has_content = True

@@ -2,12 +2,9 @@
 Implementing language buttons
 -----------------------------
 
-Each article with translations has translations links, but that's the
-only way to switch between language subsites.
+Each article with translations has translations links, but that's the only way to switch between language subsites.
 
-For this reason it is convenient to add language buttons to the top
-menu bar to make it simple to switch between the language subsites on
-all pages.
+For this reason it is convenient to add language buttons to the top menu bar to make it simple to switch between the language subsites on all pages.
 
 Example designs
 ---------------
@@ -15,9 +12,7 @@ Example designs
 Language buttons showing other available languages
 ..................................................
 
-The ``extra_siteurls`` dictionary is a mapping of all other (not the
-``DEFAULT_LANG`` of the current (sub-)site) languages to the
-``SITEURL`` of the respective (sub-)sites
+The ``extra_siteurls`` dictionary is a mapping of all other (not the *DEFAULT_LANG* of the current (sub-)site) languages to the *SITEURL* of the respective (sub-)sites
 
 .. code-block:: jinja
 
@@ -25,7 +20,7 @@ The ``extra_siteurls`` dictionary is a mapping of all other (not the
    <nav><ul>
    {% if extra_siteurls %}
    {% for lang, url in extra_siteurls.items() %}
-   <li><a href="{{ url }}/">{{ lang }}</a></li>
+   <li><a href="{{ url }}">{{ lang }}</a></li>
    {% endfor %}
    <!-- separator -->
    <li style="background-color: white; padding: 5px;">&nbsp</li>
@@ -33,15 +28,10 @@ The ``extra_siteurls`` dictionary is a mapping of all other (not the
    {% for title, link in MENUITEMS %}
    <!-- SNIP -->
 
-Notice the slash ``/`` after ``{{ url }}``, this makes sure it works
-with local development when ``SITEURL == ''``.
-
 Language buttons showing all available languages, current is active
-...................................................................
+..................................................................
 
-The ``extra_siteurls`` dictionary is a mapping of all languages to the
-``SITEURL`` of the respective (sub-)sites. This template sets the
-language of the current (sub-)site as active.
+The ``extra_siteurls`` dictionary is a mapping of all languages to the *SITEURL* of the respective (sub-)sites. This template sets the language of the current (sub-)site as active.
 
 .. code-block:: jinja
 
@@ -49,7 +39,7 @@ language of the current (sub-)site as active.
    <nav><ul>
    {% if lang_siteurls %}
    {% for lang, url in lang_siteurls.items() %}
-   <li{% if lang == DEFAULT_LANG %} class="active"{% endif %}><a href="{{ url }}/">{{ lang }}</a></li>
+   <li{% if lang == DEFAULT_LANG %} class="active"{% endif %}><a href="{{ url }}">{{ lang }}</a></li>
    {% endfor %}
    <!-- separator -->
    <li style="background-color: white; padding: 5px;">&nbsp</li>
@@ -64,9 +54,7 @@ Tips and tricks
 Showing more than language codes
 ................................
 
-If you want the language buttons to show e.g. the names of the
-languages or flags [#flags]_, not just the language codes, you can use
-a jinja filter to translate the language codes
+If you want the language buttons to show e.g. the names of the languages or flags [#flags]_, not just the language codes, you can use a jinja filter to translate the language codes
 
 
 .. code-block:: python
@@ -90,7 +78,7 @@ And then the link content becomes
 
    <!-- SNIP -->
    {% for lang, siteurl in lang_siteurls.items() %}
-   <li{% if lang == DEFAULT_LANG %} class="active"{% endif %}><a href="{{ siteurl }}/">{{ lang | lookup_lang_name }}</a></li>
+   <li{% if lang == DEFAULT_LANG %} class="active"{% endif %}><a href="{{ siteurl }}">{{ lang | lookup_lang_name }}</a></li>
    {% endfor %}
    <!-- SNIP -->
 
@@ -98,9 +86,7 @@ And then the link content becomes
 Changing the order of language buttons
 ......................................
 
-Because ``lang_siteurls`` and ``extra_siteurls`` are instances of
-``OrderedDict`` with ``main_lang`` being always the first key, you can
-change the order through a jinja filter.
+Because ``lang_siteurls`` and ``extra_siteurls`` are instances of ``OrderedDict`` with ``main_lang`` being always the first key, you can change the order through a jinja filter.
 
 .. code-block:: python
 
@@ -124,5 +110,4 @@ And then the ``for`` loop line in the template becomes
    <!-- SNIP -->
 
 
-.. [#flags] Although it may look nice, `w3 discourages it
-            <http://www.w3.org/TR/i18n-html-tech-lang/#ri20040808.173208643>`_.
+.. [#flags] Although it may look nice, `w3 discourages it <http://www.w3.org/TR/i18n-html-tech-lang/#ri20040808.173208643>`_.
