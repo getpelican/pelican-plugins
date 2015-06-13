@@ -25,4 +25,9 @@ To display a link to the article feed simply add the following to your theme:
 {% endif %}
 ```
 
+Link to the all comment feed:
+
+```html
+<a href="{{ FEED_DOMAIN }}/{{ PELICAN_COMMENT_SYSTEM_FEED_ALL }}">Comment All Atom Feed</a>
+```
 

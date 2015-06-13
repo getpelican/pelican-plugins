@@ -14,9 +14,9 @@ To use this plugin, ensure the following are set in your `pelicanconf.py` file:
     PLUGINS = [
 		'feed_summary',
 		]
-    'FEED_USE_SUMMARY' = True
+    FEED_USE_SUMMARY = True
 
-The default value of `'FEED_USE_SUMMARY'` is `False`, so it must be set to `True` to enable the plugin, even if it is loaded.
+The default value of `FEED_USE_SUMMARY` is `False`, so it must be set to `True` to enable the plugin, even if it is loaded.
 
 This plugin is written for pelican 3.3 and later.
 

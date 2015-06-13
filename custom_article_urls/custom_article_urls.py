@@ -33,7 +33,7 @@ def custom_url(generator, metadata):
                 """
                 pass
             else:
-                temp_article = Article(None, metadata=metadata)
+                temp_article = Article("", metadata=metadata)
                 url_format = pattern_matched['URL']
                 save_as_format = pattern_matched['SAVE_AS']
                 url = url_format.format(**temp_article.url_format)

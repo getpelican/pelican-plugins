@@ -27,5 +27,10 @@ def touch_file(path, context):
         set_file_utime(path, max(x.date for x in dates))
 
 
+def touch_feed(path, context, feed):
+    set_file_utime(path, max(x['pubdate'] for x in feed.items))
+
+
 def register():
     signals.content_written.connect(touch_file)
+    signals.feed_written.connect(touch_feed)
