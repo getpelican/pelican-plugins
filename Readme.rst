@@ -116,6 +116,8 @@ PDF generator             Automatically exports RST articles and pages as PDF fi
 
 Pelican-flickr            Brings your Flickr photos & sets into your static website
 
+pelican_javascript        Allows you to embed Javascript and CSS files into individual articles
+
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
 
 Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
