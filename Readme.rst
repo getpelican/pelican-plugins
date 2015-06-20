@@ -158,6 +158,8 @@ Simple footnotes          Adds footnotes to blog posts
 
 Sitemap                   Generates plain-text or XML sitemaps
 
+Slim                      Render theme template files via Plim, a Python port of Slim, instead of Jinja
+
 Static comments           Allows you to add static comments to an article
 
 Subcategory               Adds support for subcategories
