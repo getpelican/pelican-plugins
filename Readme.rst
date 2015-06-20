@@ -100,6 +100,8 @@ Interlinks                Lets you add frequently used URLs to your markup using
 
 Libravatar                Allows inclusion of user profile pictures from libravatar.org
 
+Link Class                Allows the insertion of class attributes into the <a> generated elements (Markdown only)
+
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
 
 Multi parts posts         Allows you to write multi-part posts
