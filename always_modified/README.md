@@ -7,7 +7,7 @@ metadata. This plugin facilitates that sorting by assuming the modified date
 
 ## Usage
 
-1. Add ALWAYS_MODIFIED = True to your settings file.
+1. Add `ALWAYS_MODIFIED = True` to your settings file.
 2. Now you can sort by modified date in your templates:
 
     {% for article in articles|sort(reverse=True,attribute='modified') %}
