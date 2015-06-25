@@ -106,7 +106,7 @@ class _GitWrapper(_GitWrapperCommon):
 
             Alternatively enabling GIT_FILETIME_FOLLOW may also make your problem go away.
         '''
-        return list(self.repo.iter_commits(path=path))
+        return list(self.repo.iter_commits(paths=path))
 
     @staticmethod
     def get_commit_date(commit, tz_name):
