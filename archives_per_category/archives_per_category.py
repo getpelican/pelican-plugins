@@ -53,7 +53,8 @@ def generate_archives_per_category(generator, writer):
         for _period, group in groupby(dates, key=key):
             archive = list(group)
 
-            def get_category(item): return item.category
+            def get_category(item):
+                return item.category
             for category, articles in groupby(archive, lambda x: x.category):
                 if (categories_to_archive is not None and
                         (category not in categories_to_archive and
@@ -61,12 +62,15 @@ def generate_archives_per_category(generator, writer):
                     # Skip unwanted categories defined by name or slug
                     continue
 
-                date = archive[0].date
+                category_archive = list(articles)
+
+                date = category_archive[0].date
                 save_as = save_as_fmt.format(date=date, category=category.slug)
                 context = generator.context.copy()
 
                 context["category"] = category
                 context["category-slug"] = category.slug
+                context["articles"] = category_archive
 
                 if key == period_date_key['year']:
                     context["period"] = (_period,)
@@ -80,7 +84,8 @@ def generate_archives_per_category(generator, writer):
                         context["period"] = (_period[0], month_name,
                                              _period[2])
 
-                write(save_as, template, context, dates=archive, blog=True)
+                write(save_as, template, context, dates=category_archive,
+                      blog=True)
 
     for period in 'year', 'month', 'day':
         save_as = period_save_as[period]
