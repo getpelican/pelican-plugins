@@ -46,9 +46,6 @@
 [submodule "pandoc_reader"]
 	path = pandoc_reader
 	url = https://github.com/liob/pandoc_reader.git
-[submodule "sort_tags"]
-	path = sort_tags
-	url = https://github.com/ingwinlu/sort_tags.git
 [submodule "bootstrapify"]
 	path = bootstrapify
 	url = https://github.com/ingwinlu/pelican-bootstrapify.git
@@ -73,3 +70,12 @@
 [submodule "replacer"]
 	path = replacer
 	url = https://github.com/narusemotoki/replacer
+[submodule "pelican-toc"]
+	path = pelican-toc
+	url = https://github.com/ingwinlu/pelican-toc
+[submodule "multimarkdown_reader"]
+	path = multimarkdown_reader
+	url = https://github.com/dames57/multimarkdown_reader.git
+[submodule "pelican_javascript"]
+	path = pelican_javascript
+	url = https://github.com/mortada/pelican_javascript.git

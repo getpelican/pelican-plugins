@@ -16,7 +16,7 @@ Publish Emacs Org files alongside the rest of your website or blag.
 To provide metadata to Pelican, provide the following header in your Org file:
 
 	#+TITLE: The Title Of This BlogPost
-	#+DATE: 2001-01-01
+	#+DATE: <2001-01-01>
 	#+CATEGORY: comma, separated, list, of, tags
 
 The slug is automatically the filename of the Org file.
