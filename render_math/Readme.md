@@ -5,10 +5,19 @@ this by using the [MathJax](http://www.mathjax.org/) javascript engine.
 
 The plugin also ensures that Typogrify and recognized math "play" nicely together, by
 ensuring [Typogrify](https://github.com/mintchaos/typogrify) does not alter math content.
-It requires at a minimum Pelican version *3.5* and Typogrify version *2.0.7* to work.
-If these versions are not available, Typogrify will be disabled for the entire site.
 
 Both Markdown and reStructuredText is supported.
+
+Requirements
+------------
+
+  * Pelican version *3.6* or above is required.
+  * Typogrify version *2.0.7* or higher is needed for Typogrify to play
+    "nicely" with this plugin. If this version is not available, Typogrify
+    will be disabled for the entire site.
+  * BeautifulSoup4 is required to correct summaries. If BeautifulSoup4 is
+    not installed, summary processing will be ignored, even if specified
+    in user settings.
 
 Installation
 ------------
@@ -26,13 +35,22 @@ content. You would only want to do this if you had control over the template
 and wanted to insert the script manually.
 
 ### Typogrify
-In the past, using [Typgogrify](https://github.com/mintchaos/typogrify) would alter the math contents resulting
-in math that could not be rendered by MathJax. The only option was to ensure
-that Typogrify was disabled in the settings.
+In the past, using [Typgogrify](https://github.com/mintchaos/typogrify) would
+alter the math contents resulting in math that could not be rendered by MathJax.
+The only option was to ensure that Typogrify was disabled in the settings.
 
-The problem has been recitified in this plugin, but it requires [Typogrify version 2.0.7](https://pypi.python.org/pypi/typogrify)
-(or higher) and Pelican version 3.5 or higher. If these versions are not present, the plugin will disable
-Typogrify for the entire site
+The problem has been rectified in this plugin, but it requires at a minimum
+[Typogrify version 2.0.7](https://pypi.python.org/pypi/typogrify) (or higher).
+If this version is not present, the plugin will disable Typogrify for the entire
+site.
+
+### BeautifulSoup4
+Pelican creates summaries by truncating the contents to a specified user length.
+The truncation process is oblivious to any math and can therefore destroy
+the math output in the summary.
+
+To restore math, [BeautifulSoup4](https://pypi.python.org/pypi/beautifulsoup4/4.4.0)
+is used. If it is not installed, no summary processing will happen.
 
 Usage
 -----
