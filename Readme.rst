@@ -156,6 +156,8 @@ Replacer                  Replace a text of a generated HTML
 
 Representative image      Extracts a representative image (i.e, featured image) from the article's summary or content
 
+RMD Reader                Create posts via knitr RMarkdown files
+
 Share post                Creates share URLs of article
 
 Simple footnotes          Adds footnotes to blog posts
