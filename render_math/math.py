@@ -6,25 +6,28 @@ This plugin allows your site to render Math. It uses
 the MathJax JavaScript engine.
 
 For markdown, the plugin works by creating a Markdown
-extension which is used during the markdown compilation stage.
-Math therefore gets treated like a "first class citizen" in Pelican
+extension which is used during the markdown compilation
+stage.  Math therefore gets treated like a "first class
+citizen" in Pelican
 
 For reStructuredText, the plugin instructs the rst engine
-to output Mathjax for for math.
+to output Mathjax for all math.
 
-The mathjax script is automatically inserted into the HTML.
+The mathjax script is by default automatically inserted
+into the HTML.
 
 Typogrify Compatibility
 -----------------------
-This plugin now plays nicely with Typogrify, but it requires
-Typogrify version 2.04 or above.
+This plugin now plays nicely with Typogrify, but it
+requires Typogrify version 2.07 or above.
 
 User Settings
 -------------
-Users are also able to pass a dictionary of settings in the settings file which
-will control how the MathJax library renders things. This could be very useful
-for template builders that want to adjust the look and feel of the math.
-See README for more details.
+Users are also able to pass a dictionary of settings
+in the settings file which will control how the MathJax
+library renders things. This could be very useful for
+template builders that want to adjust the look and feel of
+the math.  See README for more details.
 """
 
 import os
@@ -224,7 +227,7 @@ def configure_typogrify(pelicanobj, mathjax_settings):
         # Instantiate markdown extension and append it to the current extensions
         pelicanobj.settings['TYPOGRIFY_IGNORE_TAGS'].extend(['.math', 'script'])  # ignore math class and script
 
-    except (ImportError, TypeError, KeyError) as e:
+    except (ImportError, TypeError) as e:
         pelicanobj.settings['TYPOGRIFY'] = False  # disable Typogrify
 
         if isinstance(e, ImportError):
@@ -232,9 +235,6 @@ def configure_typogrify(pelicanobj, mathjax_settings):
 
         if isinstance(e, TypeError):
             print("\nA more recent version of Typogrify is needed for the render_math module.\nPlease upgrade Typogrify to the latest version (anything equal or above version 2.0.7 is okay).\nTypogrify will be turned off due to this reason.\n")
-
-        if isinstance(e, KeyError):
-            print("\nA more recent version of Pelican is needed for Typogrify to work with render_math.\nPlease upgrade Pelican to the latest version or clone it directly from the master GitHub branch\nTypogrify will be turned off due to this reason\n")
 
 def process_mathjax_script(mathjax_settings):
     """Load the mathjax script template from file, and render with the settings"""
@@ -301,12 +301,13 @@ def pelican_init(pelicanobj):
 def rst_add_mathjax(content):
     """Adds mathjax script for reStructuredText"""
 
-    # This is only value for .rst files
+    # .rst is the only valid extension for reStructuredText files
     _, ext = os.path.splitext(os.path.basename(content.source_path))
     if ext != '.rst':
         return
 
     # If math class is present in text, add the javascript
+    # note that RST hardwires mathjax to be class "math"
     if 'class="math"' in content._content:
         content._content += "<script type='text/javascript'>%s</script>" % rst_add_mathjax.mathjax_script
 
@@ -315,8 +316,8 @@ def process_rst_and_summaries(content_generators):
     Ensure mathjax script is applied to RST and summaries are
     corrected if specified in user settings.
     
-    Handle content attached to ArticleGenerator and PageGenerator objects,
-    since we don't know how to handle other Generator types.
+    Handles content attached to ArticleGenerator and PageGenerator objects,
+    since the plugin doesn't know how to handle other Generator types.
     
     For reStructuredText content, examine both articles and pages.
     If article or page is reStructuredText and there is math present,
