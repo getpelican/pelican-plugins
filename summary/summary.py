@@ -8,7 +8,7 @@ body of your articles.
 
 from __future__ import unicode_literals
 from pelican import signals
-from pelican.generators import ArticlesGenerator, StaticGenerator
+from pelican.generators import ArticlesGenerator, StaticGenerator, PagesGenerator
 
 def initialized(pelican):
     from pelican.settings import DEFAULT_CONFIG
