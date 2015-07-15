@@ -79,3 +79,6 @@
 [submodule "pelican_javascript"]
 	path = pelican_javascript
 	url = https://github.com/mortada/pelican_javascript.git
+[submodule "loadcsv"]
+	path = loadcsv
+	url = https://github.com/e9t/pelican-loadcsv
