@@ -104,6 +104,8 @@ Libravatar                Allows inclusion of user profile pictures from librava
 
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
 
+Load CSV                  Adds ``csv`` Jinja tag to display the contents of a CSV file as an HTML table
+
 Multi parts posts         Allows you to write multi-part posts
 
 Markdown Inline Extend    Enables you to add customize inline patterns to your markdown
