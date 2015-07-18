@@ -28,7 +28,7 @@ def content_object_init(instance):
 
     if instance._content is not None:
         content = instance._content
-        soup = BeautifulSoup(content)
+        soup = BeautifulSoup(content, 'html.parser')
 
         if 'img' in content:
             for img in soup('img'):

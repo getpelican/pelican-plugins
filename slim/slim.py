@@ -75,7 +75,7 @@ def get_writer(sender):
                 if ('SLIM_OPTIONS' in self.settings and
                         'PRETTYIFY' in self.settings['SLIM_OPTIONS'] and
                         self.settings['SLIM_OPTIONS']['PRETTYIFY']):
-                    output = bs(output).prettify() # prettify the html
+                    output = bs(output, 'html.parser').prettify() # prettify the html
                 else:
                     output = minify(output) # minify the html
                 return output
