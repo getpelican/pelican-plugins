@@ -37,7 +37,7 @@ SETTINGS
 # Do not use a leading or trailing slash below (e.g., use "images/video-thumbnails"):
 output_directory_for_thumbnails = "images/video-thumbnails"
 
-# See the note above re: adding support for other video services to this list.
+# See the note in the Readme file re: adding support for other video services to this list.
 supported_video_services = {
 	"youtube": {
 		"shortcode_not_including_exclamation_point": "youtube",
@@ -56,7 +56,7 @@ In order for this plugin to work optimally, you need to do just a few things:
 	PLUGIN_PATH = "/pelican-plugins"  
 	PLUGINS = ["video_privacy_enhancer"]
 
-2a. If necessary, install jQuery on your site (See https://stackoverflow.com/questions/1458349/installing-jquery -- the jQuery base file should go into your Pelican themes 'static' directory)
+2a. If necessary, install jQuery on your site (See https://stackoverflow.com/questions/1458349/installing-jquery -- the jQuery base file should go into your Pelican theme's 'static' directory)
 
 2b. Copy the jQuery file in this folder into, for example, your_theme_folder/static/video_privacy_enhancer_jQuery.js, and add a line like this to the <head></head> element of your website's base.html (or equivalent) template:
 	`<script src="{{ SITEURL }}/theme/video_privacy_enhancer_jquery.js"></script> <!--Load jQuery functions for the Video Privacy Enhancer Pelican plugin -->`
