@@ -54,6 +54,7 @@ def aggregate_series(generator):
 
         for index, article in enumerated_articles:
             article.series = dict()
+            article.series['count'] = len(ordered_articles)
             article.series['name'] = series_name
             article.series['index'] = index + 1
             article.series['all'] = ordered_articles
@@ -69,6 +70,26 @@ def aggregate_series(generator):
                 article.series['next'] = ordered_articles[index + 1]
             except IndexError:
                 article.series['next'] = None
+
+            # Controls number of members in limited list
+            limit_list_count = 10
+            # Maximum number of previous articles to show prior to index
+            previous_count = 3
+
+            if article.series['count'] <= limit_list_count:
+                article.series['limit_list'] = ordered_articles
+            else:
+                start_index = index - previous_count
+                if start_index < 0:
+                    start_index = 0
+                end_index = start_index + limit_list_count
+                if end_index >= article.series['count']:
+                    # Walk backwards to complete limited list
+                    start_index = article.series['count'] - limit_list_count
+                    article.series['limit_list'] = ordered_articles[start_index:]
+                else:
+                    article.series['limit_list'] = ordered_articles[start_index: end_index]
+
 
 
 def register():

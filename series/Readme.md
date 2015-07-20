@@ -24,12 +24,14 @@ come after them, ordered by date.
 The plugin provides the following variables to your templates
 
     * `article.series.name` is the name of the series as specified in the article metadata
+    * `article.series.count` is number of articles in series.  Useful with index to specify article index of count.
     * `article.series.index` is the index of the current article inside the series
     * `article.series.all` is an ordered list of all articles in the series (including the current one)
     * `article.series.all_previous` is an ordered list of the articles published before the current one
     * `article.series.all_next` is an ordered list of the articles published after the current one
     * `article.series.previous` is the previous article in the series (a shortcut to `article.series.all_previous[-1]`)
     * `article.series.next` is the next article in the series (a shortcut to `article.series.all_next[0]`)
+    * `article.series.limited_list` is up to 10 articles in the series (this is useful for very long series).  It would be used instead of all.
 
 For example:
 
