@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="content" class="body">
+    <footer class="post-info">
+    {% if article.author_libravatar %}
+        <div align="center">
+            <img src="{{ article.author_libravatar }}">
+        </div>
+    {% endif %}
+    </footer>
+</section>
+{% endblock %}

@@ -36,7 +36,7 @@ Usage
             </a>
         </li>
     {% endif %}
-    {% if article.next_article %}
+    {% if article.next_article_in_category %}
         <li>
             <a href="{{ SITEURL }}/{{ article.next_article_in_category.url}}">
                 {{ article.next_article_in_category.title }}
@@ -63,17 +63,17 @@ Therefor the usage with subcategories is:
 .. code-block:: html+jinja
 
     <ul>
-    {% if article.prev_article_subcategory1 %}
+    {% if article.prev_article_in_subcategory1 %}
         <li>
             <a href="{{ SITEURL }}/{{ article.prev_article_in_subcategory1.url}}">
                 {{ article.prev_article_in_subcategory1.title }}
             </a>
         </li>
     {% endif %}
-    {% if article.next_article %}
+    {% if article.next_article_in_subcategory1 %}
         <li>
-            <a href="{{ SITEURL }}/{{ article.next_article_subcategory1.url}}">
-                {{ article.next_article_subcategory1.title }}
+            <a href="{{ SITEURL }}/{{ article.next_article_in_subcategory1.url}}">
+                {{ article.next_article_in_subcategory1.title }}
             </a>
         </li>
     {% endif %}
@@ -86,7 +86,7 @@ Therefor the usage with subcategories is:
             </a>
         </li>
     {% endif %}
-    {% if article.next_article %}
+    {% if article.next_article_in_subcategory2 %}
         <li>
             <a href="{{ SITEURL }}/{{ article.next_article_in_subcategory2.url}}">
                 {{ article.next_article_in_subcategory2.title }}

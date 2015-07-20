@@ -1,9 +1,10 @@
-import types
 import inspect
+import six
 
 # Modifies class methods (or instances of them) on the fly
 # http://blog.ianbicking.org/2007/08/08/opening-python-classes/
 # http://svn.colorstudy.com/home/ianb/recipes/magicset.py
+# including python 3 fixes for func_name => __name__ and types.ClassType => type
 
 def magic_set(obj):
     """
@@ -52,8 +53,7 @@ Works on both instances and classes.
 1
 """
     def decorator(func):
-        is_class = (isinstance(obj, type)
-                    or isinstance(obj, types.ClassType))
+        is_class = isinstance(obj, six.class_types)
         args, varargs, varkw, defaults = inspect.getargspec(func)
         if not args or args[0] not in ('self', 'cls', 'klass'):
             # Static function/method
@@ -68,7 +68,7 @@ Works on both instances and classes.
                 def replacement(*args, **kw):
                     return func(obj, *args, **kw)
                 try:
-                    replacement.func_name = func.func_name
+                    replacement.__name__ = func.__name__
                 except:
                     pass
         else:
@@ -78,15 +78,15 @@ Works on both instances and classes.
                 def replacement(*args, **kw):
                     return func(obj.__class__, *args, **kw)
                 try:
-                    replacement.func_name = func.func_name
+                    replacement.__name__ = func.__name__
                 except:
                     pass
-        setattr(obj, func.func_name, replacement)
+        setattr(obj, func.__name__, replacement)
         return replacement
     return decorator
-        
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
-    
+
 
