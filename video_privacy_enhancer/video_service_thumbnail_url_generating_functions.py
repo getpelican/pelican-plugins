@@ -25,7 +25,7 @@ def generate_thumbnail_download_link_youtube(video_id_from_shortcode):
 def generate_thumbnail_download_link_vimeo(video_id_from_shortcode):
 	"""Thumbnail URL generator for Vimeo videos."""
 	
-	# Following the Vimeo API at https://developer.vimeo.com/api#video-request, we need to request the video's metadata and get the thumbnail from that. To do this, we'll use the requests module both to get and parse the JSON for this task.
+	# Following the Vimeo API at https://developer.vimeo.com/api#video-request, we need to request the video's metadata and get the thumbnail from that. First, then, we'll get the metadata in JSON format, and then will parse it to find the thumbnail URL.
 	video_metadata = urllib.urlopen("https://vimeo.com/api/v2/video/" + video_id_from_shortcode + ".json") # Download the video's metadata in JSON format.
 	video_metadata_parsed = json.load(video_metadata) # Parse the JSON
 	video_thumbnail_large_location = video_metadata_parsed[0]['thumbnail_large'] # Go into the JSON and get the URL of the thumbnail.

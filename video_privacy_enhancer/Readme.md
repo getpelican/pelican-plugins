@@ -1,6 +1,6 @@
 # Video Privacy Enhancer
 
-This plugin is a conceptual port of the Electronic Frontier Foundation's (EFF's) [MyTube Drupal plugin](https://www.eff.org/pages/mytube-limit-privacy-risks-embedded-video "EFF blog post about the MyTube Plugin") to Pelican. **It increases user privacy by stopping Google's ability to place cookies on a user's system through an embedded YouTube video without that user explicitly opting-in to viewing the video (by clicking on it).** In the future, support will hopefully expand to include other video platforms.
+This plugin is a conceptual port of the Electronic Frontier Foundation's (EFF's) [MyTube Drupal plugin](https://www.eff.org/pages/mytube-limit-privacy-risks-embedded-video "EFF blog post about the MyTube Plugin") to Pelican. **It increases user privacy by stopping video services (e.g., for YouTube, Google) from placing cookies on a user's system through an embedded video without that user explicitly opting-in to viewing the video (by clicking on it).**
 
 
 ## Copyright, Contact, and Acknowledgements
@@ -28,7 +28,7 @@ I'm also grateful to the authors of the plugins in the pelican-plugins repo; bei
 
 ## Explanation and Rationale
 
-YouTube videos that are embedded in a website are capable of placing a cookie (or using other tracking methods) on a visitor's computer even if that visitor does not play the movie. For certain sites that deal with political or other potentially sensitive topics, this automatic tracking could raise privacy concerns among users. Thus, this plugin fetches and stores, on your server, a copy of the thumbnail image of each embedded YouTube video on your website. It then displays that image instead of the video until the user "opts-in" to watching the video by clicking on the thumbnail (at which point the image is replaced by the youtube embed iframe).
+Many videos (e.g., from YouTube) that are embedded in a website are capable of placing a cookie (or using other tracking methods) on a visitor's computer even if that visitor does not play the movie. For certain sites that deal with political or other potentially sensitive topics, this automatic tracking could raise privacy concerns among users. Thus, this plugin fetches and stores, on your server, a copy of the thumbnail image of each embedded YouTube video on your website. It then displays that image instead of the video until the user "opts-in" to watching the video by clicking on the thumbnail (at which point the image is replaced by the youtube embed iframe).
 
 This plugin allows video shortcodes to be used in any Pelican page or article.
 
