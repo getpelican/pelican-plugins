@@ -82,6 +82,3 @@
 [submodule "loadcsv"]
 	path = loadcsv
 	url = https://github.com/e9t/pelican-loadcsv
-[submodule "Casper2Pelican"]
-	path = Casper2Pelican
-	url = https://github.com/abr4xas/Casper2Pelican
