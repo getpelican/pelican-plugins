@@ -82,3 +82,6 @@
 [submodule "loadcsv"]
 	path = loadcsv
 	url = https://github.com/e9t/pelican-loadcsv
+[submodule "org_pandoc_reader"]
+	path = org_pandoc_reader
+	url = https://github.com/jo-tham/org_pandoc_reader.git
