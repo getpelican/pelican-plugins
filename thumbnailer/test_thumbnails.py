@@ -1,7 +1,7 @@
 from thumbnailer import _resizer
 from unittest import TestCase, main
 import os.path as path
-from PIL import Image, ImageChops
+from PIL import Image
 
 class ThumbnailerTests(TestCase):
 
@@ -44,6 +44,11 @@ class ThumbnailerFilenameTest(TestCase):
         """Test a file that is in the root of img_path."""
 
         r = _resizer('square', '100', self.img_path)
+        new_name = r.get_thumbnail_name(self.path('sample_image.jpg'))
+        self.assertEqual('sample_image_square.jpg', new_name)
+
+    def testRootWithSlash(self):
+        r = _resizer('square', '100', self.img_path + '/')
         new_name = r.get_thumbnail_name(self.path('sample_image.jpg'))
         self.assertEqual('sample_image_square.jpg', new_name)
 

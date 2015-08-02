@@ -1,4 +1,4 @@
-'''Copyright 2014 Zack Weinberg
+'''Copyright 2014, 2015 Zack Weinberg
 
 Category Metadata
 -----------------
@@ -27,12 +27,14 @@ import re
 import logging
 logger = logging.getLogger(__name__)
 
-### CORE BUG: Content.url_format does not honor category.slug (or
-### author.slug).  The sanest way to fix this without modifying core
-### is to dynamically redefine each article's class to a subclass
-### of itself with the bug fixed.
+### CORE BUG: https://github.com/getpelican/pelican/issues/1547
+### Content.url_format does not honor category.slug (or author.slug).
+### The sanest way to work around this is to dynamically redefine each
+### article's class to a subclass of itself with the bug fixed.
 ###
-### https://github.com/getpelican/pelican/issues/1547
+### Core was fixed in rev 822fb134e041c6938c253dd4db71813c4d0dc74a,
+### which is not yet in any release, so we dynamically detect whether
+### the installed version of Pelican still has the bug.
 
 patched_subclasses = {}
 def make_patched_subclass(klass):
@@ -41,9 +43,9 @@ def make_patched_subclass(klass):
             @property
             def url_format(self):
                 metadata = super(PatchedContent, self).url_format
-                if hasattr(self.author, 'slug'):
+                if hasattr(self, 'author'):
                     metadata['author'] = self.author.slug
-                if hasattr(self.category, 'slug'):
+                if hasattr(self, 'category'):
                     metadata['category'] = self.category.slug
 
                 return metadata
@@ -52,8 +54,15 @@ def make_patched_subclass(klass):
         patched_subclasses[klass.__name__] = PatchedContent
     return patched_subclasses[klass.__name__]
 
-def patch_urlformat(article):
-    article.__class__ = make_patched_subclass(article.__class__)
+def patch_urlformat(cont):
+    # Test whether this content object needs to be patched.
+    md = cont.url_format
+    if ((hasattr(cont, 'author') and cont.author.slug != md['author']) or
+        (hasattr(cont, 'category') and cont.category.slug != md['category'])):
+        logger.debug("Detected bug 1547, applying workaround.")
+        cont.__class__ = make_patched_subclass(cont.__class__)
+
+### END OF BUG WORKAROUND
 
 def make_category(article, slug):
     # Reuse the article's existing category object.
@@ -111,8 +120,8 @@ def pretaxonomy_hook(generator):
                          article, article.source_path)
             continue
 
-        patch_urlformat(article)
         article.category = category_objects[m.group(1)]
+        patch_urlformat(article)
 
     generator.articles = real_articles
 

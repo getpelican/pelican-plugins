@@ -5,10 +5,19 @@ this by using the [MathJax](http://www.mathjax.org/) javascript engine.
 
 The plugin also ensures that Typogrify and recognized math "play" nicely together, by
 ensuring [Typogrify](https://github.com/mintchaos/typogrify) does not alter math content.
-It requires at a minimum Pelican version *3.5* and Typogrify version *2.0.7* to work.
-If these versions are not available, Typogrify will be disabled for the entire site.
 
 Both Markdown and reStructuredText is supported.
+
+Requirements
+------------
+
+  * Pelican version *3.6* or above is required.
+  * Typogrify version *2.0.7* or higher is needed for Typogrify to play
+    "nicely" with this plugin. If this version is not available, Typogrify
+    will be disabled for the entire site.
+  * BeautifulSoup4 is required to correct summaries. If BeautifulSoup4 is
+    not installed, summary processing will be ignored, even if specified
+    in user settings.
 
 Installation
 ------------
@@ -20,14 +29,28 @@ Then add the following to settings.py:
 Your site is now capable of rendering math math using the mathjax JavaScript
 engine. No alterations to the template is needed, just use and enjoy!
 
-### Typogrify
-In the past, using [Typgogrify](https://github.com/mintchaos/typogrify) would alter the math contents resulting
-in math that could not be rendered by MathJax. The only option was to ensure
-that Typogrify was disabled in the settings.
+However, if you wish, you can set the `auto_insert` setting to `False` which
+will disable the mathjax script from being automatically inserted into the
+content. You would only want to do this if you had control over the template
+and wanted to insert the script manually.
 
-The problem has been recitified in this plugin, but it requires [Typogrify version 2.0.7](https://pypi.python.org/pypi/typogrify)
-(or higher) and Pelican version 3.5 or higher. If these versions are not present, the plugin will disable
-Typogrify for the entire site
+### Typogrify
+In the past, using [Typgogrify](https://github.com/mintchaos/typogrify) would
+alter the math contents resulting in math that could not be rendered by MathJax.
+The only option was to ensure that Typogrify was disabled in the settings.
+
+The problem has been rectified in this plugin, but it requires at a minimum
+[Typogrify version 2.0.7](https://pypi.python.org/pypi/typogrify) (or higher).
+If this version is not present, the plugin will disable Typogrify for the entire
+site.
+
+### BeautifulSoup4
+Pelican creates summaries by truncating the contents to a specified user length.
+The truncation process is oblivious to any math and can therefore destroy
+the math output in the summary.
+
+To restore math, [BeautifulSoup4](https://pypi.python.org/pypi/beautifulsoup4/4.4.0)
+is used. If it is not installed, no summary processing will happen.
 
 Usage
 -----
@@ -44,12 +67,18 @@ The dictionary can be set with the following keys:
 
  * `align`: [string] controls how displayed math will be aligned. Can be set to either
 `'left'`, `'right'` or `'center'`. **Default Value**: `'center'`.
+ * `auto_insert`: [boolean] will insert the mathjax script into content that it is
+detected to have math in it. Setting it to false is not recommended.
+**Default Value**: `True`
  * `indent`: [string] if `align` not set to `'center'`, then this controls the indent
 level. **Default Value**: `'0em'`.
  * `show_menu`: [boolean] controls whether the mathjax contextual menu is shown.
 **Default Value**: `True`
  * `process_escapes`: [boolean] controls whether mathjax processes escape sequences.
 **Default Value**: `True`
+ * `mathjax_font`: [string] will force mathjax to use the chosen font. Current choices
+for the font is `sanserif`, `typewriter` or `fraktur`. If this is not set, it will
+use the default font settings. **Default Value**: `default`
  * `latex_preview`: [string] controls the preview message users are shown while mathjax is
 rendering LaTex. If set to `'Tex'`, then the TeX code is used as the preview 
 (which will be visible until it is processed by MathJax). **Default Value**: `'Tex'`
@@ -64,6 +93,10 @@ is less than `responsive_break` (see below) and if so, sets `align` to `left`, `
 **Default Value**: `False` (defaults to `False` for backward compatibility)
  * `responsive_break`: [integer] a number (in pixels) representing the width breakpoint that is used
 when setting `responsive_align` to `True`. **Default Value**: 768
+ * `process_summary`: [boolean] ensures math will render in summaries and fixes math in that were cut off.
+Requires [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) be installed. **Default Value**: `True`
+ * `force_tls`: [boolean] forces mathjax script to load from cdn using https. If set to false, will use document.location.protocol
+**Default Value**: `False`
 
 #### Settings Examples
 Make math render in blue and displaymath align to the left:

@@ -29,7 +29,7 @@ def extract_toc(content):
         toc = soup.find('div', class_='contents topic')
         if toc: toc.extract()
         if toc:
-            tag=BeautifulSoup(str(toc))
+            tag=BeautifulSoup(str(toc), 'html.parser')
             tag.div['class']='toc'
             tag.div['id']=''
             p=tag.find('p', class_='topic-title first')
@@ -41,6 +41,8 @@ def extract_toc(content):
         toc.extract()
         content._content = soup.decode()
         content.toc = toc.decode()
+        if content.toc.startswith('<html>'):
+            content.toc = content.toc[12:-14]
 
 
 def register():

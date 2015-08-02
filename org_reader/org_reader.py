@@ -68,7 +68,7 @@ class OrgReader(readers.BaseReader):
 
         LOG.debug("OrgReader: running command `{0}`".format(cmd))
 
-        json_result = subprocess.check_output(cmd)
+        json_result = subprocess.check_output(cmd, universal_newlines=True)
         json_output = json.loads(json_result)
 
         slug, e = os.path.splitext(os.path.basename(filename))
@@ -76,6 +76,7 @@ class OrgReader(readers.BaseReader):
         metadata = {'title': json_output['title'],
                     'tags': json_output['category'] or '',
                     'slug': slug,
+                    'author': json_output['author'],
                     'date': json_output['date']}
 
         parsed = {}
