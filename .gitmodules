@@ -85,3 +85,6 @@
 [submodule "org_pandoc_reader"]
 	path = org_pandoc_reader
 	url = https://github.com/jo-tham/org_pandoc_reader.git
+[submodule "pelican_persian_date"]
+	path = pelican_persian_date
+	url = https://github.com/ziaa/pelican_persian_date.git
