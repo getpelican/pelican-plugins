@@ -65,7 +65,7 @@ def resize_photos(generator, writer):
                 os.path.getmtime(orig) > os.path.getmtime(resized)):
             logger.info('photos: make photo %s -> %s', orig, resized)
             im = Image.open(orig)
-	    try:
+            try:
                 exif = im._getexif()
                 icc_profile = im.info.get("icc_profile")
             except Exception:
@@ -84,7 +84,6 @@ def resize_photos(generator, writer):
             except:
                 pass
             im.save(resized, 'JPEG', quality=spec[2], icc_profile=icc_profile)
-        print(resized)
 
 def detect_content(content):
 
@@ -106,7 +105,6 @@ def detect_content(content):
                     path,
                     os.path.join('photos', photo),
                     settings['PHOTO_ARTICLE'])
-                print(origin)
         return ''.join((m.group('markup'), m.group('quote'), origin,
                         m.group('quote')))
 
