@@ -47,7 +47,7 @@ def content_object_init(instance):
                     img_path = img_path[7:]
                 elif img_path.startswith('data:image'):
                     # Image is encoded in-line (not a file).
-                    break
+                    continue
                 else:
                     logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
 
