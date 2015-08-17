@@ -67,9 +67,12 @@ def resize_photos(generator, writer):
             im = Image.open(orig)
             try:
                 exif = im._getexif()
-                icc_profile = im.info.get("icc_profile")
             except Exception:
                 exif = None
+            try:
+                icc_profile = im.info.get("icc_profile")
+            except Exception:
+                icc_profile = None
             if exif:
                 for tag, value in exif.items():
                     decoded = ExifTags.TAGS.get(tag, tag)
