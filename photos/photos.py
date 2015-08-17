@@ -69,6 +69,10 @@ def resize_photos(generator, writer):
                 exif = im._getexif()
             except Exception:
                 exif = None
+            try:
+                icc_profile = im.info.get("icc_profile")
+            except Exception:
+                icc_profile = None
             if exif:
                 for tag, value in exif.items():
                     decoded = ExifTags.TAGS.get(tag, tag)
@@ -82,8 +86,7 @@ def resize_photos(generator, writer):
                 os.makedirs(os.path.split(resized)[0])
             except:
                 pass
-            im.save(resized, 'JPEG', quality=spec[2])
-
+            im.save(resized, 'JPEG', quality=spec[2], icc_profile=icc_profile)
 
 def detect_content(content):
 
@@ -105,7 +108,6 @@ def detect_content(content):
                     path,
                     os.path.join('photos', photo),
                     settings['PHOTO_ARTICLE'])
-
         return ''.join((m.group('markup'), m.group('quote'), origin,
                         m.group('quote')))
 
