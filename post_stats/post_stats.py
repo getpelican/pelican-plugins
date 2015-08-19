@@ -31,7 +31,7 @@ def calculate_stats(instance):
         WPM = 250
 
         # Use BeautifulSoup to get readable/visible text
-        raw_text = BeautifulSoup(content).getText()
+        raw_text = BeautifulSoup(content, 'html.parser').getText()
 
         # Process the text to remove entities
         entities = r'\&\#?.+?;'

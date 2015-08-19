@@ -28,7 +28,7 @@ def content_object_init(instance):
 
     if instance._content is not None:
         content = instance._content
-        soup = BeautifulSoup(content)
+        soup = BeautifulSoup(content, 'html.parser')
 
         if 'img' in content:
             for img in soup('img'):
@@ -45,6 +45,9 @@ def content_object_init(instance):
                     img_path = img_path[10:]
                 elif img_path.startswith('/static'):
                     img_path = img_path[7:]
+                elif img_path.startswith('data:image'):
+                    # Image is encoded in-line (not a file).
+                    continue
                 else:
                     logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
 

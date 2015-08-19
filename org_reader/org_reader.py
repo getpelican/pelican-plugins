@@ -76,6 +76,7 @@ class OrgReader(readers.BaseReader):
         metadata = {'title': json_output['title'],
                     'tags': json_output['category'] or '',
                     'slug': slug,
+                    'author': json_output['author'],
                     'date': json_output['date']}
 
         parsed = {}

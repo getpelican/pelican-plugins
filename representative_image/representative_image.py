@@ -1,5 +1,6 @@
 from pelican import signals
 from pelican.contents import Article, Draft, Page
+from pelican.generators import ArticlesGenerator
 from bs4 import BeautifulSoup
 
 
@@ -23,7 +24,7 @@ def images_extraction(instance):
 
         # If there are no image in summary, look for it in the content body
         if not representativeImage:
-            soup = BeautifulSoup(instance.content, 'html.parser')
+            soup = BeautifulSoup(instance._content, 'html.parser')
             imageTag = soup.find('img')
             if imageTag:
                 representativeImage = imageTag['src']
@@ -32,5 +33,17 @@ def images_extraction(instance):
         instance.featured_image = representativeImage
 
 
+def run_plugin(generators):
+    for generator in generators:
+        if isinstance(generator, ArticlesGenerator):
+            for article in generator.articles:
+                images_extraction(article)
+
+
 def register():
-    signals.content_object_init.connect(images_extraction)
+    try:
+        signals.all_generators_finalized.connect(run_plugin)
+    except AttributeError:
+        # NOTE: This results in #314 so shouldn't really be relied on
+        # https://github.com/getpelican/pelican-plugins/issues/314
+        signals.content_object_init.connect(images_extraction)

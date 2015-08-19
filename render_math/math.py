@@ -6,31 +6,34 @@ This plugin allows your site to render Math. It uses
 the MathJax JavaScript engine.
 
 For markdown, the plugin works by creating a Markdown
-extension which is used during the markdown compilation stage.
-Math therefore gets treated like a "first class citizen" in Pelican
+extension which is used during the markdown compilation
+stage.  Math therefore gets treated like a "first class
+citizen" in Pelican
 
 For reStructuredText, the plugin instructs the rst engine
-to output Mathjax for for math.
+to output Mathjax for all math.
 
-The mathjax script is automatically inserted into the HTML.
+The mathjax script is by default automatically inserted
+into the HTML.
 
 Typogrify Compatibility
 -----------------------
-This plugin now plays nicely with Typogrify, but it requires
-Typogrify version 2.04 or above.
+This plugin now plays nicely with Typogrify, but it
+requires Typogrify version 2.07 or above.
 
 User Settings
 -------------
-Users are also able to pass a dictionary of settings in the settings file which
-will control how the MathJax library renders things. This could be very useful
-for template builders that want to adjust the look and feel of the math.
-See README for more details.
+Users are also able to pass a dictionary of settings
+in the settings file which will control how the MathJax
+library renders things. This could be very useful for
+template builders that want to adjust the look and feel of
+the math.  See README for more details.
 """
 
 import os
 import sys
 
-from pelican import signals
+from pelican import signals, generators
 
 try:
     from bs4 import BeautifulSoup
@@ -66,8 +69,9 @@ def process_settings(pelicanobj):
     mathjax_settings['responsive_break'] = '768'  # The break point at which it math is responsively aligned (in pixels)
     mathjax_settings['mathjax_font'] = 'default'  # forces mathjax to use the specified font.
     mathjax_settings['process_summary'] = BeautifulSoup is not None  # will fix up summaries if math is cut off. Requires beautiful soup
+    mathjax_settings['force_tls'] = 'false'  # will force mathjax to be served by https - if set as False, it will only use https if site is served using https
 
-    # Source for MathJax: Works boths for http and https (see http://docs.mathjax.org/en/latest/start.html#secure-access-to-the-cdn)
+    # Source for MathJax
     mathjax_settings['source'] = "'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
 
     # Get the user specified settings
@@ -110,7 +114,7 @@ def process_settings(pelicanobj):
 
         if key == 'process_escapes' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
-        
+
         if key == 'latex_preview':
             try:
                 typeVal = isinstance(value, basestring)
@@ -121,7 +125,7 @@ def process_settings(pelicanobj):
                 continue
 
             mathjax_settings[key] = value
-        
+
         if key == 'color':
             try:
                 typeVal = isinstance(value, basestring)
@@ -132,20 +136,23 @@ def process_settings(pelicanobj):
                 continue
 
             mathjax_settings[key] = value
-        
+
         if key == 'linebreak_automatic' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
-        
+
         if key == 'process_summary' and isinstance(value, bool):
             if value and BeautifulSoup is None:
                 print("BeautifulSoup4 is needed for summaries to be processed by render_math\nPlease install it")
                 value = False
 
             mathjax_settings[key] = value
-        
+
         if key == 'responsive' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
-        
+
+        if key == 'force_tls' and isinstance(value, bool):
+            mathjax_settings[key] = 'true' if value else 'false'       
+
         if key == 'responsive_break' and isinstance(value, int):
             mathjax_settings[key] = str(value)
 
@@ -198,11 +205,11 @@ def process_summary(article):
             full_text = content_parsed.find_all(class_='math')[len(math)-1].get_text()
             math[-1].string = "%s ..." % full_text
             summary = summary_parsed.decode()
-  
+
         article._summary = "%s<script type='text/javascript'>%s</script>" % (summary, process_summary.mathjax_script)
 
 def configure_typogrify(pelicanobj, mathjax_settings):
-    """Instructs Typogrify to ignore math tags - which allows Typogfrify
+    """Instructs Typogrify to ignore math tags - which allows Typogrify
     to play nicely with math related content"""
 
     # If Typogrify is not being used, then just exit
@@ -224,7 +231,7 @@ def configure_typogrify(pelicanobj, mathjax_settings):
         # Instantiate markdown extension and append it to the current extensions
         pelicanobj.settings['TYPOGRIFY_IGNORE_TAGS'].extend(['.math', 'script'])  # ignore math class and script
 
-    except (ImportError, TypeError, KeyError) as e:
+    except (ImportError, TypeError) as e:
         pelicanobj.settings['TYPOGRIFY'] = False  # disable Typogrify
 
         if isinstance(e, ImportError):
@@ -233,14 +240,12 @@ def configure_typogrify(pelicanobj, mathjax_settings):
         if isinstance(e, TypeError):
             print("\nA more recent version of Typogrify is needed for the render_math module.\nPlease upgrade Typogrify to the latest version (anything equal or above version 2.0.7 is okay).\nTypogrify will be turned off due to this reason.\n")
 
-        if isinstance(e, KeyError):
-            print("\nA more recent version of Pelican is needed for Typogrify to work with render_math.\nPlease upgrade Pelican to the latest version or clone it directly from the master GitHub branch\nTypogrify will be turned off due to this reason\n")
-
 def process_mathjax_script(mathjax_settings):
     """Load the mathjax script template from file, and render with the settings"""
-    
+
     # Read the mathjax javascript template from file
-    with open (os.path.dirname(os.path.realpath(__file__))+'/mathjax_script_template', 'r') as mathjax_script_template:
+    with open (os.path.dirname(os.path.realpath(__file__)) 
+            + '/mathjax_script_template', 'r') as mathjax_script_template:
         mathjax_template = mathjax_script_template.read()
 
     return mathjax_template.format(**mathjax_settings)
@@ -270,8 +275,10 @@ def mathjax_for_rst(pelicanobj, mathjax_script):
     rst_add_mathjax.mathjax_script = mathjax_script
 
 def pelican_init(pelicanobj):
-    """Loads the mathjax script according to the settings. Instantiate the Python
-    markdown extension, passing in the mathjax script as config parameter
+    """
+    Loads the mathjax script according to the settings.
+    Instantiate the Python markdown extension, passing in the mathjax
+    script as config parameter.
     """
 
     # Process settings, and set global var
@@ -295,29 +302,47 @@ def pelican_init(pelicanobj):
     if mathjax_settings['process_summary']:
         process_summary.mathjax_script = mathjax_script
 
-def rst_add_mathjax(article):
-    """Adds mathjax script for RST"""
+def rst_add_mathjax(content):
+    """Adds mathjax script for reStructuredText"""
 
-    # This is only value for .rst files
-    _, ext = os.path.splitext(os.path.basename(article.source_path))
+    # .rst is the only valid extension for reStructuredText files
+    _, ext = os.path.splitext(os.path.basename(content.source_path))
     if ext != '.rst':
         return
 
     # If math class is present in text, add the javascript
-    if 'class="math"' in article._content:
-        article._content += "<script type='text/javascript'>%s</script>" % rst_add_mathjax.mathjax_script
+    # note that RST hardwires mathjax to be class "math"
+    if 'class="math"' in content._content:
+        content._content += "<script type='text/javascript'>%s</script>" % rst_add_mathjax.mathjax_script
 
-def parse_articles(article_generator):
-    """Adds mathjax script to RST and processes summaries"""
+def process_rst_and_summaries(content_generators):
+    """
+    Ensure mathjax script is applied to RST and summaries are
+    corrected if specified in user settings.
 
-    for article in article_generator.articles:
-        
-        rst_add_mathjax(article)
+    Handles content attached to ArticleGenerator and PageGenerator objects,
+    since the plugin doesn't know how to handle other Generator types.
 
-        if process_summary.mathjax_script is not None:
-            process_summary(article)
+    For reStructuredText content, examine both articles and pages.
+    If article or page is reStructuredText and there is math present,
+    append the mathjax script.
+
+    Also process summaries if present (only applies to articles)
+    and user wants summaries processed (via user settings)
+    """
+
+    for generator in content_generators:
+        if isinstance(generator, generators.ArticlesGenerator):
+            for article in generator.articles:
+                rst_add_mathjax(article)
+                #optionally fix truncated formulae in summaries.
+                if process_summary.mathjax_script is not None:
+                    process_summary(article)
+        elif isinstance(generator, generators.PagesGenerator):
+            for page in generator.pages:
+                rst_add_mathjax(page)
 
 def register():
     """Plugin registration"""
     signals.initialized.connect(pelican_init)
-    signals.article_generator_finalized.connect(parse_articles)
+    signals.all_generators_finalized.connect(process_rst_and_summaries)
