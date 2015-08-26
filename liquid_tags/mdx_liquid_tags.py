@@ -20,9 +20,11 @@ from functools import wraps
 LIQUID_TAG = re.compile(r'\{%.*?%\}', re.MULTILINE | re.DOTALL)
 EXTRACT_TAG = re.compile(r'(?:\s*)(\S+)(?:\s*)')
 LT_CONFIG = { 'CODE_DIR': 'code',
+              'CODE_CHARSET': 'ascii',
               'NOTEBOOK_DIR': 'notebooks'
 }
 LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin', 
+            'CODE_CHARSET': 'Default charset for include_code subplugin',
             'NOTEBOOK_DIR' : 'Notebook directory for notebook subplugin'
 }
 
