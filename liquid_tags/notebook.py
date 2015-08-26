@@ -75,7 +75,6 @@ from pygments.formatters import HtmlFormatter
 try:
     from nbconvert.exporters import HTMLExporter
 except ImportError:
-        print("I was here 3")
         from IPython.nbconvert.exporters import HTMLExporter
 
 try:
@@ -87,7 +86,6 @@ try:
     from nbconvert.preprocessors import Preprocessor
 except ImportError:
     try:
-        print("I was here 4")
         from IPython.nbconvert.preprocessors import Preprocessor
     except ImportError:
         # IPython < 2.0
