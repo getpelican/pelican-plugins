@@ -32,7 +32,16 @@ The ``SITEMAP`` variable must be a Python dictionary and can contain three keys:
   Valid frequency values are ``always``, ``hourly``, ``daily``, ``weekly``, ``monthly``,
   ``yearly`` and ``never``.
   
-You can exclude URLs from being included in the sitemap by adding them to the sitemapExclude array in format 'sitemapExclude = ['login.html', 'signup.html']`.  
+You can exclude URLs from being included in the sitemap by use regular expressions.
+For example to exclude all url contain in path ``tag/`` or ``category/`` you can use this sitemap config.
+
+.. code-block:: python
+
+    SITEMAP = {
+        'exclude': ['tag/', 'category/']
+    }
+
+
 
 If a key is missing or a value is incorrect, it will be replaced with the
 default value.
