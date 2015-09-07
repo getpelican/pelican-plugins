@@ -92,7 +92,7 @@ class SitemapGenerator(object):
             fmt = config.get('format')
             pris = config.get('priorities')
             chfreqs = config.get('changefreqs')
-            self.sitemapExclude = config.get('exclude')
+            self.sitemapExclude = config.get('exclude', [])
 
             if fmt not in ('xml', 'txt'):
                 warning("sitemap plugin: SITEMAP['format'] must be `txt' or `xml'")
