@@ -1,11 +1,11 @@
 # Static Discussion via Hubski
 *Author: St John Karp <stjohn@fuzzjunket.com>*
 
-Scrape comments from a Hubski post and embed them in your articles. This is a static version of Hubski's own "Discussion via Hubski", which embeds the comments section on your website using a dynamic JavaScript query.
+Query comments for a Hubski post via their API and embed them in your articles. This is a static version of Hubski's own "Discussion via Hubski", which embeds the comments section on your website using a dynamic JavaScript query.
 
 ## Installation
 
-This plugin requires Beautiful Soup 4 to be installed on your system. This module takes care of all the web scraping required to get the comments from Hubski. On Debian you can install BS4 from the official repo:
+This plugin requires Beautiful Soup 4 to be installed on your system. This module takes care of any manipulation required on the HTML of the comments. On Debian you can install BS4 from the official repo:
 
     apt-get install python-bs4
 
@@ -19,7 +19,7 @@ For each article that has a Hubski post, put the post ID in the metadata with th
 
     Hubski_ID: 12345
 
-When you generate the site, Static DvH will query Hubski for each article that has an ID. It will then populate three properties on the `article` object — `article.hubski_comment_count`, `article.hubski_comments`, and `article.hubski_post_url`.
+When you generate the site, Static DvH will query the Hubski API for each article that has an ID. It will then populate two properties on the `article` object — `article.hubski_comment_count` and `article.hubski_comments`.
 
 `article.hubski_comment_count` is simply the number of comments on this Hubski post.
 
@@ -29,29 +29,44 @@ When you generate the site, Static DvH will query Hubski for each article that h
         </div><!-- #comments -->
     {% endif %}
 
-`article.hubski_comments` contains the HTML dump of the comments section. It does not parse out the comments into an iterable. `article.hubski_post_url` contains the full URL of this post on Hubski.
+`article.hubski_comments` contains the a list of comment objects as defined in the [Hubski API](https://hubski.com/pub?id=266825). The comments are largely unaltered, with the exception of adding an `iso_date` field and converting all relative links in the comment HTML to absolute links.
 
-    <div id="comments">
-        <h3>Discussion via Hubski</h3>
-        <p><strong>Check out <a href="{{ article.hubski_post_url }}">Hubski</a> to comment or reply!</strong></p>
-        {% if article.hubski_comments %}
-            {{ article.hubski_comments }}
-        {% endif %}
-    </div><!-- #comments -->
+    {% if article.hubski_id %}
+        <div id="comments">
+            <h3><img src="{{ SITEURL }}/theme/images/hubski_logo.png" style="margin-right: 10px;" /><span style="position: relative; top: -10px;">Discussion via Hubski</span></h3>
+            <p><strong>Check out <a href="{{ HUBSKI_POST_URL }}{{ article.hubski_id }}">Hubski</a> to comment or reply!</strong></p>
+            {% for comment in article.hubski_comments recursive %}
+                <div class="comment">
+                    <p><a href="{{ HUBSKI_USER_URL }}{{ comment.user }}" target="_blank">{{ comment.user }}</a> {{ comment.iso_date }} · <a href="{{ HUBSKI_POST_URL }}{{ comment.id }}" target="_blank">link</a></p>
+                    {{ comment.text }}
+                    {% if comment.children %}
+                        {{ loop(comment.children) }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div><!-- #comments -->
+    {% endif %}
 
 ## Styling
 
 Some simple styling can be achieved by indenting replies to give the comments structure.
 
-    div.subcom {
+    div.comment {
+        border-left: 1px solid gray;
+        padding-left: 10px;
+    }
+
+    div.comment > div.comment {
         margin-left: 15px;
     }
 
 ## Settings
 
-If Hubski were to change its URLs, this plugin would break. In case that ever happens, you can override the URL structure in your settings file. These are the default values:
+Add the following handy settings to your conf file. Some of these are required by Static Discussion via Hubski, while others are just handy to use in your templates:
 
     HUBSKI_URL = 'https://hubski.com'
     HUBSKI_POST_URL = HUBSKI_URL + '/pub?id='
+    HUBSKI_USER_URL = HUBSKI_URL + '/user?id='
+    HUBSKI_API_TREE_URL = HUBSKI_URL + '/api/publication/$id/tree'
 
-The ID of each post then gets appended to the `HUBSKI_POST_URL`.
+These are all straightforward strings which can be used in your templates, with the exception of the tree URL setting which is intended to be used as a string template by the plugin.
