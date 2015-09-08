@@ -20,10 +20,12 @@ from functools import wraps
 LIQUID_TAG = re.compile(r'\{%.*?%\}', re.MULTILINE | re.DOTALL)
 EXTRACT_TAG = re.compile(r'(?:\s*)(\S+)(?:\s*)')
 LT_CONFIG = { 'CODE_DIR': 'code',
-              'NOTEBOOK_DIR': 'notebooks'
+              'NOTEBOOK_DIR': 'notebooks',
+              'FLICKR_API_KEY': 'flickr'
 }
-LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin', 
-            'NOTEBOOK_DIR' : 'Notebook directory for notebook subplugin'
+LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin',
+            'NOTEBOOK_DIR' : 'Notebook directory for notebook subplugin',
+            'FLICKR_API_KEY': 'Flickr key for accessing the API'
 }
 
 class _LiquidTagsPreprocessor(markdown.preprocessors.Preprocessor):
