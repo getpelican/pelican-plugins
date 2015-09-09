@@ -116,7 +116,7 @@ def include_code(preprocessor, tag, markup):
     source = (open_tag
               + '\n\n    '
               + lang_include
-              + '\n    '.join(code.split('\n')) + '\n\n'
+              + '\n    '.join(code.decode("utf-8").split('\n')) + '\n\n'
               + close_tag + '\n')
 
     return source
