@@ -97,6 +97,8 @@ when setting `responsive_align` to `True`. **Default Value**: 768
 Requires [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) be installed. **Default Value**: `True`
  * `force_tls`: [boolean] forces mathjax script to load from cdn using https. If set to false, will use document.location.protocol
 **Default Value**: `False`
+ * `message_style`: [string] This value controls the verbosity of the messages in the lower left-hand corner. Set it to `None` to eliminate all messages.
+**Default Value**: normal
 
 #### Settings Examples
 Make math render in blue and displaymath align to the left:
