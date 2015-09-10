@@ -85,3 +85,6 @@
 [submodule "org_pandoc_reader"]
 	path = org_pandoc_reader
 	url = https://github.com/jo-tham/org_pandoc_reader.git
+[submodule "pelican-encrypt-content"]
+	path = pelican-encrypt-content
+	url = https://github.com/mindcruzer/pelican-encrypt-content

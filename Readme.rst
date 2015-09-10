@@ -118,6 +118,8 @@ Optimize images           Applies lossless compression on JPEG and PNG images
 
 PDF generator             Automatically exports RST articles and pages as PDF files
 
+pelican-encrypt-content   Password protect pages and articles.
+
 Pelican-flickr            Brings your Flickr photos & sets into your static website
 
 pelican_javascript        Allows you to embed Javascript and CSS files into individual articles
