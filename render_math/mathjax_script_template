@@ -8,12 +8,12 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
         indent = (screen.width < {responsive_break}) ? "0em" : indent;
         linebreak = (screen.width < {responsive_break}) ? 'true' : linebreak;
     }}
-    
+
     var mathjaxscript = document.createElement('script');
     var location_protocol = ({force_tls}) ? 'https' : document.location.protocol;
     if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript'; 
+    mathjaxscript.type = 'text/javascript';
     mathjaxscript.src = location_protocol + {source};
     mathjaxscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({{" +
@@ -24,6 +24,7 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
         "    displayAlign: '"+ align +"'," +
         "    displayIndent: '"+ indent +"'," +
         "    showMathMenu: {show_menu}," +
+        "    messageStyle: '{message_style}'," +
         "    tex2jax: {{ " +
         "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
         "        displayMath: [ ['$$','$$'] ]," +
