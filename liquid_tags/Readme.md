@@ -43,6 +43,16 @@ To insert a sized and labeled Instagram image in your document by its shortcode 
 
 You can specify a size with `t`, `m`, or `l`.
 
+## Flickr Tag
+To insert a Flickr image to a post, follow these steps:
+
+1. Enable ``liquid_tags.flickr``
+2. [Get an API key from Flickr](https://www.flickr.com/services/apps/create/apply)
+3. Add FLICKR_API_KEY to your config
+4. Add this to your document:
+
+    {% flickr image_id [small|medium|large] ["alt text"|'alt text'] %}
+
 ## Youtube Tag
 To insert youtube video into a post, enable the
 ``liquid_tags.youtube`` plugin, and add to your document:
