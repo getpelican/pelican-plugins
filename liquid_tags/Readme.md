@@ -96,6 +96,19 @@ which is used as a preview of the video.
 To use a video from file, make sure it's in a static directory and put in
 the appropriate url.
 
+## Audio Tag
+To insert HTML5 audio into a post, enable the ``liquid_tags.audio`` plugin,
+and add to your document:
+
+    {% audio url/to/audio [url/to/audio] [url/to/audio] %}
+
+Up to 3 audio urls are possible. So you can add different versions of
+the audio file you want to post because not every browser support every
+file format.
+
+To use a audio from file, make sure it's in a static directory and put in
+the appropriate url.
+
 ## Include Code
 To include code from a file in your document with a link to the original
 file, enable the ``liquid_tags.include_code`` plugin, and add to your
