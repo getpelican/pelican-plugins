@@ -51,7 +51,15 @@ To insert a Flickr image to a post, follow these steps:
 3. Add FLICKR_API_KEY to your config
 4. Add this to your document:
 
-    {% flickr image_id [small|medium|large] ["alt text"|'alt text'] %}
+    ``{% flickr image_id [small|medium|large] ["alt text"|'alt text'] %}``
+
+## Soundcloud Tag
+To insert a Soundcloud Widget to a post, follow these steps:
+
+1. Enable ``liquid_tags.soundcloud``
+2. Add this to your document:
+
+    ``{% soundcloud track_url %}``
 
 ## Youtube Tag
 To insert youtube video into a post, enable the
