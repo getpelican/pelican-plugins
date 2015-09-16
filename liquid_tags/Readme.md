@@ -53,6 +53,14 @@ To insert a Flickr image to a post, follow these steps:
 
     ``{% flickr image_id [small|medium|large] ["alt text"|'alt text'] %}``
 
+## Giphy Tag
+To insert a gif from Giphy in your document by its id (such as ``aMSJFS6oFX0fC``), enable the ``liquid_tags.giphy`` plugin and use the following:
+
+    {% giphy gif_id ["alt text"|'alt text'] %}
+
+IMPORTANT: You have to request a production API key from giphy [here](https://api.giphy.com/submit).
+For the first runs you could also use the public beta key you can get [here](https://github.com/giphy/GiphyAPI).
+
 ## Soundcloud Tag
 To insert a Soundcloud Widget to a post, follow these steps:
 
