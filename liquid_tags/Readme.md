@@ -53,6 +53,14 @@ To insert a Flickr image to a post, follow these steps:
 
     ``{% flickr image_id [small|medium|large] ["alt text"|'alt text'] %}``
 
+## Giphy Tag
+To insert a gif from Giphy in your document by its id (such as ``aMSJFS6oFX0fC``), enable the ``liquid_tags.giphy`` plugin and use the following:
+
+    {% giphy gif_id ["alt text"|'alt text'] %}
+
+IMPORTANT: You have to request a production API key from giphy [here](https://api.giphy.com/submit).
+For the first runs you could also use the public beta key you can get [here](https://github.com/giphy/GiphyAPI).
+
 ## Soundcloud Tag
 To insert a Soundcloud Widget to a post, follow these steps:
 
@@ -94,6 +102,19 @@ are not, then the original video size will be used.  The poster is an image
 which is used as a preview of the video.
 
 To use a video from file, make sure it's in a static directory and put in
+the appropriate url.
+
+## Audio Tag
+To insert HTML5 audio into a post, enable the ``liquid_tags.audio`` plugin,
+and add to your document:
+
+    {% audio url/to/audio [url/to/audio] [url/to/audio] %}
+
+Up to 3 audio urls are possible. So you can add different versions of
+the audio file you want to post because not every browser support every
+file format.
+
+To use a audio from file, make sure it's in a static directory and put in
 the appropriate url.
 
 ## Include Code
