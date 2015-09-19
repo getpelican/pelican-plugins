@@ -128,6 +128,8 @@ Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
 
+Pelican Persian date      Converts ``article.locale_date`` attribute from Gregorian calendar into Solar Hijri calendar which is the official calendar of Iran and Afghanistan.
+
 Pelican comment system    Allows you to add static comments to your articles
 
 Pelican Vimeo             Enables you to embed Vimeo videos in your pages and articles
