@@ -85,3 +85,12 @@
 [submodule "org_pandoc_reader"]
 	path = org_pandoc_reader
 	url = https://github.com/jo-tham/org_pandoc_reader.git
+[submodule "pdf-img"]
+	path = pdf-img
+	url = https://github.com/cmacmackin/pdf-img.git
+[submodule "pelican-cite"]
+	path = pelican-cite
+	url = https://github.com/cmacmackin/pelican-cite.git
+[submodule "figure-ref"]
+	path = figure-ref
+	url = https://github.com/cmacmackin/figure-ref

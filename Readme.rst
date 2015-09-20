@@ -70,6 +70,8 @@ Feed Summary              Allows article summaries to be used in ATOM and RSS fe
 
 Filetime from git         Uses git commit to determine page date
 
+Figure References         Provides a system to number and references figures
+
 Gallery                   Allows an article to contain an album of pictures
 
 Gist directive            This plugin adds a ``gist`` reStructuredText directive.
@@ -118,11 +120,15 @@ Optimize images           Applies lossless compression on JPEG and PNG images
 
 PDF generator             Automatically exports RST articles and pages as PDF files
 
+PDF Images                If an img tag contains a PDF, EPS or PS file as a source, this plugin generates a PNG preview which will then act as a link to the original file.
+
 Pelican-flickr            Brings your Flickr photos & sets into your static website
 
 pelican_javascript        Allows you to embed Javascript and CSS files into individual articles
 
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
+
+Pelican Cite              Produces inline citations and a bibliography in articles and pages, using a BibTeX file.
 
 Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 
