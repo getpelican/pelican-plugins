@@ -3,17 +3,18 @@
 AsciiDoc Reader
 ===============
 
-This plugin allows you to use AsciiDoc to write your posts. 
+This plugin allows you to use AsciiDoc to write your posts.
 File extension should be ``.asc``, ``.adoc``, or ``asciidoc``.
 """
 
 from pelican.readers import BaseReader
 from pelican.utils import pelican_open
 from pelican import signals
+from StringIO import StringIO
 
 try:
     # asciidocapi won't import on Py3
-    from .asciidocapi import AsciiDocAPI, AsciiDocError
+    from .asciidocapi import AsciiDocAPI
     # AsciiDocAPI class checks for asciidoc.py
     AsciiDocAPI()
 except:
@@ -21,6 +22,9 @@ except:
 else:
     asciidoc_enabled = True
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 
 class AsciiDocReader(BaseReader):
@@ -33,7 +37,6 @@ class AsciiDocReader(BaseReader):
 
     def read(self, source_path):
         """Parse content and metadata of asciidoc files"""
-        from cStringIO import StringIO
         with pelican_open(source_path) as source:
             text = StringIO(source.encode('utf8'))
         content = StringIO()
