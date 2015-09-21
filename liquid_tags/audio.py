@@ -27,6 +27,7 @@ AUDIO = re.compile(r'(/\S+|https?:\S+)(?:\s+(/\S+|https?:\S+))?(?:\s+(/\S+|https
 
 AUDIO_TYPEDICT = {'.mp3': 'audio/mpeg',
                   '.ogg': 'audio/ogg',
+                  '.oga': 'audio/ogg',
                   '.opus': 'audio/ogg',
                   '.wav': 'audio/wav',
                   '.mp4': 'audio/mp4'}
