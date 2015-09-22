@@ -38,6 +38,8 @@ Plugin                    Description
 ========================  ===========================================================
 Always modified           Copy created date metadata into modified date for easy "latest updates" indexes
 
+Add CNAME                 Simply adds CNAME file with domain in your output directory
+
 AsciiDoc reader           Use AsciiDoc to write your posts.
 
 Asset management          Use the Webassets module to manage assets such as CSS and JS files.
