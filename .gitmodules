@@ -53,7 +53,7 @@
 	path = pelican-jinja2content
 	url = https://github.com/joachimneu/pelican-jinja2content.git
 [submodule "pelican-md-yaml"]
-	path = pelican-md-yaml
+	path = pelican-md-metayaml/
 	url = https://github.com/joachimneu/pelican-md-yaml.git
 [submodule "panorama"]
 	path = panorama
