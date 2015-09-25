@@ -28,9 +28,11 @@ class _resizer(object):
 
     REGEX = re.compile(r'(\d+|\?)x(\d+|\?)')
 
-    def __init__(self, name, spec):
+    def __init__(self, name, spec, root):
         self._name = name
         self._spec = spec
+        # The location of input images from _image_path.
+        self._root = root
 
     def _null_resize(self, w, h, image):
         return image
@@ -86,16 +88,18 @@ class _resizer(object):
         return resizer(targetw, targeth, image)
 
     def get_thumbnail_name(self, in_path):
-        new_filename = path.basename(in_path)
+        # Find the partial path + filename beyond the input image directory.
+        prefix = path.commonprefix([in_path, self._root])
+        new_filename = in_path[len(prefix) + 1:]
+
+        # Generate the new filename.
         (basename, ext) = path.splitext(new_filename)
-        basename = "{0}_{1}".format(basename, self._name)
-        new_filename = "{0}{1}".format(basename, ext)
-        return new_filename
+        return "{0}_{1}{2}".format(basename, self._name, ext)
 
     def resize_file_to(self, in_path, out_path, keep_filename=False):
         """ Given a filename, resize and save the image per the specification into out_path
 
-        :param in_path: path to image file to save.  Must be supposed by PIL
+        :param in_path: path to image file to save.  Must be supported by PIL
         :param out_path: path to the directory root for the outputted thumbnails to be stored
         :return: None
         """
@@ -103,6 +107,7 @@ class _resizer(object):
             filename = path.join(out_path, path.basename(in_path))
         else:
             filename = path.join(out_path, self.get_thumbnail_name(in_path))
+        out_path = path.dirname(filename)
         if not path.exists(out_path):
             os.makedirs(out_path)
         if not path.exists(filename):
@@ -126,27 +131,37 @@ def resize_thumbnails(pelican):
         return
 
     in_path = _image_path(pelican)
-    out_path = path.join(pelican.settings['OUTPUT_PATH'],
-                         pelican.settings.get('THUMBNAIL_DIR', DEFAULT_THUMBNAIL_DIR))
 
     sizes = pelican.settings.get('THUMBNAIL_SIZES', DEFAULT_THUMBNAIL_SIZES)
-    resizers = dict((k, _resizer(k, v)) for k,v in sizes.items())
+    resizers = dict((k, _resizer(k, v, in_path)) for k,v in sizes.items())
     logger.debug("Thumbnailer Started")
     for dirpath, _, filenames in os.walk(in_path):
         for filename in filenames:
             if not filename.startswith('.'):
                 for name, resizer in resizers.items():
                     in_filename = path.join(dirpath, filename)
-                    logger.debug("Processing thumbnail {0}=>{1}".format(filename, name))
-                    if pelican.settings.get('THUMBNAIL_KEEP_NAME', False):
-                        resizer.resize_file_to(in_filename, path.join(out_path, name), True)
-                    else:
-                        resizer.resize_file_to(in_filename, out_path)
+                    out_path = get_out_path(pelican, in_path, in_filename, name)
+                    resizer.resize_file_to(
+                        in_filename,
+                        out_path, pelican.settings.get('THUMBNAIL_KEEP_NAME'))
+
+
+def get_out_path(pelican, in_path, in_filename, name):
+    base_out_path = path.join(pelican.settings['OUTPUT_PATH'],
+                         pelican.settings.get('THUMBNAIL_DIR', DEFAULT_THUMBNAIL_DIR))
+    logger.debug("Processing thumbnail {0}=>{1}".format(in_filename, name))
+    if pelican.settings.get('THUMBNAIL_KEEP_NAME', False):
+        if pelican.settings.get('THUMBNAIL_KEEP_TREE', False):
+            return path.join(base_out_path, name, path.dirname(path.relpath(in_filename, in_path)))
+        else:
+            return path.join(base_out_path, name)
+    else:
+        return base_out_path
 
 
 def _image_path(pelican):
     return path.join(pelican.settings['PATH'],
-        pelican.settings.get("IMAGE_PATH", DEFAULT_IMAGE_DIR))
+        pelican.settings.get("IMAGE_PATH", DEFAULT_IMAGE_DIR)).rstrip('/')
 
 
 def expand_gallery(generator, metadata):

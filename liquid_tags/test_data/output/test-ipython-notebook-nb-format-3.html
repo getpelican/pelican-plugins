@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>test ipython notebook nb format 3</title>
+        <link rel="stylesheet" href="http://example.com/test/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="http://example.com/test/">Testing site </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="http://example.com/test/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="http://example.com/test/test-ipython-notebook-nb-format-3.html" rel="bookmark"
+           title="Permalink to test ipython notebook nb format 3">test ipython notebook nb format 3</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-03-03T00:00:00+00:00">
+                Published: mar. 03 mars 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="http://example.com/test/author/testing-man.html">Testing Man</a>
+        </address>
+<p>In <a href="http://example.com/test/category/misc.html">misc</a>. </p>
+
+</footer><!-- /.post-info -->      <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+<h1>Loading a notebook nbformat = 3.0</h1>
+<p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Il s’agit de repérer les données nécessaires voire indispensables à la
+résolution. Ces données peuvent être:</p>
+<ul>
+<li>numériques,</li>
+<li>ou sous forme de textes (on dit souvent chaînes de caractères),</li>
+<li>ou de type logique (à deux valeurs possibles, vrai ou faux).</li>
+</ul>
+<p>Pour affecter une valeur à une variable en python, la syntaxe est de la forme:</p>
+<pre><code>nom = valeur
+</code></pre><dl>
+<dt>Affectation</dt>
+<dd>Dans un programme, une affectation donne une valeur à une variable, elle est de la forme <code>v = e</code> avec <code>v</code> une variable et <code>e</code> une expression.
+</dd>
+</dl>
+
+<h1 id="valeurs-num-riques">Valeurs numériques</h1>
+<p>Python distingue les entiers(integers), des nombres à
+virgule(floating-point) par l&#39;ajout d&#39;une virgule:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">b</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+1 &lt;class &apos;int&apos;&gt; 1.0 &lt;class &apos;float&apos;&gt;
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Mais il implémente aussi des nombres plus exotiques tels que les
+décimaux, les fractions ou encore les nombres complexes</p>
+<h1 id="cha-nes-de-caract-res">Chaînes de caractères</h1>
+<p>En python3, il existe deux grands types de chaînes de caractères, les
+strings, et les bytes. Les strings sont simplement entourées par des
+guillemets simples ou doubles.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">a</span> <span class="o">=</span> <span class="s">&#39;Mon texte&#39;</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s">&quot;Mon deuxième texte&quot;</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">b</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Mon texte &lt;class &apos;str&apos;&gt; Mon deuxième texte &lt;class &apos;str&apos;&gt;
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Les bytes sont précédées de la lettre b, il s&#39;agit de texte brut utilisé
+par la machine mais pas toujours lisible par un humain.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="s">&#39;Mon texte&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+b&apos;Mon texte&apos; &lt;class &apos;bytes&apos;&gt;
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On ne peut représenter simplement que certains caractères(les caractères
+ASCII), les caractères accentués ne peuvent être écrits directement.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="s">&#39;Mon deuxième texte&#39;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_text output_pyerr">
+<pre>
+<span class="ansicyan">  File </span><span class="ansigreen">&quot;&lt;ipython-input-5-b0bf0ef2715d&gt;&quot;</span><span class="ansicyan">, line </span><span class="ansigreen">1</span>
+<span class="ansiyellow">    b = b&apos;Mon deuxième texte&apos;</span>
+<span class="ansigrey">       ^</span>
+<span class="ansired">SyntaxError</span><span class="ansired">:</span> bytes can only contain ASCII literal characters.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Un encodage autre que le ASCII doit être utilisé pour ces caractères,
+comme par exemple le UTF-8 qui est un codage sur huit bits très répandu.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="s">&#39;Mon deuxi</span><span class="se">\xc3\xa8</span><span class="s">me texte&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+b&apos;Mon deuxi\xc3\xa8me texte&apos;
+Mon deuxième texte
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="valeurs-logiques">Valeurs logiques</h1>
+<p>On les appelle les booléens, il ne peuvent avoir que deux valeurs:</p>
+<ul>
+<li>VRAI ou FAUX: True ou False en anglais;</li>
+<li>1 ou 0.</li>
+</ul>
+<p>On les utilise pour réaliser des tests.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="mi">1</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mf">1.9</span><span class="p">,</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">2</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+(True, False, False, True, True, False)
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On peut aussi les utiliser pour savoir si une variable existe.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+True
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On peut aussi combiner plusieurs tests avec les opérateurs booléens <code>and</code>, <code>or</code> et <code>not</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="mi">1</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">1</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+True
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="mi">1</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">1</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+False
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="ow">not</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+True
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="listes-et-dictionnaires">Listes et dictionnaires</h1>
+<p>Souvent les données pertinentes doivent être agencées sous une forme
+plus vaste, comme par exemple des listes où on peut ranger de façon ordonnée <em>plusieurs valeurs</em>.</p>
+<h2 id="listes">Listes</h2>
+<p>Les listes sont des collections <em>ordonnées de valeurs</em>, elles sont
+entourées par des crochets <code>[]</code>, leurs éléments sont séparés par des
+virgules.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">a</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;deux&#39;</span> <span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+list
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On peut facilement accéder à la longueur de la liste grace à la fonction
+<code>len</code> et à chacun de ces éléments grâce à leur index <em>(Attention le
+premier élement à l&#39;index 0)</em></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+3
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+(1, 3)
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On peut inversement connaître l&#39;indice correspondant à une valeur grâce à l&#39;attribut <code>index</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">a</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">a</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;deux&#39;</span><span class="p">),</span> <span class="n">a</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+(0, 1, 2)
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="dictionnaires">Dictionnaires</h2>
+<p>Dans un dictionnaire les valeurs de la collection ne sont pas repéré par
+un index, mais par une <em>clé</em>. Les dictionnaires sont entourés d&#39;accolades <code>{}</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">a</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;nom&#39;</span><span class="p">:</span> <span class="s">&#39;Doe&#39;</span> <span class="p">,</span> <span class="s">&#39;prenom&#39;</span><span class="p">:</span> <span class="s">&#39;John&#39;</span><span class="p">,</span> <span class="s">&#39;age&#39;</span><span class="p">:</span> <span class="mi">77</span> <span class="p">}</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+dict
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pour accéder aux éléments du dictionnaire, il suffit d&#39;appeler la clé
+correspondante, d&#39;autres part la fonction <code>len</code> est égalemnt disponible.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+3
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">a</span><span class="p">[</span><span class="s">&#39;nom&#39;</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="s">&#39;age&#39;</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+(&apos;Doe&apos;, 77)
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="modification-des-listes-et-dictionnaires">Modification des listes et dictionnaires</h2>
+<p>Les listes et dictionnaires sont des objets <strong>mutables</strong>, c&#39;est à dire que l&#39;on peut modifier leur contenu sans créer un nouvel objet. On dit qu&#39;il s&#39;agit de données <a href="http://fr.wikipedia.org/wiki/Persistance_%28informatique%29">non-persistantes</a>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># Valeurs initiales</span>
+<span class="n">liste</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;deux&#39;</span> <span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;nom&#39;</span><span class="p">:</span> <span class="s">&#39;Doe&#39;</span> <span class="p">,</span> <span class="s">&#39;prenom&#39;</span><span class="p">:</span> <span class="s">&#39;John&#39;</span><span class="p">,</span> <span class="s">&#39;age&#39;</span><span class="p">:</span> <span class="mi">77</span> <span class="p">}</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Valeurs initiales:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">liste</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+
+<span class="c"># Modification des valeurs par assignation</span>
+<span class="n">liste</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">dict</span><span class="p">[</span><span class="s">&#39;age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">17</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Modification des valeurs par assignation:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">liste</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+
+<span class="c"># Ajout d&#39;éléments</span>
+<span class="n">liste</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">dict</span><span class="p">[</span><span class="s">&#39;nationalité&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;française&#39;</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Ajout d&#39;éléments:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">liste</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+
+<span class="c"># Suppression d&#39;éléments</span>
+<span class="n">liste</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;age&#39;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Suppression d&#39;éléments:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">liste</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Valeurs initiales:
+ [1, &apos;deux&apos;, 3] {&apos;age&apos;: 77, &apos;nom&apos;: &apos;Doe&apos;, &apos;prenom&apos;: &apos;John&apos;}
+Modification des valeurs par assignation:
+ [1, 2, 3] {&apos;age&apos;: 17, &apos;nom&apos;: &apos;Doe&apos;, &apos;prenom&apos;: &apos;John&apos;}
+Ajout d&apos;éléments:
+ [1, 2, 3, 4] {&apos;age&apos;: 17, &apos;nom&apos;: &apos;Doe&apos;, &apos;nationalité&apos;: &apos;française&apos;, &apos;prenom&apos;: &apos;John&apos;}
+Suppression d&apos;éléments:
+ [2, 3, 4] {&apos;nom&apos;: &apos;Doe&apos;, &apos;nationalité&apos;: &apos;française&apos;, &apos;prenom&apos;: &apos;John&apos;}
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Si on a besoin de modifier une liste ou un dictionnaire, mais que l&#39;on veut garder une trace des objets initiaux, il faut commencer par en créer une <strong>copie</strong>, il ne suffit pas de créer une variable suplémentaire sans quoi cette variable serait elle aussi modifiée si l&#39;objet initial changeait: l&#39;assignation est dite par <strong>référence</strong> dans ce cas.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="c"># Valeurs initiales</span>
+<span class="n">L</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;deux&#39;</span> <span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Valeurs initiales:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+
+<span class="c"># Création d&#39;une référencxe à la liste par simple assignation</span>
+<span class="n">L_ref</span> <span class="o">=</span> <span class="n">L</span>
+
+<span class="c"># Création d&#39;une copie de la liste</span>
+<span class="n">L_copie</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+
+<span class="c"># Modification de la liste initiale</span>
+<span class="n">L</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Modification de la liste L:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;La liste L a bien, été modifiée:&quot;</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;La liste L_ref a aussi été modifiée car il s&#39;agit juste d&#39;une référence vers la liste L:&quot;</span><span class="p">,</span> <span class="n">L_ref</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;La copie L_copie n&#39;a pas été modifiée:&quot;</span><span class="p">,</span> <span class="n">L_copie</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Valeurs initiales:
+ [1, &apos;deux&apos;, 3]
+Modification de la liste L:
+La liste L a bien, été modifiée: [1, 2, 3]
+La liste L_ref a aussi été modifiée car il s&apos;agit juste d&apos;une référence vers la liste L: [1, 2, 3]
+La copie L_copie n&apos;a pas été modifiée: [1, &apos;deux&apos;, 3]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="entr-e-des-donn-es">Entrée des données</h1>
+<p>Dans cette phase peut aussi figurer ce qu’on appelle l’entrée des
+données, qui peut se manifester par la saisie de caractères ou de
+nombres sur le clavier, ou la lecture de la position du pointeur de la
+souris, ou encore par la lecture d’un fichier contenant ces nombres ou
+caractères.</p>
+<p>Il s’agit aussi de repérer les résultats intermédiaires qu’il est bon de
+mémoriser pour la suite car indispensables au traitement.</p>
+<p>Il est parfois utile d’utiliser des variables auxiliaires pour ne pas
+perturber les données initiales.</p>
+<h2 id="entr-e-des-donn-es-au-clavier">Entrée des données au clavier</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">chiffre</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">&quot;Entrer la valeur du chiffre souhaité: &quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Entrer la valeur du chiffre souhaité: 7
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span><span class="p">(</span><span class="n">chiffre</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+7
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Attention cependant, cette valeur est une chaîne de caractère, et les opérations sont celles des <code>string</code>s.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">chiffre</span><span class="p">))</span>
+<span class="n">chiffre</span><span class="o">*</span><span class="mi">10</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+&lt;class &apos;str&apos;&gt;
+
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+&apos;7777777777&apos;
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Il convient de la convertir un nombre entier ou flottant avant d&#39;utiliser la valeur.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">chiffre</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">chiffre</span><span class="p">)</span>
+<span class="mi">10</span><span class="o">*</span><span class="n">chiffre</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+70
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="lecture-d-un-fichier">Lecture d&#39;un fichier</h2>
+<p>Voici par exemple comment ouvrir et lire un fichier appelé <code>lorem.txt</code>
+contenu dans le répértoire <code>data</code> du dossier courant.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">fichier</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;data/lorem.txt&#39;</span><span class="p">)</span>
+<span class="n">fichier</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[27]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+&apos;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod\ntempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\nno sea takimata sanctus est Lorem ipsum dolor sit amet.\n&apos;
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Dans la sortie précédente, les caractères <code>\n</code> représentent les sauts de
+ligne, on peut aussi lire le fichier ligne par ligne.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">fichier</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;data/lorem.txt&#39;</span><span class="p">)</span>
+<span class="n">fichier</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+&apos;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod\n&apos;
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -37,6 +37,11 @@ EXCLUDE_TYPES = [
     '.avi',
     '.mov',
     '.mp4',
+    '.webm',
+
+    # Internally-compressed fonts. gzip can often shave ~50 more bytes off,
+    # but it's not worth it.
+    '.woff',
 ]
 
 COMPRESSION_LEVEL = 9 # Best Compression
@@ -61,7 +66,7 @@ def create_gzip_cache(pelican):
         for name in filenames:
             if should_compress(name):
                 filepath = os.path.join(dirpath, name)
-                create_gzip_file(filepath)
+                create_gzip_file(filepath, should_overwrite(pelican.settings))
 
 
 def should_compress(filename):
@@ -75,11 +80,18 @@ def should_compress(filename):
 
     return True
 
+def should_overwrite(settings):
+    '''Check if the gzipped files should overwrite the originals.
 
-def create_gzip_file(filepath):
+    :param settings: The pelican instance settings
+    '''
+    return settings.get('GZIP_CACHE_OVERWRITE', False)
+
+def create_gzip_file(filepath, overwrite):
     '''Create a gzipped file in the same directory with a filepath.gz name.
 
     :param filepath: A file to compress
+    :param overwrite: Whether the original file should be overwritten
     '''
     compressed_path = filepath + '.gz'
 
@@ -90,6 +102,11 @@ def create_gzip_file(filepath):
         uncompressed_data = uncompressed.read()
         gzipped_data = gzip_compress_obj.compress(uncompressed_data)
         gzipped_data += gzip_compress_obj.flush()
+
+        if len(gzipped_data) >= len(uncompressed_data):
+            logger.debug('No improvement: %s' % filepath)
+            return
+
         with open(compressed_path, 'wb') as compressed:
             logger.debug('Compressing: %s' % filepath)
             try:
@@ -97,6 +114,10 @@ def create_gzip_file(filepath):
             except Exception as ex:
                 logger.critical('Gzip compression failed: %s' % ex)
 
+        if overwrite:
+            logger.debug('Overwriting: %s with %s' % (filepath, compressed_path))
+            os.remove(filepath)
+            os.rename(compressed_path, filepath)
 
 def register():
     signals.finalized.connect(create_gzip_cache)

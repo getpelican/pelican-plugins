@@ -92,7 +92,7 @@ LessCSS's binary:
 If you wish to place your assets in locations other than the theme output
 directory, you can use ``ASSET_SOURCE_PATHS`` in your settings file to provide
 webassets with a list of additional directories to search, relative to the
-theme's top-level directory. For example:
+theme's top-level directory:
 
 .. code-block:: python
 

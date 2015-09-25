@@ -10,6 +10,7 @@ File extension should be ``.asc``, ``.adoc``, or ``asciidoc``.
 from pelican.readers import BaseReader
 from pelican.utils import pelican_open
 from pelican import signals
+import six
 
 try:
     # asciidocapi won't import on Py3
@@ -35,7 +36,7 @@ class AsciiDocReader(BaseReader):
         """Parse content and metadata of asciidoc files"""
         from cStringIO import StringIO
         with pelican_open(source_path) as source:
-            text = StringIO(source)
+            text = StringIO(source.encode('utf8'))
         content = StringIO()
         ad = AsciiDocAPI()
 
@@ -46,12 +47,12 @@ class AsciiDocReader(BaseReader):
 
         backend = self.settings.get('ASCIIDOC_BACKEND', self.default_backend)
         ad.execute(text, content, backend=backend)
-        content = content.getvalue()
+        content = content.getvalue().decode('utf8')
 
         metadata = {}
         for name, value in ad.asciidoc.document.attributes.items():
             name = name.lower()
-            metadata[name] = self.process_metadata(name, value)
+            metadata[name] = self.process_metadata(name, six.text_type(value))
         if 'doctitle' in metadata:
             metadata['title'] = metadata['doctitle']
         return content, metadata

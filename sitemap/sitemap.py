@@ -47,7 +47,7 @@ XML_FOOTER = """
 
 def format_date(date):
     if date.tzinfo:
-        tz = date.strftime('%s')
+        tz = date.strftime('%z')
         tz = tz[:-2] + ':' + tz[-2:]
     else:
         tz = "-00:00"
@@ -160,11 +160,16 @@ class SitemapGenerator(object):
             pri = self.priorities['indexes']
             chfreq = self.changefreqs['indexes']
 
+        pageurl = '' if page.url == 'index.html' else page.url
+        
+        #Exclude URLs from the sitemap:
+        sitemapExclude = []
 
         if self.format == 'xml':
-            fd.write(XML_URL.format(self.siteurl, page.url, lastmod, chfreq, pri))
+            if pageurl not in sitemapExclude:
+                fd.write(XML_URL.format(self.siteurl, pageurl, lastmod, chfreq, pri))
         else:
-            fd.write(self.siteurl + '/' + page.url + '\n')
+            fd.write(self.siteurl + '/' + pageurl + '\n')
 
     def get_date_modified(self, page, default):
         if hasattr(page, 'modified'):
@@ -180,7 +185,7 @@ class SitemapGenerator(object):
             for article in articles:
                 lastmod = max(lastmod, article.date.replace(tzinfo=self.timezone))
                 try:
-                    modified = self.get_date_modified(article, datetime.min.replace(tzinfo=self.timezone));
+                    modified = self.get_date_modified(article, datetime.min).replace(tzinfo=self.timezone)
                     lastmod = max(lastmod, modified)
                 except ValueError:
                     # Supressed: user will be notified.

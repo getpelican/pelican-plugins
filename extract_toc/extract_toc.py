@@ -11,23 +11,48 @@ from os import path
 from bs4 import BeautifulSoup
 from pelican import signals, readers, contents
 
+try:
+    from pandoc_reader import PandocReader
+except ImportError:
+    PandocReader = False
+
 
 def extract_toc(content):
     if isinstance(content, contents.Static):
         return
 
     soup = BeautifulSoup(content._content,'html.parser')
+    filename = content.source_path
+    extension = path.splitext(filename)[1][1:]
     toc = None
-    if not toc:  # default Markdown reader
+
+    # default Markdown reader
+    if not toc and readers.MarkdownReader.enabled and extension in readers.MarkdownReader.file_extensions:
         toc = soup.find('div', class_='toc')
-    if not toc:  # default reStructuredText reader
+        if toc: toc.extract()
+
+    # default reStructuredText reader
+    if not toc and readers.RstReader.enabled and extension in readers.RstReader.file_extensions:
         toc = soup.find('div', class_='contents topic')
-    if not toc:  # Pandoc reader
+        if toc: toc.extract()
+        if toc:
+            tag=BeautifulSoup(str(toc), 'html.parser')
+            tag.div['class']='toc'
+            tag.div['id']=''
+            p=tag.find('p', class_='topic-title first')
+            if p:p.extract()
+            toc=tag
+
+    # Pandoc reader (markdown and other formats)
+    if not toc and PandocReader and PandocReader.enabled and extension in PandocReader.file_extensions:
         toc = soup.find('nav', id='TOC')
+
     if toc:
         toc.extract()
         content._content = soup.decode()
         content.toc = toc.decode()
+        if content.toc.startswith('<html>'):
+            content.toc = content.toc[12:-14]
 
 
 def register():
