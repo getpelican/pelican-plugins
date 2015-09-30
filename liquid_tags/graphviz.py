@@ -9,7 +9,7 @@ Graphviz programs like dot, neato, twopi etc. [1]
 
 Syntax
 ------
-{% graphviz 
+{% graphviz
     <program> {
         <DOT code>
     }
@@ -17,7 +17,7 @@ Syntax
 
 Examples
 --------
-{% graphviz 
+{% graphviz
     dot {
         digraph graphname {
             a -> b -> c;
@@ -27,14 +27,14 @@ Examples
 %}
 
 
-{% graphviz 
+{% graphviz
     twopi {
         <code goes here>
     }
 %}
 
 
-{% graphviz 
+{% graphviz
     neato {
         <code goes here>
     }
@@ -45,7 +45,7 @@ Examples
 
 Output
 ------
-<div class="graphviz" style="align: center;"><img src="data:image/png;base64,_BASE64_IMAGE DATA_/></div>
+<div class="graphviz" style="text-align: center;"><img src="data:image/png;base64,_BASE64_IMAGE DATA_/></div>
 
 """
 
@@ -58,8 +58,8 @@ DOT_BLOCK_RE = re.compile(r'^\s*(?P<program>\w+)\s*\{\s*(?P<code>.*\})\s*\}$', r
 
 
 def run_graphviz(program, code, options=[], format='png'):
-    """ Runs graphviz programs and returns image data 
-        
+    """ Runs graphviz programs and returns image data
+
         Copied from https://github.com/tkf/ipython-hierarchymagic/blob/master/hierarchymagic.py
     """
     import os
@@ -116,7 +116,7 @@ def graphviz_parser(preprocessor, tag, markup):
         output = run_graphviz(program, code)
 
         # Return Base64 encoded image
-        return '<div class="graphviz" style="align: center;"><img src="data:image/png;base64,%s"></div>' % base64.b64encode(output)
+        return '<div class="graphviz" style="text-align: center;"><img src="data:image/png;base64,%s"></div>' % base64.b64encode(output)
 
     else:
         raise ValueError('Error processing input. '
