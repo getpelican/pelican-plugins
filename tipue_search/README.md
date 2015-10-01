@@ -62,4 +62,6 @@ How to use
 
 To utilize JSON Search mode, your theme needs to have Tipue Search properly configured in it. [Official documentation](http://www.tipue.com/search/docs/#json) has the required details.
 
-Pelican [Elegant Theme](https://github.com/talha131/pelican-elegant) has Tipue Search configured. You can view its code to understand the configuration. 
+Pelican [Elegant Theme](https://github.com/talha131/pelican-elegant) and [Plumage
+theme](https://github.com/kdeldycke/plumage) have Tipue Search configured. You can view their
+code to understand the configuration.
