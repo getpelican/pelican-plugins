@@ -52,9 +52,6 @@
 [submodule "pelican-jinja2content"]
 	path = pelican-jinja2content
 	url = https://github.com/joachimneu/pelican-jinja2content.git
-[submodule "pelican-md-yaml"]
-	path = pelican-md-yaml
-	url = https://github.com/joachimneu/pelican-md-yaml.git
 [submodule "panorama"]
 	path = panorama
 	url = git://github.com/romainx/panorama.git
@@ -97,3 +94,6 @@
 [submodule "encrypt-content"]
 	path = encrypt-content
 	url = https://github.com/mindcruzer/pelican-encrypt-content
+[submodule "md-metayaml"]
+	path = md-metayaml
+	url = https://github.com/joachimneu/pelican-md-metayaml
