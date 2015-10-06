@@ -97,3 +97,6 @@
 [submodule "md-metayaml"]
 	path = md-metayaml
 	url = https://github.com/joachimneu/pelican-md-metayaml
+[submodule "backreftranslate"]
+	path = backreftranslate
+	url = https://github.com/daltonmatos/pelican-plugin-backref-translate
