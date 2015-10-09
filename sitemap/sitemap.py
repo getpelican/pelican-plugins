@@ -8,6 +8,7 @@ The sitemap plugin generates plain-text or XML sitemaps.
 
 from __future__ import unicode_literals
 
+import re
 import collections
 import os.path
 
@@ -81,6 +82,8 @@ class SitemapGenerator(object):
             'pages': 0.5
         }
 
+        self.sitemapExclude = []
+
         config = settings.get('SITEMAP', {})
 
         if not isinstance(config, dict):
@@ -89,6 +92,7 @@ class SitemapGenerator(object):
             fmt = config.get('format')
             pris = config.get('priorities')
             chfreqs = config.get('changefreqs')
+            self.sitemapExclude = config.get('exclude', [])
 
             if fmt not in ('xml', 'txt'):
                 warning("sitemap plugin: SITEMAP['format'] must be `txt' or `xml'")
@@ -163,10 +167,13 @@ class SitemapGenerator(object):
         pageurl = '' if page.url == 'index.html' else page.url
         
         #Exclude URLs from the sitemap:
-        sitemapExclude = []
-
         if self.format == 'xml':
-            if pageurl not in sitemapExclude:
+            flag = False
+            for regstr in self.sitemapExclude:
+                if re.match(regstr, pageurl):
+                    flag = True
+                    break
+            if not flag:
                 fd.write(XML_URL.format(self.siteurl, pageurl, lastmod, chfreq, pri))
         else:
             fd.write(self.siteurl + '/' + pageurl + '\n')
