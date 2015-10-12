@@ -44,6 +44,7 @@ this will insert the appropriate CSS.  All efforts have been made to ensure
 that this CSS will not override formats within the blog theme, but there may
 still be some conflicts.
 """
+import warnings
 import re
 import os
 from functools import partial
@@ -60,6 +61,11 @@ except:
 
 if not IPYTHON_VERSION >= 1:
     raise ValueError("IPython version 1.0+ required for notebook tag")
+
+if IPython_VERSION > 1:
+    warnings.warn("Pelican plugin is not designed to work with IPython "
+                  "versions greater than 1.x. CSS styles have changed in "
+                  "later releases.")
 
 try:
     from nbconvert.filters.highlight import _pygments_highlight
