@@ -62,7 +62,7 @@ except:
 if not IPYTHON_VERSION >= 1:
     raise ValueError("IPython version 1.0+ required for notebook tag")
 
-if IPython_VERSION > 1:
+if IPYTHON_VERSION > 1:
     warnings.warn("Pelican plugin is not designed to work with IPython "
                   "versions greater than 1.x. CSS styles have changed in "
                   "later releases.")
