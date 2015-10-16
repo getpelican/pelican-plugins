@@ -52,6 +52,8 @@ Better figures/samples    Adds a `style="width: ???px; height: auto;"` attribute
 
 bootstrapify              Automatically add bootstraps default classes to your content, usefull for md generated tables
 
+Category Order            Order categories (and tags) by the number of articles in that category (or tag).
+
 CJK auto spacing          Inserts spaces between Chinese/Japanese/Korean characters and English words
 
 Clean summary             Cleans your summary of excess images
