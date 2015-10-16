@@ -179,7 +179,7 @@ def expand_gallery(generator, metadata):
     template = generator.settings.get('GALLERY_TEMPLATE', DEFAULT_TEMPLATE)
     thumbnail_name = generator.settings.get("GALLERY_THUMBNAIL", DEFAULT_GALLERY_THUMB)
     thumbnail_prefix = generator.settings.get("")
-    resizer = _resizer(thumbnail_name, '?x?')
+    resizer = _resizer(thumbnail_name, '?x?', base_path)
     for dirpath, _, filenames in os.walk(in_path):
         for filename in filenames:
             if not filename.startswith('.'):

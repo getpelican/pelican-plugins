@@ -11,6 +11,11 @@ from os import path
 from bs4 import BeautifulSoup
 from pelican import signals, readers, contents
 
+try:
+    from pandoc_reader import PandocReader
+except ImportError:
+    PandocReader = False
+
 
 def extract_toc(content):
     if isinstance(content, contents.Static):
@@ -20,12 +25,14 @@ def extract_toc(content):
     filename = content.source_path
     extension = path.splitext(filename)[1][1:]
     toc = None
-    # if it is a Markdown file
-    if extension in readers.MarkdownReader.file_extensions:
+
+    # default Markdown reader
+    if not toc and readers.MarkdownReader.enabled and extension in readers.MarkdownReader.file_extensions:
         toc = soup.find('div', class_='toc')
         if toc: toc.extract()
-    # else if it is a reST file
-    elif extension in readers.RstReader.file_extensions:
+
+    # default reStructuredText reader
+    if not toc and readers.RstReader.enabled and extension in readers.RstReader.file_extensions:
         toc = soup.find('div', class_='contents topic')
         if toc: toc.extract()
         if toc:
@@ -35,8 +42,11 @@ def extract_toc(content):
             p=tag.find('p', class_='topic-title first')
             if p:p.extract()
             toc=tag
-    elif not toc:  # Pandoc reader
+
+    # Pandoc reader (markdown and other formats)
+    if not toc and PandocReader and PandocReader.enabled and extension in PandocReader.file_extensions:
         toc = soup.find('nav', id='TOC')
+
     if toc:
         toc.extract()
         content._content = soup.decode()

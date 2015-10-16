@@ -44,11 +44,15 @@ Asset management          Use the Webassets module to manage assets such as CSS 
 
 Auto Pages                Generate custom content for generated Author, Category, and Tag pages (e.g. author biography)
 
+Backref Translate         Add a new attribute (``is_translation_of``) to every article/page (which is a translation) pointing back to the original article/page which is being translated
+
 Better code samples       Wraps all `table` blocks with a class attribute `.codehilitetable` in an additional `div` of class `.hilitewrapper`. It thus permits to style codeblocks better, especially to make them scrollable.
 
 Better figures/samples    Adds a `style="width: ???px; height: auto;"` attribute to any `<img>` tags in the content
 
 bootstrapify              Automatically add bootstraps default classes to your content, usefull for md generated tables
+
+Category Order            Order categories (and tags) by the number of articles in that category (or tag).
 
 CJK auto spacing          Inserts spaces between Chinese/Japanese/Korean characters and English words
 
@@ -64,11 +68,15 @@ Custom article URLs       Adds support for defining different default URLs for d
 
 Disqus static comments    Adds a disqus_comments property to all articles. Comments are fetched at generation time using disqus API
 
+Encrypt content           Password protect pages and articles
+
 Extract table of content  Extracts table of contents (ToC) from `article.content`
 
 Feed Summary              Allows article summaries to be used in ATOM and RSS feeds instead of the entire article
 
 Filetime from git         Uses git commit to determine page date
+
+Figure References         Provides a system to number and references figures
 
 Gallery                   Allows an article to contain an album of pictures
 
@@ -118,11 +126,15 @@ Optimize images           Applies lossless compression on JPEG and PNG images
 
 PDF generator             Automatically exports RST articles and pages as PDF files
 
+PDF Images                If an img tag contains a PDF, EPS or PS file as a source, this plugin generates a PNG preview which will then act as a link to the original file.
+
 Pelican-flickr            Brings your Flickr photos & sets into your static website
 
 pelican_javascript        Allows you to embed Javascript and CSS files into individual articles
 
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
+
+Pelican Cite              Produces inline citations and a bibliography in articles and pages, using a BibTeX file.
 
 Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 

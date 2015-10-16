@@ -64,7 +64,7 @@ class Tipue_Search_JSON_Generator(object):
 
     def create_tpage_node(self, srclink):
 
-        srcfile = open(os.path.join(self.output_path, self.tpages[srclink]))
+        srcfile = open(os.path.join(self.output_path, self.tpages[srclink]), encoding='utf-8')
         soup = BeautifulSoup(srcfile, 'html.parser')
         page_text = soup.get_text()
 
@@ -82,8 +82,8 @@ class Tipue_Search_JSON_Generator(object):
         node = {'title': page_title,
                 'text': page_text,
                 'tags': page_category,
-                'loc': page_url}
-        
+                'url': page_url}
+
         self.json_nodes.append(node)
 
 
