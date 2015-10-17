@@ -56,9 +56,9 @@ For example, add the following to the template `article.html`:
 
 ## Known use cases
 
-<pxquim.pt> uses sub-parts and the plug-in Pictures to publish photo galleries with thousands of photos. Sub-parts break the photo galleries into manageable chunks, possibly with different tags and authors.
+[pxquim.pt](http://pxquim.pt/) uses sub-parts and the plug-in Pictures to publish photo galleries with thousands of photos. Sub-parts break the photo galleries into manageable chunks, possibly with different tags and authors.
 
-<pxquim.com> uses sub-parts to cover conferences, where it makes sense to have a sub-part for each speaker.
+[pxquim.com](http://pxquim.com/) uses sub-parts to cover conferences, where it makes sense to have a sub-part for each speaker.
 
 ## What is the difference between Sub-part and Series?
 
