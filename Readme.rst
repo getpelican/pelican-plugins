@@ -148,6 +148,8 @@ Pelican YouTube           Enables you to embed YouTube videos in your pages and 
 
 pelicanfly                Lets you type things like `i ♥ :fa-coffee:` in your Markdown documents and have it come out as little Font Awesome icons in the browser
 
+Photos                    Add a photo or a gallery of photos to an article, or include photos in the body text. Resize photos as needed.
+
 Pin to top                Pin Pelican's article(s) to top "Sticky article"
 
 PlantUML                  Allows you to define UML diagrams directly into rst documents using the great PlantUML tool
