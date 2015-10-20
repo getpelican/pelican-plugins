@@ -186,6 +186,8 @@ Static comments           Allows you to add static comments to an article
 
 Subcategory               Adds support for subcategories
 
+Sub parts                 Break a very long article in parts, without polluting the timeline with lots of small articles.
+
 Summary                   Allows easy, variable length summaries directly embedded into the body of your articles
 
 tag_cloud                 Provides a tag_cloud
