@@ -103,3 +103,6 @@
 [submodule "category_order"]
 	path = category_order
 	url = https://github.com/jhshi/pelican.plugins.category_order.git
+[submodule "post_revision"]
+	path = post_revision
+	url = https://github.com/jhshi/pelican.plugins.post_revision.git

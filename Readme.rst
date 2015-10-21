@@ -154,6 +154,8 @@ Pin to top                Pin Pelican's article(s) to top "Sticky article"
 
 PlantUML                  Allows you to define UML diagrams directly into rst documents using the great PlantUML tool
 
+Post Revision             Extract article and page revision information from Git commit history.
+
 Post statistics           Calculates various statistics about a post and store them in an article.stats dictionary
 
 Random article            Generates a html file which redirect to a random article
