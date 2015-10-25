@@ -3,6 +3,33 @@ tag_cloud
 
 This plugin generates a tag-cloud.
 
+Installation
+------------
+
+In order to use to use this plugin, you have to edit(*) or create(+) the following files::
+
+      blog/
+        ├── pelicanconf.py *
+        ├── content
+        ├── plugins +
+        │     └── tag_cloud.py +
+        └── themes
+              └── mytheme
+                    ├── templates
+                    │      └── base.html *
+                    └── static
+                          └── css
+                               └── style.css *
+
+In **pelicanconf.py** you have to activate the plugin::
+
+    PLUGIN_PATHS = ["plugins"]
+    PLUGINS = ["tag_cloud"]
+
+Into your **plugins** folder, you should add tag_cloud.py (from this repository).
+
+In your theme files, you should change **base.html** to apply formats (and sizes) defined in **style.css**, as specified in "Settings", below.
+
 Settings
 --------
 
