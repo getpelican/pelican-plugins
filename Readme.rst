@@ -52,6 +52,8 @@ Better figures/samples    Adds a `style="width: ???px; height: auto;"` attribute
 
 bootstrapify              Automatically add bootstraps default classes to your content, usefull for md generated tables
 
+Category Order            Order categories (and tags) by the number of articles in that category (or tag).
+
 CJK auto spacing          Inserts spaces between Chinese/Japanese/Korean characters and English words
 
 Clean summary             Cleans your summary of excess images
@@ -122,6 +124,8 @@ Open graph                Generates Open Graph tags for your articles
 
 Optimize images           Applies lossless compression on JPEG and PNG images
 
+Page View                 Pull page view count from Google Analytics.
+
 PDF generator             Automatically exports RST articles and pages as PDF files
 
 PDF Images                If an img tag contains a PDF, EPS or PS file as a source, this plugin generates a PNG preview which will then act as a link to the original file.
@@ -145,6 +149,8 @@ Pelican Vimeo             Enables you to embed Vimeo videos in your pages and ar
 Pelican YouTube           Enables you to embed YouTube videos in your pages and articles
 
 pelicanfly                Lets you type things like `i ♥ :fa-coffee:` in your Markdown documents and have it come out as little Font Awesome icons in the browser
+
+Photos                    Add a photo or a gallery of photos to an article, or include photos in the body text. Resize photos as needed.
 
 Pin to top                Pin Pelican's article(s) to top "Sticky article"
 
@@ -181,6 +187,8 @@ Slim                      Render theme template files via Plim, a Python port of
 Static comments           Allows you to add static comments to an article
 
 Subcategory               Adds support for subcategories
+
+Sub parts                 Break a very long article in parts, without polluting the timeline with lots of small articles.
 
 Summary                   Allows easy, variable length summaries directly embedded into the body of your articles
 

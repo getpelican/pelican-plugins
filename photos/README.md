@@ -144,9 +144,9 @@ Add the following to the template `base.html`, before the closing HTML `</body>`
 
 ## Known use cases
 
-<pxquim.pt> uses Photos and the plug-in Sub-parts to publish 600 photo galleries with 40,000 photos. Photos keeps the high-resolution photos separate from the site articles.
+[pxquim.pt](http://pxquim.pt/) uses Photos and the plug-in Sub-parts to publish 600 photo galleries with 40,000 photos. Photos keeps the high-resolution photos separate from the site articles.
 
-<pxquim.com> uses sub-parts to cover conferences, where it makes sense to have a sub-part for each speaker.
+[pxquim.com](http://pxquim.com/) uses sub-parts to cover conferences, where it makes sense to have a sub-part for each speaker.
 
 ## Alternatives
 
