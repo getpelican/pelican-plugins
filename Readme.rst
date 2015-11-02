@@ -110,6 +110,8 @@ Interlinks                Lets you add frequently used URLs to your markup using
 
 Libravatar                Allows inclusion of user profile pictures from libravatar.org
 
+Link Class                Allows the insertion of class attributes into generated <a> elements (Markdown only)
+
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
 
 Load CSV                  Adds ``csv`` Jinja tag to display the contents of a CSV file as an HTML table
