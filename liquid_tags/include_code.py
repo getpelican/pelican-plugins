@@ -88,7 +88,7 @@ def include_code(preprocessor, tag, markup):
     if not os.path.exists(code_path):
         raise ValueError("File {0} could not be found".format(code_path))
 
-    with open(code_path) as fh:
+    with open(code_path, mode='rb') as fh:
         if lines:
             code = fh.readlines()[first_line - 1: last_line]
             code[-1] = code[-1].rstrip()
