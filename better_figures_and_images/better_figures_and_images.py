@@ -55,9 +55,17 @@ def content_object_init(instance):
                 # search src path list
                 # 1. Build the source image filename from PATH
                 # 2. Build the source image filename from STATIC_PATHS
+
+                # if img_path start with '/', remove it.
+                img_path = os.path.sep.join([el for el in img_path.split("/") if len(el) > 0])
+
+                # style: {filename}/static/foo/bar.png
                 src = os.path.join(instance.settings['PATH'], img_path, img_filename)
                 src_candidates = [src]
+
+                # style: {filename}../static/foo/bar.png
                 src_candidates += [os.path.join(instance.settings['PATH'], static_path, img_path, img_filename) for static_path in instance.settings['STATIC_PATHS']]
+
                 src_candidates = [f for f in src_candidates if path.isfile(f) and access(f, R_OK)]
 
                 if not src_candidates:
