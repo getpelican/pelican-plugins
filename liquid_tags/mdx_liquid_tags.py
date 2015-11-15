@@ -17,13 +17,17 @@ import os
 from functools import wraps
 
 # Define some regular expressions
-LIQUID_TAG = re.compile(r'\{%.*?%\}')
+LIQUID_TAG = re.compile(r'\{%.*?%\}', re.MULTILINE | re.DOTALL)
 EXTRACT_TAG = re.compile(r'(?:\s*)(\S+)(?:\s*)')
 LT_CONFIG = { 'CODE_DIR': 'code',
-              'NOTEBOOK_DIR': 'notebooks'
+              'NOTEBOOK_DIR': 'notebooks',
+              'FLICKR_API_KEY': 'flickr',
+              'GIPHY_API_KEY': 'giphy'
 }
-LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin', 
-            'NOTEBOOK_DIR' : 'Notebook directory for notebook subplugin'
+LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin',
+            'NOTEBOOK_DIR' : 'Notebook directory for notebook subplugin',
+            'FLICKR_API_KEY': 'Flickr key for accessing the API',
+            'GIPHY_API_KEY': 'Giphy key for accessing the API'
 }
 
 class _LiquidTagsPreprocessor(markdown.preprocessors.Preprocessor):
@@ -42,10 +46,10 @@ class _LiquidTagsPreprocessor(markdown.preprocessors.Preprocessor):
             markup = EXTRACT_TAG.sub('', markup, 1)
             if tag in self._tags:
                 liquid_tags[i] = self._tags[tag](self, tag, markup.strip())
-                
+
         # add an empty string to liquid_tags so that chaining works
         liquid_tags.append('')
- 
+
         # reconstruct string
         page = ''.join(itertools.chain(*zip(LIQUID_TAG.split(page),
                                             liquid_tags)))

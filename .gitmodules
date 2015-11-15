@@ -52,9 +52,6 @@
 [submodule "pelican-jinja2content"]
 	path = pelican-jinja2content
 	url = https://github.com/joachimneu/pelican-jinja2content.git
-[submodule "pelican-md-yaml"]
-	path = pelican-md-yaml
-	url = https://github.com/joachimneu/pelican-md-yaml.git
 [submodule "panorama"]
 	path = panorama
 	url = git://github.com/romainx/panorama.git
@@ -85,3 +82,33 @@
 [submodule "org_pandoc_reader"]
 	path = org_pandoc_reader
 	url = https://github.com/jo-tham/org_pandoc_reader.git
+[submodule "pdf-img"]
+	path = pdf-img
+	url = https://github.com/cmacmackin/pdf-img.git
+[submodule "pelican-cite"]
+	path = pelican-cite
+	url = https://github.com/cmacmackin/pelican-cite.git
+[submodule "figure-ref"]
+	path = figure-ref
+	url = https://github.com/cmacmackin/figure-ref
+[submodule "encrypt-content"]
+	path = encrypt-content
+	url = https://github.com/mindcruzer/pelican-encrypt-content
+[submodule "md-metayaml"]
+	path = md-metayaml
+	url = https://github.com/joachimneu/pelican-md-metayaml
+[submodule "backreftranslate"]
+	path = backreftranslate
+	url = https://github.com/daltonmatos/pelican-plugin-backref-translate
+[submodule "category_order"]
+	path = category_order
+	url = https://github.com/jhshi/pelican.plugins.category_order.git
+[submodule "ga_page_view"]
+	path = ga_page_view
+	url = https://github.com/jhshi/pelican.plugins.ga_page_view.git
+[submodule "post_revision"]
+	path = post_revision
+	url = https://github.com/jhshi/pelican.plugins.post_revision
+[submodule "linkclass"]
+	path = pelican-linkclass
+	url = https://github.com/rlaboiss/pelican-linkclass

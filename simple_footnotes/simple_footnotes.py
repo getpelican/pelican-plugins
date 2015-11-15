@@ -17,8 +17,14 @@ def getText(node, recursive = False):
         L.append(getText(n) )
     return ''.join(L)
 
+def sequence_gen(genlist):
+    for gen in genlist:
+        for elem in gen:
+            yield elem
+
+
 def parse_for_footnotes(article_generator):
-    for article in article_generator.articles:
+    for article in sequence_gen([article_generator.drafts, article_generator.articles]):
         if "[ref]" in article._content and "[/ref]" in article._content:
             content = article._content.replace("[ref]", "<x-simple-footnote>").replace("[/ref]", "</x-simple-footnote>")
             parser = html5lib.HTMLParser(tree=html5lib.getTreeBuilder("dom"))

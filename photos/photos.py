@@ -69,6 +69,10 @@ def resize_photos(generator, writer):
                 exif = im._getexif()
             except Exception:
                 exif = None
+            try:
+                icc_profile = im.info.get("icc_profile")
+            except Exception:
+                icc_profile = None
             if exif:
                 for tag, value in exif.items():
                     decoded = ExifTags.TAGS.get(tag, tag)
@@ -82,8 +86,7 @@ def resize_photos(generator, writer):
                 os.makedirs(os.path.split(resized)[0])
             except:
                 pass
-            im.save(resized, 'JPEG', quality=spec[2])
-
+            im.save(resized, 'JPEG', quality=spec[2], icc_profile=icc_profile)
 
 def detect_content(content):
 
@@ -95,7 +98,9 @@ def detect_content(content):
         if what == 'photo':
             if value.startswith('/'):
                 value = value[1:]
-            path = os.path.join(settings['PHOTO_LIBRARY'], value)
+            path = os.path.join(
+                        os.path.expanduser(settings['PHOTO_LIBRARY']),
+                        value)
             if not os.path.isfile(path):
                 logger.error('photos: No photo %s', path)
             else:
@@ -105,7 +110,6 @@ def detect_content(content):
                     path,
                     os.path.join('photos', photo),
                     settings['PHOTO_ARTICLE'])
-
         return ''.join((m.group('markup'), m.group('quote'), origin,
                         m.group('quote')))
 
@@ -128,7 +132,9 @@ def detect_content(content):
 def process_gallery_photo(generator, article, gallery):
     if gallery.startswith('/'):
         gallery = gallery[1:]
-    dir_gallery = os.path.join(generator.settings['PHOTO_LIBRARY'], gallery)
+    dir_gallery = os.path.join(
+                    os.path.expanduser(generator.settings['PHOTO_LIBRARY']),
+                    gallery)
     if os.path.isdir(dir_gallery):
         logger.info('photos: Gallery detected: %s', gallery)
         dir_photo = os.path.join('photos', gallery.lower())
@@ -137,7 +143,7 @@ def process_gallery_photo(generator, article, gallery):
                            msg='photos: No EXIF for gallery %s')
         captions = read_notes(os.path.join(dir_gallery, 'captions.txt'))
         article.photo_gallery = []
-        for pic in os.listdir(dir_gallery):
+        for pic in sorted(os.listdir(dir_gallery)):
             if pic.startswith('.'): continue
             if pic.endswith('.txt'): continue
             photo = os.path.splitext(pic)[0].lower() + '.jpg'
@@ -156,6 +162,8 @@ def process_gallery_photo(generator, article, gallery):
                 os.path.join(dir_gallery, pic),
                 os.path.join(dir_thumb, thumb),
                 generator.settings['PHOTO_THUMB'])
+    else:
+        logger.error('photos: Gallery does not exist: %s at %s', gallery, dir_gallery)
 
 
 def process_gallery_filename(generator, article, gallery):
@@ -163,7 +171,9 @@ def process_gallery_filename(generator, article, gallery):
         gallery = gallery[1:]
     else:
         gallery = os.path.join(article.relative_dir, gallery)
-    dir_gallery = os.path.join(generator.settings['PHOTO_LIBRARY'], gallery)
+    dir_gallery = os.path.join(
+                    os.path.expanduser(generator.settings['PHOTO_LIBRARY']),
+                    gallery)
     if os.path.isdir(dir_gallery):
         logger.info('photos: Gallery detected: %s', gallery)
         dir_photo = gallery.lower()
@@ -172,7 +182,7 @@ def process_gallery_filename(generator, article, gallery):
                            msg='photos: No EXIF for gallery %s')
         captions = read_notes(os.path.join(dir_gallery, 'captions.txt'))
         article.photo_gallery = []
-        for pic in os.listdir(dir_gallery):
+        for pic in sorted(os.listdir(dir_gallery)):
             if pic.startswith('.'): continue
             if pic.endswith('.txt'): continue
             photo = pic.lower()
@@ -187,6 +197,8 @@ def process_gallery_filename(generator, article, gallery):
                 os.path.join(dir_gallery, pic),
                 os.path.join(dir_thumb, thumb),
                 generator.settings['PHOTO_THUMB'])
+    else:
+        logger.error('photos: Gallery does not exist: %s at %s', gallery, dir_gallery)
 
 
 def detect_gallery(generator):
@@ -204,7 +216,9 @@ def detect_gallery(generator):
 def process_image_photo(generator, article, image):
     if image.startswith('/'):
         image = image[1:]
-    path = os.path.join(generator.settings['PHOTO_LIBRARY'], image)
+    path = os.path.join(
+                os.path.expanduser(generator.settings['PHOTO_LIBRARY']),
+                image)
     if os.path.isfile(path):
         photo = os.path.splitext(image)[0].lower() + 'a.jpg'
         thumb = os.path.splitext(image)[0].lower() + 't.jpg'

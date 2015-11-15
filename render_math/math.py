@@ -56,7 +56,7 @@ def process_settings(pelicanobj):
     # will be used for
 
     # Default settings
-    mathjax_settings['auto_insert'] = True  # if set to true, it will insert mathjax script automatically into content without needing to alter the template. 
+    mathjax_settings['auto_insert'] = True  # if set to true, it will insert mathjax script automatically into content without needing to alter the template.
     mathjax_settings['align'] = 'center'  # controls alignment of of displayed equations (values can be: left, right, center)
     mathjax_settings['indent'] = '0em'  # if above is not set to 'center', then this setting acts as an indent
     mathjax_settings['show_menu'] = 'true'  # controls whether to attach mathjax contextual menu
@@ -70,6 +70,7 @@ def process_settings(pelicanobj):
     mathjax_settings['mathjax_font'] = 'default'  # forces mathjax to use the specified font.
     mathjax_settings['process_summary'] = BeautifulSoup is not None  # will fix up summaries if math is cut off. Requires beautiful soup
     mathjax_settings['force_tls'] = 'false'  # will force mathjax to be served by https - if set as False, it will only use https if site is served using https
+    mathjax_settings['message_style'] = 'normal'  # This value controls the verbosity of the messages in the lower left-hand corner. Set it to "none" to eliminate all messages
 
     # Source for MathJax
     mathjax_settings['source'] = "'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
@@ -108,6 +109,9 @@ def process_settings(pelicanobj):
 
         if key == 'show_menu' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
+
+        if key == 'message_style':
+            mathjax_settings[key] = value if value is not None else 'none'
 
         if key == 'auto_insert' and isinstance(value, bool):
             mathjax_settings[key] = value
@@ -244,7 +248,7 @@ def process_mathjax_script(mathjax_settings):
     """Load the mathjax script template from file, and render with the settings"""
 
     # Read the mathjax javascript template from file
-    with open (os.path.dirname(os.path.realpath(__file__)) 
+    with open (os.path.dirname(os.path.realpath(__file__))
             + '/mathjax_script_template', 'r') as mathjax_script_template:
         mathjax_template = mathjax_script_template.read()
 
@@ -333,7 +337,7 @@ def process_rst_and_summaries(content_generators):
 
     for generator in content_generators:
         if isinstance(generator, generators.ArticlesGenerator):
-            for article in generator.articles:
+            for article in generator.articles + generator.translations:
                 rst_add_mathjax(article)
                 #optionally fix truncated formulae in summaries.
                 if process_summary.mathjax_script is not None:

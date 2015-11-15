@@ -6,13 +6,21 @@ based on the octopress video tag [1]_
 
 Syntax
 ------
-{% include_code path/to/code [lang:python] [Title text] %}
+{% include_code path/to/code [lang:python] [Title text] [codec:utf8] %}
 
 The "path to code" is specified relative to the ``code`` subdirectory of
 the content directory  Optionally, this subdirectory can be specified in the
 config file:
 
     CODE_DIR = 'code'
+
+If your input file is not ASCII/UTF-8 encoded, you need to specify the
+appropriate input codec by using the ``codec`` option.
+Example ``codec:iso-8859-1``
+Using this option does not affect the output encoding.
+
+For a list of valid codec identifiers, see
+https://docs.python.org/2/library/codecs.html#standard-encodings
 
 Example
 -------
@@ -45,6 +53,8 @@ FORMAT = re.compile(r"""
 (?:\s+)?                           # Whitespace
 (?P<hidefilename>:hidefilename:)?  # Hidefilename flag
 (?:\s+)?                           # Whitespace
+(?:(?:codec:)(?P<codec>\S+))?        # Optional language
+(?:\s+)?                           # Whitespace
 (?P<title>.+)?$                    # Optional title
 """, re.VERBOSE)
 
@@ -61,6 +71,7 @@ def include_code(preprocessor, tag, markup):
         argdict = match.groupdict()
         title = argdict['title'] or ""
         lang = argdict['lang']
+        codec = argdict['codec'] or "utf8"
         lines = argdict['lines']
         hide_filename = bool(argdict['hidefilename'])
         if lines:
@@ -116,7 +127,7 @@ def include_code(preprocessor, tag, markup):
     source = (open_tag
               + '\n\n    '
               + lang_include
-              + '\n    '.join(code.split('\n')) + '\n\n'
+              + '\n    '.join(code.decode(codec).split('\n')) + '\n\n'
               + close_tag + '\n')
 
     return source

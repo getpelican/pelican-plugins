@@ -17,8 +17,8 @@ The `value` of the dictionary is the path to the specific avatar.
 ##### Example
 ```python
 PELICAN_COMMENT_SYSTEM_AUTHORS = {
-	('John'): "images/authors/john.png",
-	('Tom'): "images/authors/tom.png",
+	('John',): "images/authors/john.png",
+	('Tom',): "images/authors/tom.png",
 }
 ```
 

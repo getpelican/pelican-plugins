@@ -3,17 +3,17 @@ Pelican Plugins
 
 Beginning with version 3.0, Pelican supports plugins. Plugins are a way to add
 features to Pelican without having to directly modify the Pelican core. Starting
-with 3.2, all plugins (including the ones previously in the core) are
-moved here, so this is the central place for all plugins.
+with 3.2, all plugins (including the ones previously in the core) have been
+moved to this repository, so this is the central place for all plugins.
 
 How to use plugins
 ==================
 
-Easiest way to install and use these plugins is cloning this repo::
+The easiest way to install and use these plugins is to clone this repo::
 
     git clone --recursive https://github.com/getpelican/pelican-plugins
 
-and activating the ones you want in your settings file::
+and activate the ones you want in your settings file::
 
     PLUGIN_PATHS = ['path/to/pelican-plugins']
     PLUGINS = ['assets', 'sitemap', 'gravatar']
@@ -44,11 +44,15 @@ Asset management          Use the Webassets module to manage assets such as CSS 
 
 Auto Pages                Generate custom content for generated Author, Category, and Tag pages (e.g. author biography)
 
+Backref Translate         Add a new attribute (``is_translation_of``) to every article/page (which is a translation) pointing back to the original article/page which is being translated
+
 Better code samples       Wraps all `table` blocks with a class attribute `.codehilitetable` in an additional `div` of class `.hilitewrapper`. It thus permits to style codeblocks better, especially to make them scrollable.
 
 Better figures/samples    Adds a `style="width: ???px; height: auto;"` attribute to any `<img>` tags in the content
 
 bootstrapify              Automatically add bootstraps default classes to your content, usefull for md generated tables
+
+Category Order            Order categories (and tags) by the number of articles in that category (or tag).
 
 CJK auto spacing          Inserts spaces between Chinese/Japanese/Korean characters and English words
 
@@ -64,11 +68,15 @@ Custom article URLs       Adds support for defining different default URLs for d
 
 Disqus static comments    Adds a disqus_comments property to all articles. Comments are fetched at generation time using disqus API
 
+Encrypt content           Password protect pages and articles
+
 Extract table of content  Extracts table of contents (ToC) from `article.content`
 
 Feed Summary              Allows article summaries to be used in ATOM and RSS feeds instead of the entire article
 
 Filetime from git         Uses git commit to determine page date
+
+Figure References         Provides a system to number and references figures
 
 Gallery                   Allows an article to contain an album of pictures
 
@@ -102,6 +110,8 @@ Interlinks                Lets you add frequently used URLs to your markup using
 
 Libravatar                Allows inclusion of user profile pictures from libravatar.org
 
+Link Class                Allows the insertion of class attributes into generated <a> elements (Markdown only)
+
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
 
 Load CSV                  Adds ``csv`` Jinja tag to display the contents of a CSV file as an HTML table
@@ -116,13 +126,19 @@ Open graph                Generates Open Graph tags for your articles
 
 Optimize images           Applies lossless compression on JPEG and PNG images
 
+Page View                 Pull page view count from Google Analytics.
+
 PDF generator             Automatically exports RST articles and pages as PDF files
+
+PDF Images                If an img tag contains a PDF, EPS or PS file as a source, this plugin generates a PNG preview which will then act as a link to the original file.
 
 Pelican-flickr            Brings your Flickr photos & sets into your static website
 
 pelican_javascript        Allows you to embed Javascript and CSS files into individual articles
 
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
+
+Pelican Cite              Produces inline citations and a bibliography in articles and pages, using a BibTeX file.
 
 Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 
@@ -136,9 +152,13 @@ Pelican YouTube           Enables you to embed YouTube videos in your pages and 
 
 pelicanfly                Lets you type things like `i ♥ :fa-coffee:` in your Markdown documents and have it come out as little Font Awesome icons in the browser
 
+Photos                    Add a photo or a gallery of photos to an article, or include photos in the body text. Resize photos as needed.
+
 Pin to top                Pin Pelican's article(s) to top "Sticky article"
 
 PlantUML                  Allows you to define UML diagrams directly into rst documents using the great PlantUML tool
+
+Post Revision             Extract article and page revision information from Git commit history
 
 Post statistics           Calculates various statistics about a post and store them in an article.stats dictionary
 
@@ -171,6 +191,8 @@ Slim                      Render theme template files via Plim, a Python port of
 Static comments           Allows you to add static comments to an article
 
 Subcategory               Adds support for subcategories
+
+Sub parts                 Break a very long article in parts, without polluting the timeline with lots of small articles.
 
 Summary                   Allows easy, variable length summaries directly embedded into the body of your articles
 
