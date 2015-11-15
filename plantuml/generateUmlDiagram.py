@@ -9,9 +9,9 @@ from pelican import logger
 
 def generate_uml_image(path, plantuml_code, imgformat):
     tf = tempfile.NamedTemporaryFile(delete=False)
-    tf.write('@startuml\n')
+    tf.write('@startuml\n'.encode('utf8'))
     tf.write(plantuml_code.encode('utf8'))
-    tf.write('\n@enduml')
+    tf.write('\n@enduml'.encode('utf8'))
     tf.flush()
 
     logger.debug("[plantuml] Temporary PlantUML source at "+(tf.name))
@@ -43,10 +43,10 @@ def generate_uml_image(path, plantuml_code, imgformat):
             # diagram was correctly generated, we can remove the temporary file (if not debugging)
             if not logger.isEnabledFor(logging.DEBUG):
                 os.remove(tf.name)
-            # renaming output image using an hash code, just to not pullate
+            # renaming output image using an hash code, just to not pollute
             # output directory with a growing number of images
             name = os.path.join(path, os.path.basename(name))
-            newname = os.path.join(path, "%08x" % (adler32(plantuml_code) & 0xffffffff))+imgext
+            newname = os.path.join(path, "%08x" % (adler32(plantuml_code.encode()) & 0xffffffff))+imgext
 
             if os.path.exists(newname):
                 os.remove(newname)

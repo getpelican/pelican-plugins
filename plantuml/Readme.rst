@@ -2,31 +2,23 @@
 PlantUML plugin for Pelican rst and md documents
 ================================================
 
-This plugin allows you to define UML diagrams directly into rst or md documents using the great
-PlantUML_ tool.
+This plugin allows you to define UML diagrams directly into rst or md documents using the great PlantUML_ tool.
 
-It gets the content of ``uml`` directive, passes it to the external
-program PlantUML_ and then links the generated image to the document.
+It gets the content of ``uml`` directive, passes it to the external program PlantUML_ and then links the generated image to the document.
 
 .. contents::
 
 Installation
 ============
 
-You need to install PlantUML_ (see the site for details) and Graphviz_ 2.26.3 or later.
-The plugin expects a program ``plantuml`` in the classpath. If not installed by your package
-manager, you can create a shell script and place it somewhere in the classpath. For example,
-save te following into ``/usr/local/bin/plantuml`` (supposing PlantUML_ installed into
-``/opt/plantuml``):
+You need to install PlantUML_ (see the site for details) and Graphviz_ 2.26.3 or later. The plugin expects a program ``plantuml`` in the classpath. If not installed by your package manager, you can create a shell script and place it somewhere in the classpath. For example, save te following into ``/usr/local/bin/plantuml`` (supposing PlantUML_ installed into ``/opt/plantuml``):
 
 .. code-block:: bash
 
     #!/bin/bash
     java -jar /opt/plantuml/plantuml.jar ${@}
 
-For Gentoo_ there is an ebuild at http://gpo.zugaina.org/dev-util/plantuml/RDep: you can download
-the ebuild and the ``files`` subfolder or you can add the ``zugaina`` repository with _layman
-(reccomended).
+For Gentoo_ there is an ebuild at http://gpo.zugaina.org/dev-util/plantuml/RDep: you can download the ebuild and the ``files`` subfolder or you can add the ``zugaina`` repository with _layman (reccomended).
 
 Usage
 =====
@@ -41,18 +33,11 @@ One loaded the plugin register also the Pyhton-Markdown_ extension.
 
 RST usage
 ---------
-Use the ``uml`` directive to start UML diagram description. It is not necessary to enclose
-diagram body between ``@startuml`` and ``@enduml`` directives: they are added automatically 
-before calling ``plantuml``.
+Use the ``uml`` directive to start UML diagram description. It is not necessary to enclose diagram body between ``@startuml`` and ``@enduml`` directives: they are added automatically  before calling ``plantuml``.
 
-In addition to ``class`` and
-``alt`` options common to all images, you can use the ``format`` option to select what kind
-of image must be produced. At the moment only ``png`` and ``svg`` are supported; the default
-is ``png``.
+In addition to ``class`` and ``alt`` options common to all images, you can use the ``format`` option to select what kind of image must be produced. At the moment only ``png`` and ``svg`` are supported; the default is ``png``.
 
-Please note that the ``format`` option in not recognized by the ``plantuml`` extension of
-``rst2pdf`` utility (call it with ``-e plantuml.py``) so if you use it you can get errors from
-that program.
+Please note that the ``format`` option in not recognized by the ``plantuml`` extension of ``rst2pdf`` utility (call it with ``-e plantuml.py``) so if you use it you can get errors from that program.
 
 MD usage
 --------
@@ -64,34 +49,24 @@ For use with the Pyhton-Markdown_ syntax, the UML block must be enclose with ``:
        PlantUML script
     ::end-uml::
 
-Please keep a blank line before ``::uml::`` and after ``::end-uml::`` to be sure that the UML code will be correctly
-recognized.
-See Examples_ for more details.
+Please keep a blank line before ``::uml::`` and after ``::end-uml::`` to be sure that the UML code will be correctly recognized. See Examples_ for more details.
 
-With MD syntax options must be specified in the same line as the opening ``:uml::``, with the
-order ``format``, ``classes`` anmd ``alt``. The general syntax for option is
+With MD syntax options must be specified in the same line as the opening ``:uml::``, with the order ``format``, ``classes`` anmd ``alt``. The general syntax for option is
 
 .. code-block:: text
 
     option="value"
 
-Option can be enclosed with single or double quotes, as you like.
-Options defaults are the same as for the rst plugin.
+Option can be enclosed with single or double quotes, as you like. Options defaults are the same as for the rst plugin.
 
 For pandoc_reader plugin users
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The plugin ``pandoc_reader`` sends the Markdown body to the pandoc_ tool which has it's own Markdown parser, written
-in Haskell_ language: Python_ plugins manipulating Markdown posts (such this) are not used because the entire body
-id passed to pandoc_ without any iteraction by Pelican_.
+The plugin ``pandoc_reader`` sends the Markdown body to the pandoc_ tool which has it's own Markdown parser, written in Haskell_ language: Python_ plugins manipulating Markdown posts (such this) are not used because the entire body id passed to pandoc_ without any iteraction by Pelican_.
 
-For those who are using the ``pandoc_reader`` plugin and wants to include PlantUML_ diagrams, use the
-``pandoc-plantuml`` script (only *nix, sorry): it is a wrapper for filtering the code blocks parsed by pandoc_ before
-writing out the converted file.
-It is an adaption of the great work by Kurt Bonne for his
-`pandoc-plantuml-filter <https://github.com/kbonne/pandoc-plantuml-filter.git>`_.
+For those who are using the ``pandoc_reader`` plugin and wants to include PlantUML_ diagrams, use the ``pandoc-plantuml`` script (only *nix, sorry): it is a wrapper for filtering the code blocks parsed by pandoc_ before
+writing out the converted file. It is an adaption of the great work by Kurt Bonne for his `pandoc-plantuml-filter <https://github.com/kbonne/pandoc-plantuml-filter.git>`_.
 
-To use it, copy the ``pandoc-plantuml`` file in a subdirectory of your pelican project (for example `pandoc_extensions`)
-and make sure it is executable (``chmod +x pandoc-plantuml``).
+To use it, copy the ``pandoc-plantuml`` file in a subdirectory of your pelican project (for example `pandoc_extensions`) and make sure it is executable (``chmod +x pandoc-plantuml``).
 
 In the ``pelicanconf.py`` configure the needed plugins:
 
@@ -116,10 +91,11 @@ In Markdown posts use the following syntax to include PlantUML_ diagrams:
 
 Rendered images will bu put in the output/images folder.
 
+**NOTE:** ``pandoc-plantuml`` is broken from pandoc 1.16 cause an API change in pandoc ``Image`` function. I'm working on a fix but in the meanwhile use a version of pandoc prior to ``1.16`` .
+
 Debugging
 ---------
-The plugin can produce debugging informations to help to locate errors. To enable debugging
-execute ``pelican`` in debug mode:
+The plugin can produce debugging informations to help to locate errors. To enable debugging execute ``pelican`` in debug mode:
 
  .. code-block:: console
 
