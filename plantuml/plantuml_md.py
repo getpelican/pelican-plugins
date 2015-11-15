@@ -26,7 +26,7 @@ import os
 import re
 import markdown
 from markdown.util import etree
-from generateUmlDiagram import generate_uml_image
+from .generateUmlDiagram import generate_uml_image
 
 # For details see https://pythonhosted.org/Markdown/extensions/api.html#blockparser
 class PlantUMLBlockProcessor(markdown.blockprocessors.BlockProcessor):

@@ -13,7 +13,7 @@ from docutils.nodes import image, literal_block
 from docutils.parsers.rst import Directive, directives
 from pelican import signals, logger
 
-from generateUmlDiagram import generate_uml_image
+from .generateUmlDiagram import generate_uml_image
 
 
 global_siteurl = "" # URL of the site, filled on plugin initialization
