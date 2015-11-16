@@ -88,9 +88,3 @@ It is recommended to use this extension along with the thumbnailer plugin.
           ]
 
 You may also wish to use this along with a gallery plugin such as [Colorbox](http://www.jacklmoore.com/colorbox/).
-
-##In Use
-
-* [SESIF Article](http://sesif.github.io/my-super-title.html)
-* [SESIF Gallery](http://sesif.github.io/pages/gallery.html)
-* [SESIF Source](http://github.com/SESIF/SESIF.github.io/tree/source)
