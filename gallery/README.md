@@ -7,9 +7,10 @@ Gallery
 ##How to Use
 
 1. Group images into folders, with each folder representing an album.
-2. Place all album folders within a folder named gallery, which resides within the images folder.
+2. Place all album folders within a folder, which should reside under content.
+3. Insert `GALLERY_PATH` to your `pelicanconf.py` and set a path to that folder. By default it is `images/gallery`.
 
-		./content/images/gallery/album_name
+		./content/images/gallery/{your albums}
 	
 ###Articles
 
