@@ -2,10 +2,19 @@ import os
 from pelican import signals
 
 
-def add_gallery_post(generator):
+def get_content_path(pelican):
+    return pelican.settings.get('PATH')
 
-    contentpath = generator.settings.get('PATH')
-    gallerycontentpath = os.path.join(contentpath,'images/gallery')
+
+def get_gallery_path(pelican):
+    gallery_path = pelican.settings.get('GALLERY_PATH', 'images/gallery')
+    content_path = get_content_path(pelican)
+
+    return os.path.join(content_path, gallery_path)
+
+
+def add_gallery_post(generator):
+    gallerycontentpath = get_gallery_path(generator)
 
     for article in generator.articles:
         if 'gallery' in article.metadata.keys():
@@ -24,9 +33,7 @@ def add_gallery_post(generator):
 
 
 def add_gallery_page(generator):
-
-    contentpath = generator.settings.get('PATH')
-    gallerycontentpath = os.path.join(contentpath,'images/gallery')
+    gallerycontentpath = get_gallery_path(generator)
 
     for page in generator.pages:
         if 'gallery' in page.metadata.keys():
@@ -45,9 +52,7 @@ def add_gallery_page(generator):
 
 
 def generate_gallery_page(generator):
-
-    contentpath = generator.settings.get('PATH')
-    gallerycontentpath = os.path.join(contentpath,'images/gallery')
+    gallerycontentpath = get_gallery_path(generator)
 
     for page in generator.pages:
         if page.metadata.get('template') == 'gallery':
