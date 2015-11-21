@@ -23,12 +23,20 @@ class PdfGenerator(Generator):
     rst"""
     def __init__(self, *args, **kwargs):
         super(PdfGenerator, self).__init__(*args, **kwargs)
-        
-        pdf_style_path = os.path.join(self.settings['PDF_STYLE_PATH'])
-        pdf_style = self.settings['PDF_STYLE']
+
+        if 'PDF_STYLE_PATH' in self.settings:
+            pdf_style_path = [self.settings['PDF_STYLE_PATH']]
+        else:
+            pdf_style_path = []
+
+        if 'PDF_STYLE' in self.settings:
+            pdf_style = [self.settings['PDF_STYLE']]
+        else:
+            pdf_style = []
+
         self.pdfcreator = RstToPdf(breakside=0,
-                                   stylesheets=[pdf_style],
-                                   style_path=[pdf_style_path])
+                                   stylesheets=pdf_style,
+                                   style_path=pdf_style_path)
 
     def _create_pdf(self, obj, output_path):
         if obj.source_path.endswith('.rst'):
