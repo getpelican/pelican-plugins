@@ -34,7 +34,7 @@ from rst2pdf.createpdf import RstToPdf
 class PdfGenerator(Generator):
     "Generate PDFs on the output dir, for all articles and pages"
 
-    supported_md_fields = ['date', 'summary']
+    supported_md_fields = ['date']
 
     def __init__(self, *args, **kwargs):
         super(PdfGenerator, self).__init__(*args, **kwargs)
