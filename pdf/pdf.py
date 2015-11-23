@@ -8,6 +8,7 @@ The pdf plugin generates PDF files from RST sources.
 
 from __future__ import unicode_literals, print_function
 
+from io import open
 from pelican import signals
 from pelican.generators import Generator
 from pelican.readers import MarkdownReader
@@ -59,12 +60,12 @@ class PdfGenerator(Generator):
         mdreader = MarkdownReader(self.settings)
         _, ext = os.path.splitext(obj.source_path)
         if ext == '.rst':
-            with open(obj.source_path) as f:
+            with open(obj.source_path, encoding='utf-8') as f:
                 text = f.read()
-            header = str()
+            header = ''
         elif ext[1:] in mdreader.file_extensions and mdreader.enabled:
             text, meta = mdreader.read(obj.source_path)
-            header = str()
+            header = ''
 
             if 'title' in meta:
                 title = meta['title']
@@ -80,6 +81,11 @@ class PdfGenerator(Generator):
             header += '\n'.join([':%s: %s' % (k, meta[k]) for k in meta])
             header += '\n\n.. raw:: html\n\n\t'
             text = text.replace('\n', '\n\t')
+
+            # rst2pdf casts the text to str and will break if it finds
+            # non-escaped characters. Here we nicely escape them to XML/HTML
+            # entities before proceeding
+            text = text.encode('ascii', 'xmlcharrefreplace')
         else:
             # We don't support this format
             logger.warn('Ignoring unsupported file ' + obj.source_path)
