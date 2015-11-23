@@ -39,3 +39,4 @@ class TestPdfGeneration(unittest.TestCase):
 
     def test_existence(self):
         assert os.path.exists(os.path.join(self.temp_path, 'pdf', 'this-is-a-super-article.pdf'))
+        assert os.path.exists(os.path.join(self.temp_path, 'pdf', 'a-markdown-powered-article.pdf'))
