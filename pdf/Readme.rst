@@ -2,31 +2,35 @@
 PDF Generator
 -------------
 
-The PDF Generator plugin automatically exports RST articles and pages
-as PDF files as part of the site-generation process. PDFs are saved to
-output/pdf/
+The PDF Generator plugin automatically exports reStructuredText articles and
+pages as PDF files as part of the site generation process. PDFs are saved to:
+``output/pdf/``
 
 Requirements
 ------------
-You should ensure you have the ``rst2pdf`` module installed::
+
+You should ensure you have the ``rst2pdf`` module installed, which can be
+accomplished via::
 
 	pip install rst2pdf
 
 Usage
 -----
-To customize the pdf output, you can use the following settings in your
-configuration file::
+
+To customize the PDF output, you can use the following settings in your
+Pelican configuration file::
 
 	PDF_STYLE = ''
 	PDF_STYLE_PATH = ''
 
-``PDF_STYLE_PATH`` defines a new path where rst2pdf will look for style sheets,
-while ``PDF_STYLE`` defines which style you want to use. For a description of
-the available styles, please read `rst2pdf's documentation`_.
+``PDF_STYLE_PATH`` defines a new path where ``rst2pdf`` will look for style
+sheets, while ``PDF_STYLE`` specifies the style you want to use. For a
+description of the available styles, please read the `rst2pdf documentation`_.
 
-.. _rst2pdf's documentation: http://rst2pdf.ralsina.me/handbook.html#styles
+.. _rst2pdf documentation: http://rst2pdf.ralsina.me/handbook.html#styles
 
 Known Issues
 ------------
+
 Relative links in the form of ``|filename|images/test.png`` are not yet handled
-by the pdf generator
+by the PDF generator.
