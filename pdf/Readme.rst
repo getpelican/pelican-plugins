@@ -9,7 +9,7 @@ Requirements
 ------------
 You should ensure you have the ``rst2pdf`` module installed::
 
-	pip install rst2pdf
+    pip install rst2pdf
 
 If you are converting Markdown sources to PDF, you also need the ``xhtml2pdf``
 module::
@@ -21,8 +21,8 @@ Usage
 To customize the pdf output, you can use the following settings in your
 configuration file::
 
-	PDF_STYLE = ''
-	PDF_STYLE_PATH = ''
+    PDF_STYLE = ''
+    PDF_STYLE_PATH = ''
 
 ``PDF_STYLE_PATH`` defines a new path where rst2pdf will look for style sheets,
 while ``PDF_STYLE`` defines which style you want to use. For a description of
