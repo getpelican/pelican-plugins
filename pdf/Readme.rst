@@ -2,8 +2,8 @@
 PDF Generator
 -------------
 
-The PDF Generator plugin automatically exports reStructuredText articles and
-pages as PDF files as part of the site generation process. PDFs are saved to:
+The PDF Generator plugin automatically exports articles and pages as PDF files
+as part of the site generation process. PDFs are saved to:
 ``output/pdf/``
 
 Requirements
@@ -13,6 +13,11 @@ You should ensure you have the ``rst2pdf`` module installed, which can be
 accomplished via::
 
 	pip install rst2pdf
+
+If you are converting Markdown sources to PDF, you also need the ``xhtml2pdf``
+module, which can be installed with::
+
+	pip install xhtml2pdf
 
 Usage
 -----

@@ -3,7 +3,7 @@
 PDF Generator
 -------
 
-The pdf plugin generates PDF files from RST sources.
+The pdf plugin generates PDF files from reStructuredText and Markdown sources.
 '''
 
 from __future__ import unicode_literals, print_function

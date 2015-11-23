@@ -128,7 +128,7 @@ Optimize images           Applies lossless compression on JPEG and PNG images
 
 Page View                 Pull page view count from Google Analytics.
 
-PDF generator             Automatically exports RST articles and pages as PDF files
+PDF generator             Automatically exports articles and pages as PDF files
 
 PDF Images                If an img tag contains a PDF, EPS or PS file as a source, this plugin generates a PNG preview which will then act as a link to the original file.
 
