@@ -3,24 +3,39 @@
 PDF Generator
 -------
 
-The pdf plugin generates PDF files from RST sources.
+The pdf plugin generates PDF files from reStructuredText and Markdown sources.
 '''
 
 from __future__ import unicode_literals, print_function
 
+from io import open
 from pelican import signals
 from pelican.generators import Generator
-from rst2pdf.createpdf import RstToPdf
+from pelican.readers import MarkdownReader
 
 import os
 import logging
 
 logger = logging.getLogger(__name__)
 
+import xhtml2pdf.util
+if 'pyPdf' not in dir(xhtml2pdf.util):
+    try:
+        from xhtml2pdf.util import PyPDF2
+        xhtml2pdf.util.pyPdf = PyPDF2
+    except ImportError:
+        logger.error('Failed to monkeypatch xhtml2pdf. ' +
+                     'You have missing dependencies')
+        raise
+
+from rst2pdf.createpdf import RstToPdf
+
 
 class PdfGenerator(Generator):
-    """Generate PDFs on the output dir, for all articles and pages coming from
-    rst"""
+    "Generate PDFs on the output dir, for all articles and pages"
+
+    supported_md_fields = ['date']
+
     def __init__(self, *args, **kwargs):
         super(PdfGenerator, self).__init__(*args, **kwargs)
 
@@ -36,16 +51,49 @@ class PdfGenerator(Generator):
 
         self.pdfcreator = RstToPdf(breakside=0,
                                    stylesheets=pdf_style,
-                                   style_path=pdf_style_path)
+                                   style_path=pdf_style_path,
+                                   raw_html=True)
 
     def _create_pdf(self, obj, output_path):
-        if obj.source_path.endswith('.rst'):
-            filename = obj.slug + ".pdf"
-            output_pdf = os.path.join(output_path, filename)
-            # print('Generating pdf for', obj.source_path, 'in', output_pdf)
-            with open(obj.source_path) as f:
-                self.pdfcreator.createPdf(text=f.read(), output=output_pdf)
-            logger.info(' [ok] writing %s' % output_pdf)
+        filename = obj.slug + '.pdf'
+        output_pdf = os.path.join(output_path, filename)
+        mdreader = MarkdownReader(self.settings)
+        _, ext = os.path.splitext(obj.source_path)
+        if ext == '.rst':
+            with open(obj.source_path, encoding='utf-8') as f:
+                text = f.read()
+            header = ''
+        elif ext[1:] in mdreader.file_extensions and mdreader.enabled:
+            text, meta = mdreader.read(obj.source_path)
+            header = ''
+
+            if 'title' in meta:
+                title = meta['title']
+                header = title + '\n' + '#' * len(title) + '\n\n'
+                del meta['title']
+
+            for k in meta.keys():
+                # We can't support all fields, so we strip the ones that won't
+                # look good
+                if k not in self.supported_md_fields:
+                    del meta[k]
+
+            header += '\n'.join([':%s: %s' % (k, meta[k]) for k in meta])
+            header += '\n\n.. raw:: html\n\n\t'
+            text = text.replace('\n', '\n\t')
+
+            # rst2pdf casts the text to str and will break if it finds
+            # non-escaped characters. Here we nicely escape them to XML/HTML
+            # entities before proceeding
+            text = text.encode('ascii', 'xmlcharrefreplace')
+        else:
+            # We don't support this format
+            logger.warn('Ignoring unsupported file ' + obj.source_path)
+            return
+
+        logger.info(' [ok] writing %s' % output_pdf)
+        self.pdfcreator.createPdf(text=(header+text),
+                                  output=output_pdf)
 
     def generate_context(self):
         pass
