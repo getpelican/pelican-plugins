@@ -50,7 +50,7 @@ Better code samples       Wraps all `table` blocks with a class attribute `.code
 
 Better figures/samples    Adds a `style="width: ???px; height: auto;"` attribute to any `<img>` tags in the content
 
-bootstrapify              Automatically add bootstraps default classes to your content, usefull for md generated tables
+bootstrapify              Automatically add bootstraps default classes to your content
 
 Category Order            Order categories (and tags) by the number of articles in that category (or tag).
 
