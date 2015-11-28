@@ -180,6 +180,8 @@ Representative image      Extracts a representative image (i.e, featured image) 
 
 RMD Reader                Create posts via knitr RMarkdown files
 
+Section number            Adds section number to the article's context, in the form of `2.3.3` Sections are indicated by `<h1>-<h6>` in the parsed html format.
+
 Share post                Creates share URLs of article
 
 Simple footnotes          Adds footnotes to blog posts
