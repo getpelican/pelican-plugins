@@ -54,7 +54,7 @@
 	url = https://github.com/joachimneu/pelican-jinja2content.git
 [submodule "panorama"]
 	path = panorama
-	url = git://github.com/romainx/panorama.git
+	url = https://github.com/romainx/panorama.git
 [submodule "pelican-genealogy"]
 	path = pelican-genealogy
 	url = https://github.com/zappala/pelican-genealogy
