@@ -37,10 +37,12 @@ in the STATIC_PATHS setting, e.g.:
 
 [1] https://github.com/imathis/octopress/blob/master/plugins/include_code.rb
 """
+from __future__ import unicode_literals
+
+from io import open
 import re
 import os
 from .mdx_liquid_tags import LiquidTags
-
 
 SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}"
 FORMAT = re.compile(r"""
@@ -88,7 +90,7 @@ def include_code(preprocessor, tag, markup):
     if not os.path.exists(code_path):
         raise ValueError("File {0} could not be found".format(code_path))
 
-    with open(code_path) as fh:
+    with open(code_path, encoding='utf-8') as fh:
         if lines:
             code = fh.readlines()[first_line - 1: last_line]
             code[-1] = code[-1].rstrip()
