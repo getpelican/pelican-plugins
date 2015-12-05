@@ -17,7 +17,8 @@ valid URLs at the time of writing:
 HUBSKI_URL = 'https://hubski.com'
 HUBSKI_POST_URL = HUBSKI_URL + '/pub?id='
 HUBSKI_USER_URL = HUBSKI_URL + '/user?id='
-HUBSKI_API_TREE_URL = HUBSKI_URL + '/api/publication/$id/tree'
+HUBSKI_API_URL = 'http://api.hubski.com'
+HUBSKI_API_TREE_URL = HUBSKI_API_URL + '/publication/$id/tree'
 """
 
 from __future__ import unicode_literals
@@ -29,7 +30,6 @@ from string import Template
 
 def hubski_static(generator):
     # API end-points should be defined in the conf file so they can easily be changed
-    hubski_url = generator.settings.get('HUBSKI_URL')
     tree_template = Template(generator.settings.get('HUBSKI_API_TREE_URL'))
 
     for article in generator.articles:
@@ -39,7 +39,7 @@ def hubski_static(generator):
             publication = requests.get(post_tree_url).json()
 
             # Perform any desired transformations on the comments
-            comments, comment_count = hubski_alter_comments(hubski_url, publication)
+            comments, comment_count = hubski_alter_comments(generator, publication)
 
             # Make a count of top-level comments available in the templates
             article.hubski_comment_count = comment_count
@@ -47,7 +47,7 @@ def hubski_static(generator):
             # Make the comments available to the templates
             article.hubski_comments = comments
 
-def hubski_alter_comments(hubski_url, publication):
+def hubski_alter_comments(generator, publication):
     children = []
     children_count = 0
     if 'children' in publication:
@@ -56,7 +56,7 @@ def hubski_alter_comments(hubski_url, publication):
             for a in soup.find_all('a'):
                 # Update relative links with full paths
                 if not a['href'].startswith('http'):
-                    a['href'] = hubski_url + '/' + a['href']
+                    a['href'] = generator.settings.get('HUBSKI_URL') + '/' + a['href']
                 # Also make them open in a new window
                 a['target'] = '_blank'
             child['text'] = unicode(soup)
@@ -65,7 +65,7 @@ def hubski_alter_comments(hubski_url, publication):
             child['iso_date'] = date.fromtimestamp(child['time']).isoformat()
 
             # Recursively process the child's children
-            child['children'], sub_children_count = hubski_alter_comments(hubski_url, child)
+            child['children'], sub_children_count = hubski_alter_comments(generator, child)
 
             # Keep a running total of all children
             children_count = children_count + sub_children_count

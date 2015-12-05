@@ -67,6 +67,7 @@ Add the following handy settings to your conf file. Some of these are required b
     HUBSKI_URL = 'https://hubski.com'
     HUBSKI_POST_URL = HUBSKI_URL + '/pub?id='
     HUBSKI_USER_URL = HUBSKI_URL + '/user?id='
-    HUBSKI_API_TREE_URL = HUBSKI_URL + '/api/publication/$id/tree'
+    HUBSKI_API_URL = 'http://api.hubski.com'
+    HUBSKI_API_TREE_URL = HUBSKI_API_URL + '/publication/$id/tree'
 
 These are all straightforward strings which can be used in your templates, with the exception of the tree URL setting which is intended to be used as a string template by the plugin.
