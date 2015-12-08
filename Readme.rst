@@ -126,6 +126,8 @@ Open graph                Generates Open Graph tags for your articles
 
 Optimize images           Applies lossless compression on JPEG and PNG images
 
+Org Reader                Create posts via Emacs Orgmode files
+
 Page View                 Pull page view count from Google Analytics.
 
 PDF generator             Automatically exports articles and pages as PDF files
