@@ -1,43 +1,43 @@
 # Liquid-style Tags
 *Author: Jake Vanderplas <jakevdp@cs.washington.edu>*
 
-This plugin allows liquid-style tags to be inserted into markdown within
-Pelican documents. Liquid uses tags bounded by ``{% ... %}``, and is used
-to extend markdown in other blogging platforms such as octopress.
+This plugin allows liquid-style tags to be inserted into Markdown within
+Pelican documents via tags bounded by `{% ... %}`, a convention also used
+to extend Markdown in other publishing platforms such as Octopress.
 
 This set of extensions does not actually interface with liquid, but allows
 users to define their own liquid-style tags which will be inserted into
-the markdown preprocessor stream.  There are several built-in tags, which
+the Markdown preprocessor stream. There are several built-in tags, which
 can be added as follows.
 
-First, in your pelicanconf.py file, add the plugins you want to  use:
+First, in your pelicanconf.py file, add the plugins you want to use:
 
     PLUGIN_PATH = '/path/to/pelican-plugins'
     PLUGINS = ['liquid_tags.img', 'liquid_tags.video',
                'liquid_tags.youtube', 'liquid_tags.vimeo',
                'liquid_tags.include_code', 'liquid_tags.notebook']
 
-There are several options available
+Following below is more information about these and other tags.
 
 ## Image Tag
 To insert a sized and labeled image in your document, enable the
-``liquid_tags.img`` plugin and use the following:
+`liquid_tags.img` plugin and use the following:
 
     {% img [class name(s)] path/to/image [width [height]] [title text | "title text" ["alt text"]] %}
 
 ### Base64 Image (inline image) tag
 
-There is one more tag for image: ``b64img``. It is based on ``img`` tag, but instead of inserting link on image it acutally reads image and inserts it as base64 text into ``<img src=`` attribute.
+`b64img` is based on the`img` tag, but instead of inserting a link to the image it encodes it as base64 text and inserts it into a`<img src=` attribute.
 
 To use it:
 
-1. Enable ``liquid_tags.b64img``
-1. Insert tag as you'd insert image one: ``{% b64img [class name(s)] path/to/image [width [height]] [title text | "title text" ["alt text"]] %}``
+1. Enable `liquid_tags.b64img`
+1. Insert a tag as follows: `{% b64img [class name(s)] path/to/image [width [height]] [title text | "title text" ["alt text"]] %}`
 
-Images are read on compilation phase so you can use any local path (just be sure that image will remain there on next compilation)
+Images are encoded at generation time, so you can use any local path (just be sure that the image will remain in the same location for subsequent site generations).
 
 ## Instagram Tag
-To insert a sized and labeled Instagram image in your document by its shortcode (such as ``pFI0CAIZna``), enable the ``liquid_tags.gram`` plugin and use the following:
+To insert a sized and labeled Instagram image in your document by its shortcode (such as `pFI0CAIZna`), enable the `liquid_tags.gram` plugin and use the following:
 
     {% gram shortcode [size] [width] [class name(s)] [title text | "title text" ["alt text"]] %}
 
@@ -46,76 +46,77 @@ You can specify a size with `t`, `m`, or `l`.
 ## Flickr Tag
 To insert a Flickr image to a post, follow these steps:
 
-1. Enable ``liquid_tags.flickr``
+1. Enable `liquid_tags.flickr`
 2. [Get an API key from Flickr](https://www.flickr.com/services/apps/create/apply)
-3. Add FLICKR_API_KEY to your config
-4. Add this to your document:
+3. Add FLICKR_API_KEY to your settings file
+4. Add this to your source document:
 
-    ``{% flickr image_id [small|medium|large] ["alt text"|'alt text'] %}``
+    {% flickr image_id [small|medium|large] ["alt text"|'alt text'] %}
 
 ## Giphy Tag
-To insert a gif from Giphy in your document by its id (such as ``aMSJFS6oFX0fC``), enable the ``liquid_tags.giphy`` plugin and use the following:
+To insert a GIF from Giphy in your document by its ID (such as `aMSJFS6oFX0fC`), enable the `liquid_tags.giphy` plugin and use the following:
 
     {% giphy gif_id ["alt text"|'alt text'] %}
 
-IMPORTANT: You have to request a production API key from giphy [here](https://api.giphy.com/submit).
-For the first runs you could also use the public beta key you can get [here](https://github.com/giphy/GiphyAPI).
+**Important:** You must [request a production API key](https://api.giphy.com/submit) from Giphy.
+If you just want to try it out, you can use the public beta key contained within the [GiphyAPI](https://github.com/giphy/GiphyAPI) README file.
 
 ## Soundcloud Tag
-To insert a Soundcloud Widget to a post, follow these steps:
+To insert a Soundcloud widget in your content, follow these steps:
 
-1. Enable ``liquid_tags.soundcloud``
-2. Add this to your document:
+1. Enable `liquid_tags.soundcloud`
+2. Add this to your source document:
 
-    ``{% soundcloud track_url %}``
+    {% soundcloud track_url %}
 
-## Youtube Tag
-To insert youtube video into a post, enable the
-``liquid_tags.youtube`` plugin, and add to your document:
+## YouTube Tag
+To insert a YouTube video into your content, enable the
+`liquid_tags.youtube` plugin and add the following to your source document:
 
     {% youtube youtube_id [width] [height] %}
 
-The width and height are in pixels, and can be optionally specified.  If they
-are not, then the dimensions will be 640 (wide) by 390 (tall).
+The width and height are in pixels and are optional. If they
+are not specified, then the dimensions will be 640 (wide) by 390 (tall).
 
-If you're experiencing issues with code generating (i.e. missing closing tags), add `SUMMARY_MAX_LENGTH = None` to your config.
+If you experience issues with code generation (e.g., missing closing tags),
+add `SUMMARY_MAX_LENGTH = None` to your settings file.
 
 ## Vimeo Tag
-To insert a Vimeo video into a post, enable the
-``liquid_tags.vimeo`` plugin, and add to your document:
+To insert a Vimeo video into your content, enable the `liquid_tags.vimeo`
+plugin and add the following to your source document:
 
     {% vimeo vimeo_id [width] [height] %}
 
-The width and height are in pixels, and can be optionally specified.  If they
-are not, then the dimensions will be 640 (wide) by 390 (tall).
+The width and height are in pixels and are optional. If they
+are not specified, then the dimensions will be 640 (wide) by 390 (tall).
 
-If you're experiencing issues with code generating (i.e. missing closing tags), add `SUMMARY_MAX_LENGTH = None` to your config.
+If you experience issues with code generation (e.g., missing closing tags),
+add `SUMMARY_MAX_LENGTH = None` to your settings file.
 
 ## Video Tag
-To insert flash/HTML5-friendly video into a post, enable the
-``liquid_tags.video`` plugin, and add to your document:
+To insert HTML5-friendly video into your content, enable the `liquid_tags.video`
+plugin and add the following to your source document:
 
     {% video /url/to/video.mp4 [width] [height] [/path/to/poster.png] %}
 
-The width and height are in pixels, and can be optionally specified.  If they
-are not, then the original video size will be used.  The poster is an image
-which is used as a preview of the video.
+The width and height are in pixels and are optional. If they are not specified,
+then the native video size will be used. The poster image is a preview image
+that is shown prior to initiating video playback.
 
-To use a video from file, make sure it's in a static directory and put in
-the appropriate url.
+To link to a video file, make sure it is in a static directory, transmitted
+to your server, and available at the specified URL.
 
 ## Audio Tag
-To insert HTML5 audio into a post, enable the ``liquid_tags.audio`` plugin,
-and add to your document:
+To insert HTML5 audio into a post, enable the `liquid_tags.audio` plugin
+and add the following to your source document:
 
     {% audio url/to/audio [url/to/audio] [url/to/audio] %}
 
-Up to 3 audio urls are possible. So you can add different versions of
-the audio file you want to post because not every browser support every
-file format.
+This tag supports up to three audio URL arguments so you can add different
+audio file versions, as different browsers support different file formats.
 
-To use a audio from file, make sure it's in a static directory and put in
-the appropriate url.
+To link to a audio file, make sure it is in a static directory, transmitted
+to your server, and available at the specified URL.
 
 ## Include Code
 To include code from a file in your document with a link to the original
