@@ -1,0 +1,5 @@
+cssselect>=0.9.1          # via premailer
+cssutils>=1.0.1           # via premailer
+lxml>=3.5.0               # via premailer
+premailer>=2.9.6
+
