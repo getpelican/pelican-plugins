@@ -120,110 +120,105 @@ to your server, and available at the specified URL.
 
 ## Include Code
 To include code from a file in your document with a link to the original
-file, enable the ``liquid_tags.include_code`` plugin, and add to your
-document:
+file, enable the `liquid_tags.include_code` plugin, and add the following to
+your source document:
 
     {% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}
 
-All arguments are optional but their order must be kept. `:hidefilename:` is
-only allowed if a title is also given.
+All arguments are optional but must be specified in the order shown above.
+If using `:hidefilename:`, a title must be provided as indicated above.
 
     {% include_code /path/to/code.py lines:1-10 :hidefilename: Test Example %}
 
-This example will show the first 10 lines of the file while hiding the actual
+This example will show the first ten lines of the file while hiding the actual
 filename.
 
-The script must be in the ``code`` subdirectory of your content folder:
-this default location can be changed by specifying
+The script must be in the `code` subdirectory of your content folder;
+the default location can be changed by specifying the directory in your
+settings file thusly:
 
     CODE_DIR = 'code'
 
-within your configuration file. Additionally, in order for the resulting
-hyperlink to work, this directory must be listed under the STATIC_PATHS
-setting, e.g.:
+Additionally, in order for the resulting hyperlink to work, this directory must
+be listed in the STATIC_PATHS setting. For example:
 
     STATIC_PATHS = ['images', 'code']
 
 ## IPython notebooks
 
 To insert an [IPython][] notebook into your post, enable the
-``liquid_tags.notebook`` plugin and add to your document:
+``liquid_tags.notebook`` plugin and add the following to your source document:
 
     {% notebook filename.ipynb %}
 
-The file should be specified relative to the ``notebooks`` subdirectory of the
-content directory.  Optionally, this subdirectory can be specified in the
-config file:
+The file should be specified relative to the `notebooks` subdirectory of the
+content directory. Optionally, this subdirectory can be specified in your
+settings file:
 
     NOTEBOOK_DIR = 'notebooks'
 
 Because the conversion and rendering of notebooks is rather involved, there
-are a few extra steps required for this plugin:
-
-- First, you will need to install IPython:
+are a few extra steps required for this plugin. First, you must install IPython:
 
       pip install ipython==2.4.1
 
-- After typing "make html" when using the notebook tag, a file called
-  ``_nb_header.html`` will be produced in the main directory.  The content
-  of the file should be included in the header of the theme.  An easy way
-  to accomplish this is to add the following lines within the header template
-  of the theme you use:
+After running Pelican on content containing an IPython notebook tag, a file
+called `_nb_header.html` will be generated in the main directory. The content
+of this file should be included in the header of your theme. An easy way to
+accomplish this is to add the following to your theme’s header template…
 
       {% if EXTRA_HEADER %}
       {{ EXTRA_HEADER }}
       {% endif %}
 
-  and in your configuration file, include the line:
+… and in your settings file, include the line:
 
       EXTRA_HEADER = open('_nb_header.html').read().decode('utf-8')
 
-  this will insert the proper css formatting into your document.
+This will insert the proper CSS formatting into your generated document.
 
 ### Optional Arguments for Notebook Tags
 
-The notebook tag also has two optional arguments: ``cells`` and ``language``.
+The notebook tag also has two optional arguments: `cells` and `language`.
 
 - You can specify a slice of cells to include:
 
-  ``{% notebook filename.ipynb cells[2:8] %}``
+  `{% notebook filename.ipynb cells[2:8] %}`
 
-- You can also specify the name of a language which Pygments should use for
-  highlighting code cells. A list of the short names for languages that Pygments
-  will highlight can be found [here](http://www.pygments.org/docs/lexers/).
+- You can also specify the name of the language that Pygments should use for
+  highlighting code cells. For a list of the language short names that Pygments
+  can highlight, refer to the [Pygments lexer list](http://www.pygments.org/docs/lexers/).
 
-  ``{% notebook filename.ipynb language[julia] %}``
+  `{% notebook filename.ipynb language[julia] %}`
 
   This may be helpful for those using [IJulia](https://github.com/JuliaLang/IJulia.jl)
-  or notebooks in any other language, especially as the IPython project [broadens its
-  scope](https://github.com/ipython/ipython/wiki/Roadmap:-IPython) of [language
-  compatibility](http://jupyter.org/). By default, the language for highlighting
-  will be ``ipython``.
+  or notebooks in other languages, especially as the IPython project [broadens its
+  scope](https://github.com/ipython/ipython/wiki/Roadmap:-IPython) to [support
+  other languages](http://jupyter.org/). The default language for highlighting
+  is `ipython`.
 
 - These options can be used separately, together, or not at all. However,
-  if both tags are used then ``cells`` must come before ``language``:
+  if both tags are used then `cells` must come before `language`:
 
-  ``{% notebook filename.ipynb cells[2:8] language[julia] %}``
+  `{% notebook filename.ipynb cells[2:8] language[julia] %}`
 
 ### Collapsible Code in IPython Notebooks
 
-The plugin also enables collapsible code input boxes. For this to work
-you first need to copy the file ``pelicanhtml_3.tpl`` (for IPython
-3.x, ``pelicanhtml_2.tpl`` (for IPython 2.x)...) to the top level of your
-Pelican blog. Notebook input cells containing the comment line ``#
-<!-- collapse=True -->`` will be collapsed when the html page is
-loaded and can be expanded by clicking on them. Cells containing the
-comment line ``# <!-- collapse=False -->`` will be open on load but
-can be collapsed by clicking on their header. Cells without collapse
+The IPython plugin also enables collapsible code input boxes. For this to work
+you must first copy the file `pelicanhtml_3.tpl` (for IPython 3.x) or
+`pelicanhtml_2.tpl` (for IPython 2.x) to the top level of your content
+directory. Notebook input cells containing the comment line `#
+<!-- collapse=True -->` will be collapsed when the HTML page is
+loaded and can be expanded by tapping on them. Cells containing the
+comment line `# <!-- collapse=False -->` will be expanded on load but
+can be collapsed by tapping on their header. Cells without collapsed
 comments are rendered as standard code input cells.
 
 ## Testing
 
-To test the plugin in multiple environments we use [tox](http://tox.readthedocs.org/en/latest/), to run the entire test suite, just type:
+To test the plugin in multiple environments we use [tox](http://tox.readthedocs.org/en/latest/). To run the entire test suite:
 
-```
-cd path/to/liquid_tags
-tox
-```
+    cd path/to/liquid_tags
+    tox
 
 [IPython]: http://ipython.org/
