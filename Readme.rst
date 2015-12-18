@@ -48,9 +48,9 @@ Backref Translate         Add a new attribute (``is_translation_of``) to every a
 
 Better code line numbers  Allow code blocks with line numbers to wrap
 
-Better code samples       Wraps all `table` blocks with a class attribute `.codehilitetable` in an additional `div` of class `.hilitewrapper`. It thus permits to style codeblocks better, especially to make them scrollable.
+Better code samples       Wraps all ``table`` blocks with a class attribute ``.codehilitetable`` in an additional ``div`` of class ``.hilitewrapper``. It thus permits to style codeblocks better, especially to make them scrollable.
 
-Better figures/samples    Adds a `style="width: ???px; height: auto;"` attribute to any `<img>` tags in the content
+Better figures/samples    Adds a ``style="width: ???px; height: auto;"`` attribute to any ``<img>`` tags in the content
 
 bootstrapify              Automatically add bootstraps default classes to your content
 
@@ -62,7 +62,7 @@ Clean summary             Cleans your summary of excess images
 
 Code include              Includes Pygments highlighted code in reStructuredText
 
-Collate content           Makes categories of content available to the template as lists through a `collations` attribute
+Collate content           Makes categories of content available to the template as lists through a ``collations`` attribute
 
 Creole reader             Allows you to write your posts using the wikicreole syntax
 
@@ -72,7 +72,7 @@ Disqus static comments    Adds a disqus_comments property to all articles. Comme
 
 Encrypt content           Password protect pages and articles
 
-Extract table of content  Extracts table of contents (ToC) from `article.content`
+Extract table of content  Extracts table of contents (ToC) from ``article.content``
 
 Feed Summary              Allows article summaries to be used in ATOM and RSS feeds instead of the entire article
 
@@ -152,7 +152,7 @@ Pelican Vimeo             Enables you to embed Vimeo videos in your pages and ar
 
 Pelican YouTube           Enables you to embed YouTube videos in your pages and articles
 
-pelicanfly                Lets you type things like `i ♥ :fa-coffee:` in your Markdown documents and have it come out as little Font Awesome icons in the browser
+pelicanfly                Lets you type things like ``i ♥ :fa-coffee:`` in your Markdown documents and have it come out as little Font Awesome icons in the browser
 
 Photos                    Add a photo or a gallery of photos to an article, or include photos in the body text. Resize photos as needed.
 
