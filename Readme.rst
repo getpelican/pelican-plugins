@@ -76,6 +76,8 @@ Extract table of content  Extracts table of contents (ToC) from `article.content
 
 Feed Summary              Allows article summaries to be used in ATOM and RSS feeds instead of the entire article
 
+Feed Template             Allows to customize article title, link and description in RSS feeds using a template
+
 Filetime from git         Uses git commit to determine page date
 
 Figure References         Provides a system to number and references figures
