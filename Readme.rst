@@ -68,6 +68,8 @@ Creole reader             Allows you to write your posts using the wikicreole sy
 
 Custom article URLs       Adds support for defining different default URLs for different categories
 
+Dateish                   Treat arbitrary metadata fields as datetime objects
+
 Disqus static comments    Adds a disqus_comments property to all articles. Comments are fetched at generation time using disqus API
 
 Encrypt content           Password protect pages and articles
