@@ -112,6 +112,8 @@ Image Process             Automates the processing of images based on their clas
 
 Interlinks                Lets you add frequently used URLs to your markup using short keywords
 
+Just Table		  Just table can easily create tables in your Pelican articles for you.
+
 Libravatar                Allows inclusion of user profile pictures from libravatar.org
 
 Link Class                Allows the insertion of class attributes into generated <a> elements (Markdown only)
