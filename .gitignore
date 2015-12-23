@@ -1,3 +1,7 @@
 *.pyc
 *.log
 *~
+# test
+.tox
+.cache
+*/default-tox.ini

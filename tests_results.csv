@@ -1,0 +1,16 @@
+plugin,test suite,exit code
+asciidoc_reader,default,0
+assets,default,1
+collate_content,default,1
+gzip_cache,default,1
+i18n_subsites,default,1
+libravatar,default,1
+liquid_tags,custom,0
+pdf,default,1
+photos,default,1
+representative_image,default,1
+simple_footnotes,default,0
+sub_parts,default,1
+summary,default,1
+tag_cloud,default,1
+thumbnailer,default,1
