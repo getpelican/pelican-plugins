@@ -74,6 +74,8 @@ Disqus static comments    Adds a disqus_comments property to all articles. Comme
 
 Encrypt content           Password protect pages and articles
 
+Events                    Add event start, duration, and location info to post metadata to generate an iCalendar file
+
 Extract table of content  Extracts table of contents (ToC) from ``article.content``
 
 Feed Summary              Allows article summaries to be used in ATOM and RSS feeds instead of the entire article
