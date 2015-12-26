@@ -84,6 +84,8 @@ Figure References         Provides a system to number and references figures
 
 Filetime from Git         Uses Git commit to determine page date
 
+Footer Insert             Add standardized footer (e.g., author information) at end of every article
+
 Gallery                   Allows an article to contain an album of pictures
 
 Gist directive            This plugin adds a ``gist`` reStructuredText directive.
