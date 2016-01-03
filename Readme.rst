@@ -156,6 +156,8 @@ Pelican Cite              Produces inline citations and a bibliography in articl
 
 Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 
+Pelican mboxreader        Lets you generate articles automatically via email, given a path to a Unix mbox.
+
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
 
 Pelican comment system    Allows you to add static comments to your articles
