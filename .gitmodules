@@ -118,3 +118,6 @@
 [submodule "ace_editor"]
 	path = ace_editor
 	url = https://github.com/mothsART/ace_editor.git
+[submodule "mboxreader"]
+	path = pelican-mboxreader
+	url = https://github.com/TC01/pelican-mboxreader

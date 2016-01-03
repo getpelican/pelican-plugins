@@ -132,6 +132,8 @@ Multi parts posts         Allows you to write multi-part posts
 
 Markdown Inline Extend    Enables you to add customize inline patterns to your markdown
 
+Mbox Reader               Generate articles automatically via email, given a path to a Unix mbox
+
 Neighbor articles         Adds ``next_article`` (newer) and ``prev_article`` (older) variables to the article's context
 
 Open graph                Generates Open Graph tags for your articles
