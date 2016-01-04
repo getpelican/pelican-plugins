@@ -1,4 +1,4 @@
-from . import giphy
+from .. import giphy
 try:
     from unittest.mock import patch
 except ImportError:

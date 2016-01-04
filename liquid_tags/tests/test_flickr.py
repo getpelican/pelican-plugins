@@ -1,4 +1,4 @@
-from . import flickr
+from .. import flickr
 try:
     from unittest.mock import patch
 except ImportError:

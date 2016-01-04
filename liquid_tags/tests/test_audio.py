@@ -1,4 +1,4 @@
-from . import audio
+from .. import audio
 import pytest
 import re
 
