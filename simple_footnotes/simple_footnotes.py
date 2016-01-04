@@ -1,3 +1,6 @@
+# -*- coding: UTF-8 -*-
+from __future__ import unicode_literals
+
 from pelican import signals
 import re
 import html5lib
@@ -94,4 +97,3 @@ def parse_for_footnotes(article_generator):
 
 def register():
     signals.article_generator_finalized.connect(parse_for_footnotes)
-
