@@ -2,21 +2,21 @@ Members
 -------
 
 This plugin looks for a ``members`` metadata header containing key/value pairs
-and makes them available for use in templates
+and makes them available for use in templates.
 
-The first line of the members metadata defines each key, and the following
-lines contain corresponding values for each member.
+The first line of this metadata defines each key, and the following line should
+contain corresponding values for each member.
 
-The key line must be in the same line as the metadata name 'members', and each
-member data must have an identation before it.
+The keys must be in the same first line as the ``members`` metadata header,
+and the next line containing the corresponding values must have an identation
+before it.
 
-In ReSTructuredText::
+Example for reStructuredText::
 
-    :members: nome, email, twitter, github, site_nome, site_href
+    :members: name, email, twitter, github, site_nome, site_href
         Danilo Shiga, daniloshiga@gmail.com, @daneoshiga, daneoshiga, Danilo Shiga, http://daniloshiga.com
 
+Example for Markdown::
 
-In Markdown::
-
-    members: nome, email, twitter, github, site_nome, site_href
+    members: name, email, twitter, github, site_nome, site_href
         Danilo Shiga, daniloshiga@gmail.com, @daneoshiga, daneoshiga, Danilo Shiga, http://daniloshiga.com
