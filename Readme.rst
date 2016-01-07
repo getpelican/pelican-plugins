@@ -128,11 +128,15 @@ Liquid-style tags         Allows liquid-style tags to be inserted into markdown 
 
 Load CSV                  Adds ``csv`` Jinja tag to display the contents of a CSV file as an HTML table
 
-Multi parts posts         Allows you to write multi-part posts
-
 Markdown Inline Extend    Enables you to add customize inline patterns to your markdown
 
+Markdown-metaYAML         Pelican reader to enable YAML-style metadata in markdown articles
+
+Math Render               Gives pelican the ability to render mathematics
+
 Mbox Reader               Generate articles automatically via email, given a path to a Unix mbox
+
+Multi parts posts         Allows you to write multi-part posts
 
 Neighbor articles         Adds ``next_article`` (newer) and ``prev_article`` (older) variables to the article's context
 
@@ -143,6 +147,8 @@ Optimize images           Applies lossless compression on JPEG and PNG images
 Org Reader                Create posts via Emacs Orgmode files
 
 Page View                 Pull page view count from Google Analytics.
+
+Panorama                  Creates charts from posts metadata
 
 PDF generator             Automatically exports articles and pages as PDF files
 
@@ -183,12 +189,6 @@ Random article            Generates a html file which redirect to a random artic
 Read More link            Inserts an inline "read more" or "continue" link into the last html element of the object summary
 
 Related posts             Adds the ``related_posts`` variable to the article's context
-
-Markdown-metaYAML         Pelican reader to enable YAML-style metadata in markdown articles
-
-Math Render               Gives pelican the ability to render mathematics
-
-Panorama                  Creates charts from posts metadata
 
 Replacer                  Replace a text of a generated HTML
 
