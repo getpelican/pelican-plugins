@@ -192,6 +192,8 @@ Read More link            Inserts an inline "read more" or "continue" link into 
 
 Related posts             Adds the ``related_posts`` variable to the article's context
 
+Render Math               Render mathematics in content via the MathJax Javascript engine
+
 Replacer                  Replace a text of a generated HTML
 
 Representative image      Extracts a representative image (i.e, featured image) from the article's summary or content
