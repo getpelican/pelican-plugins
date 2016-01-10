@@ -154,15 +154,17 @@ PDF generator             Automatically exports articles and pages as PDF files
 
 PDF Images                If an img tag contains a PDF, EPS or PS file as a source, this plugin generates a PNG preview which will then act as a link to the original file.
 
+Pelican Cite              Produces inline citations and a bibliography in articles and pages, using a BibTeX file.
+
 Pelican-flickr            Brings your Flickr photos & sets into your static website
+
+Pelican Genealogy         Add surnames and people so metadata and context can be accessed from within a theme to provide surname and person pages
+
+Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 
 pelican_javascript        Allows you to embed Javascript and CSS files into individual articles
 
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
-
-Pelican Cite              Produces inline citations and a bibliography in articles and pages, using a BibTeX file.
-
-Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
 
