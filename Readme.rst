@@ -162,6 +162,8 @@ Pelican Genealogy         Add surnames and people so metadata and context can be
 
 Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 
+Pelican Github Projects   Embed a list of your public GitHub projects in your pages
+
 pelican_javascript        Allows you to embed Javascript and CSS files into individual articles
 
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
