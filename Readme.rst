@@ -166,6 +166,8 @@ Pelican Github Projects   Embed a list of your public GitHub projects in your pa
 
 pelican_javascript        Allows you to embed Javascript and CSS files into individual articles
 
+Pelican Jinja2Content     Allows the use of Jinja2 template code in articles, including ``include`` and ``import`` statements
+
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
 
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
