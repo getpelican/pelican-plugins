@@ -168,6 +168,8 @@ pelican_javascript        Allows you to embed Javascript and CSS files into indi
 
 Pelican Jinja2Content     Allows the use of Jinja2 template code in articles, including ``include`` and ``import`` statements
 
+Pelican Link Class        Set class attribute of ``<a>`` elements according to whether the link is external or internal
+
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
 
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
