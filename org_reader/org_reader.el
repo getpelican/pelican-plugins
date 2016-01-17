@@ -1,5 +1,6 @@
 (require 'json)
 (require 'org)
+(require 'ox)
 (defun org->pelican (filename backend)
   (progn
     (save-excursion
