@@ -1,14 +1,21 @@
 #-*- conding: utf-8 -*-
 
 import os
+import warnings
 
 from pelican import readers
 from pelican import signals
 from pelican import settings
 from pelican.utils import pelican_open
 from markdown import Markdown
+
 try:
-    from rpy2 import robjects
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        from rpy2.robjects.packages import importr
+    knitr = importr('knitr')
+    idx = knitr.opts_knit.names.index('set')
+    knitr.opts_knit[idx](**{'base.dir': '{0}/content'.format(settings.DEFAULT_CONFIG.get('PATH'))})
     rmd = True
 except ImportError:
     rmd = False
@@ -22,16 +29,14 @@ class RmdReader(readers.BaseReader):
     def read(self, filename):
         """Parse content and metadata of markdown files"""
         # replace single backslashes with double backslashes
-        filename = filename.replace('\\', '\\\\')        
+        filename = filename.replace('\\', '\\\\')
         # parse Rmd file - generate md file
         md_filename = filename.replace('.Rmd', '.aux').replace('.rmd', '.aux')
-        robjects.r("""
-require(knitr);
-opts_knit$set(base.dir='{2}/content');
-knit('{0}', '{1}', quiet=TRUE, encoding='UTF-8');
-""".format(filename, md_filename, settings.DEFAULT_CONFIG.get('PATH')))
+        knitr.knit(filename, md_filename, quiet=True, encoding='UTF-8')
+        # read md file - create a MarkdownReader
         md_reader = readers.MarkdownReader(self.settings)
         content, metadata = md_reader.read(md_filename)
+        # remove md file
         os.remove(md_filename)
         return content, metadata
 
