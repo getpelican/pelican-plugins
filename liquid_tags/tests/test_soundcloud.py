@@ -1,4 +1,4 @@
-from . import soundcloud
+from .. import soundcloud
 import pytest
 
 
