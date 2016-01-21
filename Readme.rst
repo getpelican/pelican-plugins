@@ -172,6 +172,8 @@ Pelican Link Class        Set class attribute of ``<a>`` elements according to w
 
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
 
+Pelican Page Hierarchy    Creates a URL hierarchy for pages that matches the filesystem hierarchy of their sources
+
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
 
 Pelican comment system    Allows you to add static comments to your articles
