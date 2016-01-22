@@ -156,6 +156,8 @@ PDF Images                If an img tag contains a PDF, EPS or PS file as a sour
 
 Pelican Cite              Produces inline citations and a bibliography in articles and pages, using a BibTeX file.
 
+Pelican Comment System    Allows you to add static comments to your articles
+
 Pelican-flickr            Brings your Flickr photos & sets into your static website
 
 Pelican Genealogy         Add surnames and people so metadata and context can be accessed from within a theme to provide surname and person pages
@@ -170,13 +172,11 @@ Pelican Jinja2Content     Allows the use of Jinja2 template code in articles, in
 
 Pelican Link Class        Set class attribute of ``<a>`` elements according to whether the link is external or internal
 
-pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
-
 Pelican Page Hierarchy    Creates a URL hierarchy for pages that matches the filesystem hierarchy of their sources
 
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
 
-Pelican comment system    Allows you to add static comments to your articles
+pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
 
 Pelican Vimeo             Enables you to embed Vimeo videos in your pages and articles
 
