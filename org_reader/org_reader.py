@@ -23,7 +23,7 @@ the org file's header:
 #+DATE: 2001-01-01
 #+CATEGORY: blog-category
 #+AUTHOR: My Name
-#+LANGUAGE: en
+#+PROPERTY: LANGUAGE en
 #+PROPERTY: SUMMARY hello, this is the description
 #+PROPERTY: SLUG test_slug
 #+PROPERTY: MODIFIED [2015-12-29 Di]
