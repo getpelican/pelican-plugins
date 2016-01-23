@@ -1,6 +1,7 @@
 (require 'json)
 (require 'org)
 (require 'ox)
+
 (defun org->pelican (filename backend)
   (progn
     (save-excursion
@@ -37,12 +38,12 @@
 
                  :author (substring-no-properties
                           (car (plist-get org-export-env ':author)))
-                 :language (plist-get org-export-env ':language)
 
                  ; org file properties
                  :category (cdr (assoc-string "CATEGORY" org-file-properties t))
 
                  ; custom org file properties, defined as #+PROPERTY: NAME ARG
+                 :language (cdr (assoc-string "LANGUAGE" org-file-properties t))
                  :save_as (cdr (assoc-string "SAVE_AS" org-file-properties t))
                  :tags (cdr (assoc-string "TAGS" org-file-properties t))
                  :summary (cdr (assoc-string "SUMMARY" org-file-properties t))
