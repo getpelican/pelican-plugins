@@ -43,7 +43,7 @@ def generate_uml_image(path, plantuml_code, imgformat):
             # diagram was correctly generated, we can remove the temporary file (if not debugging)
             if not logger.isEnabledFor(logging.DEBUG):
                 os.remove(tf.name)
-            # renaming output image using an hash code, just to not pullate
+            # renaming output image using an hash code, just to not pollute
             # output directory with a growing number of images
             name = os.path.join(path, os.path.basename(name))
             newname = os.path.join(path, "%08x" % (adler32(plantuml_code.encode()) & 0xffffffff))+imgext
