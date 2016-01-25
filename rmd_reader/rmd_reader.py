@@ -9,17 +9,29 @@ from pelican import settings
 from pelican.utils import pelican_open
 from markdown import Markdown
 
-try:
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        from rpy2.robjects.packages import importr
-    knitr = importr('knitr')
-    idx = knitr.opts_knit.names.index('set')
-    knitr.opts_knit[idx](**{'base.dir': '{0}/content'.format(settings.DEFAULT_CONFIG.get('PATH'))})
-    rmd = True
-except ImportError:
-    rmd = False
+#import pelicanconf
 
+knitr = None
+rmd = False
+
+def initsignal(pelicanobj):
+    global knitr,rmd
+    try:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            from rpy2.robjects.packages import importr
+        knitr = importr('knitr')
+        idx = knitr.opts_knit.names.index('set')
+        PATH = pelicanobj.settings.get('PATH','%s/content' % settings.DEFAULT_CONFIG.get('PATH'))
+        knitr.opts_knit[idx](**{'base.dir': PATH})
+        idy = knitr.opts_chunk.names.index('set')
+        knitroptschunk = pelicanobj.settings.get('KNITR_OPTS_CHUNK',None)
+        if knitroptschunk is not None:     
+            knitr.opts_chunk[idy](**{str(k): v for k,v in knitroptschunk.iteritems()})
+        rmd = True
+    except ImportError:
+        rmd = False
+    
 class RmdReader(readers.BaseReader):
     enabled = rmd
     file_extensions = ['Rmd', 'rmd']
@@ -45,3 +57,4 @@ def add_reader(readers):
 
 def register():
     signals.readers_init.connect(add_reader)
+    signals.initialized.connect(initsignal)
