@@ -176,6 +176,8 @@ Pelican Page Hierarchy    Creates a URL hierarchy for pages that matches the fil
 
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
 
+Pelican Themes Generator  Generates theme screenshots from the Pelican Themes repository
+
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
 
 Pelican Vimeo             Enables you to embed Vimeo videos in your pages and articles
