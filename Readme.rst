@@ -212,6 +212,8 @@ RMD Reader                Create posts via knitr RMarkdown files
 
 Section number            Adds section numbers for article headers, in the form of ``2.3.3``
 
+Series                    Groups related articles into a series
+
 Share post                Creates share URLs of article
 
 Simple footnotes          Adds footnotes to blog posts
