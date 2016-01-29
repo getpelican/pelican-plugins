@@ -105,7 +105,7 @@ def detect_content(content):
                 logger.error('photos: No photo %s', path)
             else:
                 photo = os.path.splitext(value)[0].lower() + 'a.jpg'
-                origin = os.path.join('/photos', photo)
+                origin = os.path.join(settings['SITEURL'], 'photos', photo)
                 enqueue_resize(
                     path,
                     os.path.join('photos', photo),
