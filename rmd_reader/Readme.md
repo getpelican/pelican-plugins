@@ -39,6 +39,16 @@ The plugin detects RMD files ending with `.Rmd` or `.rmd` so you only have to wr
 
 This plugin calls R to process these files and generates markdown files that are processed by Pelican's `MarkdownReader` in order to generate html files from ordinary `.md` files.
 
+### Configuration
+
+`rmd_reader` has these 3 variables that can be set in `pelicanconf`.
+
+- `RMD_READER_CLEANUP` (`True`): The RMarkdown file is converted into a Markdown file with the extension `.aux` (to avoid conflicts while pelican is processing). This file is processed by pelican's MarkdownReader and is removed after that (the cleanup step). So if you want to check this file set `RMD_READER_CLEANUP=True`.
+- `RMD_READER_KNITR_QUIET` (`True`): sets `knitr`'s quiet argument.
+- `RMD_READER_KNITR_ENCODING` (`UTF-8`): sets `knitr`'s encoding argument.
+- `RMD_READER_KNITR_OPTS_CHUNK` (`None`): sets `knitr`'s `opts_chunk`.
+
+
 ### Plotting
 
 The code below must be pasted inside the `.Rmd` file in order to correctly set the `src` attribute of `img` tag.
