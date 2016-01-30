@@ -232,6 +232,8 @@ Summary                   Allows easy, variable length summaries directly embedd
 
 tag_cloud                 Provides a tag_cloud
 
+Textile Reader            Adds support for Textile markup
+
 Thumbnailer               Creates thumbnails for all of the images found under a specific directory
 
 Tipue Search              Serializes generated HTML to JSON that can be used by jQuery plugin - Tipue Search
