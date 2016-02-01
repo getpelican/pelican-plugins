@@ -242,6 +242,8 @@ Touch                     Does a touch on your generated files using the date me
 
 Twitter Bootstrap         Defines some rst directive that enable a clean usage of the twitter bootstrap CSS and Javascript components
 
+txt2tags_reader           Reader that renders txt2tags markup in content
+
 W3C validate              Submits generated HTML content to the W3C Markup Validation Service
 ========================  ===========================================================
 
