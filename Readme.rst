@@ -124,6 +124,8 @@ Libravatar                Allows inclusion of user profile pictures from librava
 
 Link Class                Allows the insertion of class attributes into generated <a> elements (Markdown only)
 
+Linker                    Allows the definition of custom linker commands in analogy to the builtin ``{filename}``, ``{attach}``, ``{category}``, ``{tag}``, ``{author}``, and ``{index}`` syntax
+
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
 
 Load CSV                  Adds ``csv`` Jinja tag to display the contents of a CSV file as an HTML table
