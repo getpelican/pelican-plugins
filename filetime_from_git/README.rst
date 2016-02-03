@@ -30,6 +30,11 @@ You can also set GIT_FILETIME_FOLLOW to True in your pelican config to
 make the plugin follow file renames i.e. ensure the creation date matches
 the original file creation date, not the date is was renamed.
 
+By default, the plugin ensures that articles which use "git time" always have a
+"Modified" date set, even if this date matches the creation date. If you only want
+to add a "Modified" date if it actually differs from the creation date, then set
+``GIT_FILETIME_ALWAYS_ADD_MODIFIED`` to ``False`` in your Pelican config.
+
 FAQ
 ---
 

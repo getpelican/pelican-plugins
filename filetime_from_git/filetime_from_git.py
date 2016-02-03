@@ -65,7 +65,8 @@ def filetime_from_git(content):
         # file is not managed by git
         content.date = datetime_from_timestamp(os.stat(path).st_ctime, content)
 
-    if not hasattr(content, 'modified'):
+    # Make sure we always have a `modified' field unless this behaviour has been disabled:
+    if not hasattr(content, 'modified') and content.settings.get("GIT_FILETIME_ALWAYS_ADD_MODIFIED", True):
         content.modified = content.date
 
     if hasattr(content, 'date'):
