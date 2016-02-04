@@ -246,6 +246,8 @@ Twitter Bootstrap         Defines some rst directive that enable a clean usage o
 
 txt2tags_reader           Reader that renders txt2tags markup in content
 
+Video Privacy Enhancer    Increases user privacy by stopping YouTube, Google, et al from placing cookies via embedded video
+
 W3C validate              Submits generated HTML content to the W3C Markup Validation Service
 ========================  ===========================================================
 
