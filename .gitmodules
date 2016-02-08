@@ -121,3 +121,6 @@
 [submodule "mboxreader"]
 	path = pelican-mboxreader
 	url = https://github.com/TC01/pelican-mboxreader
+[submodule "pelican-resume"]
+	path = pelican-resume
+	url = https://github.com/cmenguy/pelican-resume.git
