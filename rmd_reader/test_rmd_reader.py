@@ -10,7 +10,7 @@ import glob
 from pelican import Pelican
 from pelican.settings import read_settings
 
-logging.basicConfig(stream=sys.stderr, level=logging.CRITICAL)
+logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
 class Test(unittest.TestCase):
 
@@ -19,19 +19,23 @@ class Test(unittest.TestCase):
         try:
             import rpy2
             import rmd_reader
-        except Exception, e:
+        except Exception:
             raise unittest.SkipTest("rpy not installed.  Will not test rmd_reader.")
         
         self.testtitle = 'rtest'
         self.cwd = os.path.dirname(os.path.abspath(__file__))
+        logging.debug(self.cwd)
         
         # Setup content dir and test rmd file
         self.contentdir = os.path.join(self.cwd,'test-content')
+        logging.debug(self.contentdir)
         try:
             os.mkdir(self.contentdir)
         except Exception:
             pass
         self.contentfile = os.path.join(self.contentdir,'test.rmd')
+        logging.debug(self.contentfile)
+        
         self.testrmd = '''Title: %s
 Date: 2014-06-23
 
@@ -46,6 +50,8 @@ plot(cars)
             
         # Setup output dir
         self.outputdir = os.path.join(self.cwd,'test-output')
+        logging.debug(self.outputdir)
+        
         try:
             os.mkdir(self.outputdir)
         except Exception:
@@ -66,7 +72,7 @@ plot(cars)
         settings = read_settings(path=None, override={
             'PATH': self.contentdir,
             'OUTPUT_PATH': self.outputdir,
-            'KNITR_OPTS_CHUNK': {'fig.path' : '%s/' % self.figpath},
+            'RMD_READER_KNITR_OPTS_CHUNK': {'fig.path' : '%s/' % self.figpath},
             'PLUGIN_PATHS': ['../'],
             'PLUGINS': ['rmd_reader'],
         })
@@ -75,8 +81,10 @@ plot(cars)
         
         outputfilename = os.path.join(self.outputdir,'%s.html' % self.testtitle)
         self.assertTrue(os.path.exists(outputfilename),'File %s was not created.' % outputfilename)
+        
         imagesdir = os.path.join(self.outputdir,self.figpath)
         self.assertTrue(os.path.exists(imagesdir), 'figpath not created.')
+        
         images = glob.glob('%s/*' % imagesdir)
         self.assertTrue(len(images) == 1,'Contents of images dir is not correct: %s' % ','.join(images))
         
