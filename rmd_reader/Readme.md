@@ -66,3 +66,11 @@ The code below must be pasted inside the `.Rmd` file in order to correctly set t
 
 I usually paste it just after the Markdown header.
 There is a R [template](https://github.com/almartin82/pelicanRMD) available that has the base elements needed by `rmd_reader`.
+
+Alternatively, Rebecca Weiss (@rjweiss) suggested using `opts_chunk` to set knitr's `fig.path` ([link](http://rjweiss.github.io/articles/2014_08_25/testing-rmarkdown-integration/)).
+Now that can be done directly in `pelicanconf` thougth `RMD_READER_KNITR_OPTS_CHUNK`, that variable receives a `dict` with options to be passed to knitr's `opts_chunk`.
+
+```
+RMD_READER_KNITR_OPTS_CHUNK = {'fig.path': '../../../figure/'}
+```
+
