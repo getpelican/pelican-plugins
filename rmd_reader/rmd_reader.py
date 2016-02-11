@@ -9,14 +9,12 @@ logger = logging.getLogger(__name__)
 from pelican import readers
 from pelican import signals
 from pelican import settings
-from pelican.utils import pelican_open
-from markdown import Markdown
 
 knitr = None
 rmd = False
 
 def initsignal(pelicanobj):
-    global knitr,rmd
+    global knitr, rmd
     try:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -29,7 +27,7 @@ def initsignal(pelicanobj):
         idx = knitr.opts_chunk.names.index('set')
         knitroptschunk = pelicanobj.settings.get('RMD_READER_KNITR_OPTS_CHUNK', None)
         if knitroptschunk is not None:     
-            knitr.opts_chunk[idx](**{str(k): v for k,v in knitroptschunk.iteritems()})
+            knitr.opts_chunk[idx](**{str(k): v for k,v in knitroptschunk.items()})
         rmd = True
     except ImportError as ex:
         rmd = False
@@ -39,14 +37,12 @@ class RmdReader(readers.BaseReader):
     
     @property
     def enabled():
-        global rmd
         return rmd
 
     # You need to have a read method, which takes a filename and returns
     # some content and the associated metadata.
     def read(self, filename):
         """Parse content and metadata of markdown files"""
-        global knitr
         QUIET = self.settings.get('RMD_READER_KNITR_QUIET', True)
         ENCODING = self.settings.get('RMD_READER_KNITR_ENCODING', 'UTF-8')
         CLEANUP = self.settings.get('RMD_READER_CLEANUP', True)
