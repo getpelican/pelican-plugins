@@ -121,3 +121,6 @@
 [submodule "mboxreader"]
 	path = pelican-mboxreader
 	url = https://github.com/TC01/pelican-mboxreader
+[submodule "extended_meta"]
+	path = extended_meta
+	url = git@github.com:kplaube/extended_meta.git
