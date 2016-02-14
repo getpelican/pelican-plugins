@@ -171,9 +171,7 @@ def process_gallery_filename(generator, article, gallery):
         gallery = gallery[1:]
     else:
         gallery = os.path.join(article.relative_dir, gallery)
-    dir_gallery = os.path.join(
-                    os.path.expanduser(generator.settings['PHOTO_LIBRARY']),
-                    gallery)
+    dir_gallery = os.path.join(generator.path, gallery)
     if os.path.isdir(dir_gallery):
         logger.info('photos: Gallery detected: %s', gallery)
         dir_photo = gallery.lower()
