@@ -1,17 +1,21 @@
-# Comment Form (aka: never gather Metadata)
-Add a form, which allows your visitors to easily write comments.
+# Comment Form (AKA, never gather metadata)
 
-But more importantly, on submit the form generates a mailto-link.
-The resulting email contains a valid markdown block. Now you only have to copy this block in a new file. And therefore there is no need to gather the metadata (like date, author, replyto) yourself.
+Add a form that allows your visitors to easily write comments.
+
+But more importantly, on submission the form generates a `mailto:` link.
+
+The resulting email contains a valid Markdown block. Now you only have to copy this block to a new file, obviating the need to gather the metadata (such as date, author, replyto) yourself.
 
 #### Reply button
-Add this in the "comment for loop" in your article theme, so your visitors can reply to a comment.
+
+Add the following in the comment for-loop in your article.html template so your visitors can reply to a comment.
 
 ```html
 <button onclick="reply('{{comment.slug | urlencode}}');">Reply</button>
 ```
 
 #### Form
+
 A basic form so your visitors can write comments.
 
 ```html
@@ -22,10 +26,12 @@ A basic form so your visitors can write comments.
 	<input name="replyto" type="hidden" id="commentForm_replyto">
 </form>
 ```
+
 You may want to add a button to reset the `replyto` field.
 
 #### Javascript
-To generate the mailto-Link and set the `replyto` field there is some javascript required.
+
+To generate the `mailto:` link and set the `replyto` field, there is some Javascript required.
 
 ```javascript
 <script type="text/javascript">
@@ -78,6 +84,6 @@ To generate the mailto-Link and set the `replyto` field there is some javascript
 	});
 </script>
 ```
-(jQuery is required for this script)
+(jQuery is required for this script.)
 
-Don't forget to set the Variables `user` and `domain`.
+Don't forget to set the variables `user` and `domain`.
