@@ -24,6 +24,7 @@ from . import avatars
 
 
 _all_comments = []
+pelican_writer = None
 
 def setdefault(pelican, settings):
     from pelican.settings import DEFAULT_CONFIG
@@ -57,11 +58,12 @@ def pelican_initialized(pelican):
         DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
     DEFAULT_CONFIG['ARTICLE_EXCLUDES'].append(
         DEFAULT_CONFIG['PELICAN_COMMENT_SYSTEM_DIR'])
-    if pelican:
-        pelican.settings['PAGE_EXCLUDES'].append(
-            pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
-        pelican.settings['ARTICLE_EXCLUDES'].append(
-            pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
+    pelican.settings['PAGE_EXCLUDES'].append(
+        pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
+    pelican.settings['ARTICLE_EXCLUDES'].append(
+        pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
+    global pelican_writer
+    pelican_writer = pelican.get_writer()
 
 
 def initialize(article_generator):
@@ -111,7 +113,6 @@ def write_feed_all(gen, writer):
         com.title = com.article.title + " - " + com.title
         com.override_url = com.article.url + com.url
 
-    writer = Writer(gen.output_path, settings=gen.settings)
     writer.write_feed(_all_comments, context, path)
 
 
@@ -120,10 +121,17 @@ def write_feed(gen, items, context, slug):
         return
 
     path = gen.settings['PELICAN_COMMENT_SYSTEM_FEED'] % slug
+    pelican_writer.write_feed(items, context, path)
 
-    writer = Writer(gen.output_path, settings=gen.settings)
-    writer.write_feed(items, context, path)
 
+def process_comments(article_generator):
+    for article in article_generator.articles:
+        add_static_comments(article_generator, article)
+
+def mirror_to_translations(article):
+    for translation in article.translations:
+        translation.comments_count = article.comments_count
+        translation.comments = article.comments
 
 def add_static_comments(gen, content):
     if gen.settings['PELICAN_COMMENT_SYSTEM'] is not True:
@@ -133,6 +141,7 @@ def add_static_comments(gen, content):
 
     content.comments_count = 0
     content.comments = []
+    mirror_to_translations(content)
 
     # Modify the local context, so we get proper values for the feed
     context = copy.copy(gen.context)
@@ -191,6 +200,7 @@ def add_static_comments(gen, content):
 
     content.comments_count = len(comments) + count
     content.comments = comments
+    mirror_to_translations(content)
 
 
 def writeIdenticonsToDisk(gen, writer):
@@ -208,7 +218,7 @@ def pelican_finalized(pelican):
 def register():
     signals.initialized.connect(pelican_initialized)
     signals.article_generator_init.connect(initialize)
-    signals.article_generator_write_article.connect(add_static_comments)
+    signals.article_generator_finalized.connect(process_comments)
     signals.article_writer_finalized.connect(writeIdenticonsToDisk)
     signals.article_writer_finalized.connect(write_feed_all)
     signals.finalized.connect(pelican_finalized)
