@@ -10,11 +10,11 @@ The comments are stored in files which can be processed by Pelican (e.g.: Markdo
  - Easy styleable via the themes
 
 
-See it in action here: [blog.scheirle.de](http://blog.scheirle.de/posts/2014/March/29/static-comments-via-email/)
+See it in action here: [bernhard.scheirle.de](http://bernhard.scheirle.de/posts/2014/March/29/static-comments-via-email/)
 
-Author             | Website                   | Github
--------------------|---------------------------|------------------------------
-Bernhard Scheirle  | <http://blog.scheirle.de> | <https://github.com/Scheirle>
+Author             | Website                       | Github
+-------------------|-------------------------------|------------------------------
+Bernhard Scheirle  | <http://bernhard.scheirle.de> | <https://github.com/Scheirle>
 
 ## Instructions
  - [Installation and basic usage](doc/installation.md)
