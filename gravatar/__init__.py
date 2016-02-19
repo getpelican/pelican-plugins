@@ -1,1 +1,0 @@
-from .gravatar import *
