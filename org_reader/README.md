@@ -3,6 +3,9 @@
 Publish Emacs Org files alongside the rest of your website or blog.
 
 - `ORG_READER_EMACS_LOCATION`: Required. Location of Emacs binary.
+  If you use `Emacs for Mac OS X`,
+  the location should be `/Applications/Emacs.app/Contents/MacOS/Emacs`,
+  rather than `/usr/bin/emacs`.
 
 - `ORG_READER_EMACS_SETTINGS`: Optional. An absolute path to an Elisp file, to
   run per invocation. Useful for initializing the `package` Emacs library if
