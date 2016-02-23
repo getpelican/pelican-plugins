@@ -121,3 +121,6 @@
 [submodule "mboxreader"]
 	path = pelican-mboxreader
 	url = https://github.com/TC01/pelican-mboxreader
+[submodule "pelican_vidme"]
+	path = pelican_vidme
+	url = https://github.com/chriscowley/pelican_vidme.git
