@@ -274,8 +274,9 @@ def mathjax_for_markdown(pelicanobj, mathjax_script, mathjax_settings):
 
 def mathjax_for_rst(pelicanobj, mathjax_script):
     """Setup math for RST"""
-
-    pelicanobj.settings['DOCUTILS_SETTINGS'] = {'math_output': 'MathJax'}
+    docutils_settings = pelicanobj.settings.get('DOCUTILS_SETTINGS', {})
+    docutils_settings['math_output'] = 'MathJax'
+    pelicanobj.settings['DOCUTILS_SETTINGS'] = docutils_settings
     rst_add_mathjax.mathjax_script = mathjax_script
 
 def pelican_init(pelicanobj):
