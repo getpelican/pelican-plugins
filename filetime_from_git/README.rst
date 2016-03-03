@@ -1,47 +1,48 @@
-Use git commit to determine page date
+Use Git commit to determine page date
 ======================================
 
-If the blog content is managed by git repo, this plugin will set articles'
-and pages' ``metadata['date']`` according to git commit. This plugin depends
-on python package ``gitpython``, install::
+If your blog content is versioned via Git, this plugin will set articles'
+and pages' ``metadata['date']`` to correspond to that of the Git commit.
+This plugin depends on the ``gitpython`` python package, which can be
+installed via::
 
     pip install gitpython
 
-The determine logic will works so:
+The date is determined via the following logic:
 
-* if a file is not tracked by git, or a file is staged but never commited
-    - metadata['date'] = fs time
-    - metadata['updated'] = fs time
-* if a file is tracked, but no changes in stage area or work dir
+* if a file is not tracked by Git, or a file is staged but never committed
+    - metadata['date'] = filesystem time
+    - metadata['updated'] = filesystem time
+* if a file is tracked, but no changes in staging area or working directory
     - metadata['date'] = first commit time
     - metadata['updated'] = last commit time
-* if a file is tracked, and has changes in stage area or work dir
+* if a file is tracked, and has changes in stage area or working directory
     - metadata['date'] = first commit time
-    - metadata['updated'] = fs time
+    - metadata['updated'] = filesystem time
 
-When this module is enabled, ``date`` and ``updated`` will be set automatically
-by git status, no need to manually set in article/page's metadata. And
-operations like copy, move will not affect the generated results.
+When this module is enabled, ``date`` and ``updated`` will be determined
+by Git status; no need to manually set in article/page metadata. And
+operations like copy and move will not affect the generated results.
 
-If some article or page doesn't like to use git time, set a ``gittime: off``
-metadata to disable it.
+If you don't want a given article or page to use the Git time, set the
+metadata to ``gittime: off`` to disable it.
 
-You can also set GIT_FILETIME_FOLLOW to True in your pelican config to 
-make the plugin follow file renames i.e. ensure the creation date matches
-the original file creation date, not the date is was renamed.
+You can also set ``GIT_FILETIME_FOLLOW`` to ``True`` in your settings to
+make the plugin follow file renames — i.e., ensure the creation date matches
+the original file creation date, not the date it was renamed.
 
 FAQ
 ---
 
-### Q. I get a GitCommandError: 'git rev-list ...' when I run the plugin. What's up?
-Be sure to use the correct gitpython module for your distros git binary.
-Using the GIT_FILETIME_FOLLOW option to True may also make your problem go away as it uses
-a different method to find commits.
+### Q. I get a GitCommandError: 'git rev-list ...' when I run the plugin. Why?
+Be sure to use the correct gitpython module for your distro's Git binary.
+Using the ``GIT_FILETIME_FOLLOW`` option to ``True`` may also make your
+problem go away, as that optino uses a different method to find commits.
 
-Some notes on git
+Some notes on Git
 ~~~~~~~~~~~~~~~~~~
 
-* How to check if a file is managed?
+* How to check if a file is managed by Git?
 
 .. code-block:: sh
 
@@ -51,7 +52,7 @@ Some notes on git
 
 .. code-block:: sh
 
-   git diff $file            # compare staged area with working directory
+   git diff $file            # compare staging area with working directory
    git diff --cached $file   # compare HEAD with staged area
    git diff HEAD $file       # compare HEAD with working directory
 
@@ -61,7 +62,7 @@ Some notes on git
 
    git status $file
 
-with ``gitpython`` package, it's easier to parse commited time:
+With ``gitpython`` package, it's easier to parse committed time:
 
 .. code-block:: python
 
