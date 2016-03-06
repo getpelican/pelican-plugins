@@ -21,10 +21,10 @@ Bernhard Scheirle  | <http://bernhard.scheirle.de> | <https://github.com/Scheirl
 
 ## Instructions
 
+ - [Quickstart Guide](doc/quickstart.md)
  - [Installation and basic usage](doc/installation.md)
  - [Avatars and identicons](doc/avatars.md)
  - [Comment Atom feed](doc/feed.md)
- - [Comment form (AKA, never gather metadata)](doc/form.md)
  
 ## Requirements
 
@@ -32,9 +32,7 @@ Pelican 3.4 or newer is required.
 
 To create identicons, the Python Image Library is needed. Therefore you either need PIL **or** Pillow (recommended).
 
-#### Install Pillow
-
-Install Pillow via:
+**Install Pillow via:**
 
     pip install Pillow
 

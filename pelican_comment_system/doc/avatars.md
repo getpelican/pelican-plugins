@@ -3,7 +3,7 @@ To activate the avatars and [identicons](https://en.wikipedia.org/wiki/Identicon
 
 ##### Example
 ```python
-PELICAN_COMMENT_SYSTEM_IDENTICON_DATA = ('author')
+PELICAN_COMMENT_SYSTEM_IDENTICON_DATA = ('author',)
 ```
 Now every comment with the same author tag will be treated as if written from the same person. And therefore have the same avatar/identicon. Of cause you can modify this tuple so other metadata are checked.
 
