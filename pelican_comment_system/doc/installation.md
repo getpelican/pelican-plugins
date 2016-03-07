@@ -1,9 +1,7 @@
 # Installation
 
-Activate the plugin by adding it to your `pelicanconf.py`:
+Activate the plugin by adding it to your `pelicanconf.py`: (See also [How to use plugins](https://github.com/getpelican/pelican-plugins/tree/master/#how-to-use-plugins))
 
-	PLUGIN_PATH = ['/path/to/pelican-plugins']
-	PLUGINS = ['pelican_comment_system']
 	PELICAN_COMMENT_SYSTEM = True
 
 Then, modify your `article.html` theme as follows below.
@@ -115,3 +113,5 @@ Attribute  | Description
 	<p>There are no comments yet.<p>
 {% endif %}
 ```
+
+For a more complex / extensive example have a look at [theme/template/pcs/comments.html](../theme/template/pcs/comments.html)
