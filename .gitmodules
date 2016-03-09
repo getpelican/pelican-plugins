@@ -121,3 +121,6 @@
 [submodule "mboxreader"]
 	path = pelican-mboxreader
 	url = https://github.com/TC01/pelican-mboxreader
+[submodule "pelican-yuicompressor"]
+	path = pelican-yuicompressor
+	url = https://github.com/auroredea/pelican-yuicompressor

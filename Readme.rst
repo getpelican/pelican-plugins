@@ -186,6 +186,8 @@ Pelican Vimeo             Enables you to embed Vimeo videos in your pages and ar
 
 Pelican YouTube           Enables you to embed YouTube videos in your pages and articles
 
+Pelican Yuicompressor     Minify CSS and JS files on building step
+
 pelicanfly                Lets you type things like ``i ♥ :fa-coffee:`` in your Markdown documents and have it come out as little Font Awesome icons in the browser
 
 Photos                    Add a photo or a gallery of photos to an article, or include photos in the body text. Resize photos as needed.
