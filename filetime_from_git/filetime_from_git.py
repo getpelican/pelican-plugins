@@ -4,7 +4,7 @@ import os
 from pelican import signals, contents
 from pelican.utils import strftime, set_date_tzinfo
 from datetime import datetime
-from git_wrapper import git_wrapper
+from .git_wrapper import git_wrapper
 
 
 def datetime_from_timestamp(timestamp, content):
