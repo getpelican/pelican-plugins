@@ -124,3 +124,6 @@
 [submodule "pelican-yuicompressor"]
 	path = pelican-yuicompressor
 	url = https://github.com/auroredea/pelican-yuicompressor
+[submodule "bootstrap-rst"]
+	path = bootstrap-rst
+	url = https://github.com/Alexqw/bootstrap-rst

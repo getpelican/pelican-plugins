@@ -52,6 +52,8 @@ Better code samples       Wraps ``table`` blocks with ``div > .hilitewrapper > .
 
 Better figures/samples    Adds a ``style="width: ???px; height: auto;"`` attribute to any ``<img>`` tags in the content
 
+bootstrap-rst             Provides most (though not all) of Bootstrap's features as rst directives
+
 bootstrapify              Automatically add bootstraps default classes to your content
 
 Category Order            Order categories (and tags) by the number of articles in that category (or tag).
