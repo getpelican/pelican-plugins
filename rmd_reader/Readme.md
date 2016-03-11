@@ -41,9 +41,10 @@ This plugin calls R to process these files and generates markdown files that are
 
 ### Configuration
 
-`rmd_reader` has these 3 variables that can be set in `pelicanconf`.
+`rmd_reader` has these variables that can be set in `pelicanconf`.
 
 - `RMD_READER_CLEANUP` (`True`): The RMarkdown file is converted into a Markdown file with the extension `.aux` (to avoid conflicts while pelican is processing). This file is processed by pelican's MarkdownReader and is removed after that (the cleanup step). So if you want to check this file set `RMD_READER_CLEANUP=True`.
+- `RMD_READER_RENAME_PLOT` (`True`): the figures generated for plots are named with a default prefix (usually `unnamed-chunk`) followed by a sequential number. That sequence starts on 1 for every processed file, which causes naming conflicts among files. In order to avoid these conflicts `RMD_READER_RENAME_PLOT` can be set `True` and that prefix is replaced with the same name of the post file, without extension. Another way to avoid conflicts is naming the chuncks and in that case this variable can be set `False`.
 - `RMD_READER_KNITR_QUIET` (`True`): sets `knitr`'s quiet argument.
 - `RMD_READER_KNITR_ENCODING` (`UTF-8`): sets `knitr`'s encoding argument.
 - `RMD_READER_KNITR_OPTS_CHUNK` (`None`): sets `knitr`'s `opts_chunk`.
@@ -51,21 +52,9 @@ This plugin calls R to process these files and generates markdown files that are
 
 ### Plotting
 
-The code below must be pasted inside the `.Rmd` file in order to correctly set the `src` attribute of `img` tag.
-
-	```{r, echo=FALSE}
-	hook_plot <- knit_hooks$get('plot')
-	knit_hooks$set(plot=function(x, options) {
-	    if (!is.null(options$pelican.publish) && options$pelican.publish) {
-	        x <- paste0("{filename}", x)
-	    }
-	    hook_plot(x, options)
-	})
-	opts_chunk$set(pelican.publish=TRUE)
-	```
-
-I usually paste it just after the Markdown header.
-There is a R [template](https://github.com/almartin82/pelicanRMD) available that has the base elements needed by `rmd_reader`.
+I strongly suggest using the variable `RMD_READER_RENAME_PLOT=True`.
+That helps with avoiding naming conflits among different posts.
+`rmd_reader` sets knitr's `unnamed.chunk.label` option to the Rmd file name (without extension) in runtime.
 
 Alternatively, Rebecca Weiss (@rjweiss) suggested using `opts_chunk` to set knitr's `fig.path` ([link](http://rjweiss.github.io/articles/2014_08_25/testing-rmarkdown-integration/)).
 Now that can be done directly in `pelicanconf` thougth `RMD_READER_KNITR_OPTS_CHUNK`, that variable receives a `dict` with options to be passed to knitr's `opts_chunk`.
