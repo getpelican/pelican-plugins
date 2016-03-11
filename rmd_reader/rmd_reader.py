@@ -14,11 +14,12 @@ knitr = None
 rmd = False
 
 def initsignal(pelicanobj):
-    global knitr, rmd
+    global knitr, rmd, robjects
     try:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             from rpy2.robjects.packages import importr
+            import rpy2.robjects as robjects
         knitr = importr('knitr')
         idx = knitr.opts_knit.names.index('set')
         PATH = pelicanobj.settings.get('PATH','%s/content' % settings.DEFAULT_CONFIG.get('PATH'))
@@ -46,13 +47,24 @@ class RmdReader(readers.BaseReader):
         QUIET = self.settings.get('RMD_READER_KNITR_QUIET', True)
         ENCODING = self.settings.get('RMD_READER_KNITR_ENCODING', 'UTF-8')
         CLEANUP = self.settings.get('RMD_READER_CLEANUP', True)
+        RENAME_PLOT = self.settings.get('RMD_READER_RENAME_PLOT', True)
         logger.debug("RMD_READER_KNITR_QUIET = %s", QUIET)
         logger.debug("RMD_READER_KNITR_QUIET = %s", ENCODING)
         logger.debug("RMD_READER_CLEANUP = %s", CLEANUP)
+        logger.debug("RMD_READER_RENAME_PLOT = %s", RENAME_PLOT)
         # replace single backslashes with double backslashes
         filename = filename.replace('\\', '\\\\')
         # parse Rmd file - generate md file
         md_filename = filename.replace('.Rmd', '.aux').replace('.rmd', '.aux')
+        if RENAME_PLOT:
+            chunk_label = os.path.splitext(os.path.basename(filename))[0]
+            logger.debug(chunk_label)
+            robjects.r('''
+opts_knit$set(unnamed.chunk.label="{unnamed_chunk_label}")
+render_markdown()
+hook_plot <- knit_hooks$get('plot')
+knit_hooks$set(plot=function(x, options) hook_plot(paste0("{{filename}}/", x), options))
+            '''.format(unnamed_chunk_label=chunk_label))
         knitr.knit(filename, md_filename, quiet=QUIET, encoding=ENCODING)
         # read md file - create a MarkdownReader
         md_reader = readers.MarkdownReader(self.settings)
