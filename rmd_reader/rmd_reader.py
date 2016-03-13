@@ -4,7 +4,7 @@ import os
 import warnings
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('RMD_READER')
 
 from pelican import readers
 from pelican import signals
@@ -25,9 +25,12 @@ def initsignal(pelicanobj):
         PATH = pelicanobj.settings.get('PATH','%s/content' % settings.DEFAULT_CONFIG.get('PATH'))
         logger.debug("RMD_READER PATH = %s", PATH)
         knitr.opts_knit[idx](**{'base.dir': PATH})
+        knitroptsknit = pelicanobj.settings.get('RMD_READER_KNITR_OPTS_KNIT', None)
+        if knitroptsknit:
+            knitr.opts_knit[idx](**{str(k): v for k,v in knitroptsknit.items()})
         idx = knitr.opts_chunk.names.index('set')
         knitroptschunk = pelicanobj.settings.get('RMD_READER_KNITR_OPTS_CHUNK', None)
-        if knitroptschunk is not None:     
+        if knitroptschunk:
             knitr.opts_chunk[idx](**{str(k): v for k,v in knitroptschunk.items()})
         rmd = True
     except ImportError as ex:
@@ -49,7 +52,7 @@ class RmdReader(readers.BaseReader):
         CLEANUP = self.settings.get('RMD_READER_CLEANUP', True)
         RENAME_PLOT = self.settings.get('RMD_READER_RENAME_PLOT', True)
         logger.debug("RMD_READER_KNITR_QUIET = %s", QUIET)
-        logger.debug("RMD_READER_KNITR_QUIET = %s", ENCODING)
+        logger.debug("RMD_READER_KNITR_ENCODING = %s", ENCODING)
         logger.debug("RMD_READER_CLEANUP = %s", CLEANUP)
         logger.debug("RMD_READER_RENAME_PLOT = %s", RENAME_PLOT)
         # replace single backslashes with double backslashes
@@ -58,7 +61,7 @@ class RmdReader(readers.BaseReader):
         md_filename = filename.replace('.Rmd', '.aux').replace('.rmd', '.aux')
         if RENAME_PLOT:
             chunk_label = os.path.splitext(os.path.basename(filename))[0]
-            logger.debug(chunk_label)
+            logger.debug('Chunk label: %s', chunk_label)
             robjects.r('''
 opts_knit$set(unnamed.chunk.label="{unnamed_chunk_label}")
 render_markdown()

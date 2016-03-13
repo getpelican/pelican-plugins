@@ -62,17 +62,20 @@ plot(cars)
 
 
     def tearDown(self):
+        logging.debug('CLEAN')
         if os.path.isdir(self.outputdir):
             shutil.rmtree(self.outputdir)
         if os.path.isdir(self.contentdir):
             shutil.rmtree(self.contentdir)
 
-
     def testKnitrSettings(self):
         settings = read_settings(path=None, override={
+            'LOAD_CONTENT_CACHE': False,
             'PATH': self.contentdir,
             'OUTPUT_PATH': self.outputdir,
             'RMD_READER_KNITR_OPTS_CHUNK': {'fig.path' : '%s/' % self.figpath},
+            'RMD_READER_KNITR_OPTS_KNIT': {'progress' : True, 'verbose': True},
+            'RMD_READER_RENAME_PLOT': False,
             'PLUGIN_PATHS': ['../'],
             'PLUGINS': ['rmd_reader'],
         })
@@ -82,12 +85,46 @@ plot(cars)
         outputfilename = os.path.join(self.outputdir,'%s.html' % self.testtitle)
         self.assertTrue(os.path.exists(outputfilename),'File %s was not created.' % outputfilename)
         
-        imagesdir = os.path.join(self.outputdir,self.figpath)
+        imagesdir = os.path.join(self.outputdir, self.figpath)
         self.assertTrue(os.path.exists(imagesdir), 'figpath not created.')
         
+        imagefile = os.path.join(imagesdir, 'unnamed-chunk') + '-1-1.png'
+        logging.debug(imagefile)
         images = glob.glob('%s/*' % imagesdir)
+        logging.debug(images)
+        self.assertTrue(os.path.exists(imagefile), 'image correctly named.')
+        
         self.assertTrue(len(images) == 1,'Contents of images dir is not correct: %s' % ','.join(images))
         
+
+    def testKnitrSettings2(self):
+        settings = read_settings(path=None, override={
+            'LOAD_CONTENT_CACHE': False,
+            'PATH': self.contentdir,
+            'OUTPUT_PATH': self.outputdir,
+            'RMD_READER_KNITR_OPTS_CHUNK': {'fig.path' : '%s/' % self.figpath},
+            'RMD_READER_KNITR_OPTS_KNIT': {'progress' : True, 'verbose': True},
+            'RMD_READER_RENAME_PLOT': True,
+            'PLUGIN_PATHS': ['../'],
+            'PLUGINS': ['rmd_reader'],
+        })
+        pelican = Pelican(settings=settings)
+        pelican.run()
+        
+        outputfilename = os.path.join(self.outputdir,'%s.html' % self.testtitle)
+        self.assertTrue(os.path.exists(outputfilename),'File %s was not created.' % outputfilename)
+        
+        imagesdir = os.path.join(self.outputdir, self.figpath)
+        self.assertTrue(os.path.exists(imagesdir), 'figpath not created.')
+        
+        imagefile = os.path.join(imagesdir, os.path.splitext(os.path.split(self.contentfile)[1])[0]) + '-1-1.png'
+        logging.debug(imagefile)
+        self.assertTrue(os.path.exists(imagefile), 'image correctly named.')
+        
+        images = glob.glob('%s/*' % imagesdir)
+        logging.debug(images)
+        self.assertTrue(len(images) == 1,'Contents of images dir is not correct: %s' % ','.join(images))
+
 
 
 if __name__ == "__main__":

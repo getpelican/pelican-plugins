@@ -48,6 +48,7 @@ This plugin calls R to process these files and generates markdown files that are
 - `RMD_READER_KNITR_QUIET` (`True`): sets `knitr`'s quiet argument.
 - `RMD_READER_KNITR_ENCODING` (`UTF-8`): sets `knitr`'s encoding argument.
 - `RMD_READER_KNITR_OPTS_CHUNK` (`None`): sets `knitr`'s `opts_chunk`.
+- `RMD_READER_KNITR_OPTS_KNIT` (`None`): sets `knitr`'s `opts_knit`.
 
 
 ### Plotting
