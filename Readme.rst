@@ -36,6 +36,8 @@ Plugin descriptions
 ========================  ===========================================================
 Plugin                    Description
 ========================  ===========================================================
+Ace Editor                Replace default **<code>** by an Ace__ code editor with settings configure on pelicanconf.py.
+
 Always modified           Copy created date metadata into modified date for easy "latest updates" indexes
 
 AsciiDoc reader           Use AsciiDoc to write your posts.
@@ -255,6 +257,7 @@ Video Privacy Enhancer    Increases user privacy by stopping YouTube, Google, et
 W3C validate              Submits generated HTML content to the W3C Markup Validation Service
 ========================  ===========================================================
 
+__ https://ace.c9.io
 
 Please refer to the ``Readme`` file in a plugin's folder for detailed information about
 that plugin.
