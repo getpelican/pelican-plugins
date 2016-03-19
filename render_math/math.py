@@ -107,6 +107,9 @@ def process_settings(pelicanobj):
         if key == 'indent':
             mathjax_settings[key] = value
 
+        if key == 'source':
+            mathjax_settings[key] = value
+
         if key == 'show_menu' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
 
@@ -155,7 +158,7 @@ def process_settings(pelicanobj):
             mathjax_settings[key] = 'true' if value else 'false'
 
         if key == 'force_tls' and isinstance(value, bool):
-            mathjax_settings[key] = 'true' if value else 'false'       
+            mathjax_settings[key] = 'true' if value else 'false'
 
         if key == 'responsive_break' and isinstance(value, int):
             mathjax_settings[key] = str(value)
