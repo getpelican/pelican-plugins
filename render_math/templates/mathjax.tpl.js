@@ -2,7 +2,7 @@
 //see https://docs.mathjax.org/en/v2.5-latest/configuration.html#using-plain-javascript
     var align = "{{align}}",
         indent = "{{indent}}",
-        linebreak = {{ 'true' if process_escapes else 'false'}};
+        linebreak = {{ 'true' if linebreak_automatic else 'false'}};
 
     if ({{responsive}}) {
         align = (screen.width < {{responsive_break}}) ? "left" : align;
