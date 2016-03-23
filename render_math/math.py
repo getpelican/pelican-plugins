@@ -72,7 +72,7 @@ def process_settings(pelicanobj):
     mathjax_settings['responsive_break'] = 768  # The break point at which it math is responsively aligned (in pixels)
     mathjax_settings['mathjax_font'] = 'default'  # forces mathjax to use the specified font.
     mathjax_settings['process_summary'] = BeautifulSoup is not None  # will fix up summaries if math is cut off. Requires beautiful soup
-    mathjax_settings['force_tls'] = False  # will force mathjax to be served by https - if set as False, it will only use https if site is served using https
+    # mathjax_settings['force_tls'] = False  # will force mathjax to be served by https - if set as False, it will only use https if site is served using https
     mathjax_settings['message_style'] = 'normal'  # This value controls the verbosity of the messages in the lower left-hand corner. Set it to "none" to eliminate all messages
 
     # Source for MathJax
@@ -160,10 +160,10 @@ def process_settings(pelicanobj):
 
         if key == 'responsive' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
-
-        if key == 'force_tls' and isinstance(value, bool):
-            mathjax_settings[key] = 'true' if value else 'false'
-
+        
+        # if key == 'force_tls' and isinstance(value, bool):
+        #     mathjax_settings[key] = 'true' if value else 'false'
+        
         if key == 'responsive_break' and isinstance(value, int):
             mathjax_settings[key] = str(value)
 
