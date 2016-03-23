@@ -35,11 +35,13 @@ import sys
 
 from pelican import signals, generators
 from jinja2 import Environment, PackageLoader
+import json
 
-env = Environment(
+jinja_env = Environment(
     loader=PackageLoader('render_math', 'templates'),
     trim_blocks=True,
     lstrip_blocks=True)
+jinja_env.filters['json'] = json.dumps
 
 try:
     from bs4 import BeautifulSoup
@@ -252,7 +254,7 @@ def process_mathjax_script(mathjax_settings):
     """Load the mathjax script template from file, and render with the settings"""
 
     # Read the mathjax javascript template from file
-    template = env.get_template('mathjax.tpl.js')
+    template = jinja_env.get_template('mathjax.tpl.js')
     return template.render(**mathjax_settings)
 
 def mathjax_for_markdown(pelicanobj, mathjax_script, mathjax_settings):

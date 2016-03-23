@@ -2,7 +2,7 @@
 //see https://docs.mathjax.org/en/v2.5-latest/configuration.html#using-plain-javascript
     var align = "{{align}}",
         indent = "{{indent}}",
-        linebreak = {{ 'true' if linebreak_automatic else 'false'}};
+        linebreak = {{ linebreak_automatic|json }};
 
     if ({{responsive}}) {
         align = (screen.width < {{responsive_break}}) ? "left" : align;
@@ -12,23 +12,19 @@
     window.MathJax = {
         config: ["MMLorHTML.js"],
         TeX: {
-            extensions: [
-{% for ext in tex_extensions %}
-    "{{ext}}"{% if not loop.last %},{% endif %}
-{% endfor %}
-            ],
+            extensions: {{tex_extensions|json}},
             equationNumbers: { autoNumber: 'AMS' } },
         jax: ['input/TeX','input/MathML','output/HTML-CSS'],
         extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
         displayAlign: align,
         displayIndent: indent,
-        showMathMenu: {{'true' if show_menu else 'false'}},
-        messageStyle: '{{message_style}}',
+        showMathMenu: {{show_menu|json}},
+        messageStyle: {{message_style|json}},
         tex2jax: { 
             inlineMath: [ ['\\(','\\)'] ], 
             displayMath: [ ['$$','$$'] ],
-            processEscapes: {{'true' if process_escapes else 'false'}},
-            preview: '{{latex_preview}}',
+            processEscapes: {{process_escapes|json }},
+            preview: {{latex_preview|json}},
         }, 
         "HTML-CSS": { 
             styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '{{color}} !important'} },
