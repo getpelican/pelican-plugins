@@ -12,7 +12,15 @@
     window.MathJax = {
         config: ['MMLorHTML.js'],
         TeX: {
-            extensions: {{tex_extensions|join(',')}}],
+            extensions: [
+                {% for ext in tex_extensions %}
+                    {% if not loop.last %}
+                        "{{ext}}",
+                    {% else %}
+                        "{{ext}}"
+                    {% endif %}
+                {% endfor %}
+            ],
             equationNumbers: { autoNumber: 'AMS' } },
         jax: ['input/TeX','input/MathML','output/HTML-CSS'],
         extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
