@@ -35,7 +35,11 @@ import sys
 
 from pelican import signals, generators
 from jinja2 import Environment, PackageLoader
-env = Environment(loader=PackageLoader('render_math', 'templates'))
+
+env = Environment(
+    loader=PackageLoader('render_math', 'templates'),
+    trim_blocks=True,
+    lstrip_blocks=True)
 
 try:
     from bs4 import BeautifulSoup

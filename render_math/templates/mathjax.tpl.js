@@ -10,16 +10,12 @@
         linebreak = (screen.width < {{responsive_break}}) ? true : linebreak;
     }
     window.MathJax = {
-        config: ['MMLorHTML.js'],
+        config: ["MMLorHTML.js"],
         TeX: {
             extensions: [
-                {% for ext in tex_extensions %}
-                    {% if not loop.last %}
-                        "{{ext}}",
-                    {% else %}
-                        "{{ext}}"
-                    {% endif %}
-                {% endfor %}
+{% for ext in tex_extensions %}
+    "{{ext}}"{% if not loop.last %},{% endif %}
+{% endfor %}
             ],
             equationNumbers: { autoNumber: 'AMS' } },
         jax: ['input/TeX','input/MathML','output/HTML-CSS'],
