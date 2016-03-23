@@ -2,12 +2,12 @@
 //see https://docs.mathjax.org/en/v2.5-latest/configuration.html#using-plain-javascript
     var align = "{{align}}",
         indent = "{{indent}}",
-        linebreak = "{{linebreak_automatic}}";
+        linebreak = {{ 'true' if process_escapes else 'false'}};
 
     if ({{responsive}}) {
         align = (screen.width < {{responsive_break}}) ? "left" : align;
         indent = (screen.width < {{responsive_break}}) ? "0em" : indent;
-        linebreak = (screen.width < {{responsive_break}}) ? 'true' : linebreak;
+        linebreak = (screen.width < {{responsive_break}}) ? true : linebreak;
     }
     window.MathJax = {
         config: ['MMLorHTML.js'],
@@ -26,17 +26,19 @@
         extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js'],
         displayAlign: align,
         displayIndent: indent,
-        showMathMenu: '{{show_menu}}',
-        messageStyle: '{{mesage_style}}',
+        showMathMenu: {{'true' if show_menu else 'false'}},
+        messageStyle: '{{message_style}}',
         tex2jax: { 
             inlineMath: [ ['\\(','\\)'] ], 
             displayMath: [ ['$$','$$'] ],
-            processEscapes: {{process_escapes}},
+            processEscapes: {{'true' if process_escapes else 'false'}},
             preview: '{{latex_preview}}',
         }, 
         "HTML-CSS": { 
             styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: '{{color}} !important'} },
-            linebreaks: { automatic: linebreak, width: '90% container' },
+            linebreaks: {
+                automatic: linebreak,
+                width: '90% container' },
         }, 
     }; 
     if ('{{mathjax_font}}' !== 'default') {

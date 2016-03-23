@@ -115,7 +115,7 @@ def process_settings(pelicanobj):
             mathjax_settings[key] = value
 
         if key == 'show_menu' and isinstance(value, bool):
-            mathjax_settings[key] = 'true' if value else 'false'
+            mathjax_settings[key] = value
 
         if key == 'message_style':
             mathjax_settings[key] = value if value is not None else 'none'
@@ -124,7 +124,7 @@ def process_settings(pelicanobj):
             mathjax_settings[key] = value
 
         if key == 'process_escapes' and isinstance(value, bool):
-            mathjax_settings[key] = 'true' if value else 'false'
+            mathjax_settings[key] = value
 
         if key == 'latex_preview':
             try:
@@ -149,7 +149,7 @@ def process_settings(pelicanobj):
             mathjax_settings[key] = value
 
         if key == 'linebreak_automatic' and isinstance(value, bool):
-            mathjax_settings[key] = 'true' if value else 'false'
+            mathjax_settings[key] = value
 
         if key == 'process_summary' and isinstance(value, bool):
             if value and BeautifulSoup is None:
