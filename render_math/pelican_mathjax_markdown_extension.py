@@ -95,22 +95,18 @@ class PelicanMathJaxCorrectDisplayMath(markdown.treeprocessors.Treeprocessor):
 
         return root
 
-class PelicanMathJaxAddJavaScript(markdown.treeprocessors.Treeprocessor):
+class PelicanMathJaxAddJavaScript(markdown.postprocessors.Postprocessor):
     """Tree Processor for adding Mathjax JavaScript to the blog"""
 
     def __init__(self, pelican_mathjax_extension):
         self.pelican_mathjax_extension = pelican_mathjax_extension
 
-    def run(self, root):
+    def run(self, text):
         # If no mathjax was present, then exit
         if (not self.pelican_mathjax_extension.mathjax_needed):
-            return root
-
+            return text
         # Add the mathjax script to the html document
-        mathjax_script = etree.Element('script')
-        mathjax_script.set('type','text/javascript')
-        mathjax_script.text = AtomicString(self.pelican_mathjax_extension.getConfig('mathjax_script'))
-        root.append(mathjax_script)
+        text += self.pelican_mathjax_extension.getConfig('mathjax_script')
 
         # Reset the boolean switch to false so that script is only added
         # to other pages if needed
@@ -155,4 +151,4 @@ class PelicanMathJaxExtension(markdown.Extension):
         # If necessary, add the JavaScript Mathjax library to the document. This must
         # be last in the ordered dict (hence it is given the position '_end')
         if self.getConfig('auto_insert'):
-            md.treeprocessors.add('mathjax_addjavascript', PelicanMathJaxAddJavaScript(self), '_end')
+            md.postprocessors.add('mathjax_addjavascript', PelicanMathJaxAddJavaScript(self), '_end')
