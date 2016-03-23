@@ -1,8 +1,8 @@
 <script id="mathjaxscript_pelican_#%@#$@#" type="text/javascript">
 //see https://docs.mathjax.org/en/v2.5-latest/configuration.html#using-plain-javascript
     var align = "{{align}}",
-    var indent = "{{indent}}",
-    var linebreak = "{{linebreak_automatic}}";
+        indent = "{{indent}}",
+        linebreak = "{{linebreak_automatic}}";
 
     if ({{responsive}}) {
         align = (screen.width < {{responsive_break}}) ? "left" : align;
