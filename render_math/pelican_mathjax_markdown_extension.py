@@ -111,7 +111,7 @@ class PelicanMathJaxAddJavaScript(markdown.postprocessors.Postprocessor):
         # Reset the boolean switch to false so that script is only added
         # to other pages if needed
         self.pelican_mathjax_extension.mathjax_needed = False
-        return root
+        return text
 
 class PelicanMathJaxExtension(markdown.Extension):
     """A markdown extension enabling mathjax processing in Markdown for Pelican"""
