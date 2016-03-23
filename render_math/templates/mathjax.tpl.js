@@ -1,4 +1,4 @@
-<script id="mathjaxscript_pelican_#%@#$@#" type="text/javascript">
+<script id="mathjaxscript_config_pelican_#%@#$@#" type="text/javascript">
 //see https://docs.mathjax.org/en/v2.5-latest/configuration.html#using-plain-javascript
     var align = "{{align}}",
         indent = "{{indent}}",
