@@ -37,24 +37,24 @@
                 width: '90% container' },
         }, 
     }; 
-    if ('{{mathjax_font}}' !== 'default') {
-        window.MathJax.AuthorInit = function() {
-            MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {
-                var VARIANT = MathJax.OutputJax['HTML-C}'].FONTDATA.VARIANT;
-                VARIANT['normal'].fonts.unshift('MathJax_{{mathjax_font}}');
-                VARIANT['bold'].fonts.unshift('MathJax_{{mathjax_font}}-bold');
-                VARIANT['italic'].fonts.unshift('MathJax_{{mathjax_font}}-italic');
-                VARIANT['-tex-mathit'].fonts.unshift('MathJax_{{mathjax_font}}-italic');
-            });
-            MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {
-                var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;
-                VARIANT['normal'].fonts.unshift('MathJax_{{mathjax_font}}');
-                VARIANT['bold'].fonts.unshift('MathJax_{{mathjax_font}}-bold');
-                VARIANT['italic'].fonts.unshift('MathJax_{{mathjax_font}}-italic');
-                VARIANT['-tex-mathit'].fonts.unshift('MathJax_{{mathjax_font}}-italic');
-            });
-        }
+    {% if mathjax_font != 'default' %}
+    window.MathJax.AuthorInit = function() {
+        MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {
+            var VARIANT = MathJax.OutputJax['HTML-C}'].FONTDATA.VARIANT;
+            VARIANT['normal'].fonts.unshift('MathJax_{{mathjax_font}}');
+            VARIANT['bold'].fonts.unshift('MathJax_{{mathjax_font}}-bold');
+            VARIANT['italic'].fonts.unshift('MathJax_{{mathjax_font}}-italic');
+            VARIANT['-tex-mathit'].fonts.unshift('MathJax_{{mathjax_font}}-italic');
+        });
+        MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {
+            var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;
+            VARIANT['normal'].fonts.unshift('MathJax_{{mathjax_font}}');
+            VARIANT['bold'].fonts.unshift('MathJax_{{mathjax_font}}-bold');
+            VARIANT['italic'].fonts.unshift('MathJax_{{mathjax_font}}-italic');
+            VARIANT['-tex-mathit'].fonts.unshift('MathJax_{{mathjax_font}}-italic');
+        });
     }
+    {% endif %}
 </script>
 <script id="mathjaxscript_pelican_#%@#$@#"
         type="text/javascript"
