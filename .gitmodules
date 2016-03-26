@@ -127,6 +127,3 @@
 [submodule "bootstrap-rst"]
 	path = bootstrap-rst
 	url = https://github.com/Alexqw/bootstrap-rst
-[submodule "lab"]
-	path = lab
-	url = https://github.com/mothsART/pelican-lab
