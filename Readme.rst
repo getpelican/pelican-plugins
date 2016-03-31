@@ -190,8 +190,6 @@ Pelican Vimeo             Enables you to embed Vimeo videos in your pages and ar
 
 Pelican YouTube           Enables you to embed YouTube videos in your pages and articles
 
-Pelican Yuicompressor     Minify CSS and JS files on building step
-
 pelicanfly                Lets you type things like ``i ♥ :fa-coffee:`` in your Markdown documents and have it come out as little Font Awesome icons in the browser
 
 Photos                    Add a photo or a gallery of photos to an article, or include photos in the body text. Resize photos as needed.
@@ -255,6 +253,8 @@ txt2tags_reader           Reader that renders txt2tags markup in content
 Video Privacy Enhancer    Increases user privacy by stopping YouTube, Google, et al from placing cookies via embedded video
 
 W3C validate              Submits generated HTML content to the W3C Markup Validation Service
+
+Yuicompressor             Minify CSS and JS files on building step
 ========================  ===========================================================
 
 __ https://ace.c9.io
