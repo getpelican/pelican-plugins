@@ -239,6 +239,19 @@ class SitemapGenerator(object):
                                 save_as=standard_page_url)
                 self.write_url(fake, fd)
 
+            # add template pages
+            for path, template_page_url in self.context['TEMPLATE_PAGES'].iteritems():
+
+                # don't add duplicate entry for index page
+                if template_page_url == 'index.html':
+                    continue
+
+                fake = FakePage(status='published',
+                                date=self.now,
+                                url=template_page_url,
+                                save_as=template_page_url)
+                self.write_url(fake, fd)
+
             for page in pages:
                 self.write_url(page, fd)
 
