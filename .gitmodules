@@ -124,3 +124,6 @@
 [submodule "bootstrap-rst"]
 	path = bootstrap-rst
 	url = https://github.com/Alexqw/bootstrap-rst
+[submodule "pelican-version"]
+	path = pelican-version
+	url = https://github.com/Shaked/pelican-version
