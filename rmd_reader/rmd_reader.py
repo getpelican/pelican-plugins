@@ -53,6 +53,14 @@ class RmdReader(readers.BaseReader):
         ENCODING = self.settings.get('RMD_READER_KNITR_ENCODING', 'UTF-8')
         CLEANUP = self.settings.get('RMD_READER_CLEANUP', True)
         RENAME_PLOT = self.settings.get('RMD_READER_RENAME_PLOT', 'chunklabel')
+        if type(RENAME_PLOT) is bool:
+            logger.error("RMD_READER_RENAME_PLOT takes a string value (either chunklabel or directory), please see the readme.")
+            if RENAME_PLOT:
+                RENAME_PLOT = 'chunklabel'
+                logger.error("Defaulting to chunklabel")
+            else:
+                RENAME_PLOT = 'disabled'
+                logger.error("Disabling plot renaming")
         logger.debug("RMD_READER_KNITR_QUIET = %s", QUIET)
         logger.debug("RMD_READER_KNITR_ENCODING = %s", ENCODING)
         logger.debug("RMD_READER_CLEANUP = %s", CLEANUP)
@@ -66,11 +74,11 @@ class RmdReader(readers.BaseReader):
                 chunk_label = os.path.splitext(os.path.basename(filename))[0]
                 logger.debug('Chunk label: %s', chunk_label)
             elif RENAME_PLOT == 'directory':
-                chunk_label = 'unnamed_chunk'
+                chunk_label = 'unnamed-chunk'
                 PATH = self.settings.get('PATH','%s/content' % settings.DEFAULT_CONFIG.get('PATH'))
                 src_name = os.path.splitext(os.path.relpath(filename, PATH))[0]
                 idx = knitr.opts_chunk.names.index('set')
-                knitroptschunk = { 'fig.path': os.path.join(fig_path, src_name) }
+                knitroptschunk = { 'fig.path': '%s-' % os.path.join(fig_path, src_name) }
                 knitr.opts_chunk[idx](**{str(k): v for k,v in knitroptschunk.items()})
                 logger.debug('Figures path: %s, chunk label: %s', knitroptschunk['fig.path'], chunk_label)
             robjects.r('''
