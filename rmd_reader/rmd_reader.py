@@ -32,15 +32,15 @@ def initsignal(pelicanobj):
         idx = knitr.opts_chunk.names.index('set')
         knitroptschunk = pelicanobj.settings.get('RMD_READER_KNITR_OPTS_CHUNK', None)
         if knitroptschunk:
-            fig_path = knitroptschunk['fig.path'] if knitroptschunk.has_key('fig.path') else 'figure/'
+            fig_path = knitroptschunk['fig.path'] if 'fig.path' in knitroptschunk else 'figure/'
             knitr.opts_chunk[idx](**{str(k): v for k,v in knitroptschunk.items()})
         rmd = True
     except ImportError as ex:
         rmd = False
-    
+
 class RmdReader(readers.BaseReader):
     file_extensions = ['Rmd', 'rmd']
-    
+
     @property
     def enabled():
         return rmd
