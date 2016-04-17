@@ -118,8 +118,24 @@ def generate_ical_file(generator):
     ical.add('prodid', '-//My calendar product//mxm.dk//')
     ical.add('version', '2.0')
 
-    for e in events:
+    multiLanguageSupportNecessary = "i18n_subsites" in generator.settings["PLUGINS"]
+    if multiLanguageSupportNecessary:
+        currentLang = os.path.basename(os.path.normpath(generator.settings['OUTPUT_PATH']))
+        sortedUniqueEvents = sorted(events)
+        last = sortedUniqueEvents[-1]
+        for i in range(len(sortedUniqueEvents)-2, -1,-1):
+            if last == sortedUniqueEvents[i]:
+                del sortedUniqueEvents[i]
+            else:
+                last = sortedUniqueEvents[i]
+    else:
+        sortedUniqueEvents = events
+
+    for e in sortedUniqueEvents:
         dtstart, dtend, metadata = e
+        if multiLanguageSupportNecessary and currentLang != metadata['lang']:
+            log.debug("%s is not equal to %s" %(currentLang, metadata['lang']))
+            continue
 
         ie = icalendar.Event(
             summary=metadata['summary'],
@@ -133,6 +149,9 @@ def generate_ical_file(generator):
             ie.add('location', metadata['event-location'])
 
         ical.add_component(ie)
+
+    if not os.path.exists(generator.settings['OUTPUT_PATH']):
+        os.makedirs(generator.settings['OUTPUT_PATH'])
 
     with open(ics_fname, 'wb') as f:
         f.write(ical.to_ical())
