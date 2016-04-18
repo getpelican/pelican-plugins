@@ -51,6 +51,8 @@ class AsciiDocReader(BaseReader):
 
         metadata = {}
         for name, value in ad.asciidoc.document.attributes.items():
+            if value is None:
+                continue
             name = name.lower()
             metadata[name] = self.process_metadata(name, six.text_type(value))
         if 'doctitle' in metadata:
