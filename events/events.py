@@ -31,6 +31,7 @@ TIME_MULTIPLIERS = {
 }
 
 events = []
+localized_events = {}
 
 
 def parse_tstamp(ev, field_name):
@@ -128,14 +129,18 @@ def generate_ical_file(generator):
                 del sortedUniqueEvents[i]
             else:
                 last = sortedUniqueEvents[i]
+        localized_events[currentLang] = []
     else:
         sortedUniqueEvents = events
 
     for e in sortedUniqueEvents:
         dtstart, dtend, metadata = e
-        if multiLanguageSupportNecessary and currentLang != metadata['lang']:
-            log.debug("%s is not equal to %s" %(currentLang, metadata['lang']))
-            continue
+        if multiLanguageSupportNecessary:
+            if currentLang != metadata['lang']:
+                log.debug("%s is not equal to %s" %(currentLang, metadata['lang']))
+                continue
+            elif currentLang == generator.settings['DEFAULT_LANG']:
+                 localized_events[currentLang].append(e)
 
         ie = icalendar.Event(
             summary=metadata['summary'],
@@ -150,6 +155,8 @@ def generate_ical_file(generator):
 
         ical.add_component(ie)
 
+    if localized_events:
+        localized_events[currentLang] = sorted(localized_events[currentLang], reverse=True9)
     if not os.path.exists(generator.settings['OUTPUT_PATH']):
         os.makedirs(generator.settings['OUTPUT_PATH'])
 
@@ -160,7 +167,10 @@ def generate_ical_file(generator):
 
 def generate_events_list(generator):
     """Populate the event_list variable to be used in jinja templates"""
-    generator.context['events_list'] = sorted(events, reverse=True)
+    if not localized_events:
+        generator.context['events_list'] = sorted(events, reverse = True)
+    else:
+        generator.context['events_list'] = localized_events
 
 def register():
     signals.article_generator_context.connect(parse_article)
