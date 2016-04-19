@@ -156,7 +156,7 @@ def generate_ical_file(generator):
         ical.add_component(ie)
 
     if localized_events:
-        localized_events[currentLang] = sorted(localized_events[currentLang], reverse=True9)
+        localized_events[currentLang] = sorted(localized_events[currentLang], reverse=True)
     if not os.path.exists(generator.settings['OUTPUT_PATH']):
         os.makedirs(generator.settings['OUTPUT_PATH'])
 
