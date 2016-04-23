@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 queue_resize = dict()
 hrefs = None
 
+created_galleries = {}
 
 def initialized(pelican):
     p = os.path.expanduser('~/Pictures')
@@ -140,6 +141,10 @@ def process_gallery_photo(generator, article, gallery):
         # strip whitespaces
         gallery = gallery.strip()
 
+        if gallery in created_galleries:
+            article.photo_gallery.append((gallery, created_galleries[gallery]))
+            continue
+
         dir_gallery = os.path.join(
                         os.path.expanduser(generator.settings['PHOTO_LIBRARY']),
                         gallery)
@@ -175,6 +180,7 @@ def process_gallery_photo(generator, article, gallery):
                     generator.settings['PHOTO_THUMB'])
 
             article.photo_gallery.append((gallery, articleGallery))
+            created_galleries[gallery] = articleGallery
         else:
             logger.error('photos: Gallery does not exist: %s at %s', gallery, dir_gallery)
 
