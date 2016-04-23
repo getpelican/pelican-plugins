@@ -132,38 +132,51 @@ def detect_content(content):
 def process_gallery_photo(generator, article, gallery):
     if gallery.startswith('/'):
         gallery = gallery[1:]
-    dir_gallery = os.path.join(
-                    os.path.expanduser(generator.settings['PHOTO_LIBRARY']),
-                    gallery)
-    if os.path.isdir(dir_gallery):
-        logger.info('photos: Gallery detected: %s', gallery)
-        dir_photo = os.path.join('photos', gallery.lower())
-        dir_thumb = os.path.join('photos', gallery.lower())
-        exifs = read_notes(os.path.join(dir_gallery, 'exif.txt'),
-                           msg='photos: No EXIF for gallery %s')
-        captions = read_notes(os.path.join(dir_gallery, 'captions.txt'))
-        article.photo_gallery = []
-        for pic in sorted(os.listdir(dir_gallery)):
-            if pic.startswith('.'): continue
-            if pic.endswith('.txt'): continue
-            photo = os.path.splitext(pic)[0].lower() + '.jpg'
-            thumb = os.path.splitext(pic)[0].lower() + 't.jpg'
-            article.photo_gallery.append((
-                pic,
-                os.path.join(dir_photo, photo),
-                os.path.join(dir_thumb, thumb),
-                exifs.get(pic, ''),
-                captions.get(pic, '')))
-            enqueue_resize(
-                os.path.join(dir_gallery, pic),
-                os.path.join(dir_photo, photo),
-                generator.settings['PHOTO_GALLERY'])
-            enqueue_resize(
-                os.path.join(dir_gallery, pic),
-                os.path.join(dir_thumb, thumb),
-                generator.settings['PHOTO_THUMB'])
-    else:
-        logger.error('photos: Gallery does not exist: %s at %s', gallery, dir_gallery)
+
+    galleries = gallery.split('{photo}')
+    article.photo_gallery = []
+
+    for gallery in galleries:
+        # strip whitespaces
+        gallery = gallery.strip()
+
+        dir_gallery = os.path.join(
+                        os.path.expanduser(generator.settings['PHOTO_LIBRARY']),
+                        gallery)
+
+        if os.path.isdir(dir_gallery):
+            logger.info('photos: Gallery detected: %s', gallery)
+            dir_photo = os.path.join('photos', gallery.lower())
+            dir_thumb = os.path.join('photos', gallery.lower())
+            exifs = read_notes(os.path.join(dir_gallery, 'exif.txt'),
+                               msg='photos: No EXIF for gallery %s')
+            captions = read_notes(os.path.join(dir_gallery, 'captions.txt'))
+            articleGallery = []
+
+            for pic in sorted(os.listdir(dir_gallery)):
+                if pic.startswith('.'): continue
+                if pic.endswith('.txt'): continue
+                photo = os.path.splitext(pic)[0].lower() + '.jpg'
+                thumb = os.path.splitext(pic)[0].lower() + 't.jpg'
+                articleGallery.append((
+                    pic,
+                    os.path.join(dir_photo, photo),
+                    os.path.join(dir_thumb, thumb),
+                    exifs.get(pic, ''),
+                    captions.get(pic, '')))
+
+                enqueue_resize(
+                    os.path.join(dir_gallery, pic),
+                    os.path.join(dir_photo, photo),
+                    generator.settings['PHOTO_GALLERY'])
+                enqueue_resize(
+                    os.path.join(dir_gallery, pic),
+                    os.path.join(dir_thumb, thumb),
+                    generator.settings['PHOTO_THUMB'])
+
+            article.photo_gallery.append((gallery, articleGallery))
+        else:
+            logger.error('photos: Gallery does not exist: %s at %s', gallery, dir_gallery)
 
 
 def process_gallery_filename(generator, article, gallery):
