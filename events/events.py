@@ -121,10 +121,13 @@ def generate_ical_file(generator):
     ical.add('prodid', '-//My calendar product//mxm.dk//')
     ical.add('version', '2.0')
 
+    #TODO: the following duplicate elimination is a hack, better make plugin fully multilang aware
+
     multiLanguageSupportNecessary = "i18n_subsites" in generator.settings["PLUGINS"]
     if multiLanguageSupportNecessary:
         currentLang = os.path.basename(os.path.normpath(generator.settings['OUTPUT_PATH']))
-        sortedUniqueEvents = sorted(events)
+        sortedUniqueEvents = sorted(events,
+                                    key=lambda ev: (ev.dtstart, ev.dtend, ev.metadata['lang']))
         last = sortedUniqueEvents[-1]
         for i in range(len(sortedUniqueEvents)-2, -1,-1):
             if last == sortedUniqueEvents[i]:
@@ -158,7 +161,9 @@ def generate_ical_file(generator):
         ical.add_component(ie)
 
     if localized_events:
-        localized_events[currentLang] = sorted(localized_events[currentLang], reverse=True)
+        localized_events[currentLang] = sorted(localized_events[currentLang], reverse=True,
+                                               key=lambda ev: (ev.dtstart, ev.dtend))
+
     if not os.path.exists(generator.settings['OUTPUT_PATH']):
         os.makedirs(generator.settings['OUTPUT_PATH'])
 
@@ -170,7 +175,8 @@ def generate_ical_file(generator):
 def generate_events_list(generator):
     """Populate the event_list variable to be used in jinja templates"""
     if not localized_events:
-        generator.context['events_list'] = sorted(events, reverse = True)
+        generator.context['events_list'] = sorted(events, reverse = True,
+                                                  key=lambda ev: (ev.dtstart, ev.dtend))
     else:
         generator.context['events_list'] = localized_events
 
