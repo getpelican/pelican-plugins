@@ -43,7 +43,7 @@ def parse_tstamp(ev, field_name):
     """
     try:
         return datetime.strptime(ev[field_name], '%Y-%m-%d %H:%M')
-    except Exception, e:
+    except Exception as e:
         log.error("Unable to parse the '%s' field in the event named '%s': %s" \
             % (field_name, ev['title'], e))
         raise
