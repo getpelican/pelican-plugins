@@ -15,6 +15,7 @@ Released under AGPLv3+ license, see LICENSE
 
 from datetime import datetime, timedelta
 from pelican import signals, utils
+from collections import namedtuple
 import icalendar
 import logging
 import os.path
@@ -32,6 +33,7 @@ TIME_MULTIPLIERS = {
 
 events = []
 localized_events = {}
+Event = namedtuple("Event", "dtstart dtend metadata")
 
 
 def parse_tstamp(ev, field_name):
@@ -98,7 +100,7 @@ def parse_article(generator, metadata):
         log.error(msg)
         raise ValueError(msg)
 
-    events.append((dtstart, dtend, metadata))
+    events.append(Event(dtstart, dtend, metadata))
 
 
 def generate_ical_file(generator):
