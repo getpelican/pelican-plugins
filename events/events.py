@@ -15,7 +15,7 @@ Released under AGPLv3+ license, see LICENSE
 
 from datetime import datetime, timedelta
 from pelican import signals, utils
-from collections import namedtuple
+from collections import namedtuple, defaultdict
 import icalendar
 import logging
 import os.path
@@ -32,7 +32,7 @@ TIME_MULTIPLIERS = {
 }
 
 events = []
-localized_events = {}
+localized_events = defaultdict(list)
 Event = namedtuple("Event", "dtstart dtend metadata")
 
 
@@ -121,67 +121,65 @@ def generate_ical_file(generator):
     ical.add('prodid', '-//My calendar product//mxm.dk//')
     ical.add('version', '2.0')
 
-    #TODO: the following duplicate elimination is a hack, better make plugin fully multilang aware
+    DEFAULT_LANG = generator.settings['DEFAULT_LANG']
+    curr_events = events if not localized_events else localized_events[DEFAULT_LANG]
 
-    multiLanguageSupportNecessary = "i18n_subsites" in generator.settings["PLUGINS"]
-    if multiLanguageSupportNecessary:
-        currentLang = os.path.basename(os.path.normpath(generator.settings['OUTPUT_PATH']))
-        sortedUniqueEvents = sorted(events,
-                                    key=lambda ev: (ev.dtstart, ev.dtend, ev.metadata['lang']))
-        last = sortedUniqueEvents[-1]
-        for i in range(len(sortedUniqueEvents)-2, -1,-1):
-            if last == sortedUniqueEvents[i]:
-                del sortedUniqueEvents[i]
-            else:
-                last = sortedUniqueEvents[i]
-        localized_events[currentLang] = []
-    else:
-        sortedUniqueEvents = events
-
-    for e in sortedUniqueEvents:
-        dtstart, dtend, metadata = e
-        if multiLanguageSupportNecessary:
-            if currentLang != metadata['lang']:
-                log.debug("%s is not equal to %s" %(currentLang, metadata['lang']))
-                continue
-            elif currentLang == generator.settings['DEFAULT_LANG']:
-                 localized_events[currentLang].append(e)
-
+    for e in curr_events:
         ie = icalendar.Event(
-            summary=metadata['summary'],
-            dtstart=dtstart,
-            dtend=dtend,
-            dtstamp=metadata['date'],
+            summary=e.metadata['summary'],
+            dtstart=e.dtstart,
+            dtend=e.dtend,
+            dtstamp=e.metadata['date'],
             priority=5,
-            uid=metadata['title'] + metadata['summary'],
+            uid=e.metadata['title'] + e.metadata['summary'],
         )
-        if 'event-location' in metadata:
-            ie.add('location', metadata['event-location'])
+        if 'event-location' in e.metadata:
+            ie.add('location', e.metadata['event-location'])
 
         ical.add_component(ie)
-
-    if localized_events:
-        localized_events[currentLang] = sorted(localized_events[currentLang], reverse=True,
-                                               key=lambda ev: (ev.dtstart, ev.dtend))
-
-    if not os.path.exists(generator.settings['OUTPUT_PATH']):
-        os.makedirs(generator.settings['OUTPUT_PATH'])
 
     with open(ics_fname, 'wb') as f:
         f.write(ical.to_ical())
 
 
+def generate_localized_events(generator):
+    """ Generates localized events dict if i18n_subsites plugin is active """
+
+    if "i18n_subsites" in generator.settings["PLUGINS"]:
+        if not os.path.exists(generator.settings['OUTPUT_PATH']):
+            os.makedirs(generator.settings['OUTPUT_PATH'])
+
+        for e in events:
+            if "lang" in e.metadata:
+                localized_events[e.metadata["lang"]].append(e)
+            else:
+                log.debug("event %s contains no lang attribute" % (e.metadata["title"],))
+
 
 def generate_events_list(generator):
     """Populate the event_list variable to be used in jinja templates"""
+
     if not localized_events:
         generator.context['events_list'] = sorted(events, reverse = True,
                                                   key=lambda ev: (ev.dtstart, ev.dtend))
     else:
-        generator.context['events_list'] = localized_events
+        generator.context['events_list'] = {k: sorted(v, reverse = True,
+                                                      key=lambda ev: (ev.dtstart, ev.dtend))
+                                            for k, v in localized_events.items()}
+
+def initialize_events(article_generator):
+    """
+    Clears the events list before generating articles to properly support plugins with
+    multiple generation passes like i18n_subsites
+    """
+
+    del events[:]
+    localized_events.clear()
 
 def register():
+    signals.article_generator_init.connect(initialize_events)
     signals.article_generator_context.connect(parse_article)
+    signals.article_generator_finalized.connect(generate_localized_events)
     signals.article_generator_finalized.connect(generate_ical_file)
     signals.article_generator_finalized.connect(generate_events_list)
 
