@@ -8,7 +8,7 @@ This form allows your visitors to easily write comments and send them to you via
 	```
 	mkdir -p [yourtheme]/templates/pcs
 	mkdir -p [yourtheme]/static/js
-	cp ./theme/template/pcs/comments.html [yourtheme]/templates/pcs/comments.html
+	cp ./theme/templates/pcs/comments.html [yourtheme]/templates/pcs/comments.html
 	cp ./theme/static/js/comments.js      [yourtheme]/static/js/comments.html
 	```
 
