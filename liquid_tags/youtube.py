@@ -26,7 +26,7 @@ from .mdx_liquid_tags import LiquidTags
 
 SYNTAX = "{% youtube id [width height] %}"
 
-YOUTUBE = re.compile(r'([\S]+)(\s+(\d+)\s(\d+))?')
+YOUTUBE = re.compile(r'([\S]+)(\s+([\d%]+)\s([\d%]+))?')
 
 
 @LiquidTags.register('youtube')
