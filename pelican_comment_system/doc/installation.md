@@ -114,4 +114,4 @@ Attribute  | Description
 {% endif %}
 ```
 
-For a more complex / extensive example have a look at [theme/template/pcs/comments.html](../theme/template/pcs/comments.html)
+For a more complex / extensive example have a look at [theme/templates/pcs/comments.html](../theme/templates/pcs/comments.html)

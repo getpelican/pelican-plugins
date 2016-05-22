@@ -6,9 +6,9 @@ This form allows your visitors to easily write comments and send them to you via
 
 1. Merge the `./theme` folder with your own theme folder, or copy the files manually
 	```
-	mkdir -p [yourtheme]/template/pcs
+	mkdir -p [yourtheme]/templates/pcs
 	mkdir -p [yourtheme]/static/js
-	cp ./theme/template/pcs/comments.html [yourtheme]/template/pcs/comments.html
+	cp ./theme/templates/pcs/comments.html [yourtheme]/templates/pcs/comments.html
 	cp ./theme/static/js/comments.js      [yourtheme]/static/js/comments.html
 	```
 
