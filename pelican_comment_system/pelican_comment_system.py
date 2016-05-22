@@ -187,9 +187,16 @@ def add_static_comments(gen, content):
 
     # TODO: Fix this O(n²) loop
     for reply in replies:
+        found_parent = False
         for comment in chain(comments, replies):
             if comment.slug == reply.replyto:
                 comment.addReply(reply)
+                found_parent = True
+                break
+        if not found_parent:
+            logger.warning('Comment "%s/%s" is a reply to non-existent comment "%s". '
+                'Make sure the replyto attribute is set correctly.',
+                content.slug, reply.slug, reply.replyto)
 
     count = 0
     for comment in comments:
