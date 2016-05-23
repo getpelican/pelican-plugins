@@ -53,7 +53,7 @@ class _GitWrapperCommon(object):
         '''
         commit_shas = self.git.log(
             '--pretty=%H', '--follow', '--', path).splitlines()
-        return map(self.repo.commit, commit_shas)
+        return [self.repo.commit(shas) for shas in commit_shas]
 
     def get_commits(self, path, follow=False):
         '''
