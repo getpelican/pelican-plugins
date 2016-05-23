@@ -35,7 +35,7 @@ var CommentSystem = {
 			return (norm < 10 ? '0' : '') + norm;
 		};
 		var body = ''
-		+ 'Hey,\nI posted a new comment on ' + document.URL + '\n\nGreetings ' + $("#pcs-comment-form-input-name").val() + '\n\n\n'
+			+ 'Hey,\nI posted a new comment on ' + document.URL + '\n\nGreetings ' + $("#pcs-comment-form-input-name").val() + '\n\n\n'
 			+ 'Raw comment data:\n'
 			+ '----------------------------------------\n'
 			+ 'email: \n' // just that I don't forget to write it down
@@ -69,7 +69,7 @@ var CommentSystem = {
 		var link = 'mailto:' + this.email_user + '@' + this.email_domain + '?subject='
 			+ encodeURIComponent(subject)
 			+ "&body="
-			+ encodeURIComponent(body);
+			+ encodeURIComponent(body.replace(/\r?\n/g, "\r\n"));
 		console.log(link)
 		return link;
 	}
