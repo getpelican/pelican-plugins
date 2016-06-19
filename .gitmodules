@@ -127,3 +127,6 @@
 [submodule "pelican-version"]
 	path = pelican-version
 	url = https://github.com/Shaked/pelican-version
+[submodule "lightbox"]
+	path = lightbox
+	url = https://github.com/kura/lightbox
