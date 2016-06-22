@@ -12,15 +12,15 @@ The date is determined via the following logic:
 
 * if a file is not tracked by Git, or a file is staged but never committed
     - metadata['date'] = filesystem time
-    - metadata['updated'] = filesystem time
+    - metadata['modified'] = filesystem time
 * if a file is tracked, but no changes in staging area or working directory
     - metadata['date'] = first commit time
-    - metadata['updated'] = last commit time
+    - metadata['modified'] = last commit time
 * if a file is tracked, and has changes in stage area or working directory
     - metadata['date'] = first commit time
-    - metadata['updated'] = filesystem time
+    - metadata['modified'] = filesystem time
 
-When this module is enabled, ``date`` and ``updated`` will be determined
+When this module is enabled, ``date`` and ``modified`` will be determined
 by Git status; no need to manually set in article/page metadata. And
 operations like copy and move will not affect the generated results.
 
