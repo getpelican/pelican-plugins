@@ -130,3 +130,6 @@
 [submodule "lightbox"]
 	path = lightbox
 	url = https://github.com/kura/lightbox
+[submodule "pelican-fancybox"]
+	path = pelican-fancybox
+	url = git@github.com:kaizer666/pelican-fancybox.git
