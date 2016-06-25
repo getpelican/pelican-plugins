@@ -133,3 +133,6 @@
 [submodule "markdown_figure"]
 	path = markdown_figure
 	url = https://github.com/bnice5000/markdown_figure
+[submodule "bootstrapper"]
+	path = bootstrapper
+	url = git@github.com:bnice5000/bootstrapper.git
