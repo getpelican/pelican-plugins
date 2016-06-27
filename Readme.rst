@@ -88,6 +88,8 @@ Figure References         Provides a system to number and references figures
 
 Filetime from Git         Uses Git commit to determine page date
 
+Filetime from Hg          Uses Mercurial commit to determine page date
+
 Footer Insert             Add standardized footer (e.g., author information) at end of every article
 
 GA Page View              Display Google Analytics page views on individual articles and pages
