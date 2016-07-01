@@ -10,18 +10,16 @@ place it in its own `article.toc` variable for use in templates.
 from os import path
 from bs4 import BeautifulSoup
 from pelican import signals, readers, contents
+import logging
 
-try:
-    from pandoc_reader import PandocReader
-except ImportError:
-    PandocReader = False
+logger = logging.getLogger(__name__)
 
 
 def extract_toc(content):
     if isinstance(content, contents.Static):
         return
 
-    soup = BeautifulSoup(content._content,'html.parser')
+    soup = BeautifulSoup(content._content, 'html.parser')
     filename = content.source_path
     extension = path.splitext(filename)[1][1:]
     toc = None
@@ -29,23 +27,30 @@ def extract_toc(content):
     # default Markdown reader
     if not toc and readers.MarkdownReader.enabled and extension in readers.MarkdownReader.file_extensions:
         toc = soup.find('div', class_='toc')
-        if toc: toc.extract()
+        if toc:
+            toc.extract()
 
     # default reStructuredText reader
     if not toc and readers.RstReader.enabled and extension in readers.RstReader.file_extensions:
         toc = soup.find('div', class_='contents topic')
-        if toc: toc.extract()
         if toc:
-            tag=BeautifulSoup(str(toc), 'html.parser')
-            tag.div['class']='toc'
-            tag.div['id']=''
-            p=tag.find('p', class_='topic-title first')
-            if p:p.extract()
-            toc=tag
+            toc.extract()
+            tag = BeautifulSoup(str(toc), 'html.parser')
+            tag.div['class'] = 'toc'
+            tag.div['id'] = ''
+            p = tag.find('p', class_='topic-title first')
+            if p:
+                p.extract()
+            toc = tag
 
     # Pandoc reader (markdown and other formats)
-    if not toc and PandocReader and PandocReader.enabled and extension in PandocReader.file_extensions:
-        toc = soup.find('nav', id='TOC')
+    if 'pandoc_reader' in content.settings['PLUGINS']:
+        try:
+            from pandoc_reader import PandocReader
+        except ImportError:
+            PandocReader = False
+        if not toc and PandocReader and PandocReader.enabled and extension in PandocReader.file_extensions:
+            toc = soup.find('nav', id='TOC')
 
     if toc:
         toc.extract()
