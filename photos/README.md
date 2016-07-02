@@ -89,8 +89,10 @@ For example, add the following to the template `article.html` to add the gallery
 
 		{% if article.photo_gallery %}
 		<div class="gallery">
-			{% for name, photo, thumb, exif, caption in article.photo_gallery %}
-			<a href="{{ SITEURL }}/{{ photo }}" title="{{ name }}" exif="{{ exif }}" caption="{{ caption }}"><img src="{{ SITEURL }}/{{ thumb }}"></a>
+			{% for title, gallery in article.photo_gallery %}
+				{% for name, photo, thumb, exif, caption in gallery %}
+					<a href="{{ SITEURL }}/{{ photo }}" title="{{ name }}" exif="{{ exif }}" caption="{{ caption }}"><img src="{{ SITEURL }}/{{ thumb }}"></a>
+				{% endfor %}
 			{% endfor %}
 		</div>
 		{% endif %}
