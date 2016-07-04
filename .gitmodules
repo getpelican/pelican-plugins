@@ -130,3 +130,6 @@
 [submodule "lightbox"]
 	path = lightbox
 	url = https://github.com/kura/lightbox
+[submodule "bootstrapper"]
+	path = bootstrapper
+	url = https://github.com/bnice5000/bootstrapper.git
