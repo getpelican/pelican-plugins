@@ -130,3 +130,6 @@
 [submodule "lightbox"]
 	path = lightbox
 	url = https://github.com/kura/lightbox
+[submodule "markdown_figure"]
+	path = markdown_figure
+	url = https://github.com/bnice5000/markdown_figure.git
