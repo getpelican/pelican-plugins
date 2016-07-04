@@ -44,6 +44,14 @@ def read_notes(filename, msg=None):
             logger.warning(msg, filename)
     return notes
 
+def read_blacklist(filename):
+    notes = {}
+    try:
+        with pelican_open(filename) as text:
+            return set(text.split())
+    except:
+        return set()
+
 
 def enqueue_resize(orig, resized, spec=(640, 480, 80)):
     global queue_resize
@@ -155,12 +163,14 @@ def process_gallery_photo(generator, article, gallery):
             dir_thumb = os.path.join('photos', gallery.lower())
             exifs = read_notes(os.path.join(dir_gallery, 'exif.txt'),
                                msg='photos: No EXIF for gallery %s')
+            blacklist = read_blacklist(os.path.join(dir_gallery, 'blacklist.txt'))
             captions = read_notes(os.path.join(dir_gallery, 'captions.txt'))
             articleGallery = []
 
             for pic in sorted(os.listdir(dir_gallery)):
                 if pic.startswith('.'): continue
                 if pic.endswith('.txt'): continue
+                if pic in blacklist: continue
                 photo = os.path.splitext(pic)[0].lower() + '.jpg'
                 thumb = os.path.splitext(pic)[0].lower() + 't.jpg'
                 articleGallery.append((
@@ -197,11 +207,13 @@ def process_gallery_filename(generator, article, gallery):
         dir_thumb = os.path.join('photos', gallery.lower())
         exifs = read_notes(os.path.join(dir_gallery, 'exif.txt'),
                            msg='photos: No EXIF for gallery %s')
+        blacklist = read_blacklist(os.path.join(dir_gallery, 'blacklist.txt'))
         captions = read_notes(os.path.join(dir_gallery, 'captions.txt'))
         article.photo_gallery = []
         for pic in sorted(os.listdir(dir_gallery)):
             if pic.startswith('.'): continue
             if pic.endswith('.txt'): continue
+            if pic in blacklist: continue
             photo = pic.lower()
             thumb = os.path.splitext(pic)[0].lower() + 't.jpg'
             article.photo_gallery.append((
