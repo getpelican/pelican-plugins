@@ -1,5 +1,4 @@
 from pelican import signals
-import re
 import html5lib
 
 RAW_FOOTNOTE_CONTAINERS = ["code"]
@@ -23,8 +22,12 @@ def sequence_gen(genlist):
             yield elem
 
 
-def parse_for_footnotes(article_generator):
-    for article in sequence_gen([article_generator.drafts, article_generator.articles]):
+def parse_for_footnotes(article_or_page_generator):
+    all_content = [
+      getattr(article_or_page_generator, attr, None) \
+      for attr in ['articles','drafts','pages'] ]
+    all_content = [ x for x in all_content if x is not None ]
+    for article in sequence_gen(all_content):
         if "[ref]" in article._content and "[/ref]" in article._content:
             content = article._content.replace("[ref]", "<x-simple-footnote>").replace("[/ref]", "</x-simple-footnote>")
             parser = html5lib.HTMLParser(tree=html5lib.getTreeBuilder("dom"))
@@ -77,21 +80,8 @@ def parse_for_footnotes(article_generator):
                 article._content =  "".join(list(output_generator)).replace(
                     "<x-simple-footnote>", "[ref]").replace("</x-simple-footnote>", "[/ref]").replace(
                     "<body>", "").replace("</body>", "")
-        if False:
-            count = 0
-            endnotes = []
-            for f in footnotes:
-                count += 1
-                fnstr = '<a class="simple-footnote" name="%s-%s-back" href="#%s-%s"><sup>%s</a>' % (
-                    article.slug, count, article.slug, count, count)
-                endstr = '<li id="%s-%s">%s <a href="#%s-%s-back">&uarr;</a></li>' % (
-                    article.slug, count, f[len("[ref]"):-len("[/ref]")], article.slug, count)
-                content = content.replace(f, fnstr)
-                endnotes.append(endstr)
-            content += '<h4>Footnotes</h4><ol class="simple-footnotes">%s</ul>' % ("\n".join(endnotes),)
-            article._content = content
 
 
 def register():
     signals.article_generator_finalized.connect(parse_for_footnotes)
-
+    signals.page_generator_finalized.connect(parse_for_footnotes)
