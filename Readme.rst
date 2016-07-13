@@ -206,6 +206,8 @@ Random article            Generates a html file which redirect to a random artic
 
 Read More link            Inserts an inline "read more" or "continue" link into the last html element of the object summary
 
+Read Time                 Calculates the read time based on the number of words and a words per minute count
+
 Related posts             Adds the ``related_posts`` variable to the article's context
 
 Render Math               Render mathematics in content via the MathJax Javascript engine
