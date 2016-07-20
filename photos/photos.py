@@ -6,6 +6,7 @@ import logging
 import os
 import pprint
 import re
+import sys
 
 from pelican.generators import ArticlesGenerator
 from pelican.generators import PagesGenerator
@@ -235,7 +236,7 @@ def detect_content(content):
 def galleries_string_decompose(gallery_string):
     splitter_regex = re.compile(r'[\s,]*?({photo}|{filename})')
     title_regex = re.compile(r'{(.+)}')
-    galleries = map(unicode.strip, filter(None, splitter_regex.split(gallery_string)))
+    galleries = map(unicode.strip if sys.version_info.major == 2 else str.strip, filter(None, splitter_regex.split(gallery_string)))
     galleries = [gallery[1:] if gallery.startswith('/') else gallery for gallery in galleries]
     if len(galleries) % 2 == 0 and u' ' not in galleries:
         galleries = zip(zip(['type'] * len(galleries[0::2]), galleries[0::2]), zip(['location'] * len(galleries[0::2]), galleries[1::2]))
