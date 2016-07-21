@@ -7,6 +7,7 @@ import os
 import pprint
 import re
 import sys
+import multiprocessing
 
 from pelican.generators import ArticlesGenerator
 from pelican.generators import PagesGenerator
@@ -40,6 +41,7 @@ def initialized(pelican):
     DEFAULT_CONFIG.setdefault('PHOTO_WATERMARK_TEXT', DEFAULT_CONFIG['SITENAME'])
     DEFAULT_CONFIG.setdefault('PHOTO_WATERMARK_IMG', '')
     DEFAULT_CONFIG.setdefault('PHOTO_WATERMARK_IMG_SIZE', (64, 64))
+    DEFAULT_CONFIG.setdefault('PHOTO_RESIZE_JOBS', 1)
 
     DEFAULT_CONFIG['queue_resize'] = {}
     DEFAULT_CONFIG['created_galleries'] = {}
@@ -54,6 +56,7 @@ def initialized(pelican):
         pelican.settings.setdefault('PHOTO_WATERMARK_TEXT', pelican.settings['SITENAME'])
         pelican.settings.setdefault('PHOTO_WATERMARK_IMG', '')
         pelican.settings.setdefault('PHOTO_WATERMARK_IMG_SIZE', (64, 64))
+        pelican.settings.setdefault('PHOTO_RESIZE_JOBS', 1)
 
 
 def read_notes(filename, msg=None):
@@ -152,43 +155,59 @@ def watermark_photo(image, watermark_text, watermark_image, watermark_image_size
     return image
 
 
+def resize_worker(orig, resized, spec, wm, wm_text, wm_img, wm_img_size):
+    logger.info('photos: make photo {} -> {}'.format(orig, resized))
+    im = Image.open(orig)
+    try:
+        exif = im._getexif()
+    except:
+        exif = None
+
+    icc_profile = im.info.get("icc_profile", None)
+
+    if exif:
+        for tag, value in exif.items():
+            decoded = ExifTags.TAGS.get(tag, tag)
+            if decoded == 'Orientation':
+                if value == 3:
+                    im = im.rotate(180)
+                elif value == 6:
+                    im = im.rotate(270)
+                elif value == 8:
+                    im = im.rotate(90)
+                break
+    im.thumbnail((spec[0], spec[1]), Image.ANTIALIAS)
+    try:
+        os.makedirs(os.path.split(resized)[0])
+    except:
+        pass
+
+    if wm:
+        im = watermark_photo(im, wm_text, wm_img, wm_img_size)
+
+    im.save(resized, 'JPEG', quality=spec[2], icc_profile=icc_profile)
+
+
 def resize_photos(generator, writer):
     logger.info('photos: {} photo resizes to consider.'.format(len(DEFAULT_CONFIG['queue_resize'].items())))
+    pool = multiprocessing.Pool(generator.settings['PHOTO_RESIZE_JOBS'])
     for resized, what in DEFAULT_CONFIG['queue_resize'].items():
         resized = os.path.join(generator.output_path, resized)
         orig, spec = what
         if (not os.path.isfile(resized) or
                 os.path.getmtime(orig) > os.path.getmtime(resized)):
-            logger.info('photos: make photo {} -> {}'.format(orig, resized))
-            im = Image.open(orig)
-            try:
-                exif = im._getexif()
-            except Exception:
-                exif = None
-            try:
-                icc_profile = im.info.get("icc_profile")
-            except Exception:
-                icc_profile = None
-            if exif:
-                for tag, value in exif.items():
-                    decoded = ExifTags.TAGS.get(tag, tag)
-                    if decoded == 'Orientation':
-                        if value == 3:
-                            im = im.rotate(180)
-                        elif value == 6:
-                            im = im.rotate(270)
-                        elif value == 8:
-                            im = im.rotate(90)
-                        break
-            im.thumbnail((spec[0], spec[1]), Image.ANTIALIAS)
-            try:
-                os.makedirs(os.path.split(resized)[0])
-            except Exception:
-                pass
+            pool.apply_async(resize_worker, args=(
+                orig,
+                resized,
+                spec,
+                generator.settings['PHOTO_WATERMARK'],
+                generator.settings['PHOTO_WATERMARK_TEXT'],
+                generator.settings['PHOTO_WATERMARK_IMG'],
+                generator.settings['PHOTO_WATERMARK_IMG_SIZE']
+            ))
 
-            if generator.settings['PHOTO_WATERMARK']:
-                im = watermark_photo(im, generator.settings['PHOTO_WATERMARK_TEXT'], generator.settings['PHOTO_WATERMARK_IMG'], generator.settings['PHOTO_WATERMARK_IMG_SIZE'])
-            im.save(resized, 'JPEG', quality=spec[2], icc_profile=icc_profile)
+    pool.close()
+    pool.join()
 
 
 def detect_content(content):

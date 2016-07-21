@@ -63,6 +63,9 @@ The plug-in resizes the referred photos, and generates thumbnails for galleries 
 `PHOTO_THUMB = (192, 144, 60)`
 :	For thumbnails, maximum width, height, and quality.
 
+`PHOTO_RESIZE_JOBS = 5`
+: Number of parallel resize jobs to be run. Defaults to 1.
+
 `PHOTO_WATERMARK = True`
 : Adds a watermark to all photos in articles and pages. Defaults to using your site name.
 
