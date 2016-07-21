@@ -30,8 +30,11 @@ Folders of photos may optionally have three text files, where each line describe
 `blacklist.txt`
 : Skips photos the user does not want to include. For example:
 
-	# best.jpg
-	new.jpg
+	this-file-will-be-skipped.jpg
+	this-one-will-be-skipped-too.jpg
+	# but-this-file-will-NOT-be-skipped.jpg
+	this-one-will-be-also-skipped.jpg
+	
 
 Here is an example Markdown article that shows the three use cases:
 
