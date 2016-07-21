@@ -1,0 +1,30 @@
+{
+	"CC-BY-NC-ND": {
+		"URL": "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode",
+		"Text": "Copyleft license, {Author} {Year}. Content licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License, except where indicated otherwise. See {URL} for more information."
+	},
+	"CC-BY-NC-SA": {
+		"URL": "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode",
+		"Text": "Copyleft license, {Author} {Year}. Content licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License, except where indicated otherwise. See {URL} for more information."
+	},
+	"CC-BY": {
+		"URL": "https://creativecommons.org/licenses/by/4.0/legalcode",
+		"Text": "Copyleft license, {Author} {Year}. Content licensed under a Creative Commons Attribution 4.0 International License, except where indicated otherwise. See {URL} for more information."
+	},
+	"CC-BY-SA": {
+		"URL": "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+		"Text": "Copyleft license, {Author} {Year}. Content licensed under a Creative Commons Attribution-ShareAlike 4.0 International License, except where indicated otherwise. See {URL} for more information."
+	},
+	"CC0": {
+		"URL": "https://creativecommons.org/publicdomain/zero/1.0/",
+		"Text": "CC0 Copyleft license, {Author} {Year}. To the extent possible under law, the author(s) have dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty. See {URL} for more information."
+	},
+	"CC-BY-NC": {
+		"URL": "https://creativecommons.org/licenses/by-nc/4.0/legalcode",
+		"Text": "Copyleft license, {Author} {Year}. Content licensed under a Creative Commons Attribution-NonCommercial 4.0 International License, except where indicated otherwise. See {URL} for more information."
+	},
+	"CC-BY-ND": {
+		"URL": "https://creativecommons.org/licenses/by-nd/4.0/legalcode",
+		"Text": "Copyleft license, {Author} {Year}. Content licensed under a Creative Commons Attribution-NoDerivatives 4.0 International License, except where indicated otherwise. See {URL} for more information."
+	}
+}
