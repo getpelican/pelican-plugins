@@ -77,8 +77,12 @@ def content_object_init(instance):
                 logger.debug('Better Fig. src: %s', src)
 
                 # Open the source image and query dimensions; build style string
-                im = Image.open(src)
-                extra_style = 'width: {}px; height: auto;'.format(im.size[0])
+                try:
+                    im = Image.open(src)
+                    extra_style = 'width: {}px; height: auto;'.format(im.size[0])
+                except IOError as e:
+                    logger.debug('Better Fig. Failed to open: %s', src)
+                    extra_style = 'width: 100%; height: auto;'
 
                 if 'RESPONSIVE_IMAGES' in instance.settings and instance.settings['RESPONSIVE_IMAGES']:
                     extra_style += ' max-width: 100%;'
