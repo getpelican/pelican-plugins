@@ -92,7 +92,9 @@ render_markdown()
 hook_plot <- knit_hooks$get('plot')
 knit_hooks$set(plot=function(x, options) hook_plot(paste0("{{filename}}/", x), options))
             '''.format(unnamed_chunk_label=chunk_label))
-        knitr.knit(filename, md_filename, quiet=QUIET, encoding=ENCODING)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            knitr.knit(filename, md_filename, quiet=QUIET, encoding=ENCODING)
         # read md file - create a MarkdownReader
         md_reader = readers.MarkdownReader(self.settings)
         content, metadata = md_reader.read(md_filename)
