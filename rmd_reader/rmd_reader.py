@@ -23,6 +23,9 @@ def initsignal(pelicanobj):
             rpy2.rinterface.set_initoptions((b'rpy2', b'--no-save', b'--vanilla', b'--quiet'))
             from rpy2.robjects.packages import importr
             import rpy2.robjects as robjects
+        robjects.r('Sys.setlocale("LC_ALL", "C")')
+        robjects.r('Sys.setlocale("LC_NUMERIC", "C")')
+        robjects.r('Sys.setlocale("LC_MESSAGES", "C")')
         knitr = importr('knitr')
         idx = knitr.opts_knit.names.index('set')
         PATH = pelicanobj.settings.get('PATH','%s/content' % settings.DEFAULT_CONFIG.get('PATH'))
