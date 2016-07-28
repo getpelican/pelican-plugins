@@ -124,8 +124,8 @@ def include_code(preprocessor, tag, markup):
         lang_include = ':::' + lang + '\n    '
     else:
         lang_include = ''
-    
-    if sys.version_info[0] < 3
+
+    if sys.version_info[0] < 3:
         source = (open_tag
                   + '\n\n    '
                   + lang_include
@@ -136,7 +136,7 @@ def include_code(preprocessor, tag, markup):
                   + '\n\n    '
                   + lang_include
                   + '\n    '.join(code.split('\n')) + '\n\n'
-                  + close_tags + '\n')
+                  + close_tag + '\n')
 
     return source
 
