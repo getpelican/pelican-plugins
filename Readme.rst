@@ -100,6 +100,8 @@ GitHub activity           On the template side, you just have to iterate over th
 
 Global license            Allows you to define a ``LICENSE`` setting and adds the contents of that license variable to the article's context
 
+Glossary                  Adds a variable containing definitions extracted from definition lists in articles and pages. This variable is visible to all page templates.
+
 Goodreads activity        Lists books from your Goodreads shelves
 
 GooglePlus comments       Adds GooglePlus comments to Pelican
