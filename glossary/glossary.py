@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 
 class Definitions():
     definitions = []
-    exclude = ['Hint']
+    exclude = []
 
 
 def extract_definitions(content):
@@ -59,6 +59,11 @@ def set_definitions(generator, metadata):
     generator.context['definitions'] = Definitions.definitions
 
 
+def get_excludes(generator, metadata):
+    Definitions.exclude = generator.context.get('GLOSSARY_EXCLUDE', [])
+
+
 def register():
+    signals.article_generator_context.connect(get_excludes)
     signals.content_object_init.connect(parse_content)
     signals.page_generator_context.connect(set_definitions)

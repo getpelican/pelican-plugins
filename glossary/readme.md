@@ -3,6 +3,9 @@
 Builds a glossary page containing definition lists found in articles and
 pages.
 
+
+## Example
+
 If you have an article or page that generates the following:
 
 file `defns.html` titled "My definitions"
@@ -48,6 +51,9 @@ dict2.see_also = [dict1]
 
 Note the `link` attribute does not necessarily point to `source.url`.
 
+
+## Usage
+
 Next is an example usage of the `definitions` variable.
 
 ```
@@ -73,3 +79,11 @@ Next is an example usage of the `definitions` variable.
 </dl>
 {% endfor %}
 ```
+
+## Notes
+
++ The `glossary` plugin supports the use of a `GLOSSARY_EXCLUDE` setting,
+  which can be set to an arbitrary list in your `pelicanconf.py`. By
+  default, it's equal to the empty list. `glossary` will add to
+  `definitions` all definitions **EXCEPT** those whose title is found
+  inside `GLOSSARY_EXCLUDE`.
