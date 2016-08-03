@@ -3,3 +3,5 @@
 *~
 .directory
 .idea
+.project
+.pydevproject

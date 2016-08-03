@@ -4,7 +4,7 @@ import os
 from pelican import signals, contents
 from pelican.utils import strftime, set_date_tzinfo
 from datetime import datetime
-from git_wrapper import git_wrapper
+from .git_wrapper import git_wrapper
 
 
 def datetime_from_timestamp(timestamp, content):
@@ -45,7 +45,7 @@ def filetime_from_git(content):
 
         if len(commits) == 0:
             # never commited, but staged
-            content.date = git.datetime_from_timestamp(
+            content.date = datetime_from_timestamp(
                 os.stat(path).st_ctime, content)
         else:
             # has commited

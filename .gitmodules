@@ -54,7 +54,7 @@
 	url = https://github.com/joachimneu/pelican-jinja2content.git
 [submodule "panorama"]
 	path = panorama
-	url = git://github.com/romainx/panorama.git
+	url = https://github.com/romainx/panorama.git
 [submodule "pelican-genealogy"]
 	path = pelican-genealogy
 	url = https://github.com/zappala/pelican-genealogy
@@ -112,3 +112,21 @@
 [submodule "linkclass"]
 	path = pelican-linkclass
 	url = https://github.com/rlaboiss/pelican-linkclass
+[submodule "just_table"]
+	path = just_table
+	url = https://github.com/burakkose/just_table
+[submodule "ace_editor"]
+	path = ace_editor
+	url = https://github.com/mothsART/ace_editor.git
+[submodule "mboxreader"]
+	path = pelican-mboxreader
+	url = https://github.com/TC01/pelican-mboxreader
+[submodule "bootstrap-rst"]
+	path = bootstrap-rst
+	url = https://github.com/Alexqw/bootstrap-rst
+[submodule "pelican-version"]
+	path = pelican-version
+	url = https://github.com/Shaked/pelican-version
+[submodule "lightbox"]
+	path = lightbox
+	url = https://github.com/kura/lightbox

@@ -26,6 +26,9 @@ beginning marker was found, it starts at the top of the body. It is possible
 to leave out the end marker instead, in which case the summary will start at the
 beginning marker and continue to the end of the body.
 
+If no beginning or end marker is found, and if ``SUMMARY_USE_FIRST_PARAGRAPH``
+is enabled in the settings, the summary will be the first paragraph of the post.
+
 The plugin also sets a ``has_summary`` attribute on every article. It is True
 for articles with an explicitly-defined summary, and False otherwise.  (It is
 also False for an article truncated by ``SUMMARY_MAX_LENGTH``.)  Your templates

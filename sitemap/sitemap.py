@@ -165,7 +165,7 @@ class SitemapGenerator(object):
             chfreq = self.changefreqs['indexes']
 
         pageurl = '' if page.url == 'index.html' else page.url
-        
+
         #Exclude URLs from the sitemap:
         if self.format == 'xml':
             flag = False
@@ -237,6 +237,20 @@ class SitemapGenerator(object):
                                 date=self.now,
                                 url=standard_page_url,
                                 save_as=standard_page_url)
+                self.write_url(fake, fd)
+
+            # add template pages
+            # We use items for Py3k compat. .iteritems() otherwise
+            for path, template_page_url in self.context['TEMPLATE_PAGES'].items():
+
+                # don't add duplicate entry for index page
+                if template_page_url == 'index.html':
+                    continue
+
+                fake = FakePage(status='published',
+                                date=self.now,
+                                url=template_page_url,
+                                save_as=template_page_url)
                 self.write_url(fake, fd)
 
             for page in pages:

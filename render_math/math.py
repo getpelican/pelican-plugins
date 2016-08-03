@@ -107,6 +107,9 @@ def process_settings(pelicanobj):
         if key == 'indent':
             mathjax_settings[key] = value
 
+        if key == 'source':
+            mathjax_settings[key] = value
+
         if key == 'show_menu' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
 
@@ -155,7 +158,7 @@ def process_settings(pelicanobj):
             mathjax_settings[key] = 'true' if value else 'false'
 
         if key == 'force_tls' and isinstance(value, bool):
-            mathjax_settings[key] = 'true' if value else 'false'       
+            mathjax_settings[key] = 'true' if value else 'false'
 
         if key == 'responsive_break' and isinstance(value, int):
             mathjax_settings[key] = str(value)
@@ -274,8 +277,9 @@ def mathjax_for_markdown(pelicanobj, mathjax_script, mathjax_settings):
 
 def mathjax_for_rst(pelicanobj, mathjax_script):
     """Setup math for RST"""
-
-    pelicanobj.settings['DOCUTILS_SETTINGS'] = {'math_output': 'MathJax'}
+    docutils_settings = pelicanobj.settings.get('DOCUTILS_SETTINGS', {})
+    docutils_settings['math_output'] = 'MathJax'
+    pelicanobj.settings['DOCUTILS_SETTINGS'] = docutils_settings
     rst_add_mathjax.mathjax_script = mathjax_script
 
 def pelican_init(pelicanobj):
