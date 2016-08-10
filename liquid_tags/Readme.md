@@ -93,6 +93,12 @@ are not specified, then the dimensions will be 640 (wide) by 390 (tall).
 If you experience issues with code generation (e.g., missing closing tags),
 add `SUMMARY_MAX_LENGTH = None` to your settings file.
 
+## Speakerdeck Tag
+To insert a Speakerdeck viewer into your content, enable the
+`liquid_tags.speakerdeck` plugin and add the following to your source document:
+
+    {% speakerdeck speakerdeck_id %}
+
 ## Video Tag
 To insert HTML5-friendly video into your content, enable the `liquid_tags.video`
 plugin and add the following to your source document:
