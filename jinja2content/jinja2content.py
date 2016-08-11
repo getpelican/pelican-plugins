@@ -1,5 +1,12 @@
-import os
+"""
+jinja2content.py
+----------------
 
+Pelican plugin that processes Markdown files as jinja templates.
+
+"""
+
+from os import path
 from pelican import signals
 from pelican.readers import Markdown, MarkdownReader
 from pelican.utils import pelican_open
@@ -13,17 +20,18 @@ class JinjaMarkdownReader(MarkdownReader):
 
         # will look first in 'JINJA2CONTENT_TEMPLATES', by default the
         # content root path, then in the theme's templates
-        local_templates_dir = self.settings.get('JINJA2CONTENT_TEMPLATES', '.')
-        local_templates_dir = os.path.join(self.settings['PATH'], local_templates_dir)
-        theme_templates_dir = os.path.join(self.settings['THEME'], 'templates')
-        loader = ChoiceLoader([
-            FileSystemLoader(local_templates_dir),
-            FileSystemLoader(theme_templates_dir)])
+        # local_templates_dirs = self.settings.get('JINJA2CONTENT_TEMPLATES', ['.'])
+        # local_templates_dirs = path.join(self.settings['PATH'], local_templates_dirs)
+        local_dirs = self.settings.get('JINJA2CONTENT_TEMPLATES', ['.'])
+        local_dirs = [path.join(self.settings['PATH'], folder)
+                      for folder in local_dirs]
+        theme_dir = path.join(self.settings['THEME'], 'templates')
 
+        loaders = [FileSystemLoader(_dir) for _dir
+                   in local_dirs + [theme_dir]]
         self.env = Environment(trim_blocks=True, lstrip_blocks=True,
                                extensions=self.settings['JINJA_EXTENSIONS'],
-                               loader=loader)
-
+                               loader=ChoiceLoader(loaders))
 
     def read(self, source_path):
         """Parse content and metadata of markdown files.

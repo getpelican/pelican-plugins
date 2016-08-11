@@ -72,9 +72,9 @@ to html.
 ## Configuration
 
 This plugin accepts the setting "JINJA2CONTENT_TEMPLATES" which should be
-set to a path relative to 'PATH' (the main content directory).
-`jinja2content` will look for templates inside this directory. If they are
-not found here, the theme's templates folder is used.
+set to a list of paths relative to 'PATH' (the main content directory).
+`jinja2content` will look for templates inside these directories, in order.
+If they are not found in any, the theme's templates folder is used.
 
 
 ## Notes
