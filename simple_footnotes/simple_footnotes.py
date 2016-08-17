@@ -17,6 +17,7 @@ def getText(node, recursive = False):
         L.append(getText(n) )
     return ''.join(L)
 
+
 def sequence_gen(genlist):
     for gen in genlist:
         for elem in gen:
@@ -77,21 +78,7 @@ def parse_for_footnotes(article_generator):
                 article._content =  "".join(list(output_generator)).replace(
                     "<x-simple-footnote>", "[ref]").replace("</x-simple-footnote>", "[/ref]").replace(
                     "<body>", "").replace("</body>", "")
-        if False:
-            count = 0
-            endnotes = []
-            for f in footnotes:
-                count += 1
-                fnstr = '<a class="simple-footnote" name="%s-%s-back" href="#%s-%s"><sup>%s</a>' % (
-                    article.slug, count, article.slug, count, count)
-                endstr = '<li id="%s-%s">%s <a href="#%s-%s-back">&uarr;</a></li>' % (
-                    article.slug, count, f[len("[ref]"):-len("[/ref]")], article.slug, count)
-                content = content.replace(f, fnstr)
-                endnotes.append(endstr)
-            content += '<h4>Footnotes</h4><ol class="simple-footnotes">%s</ul>' % ("\n".join(endnotes),)
-            article._content = content
 
 
 def register():
     signals.article_generator_finalized.connect(parse_for_footnotes)
-
