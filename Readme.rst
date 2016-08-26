@@ -218,6 +218,8 @@ Replacer                  Replace a text of a generated HTML
 
 Representative image      Extracts a representative image (i.e, featured image) from the article's summary or content
 
+Right Quoter              When used with typogrify/smartypants, this plugin attempts to fix the direction of assorted curly single quotes, e.g. for '90s, 'tis
+
 RMD Reader                Create posts via knitr RMarkdown files
 
 Section number            Adds section numbers for article headers, in the form of ``2.3.3``
