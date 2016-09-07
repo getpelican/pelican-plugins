@@ -83,6 +83,7 @@ def include_code(preprocessor, tag, markup):
                          "expected syntax: {0}".format(SYNTAX))
 
     code_dir = preprocessor.configs.getConfig('CODE_DIR')
+    siteurl = preprocessor.configs.getConfig('SITEURL')
     code_path = os.path.join('content', code_dir, src)
 
     if not os.path.exists(code_path):
@@ -106,7 +107,7 @@ def include_code(preprocessor, tag, markup):
         title += " [Lines %s]" % lines
     title = title.strip()
 
-    url = '{0}/{1}/{2}'.format(settings.get('SITEURL'),code_dir, src)
+    url = '{0}/{1}/{2}'.format(siteurl,code_dir, src)
     url = re.sub('/+', '/', url)
 
     open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
