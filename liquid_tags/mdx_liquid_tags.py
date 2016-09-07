@@ -23,9 +23,9 @@ LT_CONFIG = { 'CODE_DIR': 'code',
               'CODE_OPENTAG': "<figure class='code{classes}'><figcaption><span>{title}</span><a href='{url}'>{download}</a></figcaption>",
               'CODE_CLOSETAG': "</figure>",
               'CODE_DOWNLOADSTRING' : u'download',
+              'NOTEBOOK_DIR': 'notebooks',
               'FLICKR_API_KEY': 'flickr',
               'GIPHY_API_KEY': 'giphy'
-              'NOTEBOOK_DIR': 'notebooks'
 }
 LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin',
             'CODE_OPENTAG' : 'Opening template for include_code subplugin',
