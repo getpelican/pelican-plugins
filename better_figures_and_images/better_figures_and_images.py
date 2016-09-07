@@ -13,7 +13,9 @@ TODO: Need to add a test.py for this plugin.
 
 """
 
+from __future__ import unicode_literals
 from os import path, access, R_OK
+import os
 
 from pelican import signals
 
@@ -27,7 +29,7 @@ def content_object_init(instance):
 
     if instance._content is not None:
         content = instance._content
-        soup = BeautifulSoup(content)
+        soup = BeautifulSoup(content, 'html.parser')
 
         if 'img' in content:
             for img in soup('img'):
@@ -44,21 +46,45 @@ def content_object_init(instance):
                     img_path = img_path[10:]
                 elif img_path.startswith('/static'):
                     img_path = img_path[7:]
+                elif img_path.startswith('data:image'):
+                    # Image is encoded in-line (not a file).
+                    continue
                 else:
                     logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
 
-                # Build the source image filename
-                src = instance.settings['PATH'] + img_path + '/' + img_filename
+                # search src path list
+                # 1. Build the source image filename from PATH
+                # 2. Build the source image filename from STATIC_PATHS
 
+                # if img_path start with '/', remove it.
+                img_path = os.path.sep.join([el for el in img_path.split("/") if len(el) > 0])
+
+                # style: {filename}/static/foo/bar.png
+                src = os.path.join(instance.settings['PATH'], img_path, img_filename)
+                src_candidates = [src]
+
+                # style: {filename}../static/foo/bar.png
+                src_candidates += [os.path.join(instance.settings['PATH'], static_path, img_path, img_filename) for static_path in instance.settings['STATIC_PATHS']]
+
+                src_candidates = [f for f in src_candidates if path.isfile(f) and access(f, R_OK)]
+
+                if not src_candidates:
+                    logger.error('Better Fig. Error: image not found: %s', src)
+                    logger.debug('Better Fig. Skip src: %s', img_path + '/' + img_filename)
+                    continue
+
+                src = src_candidates[0]
                 logger.debug('Better Fig. src: %s', src)
-                if not (path.isfile(src) and access(src, R_OK)):
-                    logger.error('Better Fig. Error: image not found: {}'.format(src))
 
                 # Open the source image and query dimensions; build style string
-                im = Image.open(src)
-                extra_style = 'width: {}px; height: auto;'.format(im.size[0])
+                try:
+                    im = Image.open(src)
+                    extra_style = 'width: {}px; height: auto;'.format(im.size[0])
+                except IOError as e:
+                    logger.debug('Better Fig. Failed to open: %s', src)
+                    extra_style = 'width: 100%; height: auto;'
 
-                if instance.settings['RESPONSIVE_IMAGES']:
+                if 'RESPONSIVE_IMAGES' in instance.settings and instance.settings['RESPONSIVE_IMAGES']:
                     extra_style += ' max-width: 100%;'
 
                 if img.get('style'):

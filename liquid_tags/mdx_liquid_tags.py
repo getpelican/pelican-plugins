@@ -17,19 +17,23 @@ import os
 from functools import wraps
 
 # Define some regular expressions
-LIQUID_TAG = re.compile(r'\{%.*?%\}')
+LIQUID_TAG = re.compile(r'\{%.*?%\}', re.MULTILINE | re.DOTALL)
 EXTRACT_TAG = re.compile(r'(?:\s*)(\S+)(?:\s*)')
 LT_CONFIG = { 'CODE_DIR': 'code',
               'CODE_OPENTAG': "<figure class='code{classes}'><figcaption><span>{title}</span><a href='{url}'>{download}</a></figcaption>",
               'CODE_CLOSETAG': "</figure>",
               'CODE_DOWNLOADSTRING' : u'download',
+              'FLICKR_API_KEY': 'flickr',
+              'GIPHY_API_KEY': 'giphy'
               'NOTEBOOK_DIR': 'notebooks'
 }
 LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin',
             'CODE_OPENTAG' : 'Opening template for include_code subplugin',
             'CODE_CLOSETAG' : 'Closing template for include_code subplugin',
             'CODE_DOWNLOADSTRING' : 'The `download` helper string for include_code subplugin',
-            'NOTEBOOK_DIR' : 'Notebook directory for notebook subplugin'
+            'NOTEBOOK_DIR' : 'Notebook directory for notebook subplugin',
+            'FLICKR_API_KEY': 'Flickr key for accessing the API',
+            'GIPHY_API_KEY': 'Giphy key for accessing the API'
 }
 
 class _LiquidTagsPreprocessor(markdown.preprocessors.Preprocessor):
@@ -48,10 +52,10 @@ class _LiquidTagsPreprocessor(markdown.preprocessors.Preprocessor):
             markup = EXTRACT_TAG.sub('', markup, 1)
             if tag in self._tags:
                 liquid_tags[i] = self._tags[tag](self, tag, markup.strip())
-                
+
         # add an empty string to liquid_tags so that chaining works
         liquid_tags.append('')
- 
+
         # reconstruct string
         page = ''.join(itertools.chain(*zip(LIQUID_TAG.split(page),
                                             liquid_tags)))

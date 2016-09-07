@@ -12,14 +12,15 @@ try:
 except ImportError:
     from urllib import quote
 from pelican import signals, contents
+from pelican.generators import ArticlesGenerator, PagesGenerator
 
 
 def article_title(content):
-    main_title = BeautifulSoup(content.title, 'html.parser').prettify().strip()
+    main_title = BeautifulSoup(content.title, 'html.parser').get_text().strip()
     sub_title = ''
     if hasattr(content, 'subtitle'):
-        sub_title = BeautifulSoup(content.subtitle, 'html.parser').prettify().strip()
-    return quote(('%s %s' % (main_title, sub_title)).encode('utf-8'))
+        sub_title = ' ' + BeautifulSoup(content.subtitle, 'html.parser').get_text().strip()
+    return quote(('%s%s' % (main_title, sub_title)).encode('utf-8'))
 
 
 def article_url(content):
@@ -28,7 +29,7 @@ def article_url(content):
 
 
 def article_summary(content):
-    return quote(content.summary.encode('utf-8'))
+    return quote(BeautifulSoup(content.summary, 'html.parser').get_text().strip().encode('utf-8'))
 
 
 def share_post(content):
@@ -38,21 +39,43 @@ def share_post(content):
     url = article_url(content)
     summary = article_summary(content)
 
-    tweet = '%s %s' % (title, url)
-    facebook_link = 'http://www.facebook.com/sharer/sharer.php?s=100' \
-                    '&p[url]=%s&p[images][0]=&p[title]=%s&p[summary]=%s' \
-                    % (url, title, summary)
+    tweet = ('%s%s%s' % (title, quote(' '), url)).encode('utf-8')
+    diaspora_link = 'https://sharetodiaspora.github.io/?title=%s&url=%s' % (title, url)
+    facebook_link = 'http://www.facebook.com/sharer/sharer.php?u=%s' % url
     gplus_link = 'https://plus.google.com/share?url=%s' % url
     twitter_link = 'http://twitter.com/home?status=%s' % tweet
-    mail_link = 'mailto:?subject=%s&body=%s' % (title, url)
+    linkedin_link = 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&summary=%s&source=%s' % (
+        url, title, summary, url
+    )
 
-    share_links = {'twitter': twitter_link,
+    mail_link = 'mailto:?subject=%s&amp;body=%s' % (title, url)
+
+    share_links = {
+                   'diaspora': diaspora_link,
+                   'twitter': twitter_link,
                    'facebook': facebook_link,
                    'google-plus': gplus_link,
+                   'linkedin': linkedin_link,
                    'email': mail_link
                    }
     content.share_post = share_links
 
 
+def run_plugin(generators):
+    for generator in generators:
+        if isinstance(generator, ArticlesGenerator):
+            for article in generator.articles:
+                share_post(article)
+        elif isinstance(generator, PagesGenerator):
+            for page in generator.pages:
+                share_post(page)
+
+
 def register():
-    signals.content_object_init.connect(share_post)
+    try:
+        signals.all_generators_finalized.connect(run_plugin)
+    except AttributeError:
+        # NOTE: This results in #314 so shouldn't really be relied on
+        # https://github.com/getpelican/pelican-plugins/issues/314
+        signals.content_object_init.connect(share_post)
+

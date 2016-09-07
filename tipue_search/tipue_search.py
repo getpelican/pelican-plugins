@@ -40,10 +40,10 @@ class Tipue_Search_JSON_Generator(object):
         if getattr(page, 'status', 'published') != 'published':
             return
 
-        soup_title = BeautifulSoup(page.title.replace('&nbsp;', ' '))
+        soup_title = BeautifulSoup(page.title.replace('&nbsp;', ' '), 'html.parser')
         page_title = soup_title.get_text(' ', strip=True).replace('“', '"').replace('”', '"').replace('’', "'").replace('^', '&#94;')
 
-        soup_text = BeautifulSoup(page.content)
+        soup_text = BeautifulSoup(page.content, 'html.parser')
         page_text = soup_text.get_text(' ', strip=True).replace('“', '"').replace('”', '"').replace('’', "'").replace('¶', ' ').replace('^', '&#94;')
         page_text = ' '.join(page_text.split())
 
@@ -57,14 +57,14 @@ class Tipue_Search_JSON_Generator(object):
         node = {'title': page_title,
                 'text': page_text,
                 'tags': page_category,
-                'loc': page_url}
+                'url': page_url}
 
         self.json_nodes.append(node)
 
 
     def create_tpage_node(self, srclink):
 
-        srcfile = open(os.path.join(self.output_path, self.tpages[srclink]))
+        srcfile = open(os.path.join(self.output_path, self.tpages[srclink]), encoding='utf-8')
         soup = BeautifulSoup(srcfile, 'html.parser')
         page_text = soup.get_text()
 
@@ -82,8 +82,8 @@ class Tipue_Search_JSON_Generator(object):
         node = {'title': page_title,
                 'text': page_text,
                 'tags': page_category,
-                'loc': page_url}
-        
+                'url': page_url}
+
         self.json_nodes.append(node)
 
 

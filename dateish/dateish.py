@@ -18,9 +18,11 @@ def dateish(generator):
     for article in generator.articles:
         for field in generator.settings['DATEISH_PROPERTIES']:
             if hasattr(article, field):
-                text = getattr(article, field)
-                as_datetime = get_date(text)
-                setattr(article, field, as_datetime)
+                value = getattr(article, field)
+                if type(value) == list:
+                    setattr(article, field, [get_date(d) for d in value])
+                else:
+                    setattr(article, field, get_date(value))
 
 def register():
     signals.article_generator_finalized.connect(dateish)

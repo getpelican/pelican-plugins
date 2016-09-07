@@ -23,7 +23,7 @@ come after them, ordered by date.
 
 The plugin provides the following variables to your templates
 
-    * `article.series.series` is the name of the series as specified in the article metadata
+    * `article.series.name` is the name of the series as specified in the article metadata
     * `article.series.index` is the index of the current article inside the series
     * `article.series.all` is an ordered list of all articles in the series (including the current one)
     * `article.series.all_previous` is an ordered list of the articles published before the current one
@@ -34,7 +34,7 @@ The plugin provides the following variables to your templates
 For example:
 
     {% if article.series %}
-        <p>This post is part {{ article.series.index }} of the "{{ article.series.series }}" series:</p>
+        <p>This post is part {{ article.series.index }} of the "{{ article.series.name }}" series:</p>
         <ol class="parts">
             {% for part_article in article.series.all %}
                 <li {% if part_article == article %}class="active"{% endif %}>

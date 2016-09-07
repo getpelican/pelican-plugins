@@ -38,6 +38,10 @@ EXCLUDE_TYPES = [
     '.mov',
     '.mp4',
     '.webm',
+
+    # Internally-compressed fonts. gzip can often shave ~50 more bytes off,
+    # but it's not worth it.
+    '.woff',
 ]
 
 COMPRESSION_LEVEL = 9 # Best Compression
@@ -98,6 +102,11 @@ def create_gzip_file(filepath, overwrite):
         uncompressed_data = uncompressed.read()
         gzipped_data = gzip_compress_obj.compress(uncompressed_data)
         gzipped_data += gzip_compress_obj.flush()
+
+        if len(gzipped_data) >= len(uncompressed_data):
+            logger.debug('No improvement: %s' % filepath)
+            return
+
         with open(compressed_path, 'wb') as compressed:
             logger.debug('Compressing: %s' % filepath)
             try:
