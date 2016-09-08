@@ -40,7 +40,7 @@ in the STATIC_PATHS setting, e.g.:
 import re
 import os
 from .mdx_liquid_tags import LiquidTags
-
+from i18n_subsites import relpath_to_site
 
 SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}"
 FORMAT = re.compile(r"""
@@ -83,7 +83,9 @@ def include_code(preprocessor, tag, markup):
                          "expected syntax: {0}".format(SYNTAX))
 
     code_dir = preprocessor.configs.getConfig('CODE_DIR')
-    siteurl = preprocessor.configs.getConfig('SITEURL')
+    override = preprocessor.configs.getConfig('CODE_OVERRIDE_PATH')
+    if not override:
+        override = code_dir
     code_path = os.path.join('content', code_dir, src)
 
     if not os.path.exists(code_path):
@@ -107,7 +109,8 @@ def include_code(preprocessor, tag, markup):
         title += " [Lines %s]" % lines
     title = title.strip()
 
-    url = '{0}/{1}/{2}'.format(siteurl,code_dir, src)
+    url = '{0}/{1}'.format(override, src)
+    print '<'+url+'>'
     url = re.sub('/+', '/', url)
 
     open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
