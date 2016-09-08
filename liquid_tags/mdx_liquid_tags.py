@@ -20,16 +20,16 @@ from functools import wraps
 LIQUID_TAG = re.compile(r'\{%.*?%\}', re.MULTILINE | re.DOTALL)
 EXTRACT_TAG = re.compile(r'(?:\s*)(\S+)(?:\s*)')
 LT_CONFIG = { 'CODE_DIR': 'code',
-              'SITEURL': '',
               'CODE_OVERRIDE_PATH' : '',
+              'SITEURL': '',
               'NOTEBOOK_DIR': 'notebooks',
               'FLICKR_API_KEY': 'flickr',
               'GIPHY_API_KEY': 'giphy'
 }
 LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin',
+            'CODE_OVERRIDE_PATH' : 'URL for the files',
             'SITEURL' : 'Site URL',
             'NOTEBOOK_DIR' : 'Notebook directory for notebook subplugin',
-            'CODE_OVERRIDE_PATH' : 'URL for the files',
             'FLICKR_API_KEY': 'Flickr key for accessing the API',
             'GIPHY_API_KEY': 'Giphy key for accessing the API'
 }
