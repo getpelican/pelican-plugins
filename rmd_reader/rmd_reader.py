@@ -10,40 +10,59 @@ from pelican import readers
 from pelican import signals
 from pelican import settings
 
-knitr = None
-rmd = False
-fig_path = None
+KNITR = None
+RMD = False
+FIG_PATH = None
+R_STARTED = False
+
+def startr():
+    global KNITR, R_OBJECTS, R_STARTED
+    if R_STARTED:
+        return
+    logger.debug('STARTING R')
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        import rpy2.rinterface
+        rpy2.rinterface.set_initoptions((b'rpy2', b'--no-save', b'--vanilla', b'--quiet'))
+        import rpy2.robjects as R_OBJECTS
+        from rpy2.robjects.packages import importr
+    KNITR = importr('knitr')
+    logger.debug('R STARTED')
+    R_STARTED = True
 
 def initsignal(pelicanobj):
-    global knitr, rmd, fig_path, robjects
+    global RMD, FIG_PATH
     try:
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            from rpy2.robjects.packages import importr
-            import rpy2.robjects as robjects
-        knitr = importr('knitr')
-        idx = knitr.opts_knit.names.index('set')
-        PATH = pelicanobj.settings.get('PATH','%s/content' % settings.DEFAULT_CONFIG.get('PATH'))
-        logger.debug("RMD_READER PATH = %s", PATH)
-        knitr.opts_knit[idx](**{'base.dir': PATH})
+        startr()
+        R_OBJECTS.r('Sys.setlocale("LC_ALL", "C")')
+        R_OBJECTS.r('Sys.setlocale("LC_NUMERIC", "C")')
+        R_OBJECTS.r('Sys.setlocale("LC_MESSAGES", "C")')
+        
+        idx = KNITR.opts_knit.names.index('set')
+        path = pelicanobj.settings.get('PATH','%s/content' % settings.DEFAULT_CONFIG.get('PATH'))
+        logger.debug("RMD_READER PATH = %s", path)
+        KNITR.opts_knit[idx](**{'base.dir': path})
+        
         knitroptsknit = pelicanobj.settings.get('RMD_READER_KNITR_OPTS_KNIT', None)
         if knitroptsknit:
-            knitr.opts_knit[idx](**{str(k): v for k,v in knitroptsknit.items()})
-        idx = knitr.opts_chunk.names.index('set')
+            KNITR.opts_knit[idx](**{str(k): v for k,v in knitroptsknit.items()})
+        
+        idx = KNITR.opts_chunk.names.index('set')
         knitroptschunk = pelicanobj.settings.get('RMD_READER_KNITR_OPTS_CHUNK', None)
         if knitroptschunk:
-            fig_path = knitroptschunk['fig.path'] if 'fig.path' in knitroptschunk else 'figure/'
-            knitr.opts_chunk[idx](**{str(k): v for k,v in knitroptschunk.items()})
-        rmd = True
+            FIG_PATH = knitroptschunk['fig.path'] if 'fig.path' in knitroptschunk else 'figure/'
+            KNITR.opts_chunk[idx](**{str(k): v for k,v in knitroptschunk.items()})
+        
+        RMD = True
     except ImportError as ex:
-        rmd = False
+        RMD = False
 
 class RmdReader(readers.BaseReader):
     file_extensions = ['Rmd', 'rmd']
 
     @property
     def enabled():
-        return rmd
+        return RMD
 
     # You need to have a read method, which takes a filename and returns
     # some content and the associated metadata.
@@ -78,16 +97,18 @@ class RmdReader(readers.BaseReader):
                 PATH = self.settings.get('PATH','%s/content' % settings.DEFAULT_CONFIG.get('PATH'))
                 src_name = os.path.splitext(os.path.relpath(filename, PATH))[0]
                 idx = knitr.opts_chunk.names.index('set')
-                knitroptschunk = { 'fig.path': '%s-' % os.path.join(fig_path, src_name) }
+                knitroptschunk = { 'fig.path': '%s-' % os.path.join(FIG_PATH, src_name) }
                 knitr.opts_chunk[idx](**{str(k): v for k,v in knitroptschunk.items()})
                 logger.debug('Figures path: %s, chunk label: %s', knitroptschunk['fig.path'], chunk_label)
-            robjects.r('''
+            R_OBJECTS.r('''
 opts_knit$set(unnamed.chunk.label="{unnamed_chunk_label}")
 render_markdown()
 hook_plot <- knit_hooks$get('plot')
 knit_hooks$set(plot=function(x, options) hook_plot(paste0("{{filename}}/", x), options))
             '''.format(unnamed_chunk_label=chunk_label))
-        knitr.knit(filename, md_filename, quiet=QUIET, encoding=ENCODING)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            knitr.knit(filename, md_filename, quiet=QUIET, encoding=ENCODING)
         # read md file - create a MarkdownReader
         md_reader = readers.MarkdownReader(self.settings)
         content, metadata = md_reader.read(md_filename)
