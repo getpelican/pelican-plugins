@@ -96,9 +96,9 @@ class RmdReader(readers.BaseReader):
                 chunk_label = 'unnamed-chunk'
                 PATH = self.settings.get('PATH','%s/content' % settings.DEFAULT_CONFIG.get('PATH'))
                 src_name = os.path.splitext(os.path.relpath(filename, PATH))[0]
-                idx = knitr.opts_chunk.names.index('set')
+                idx = KNITR.opts_chunk.names.index('set')
                 knitroptschunk = { 'fig.path': '%s-' % os.path.join(FIG_PATH, src_name) }
-                knitr.opts_chunk[idx](**{str(k): v for k,v in knitroptschunk.items()})
+                KNITR.opts_chunk[idx](**{str(k): v for k,v in knitroptschunk.items()})
                 logger.debug('Figures path: %s, chunk label: %s', knitroptschunk['fig.path'], chunk_label)
             R_OBJECTS.r('''
 opts_knit$set(unnamed.chunk.label="{unnamed_chunk_label}")
@@ -108,7 +108,7 @@ knit_hooks$set(plot=function(x, options) hook_plot(paste0("{{filename}}/", x), o
             '''.format(unnamed_chunk_label=chunk_label))
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            knitr.knit(filename, md_filename, quiet=QUIET, encoding=ENCODING)
+            KNITR.knit(filename, md_filename, quiet=QUIET, encoding=ENCODING)
         # read md file - create a MarkdownReader
         md_reader = readers.MarkdownReader(self.settings)
         content, metadata = md_reader.read(md_filename)
