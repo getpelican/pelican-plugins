@@ -91,6 +91,8 @@ In Markdown posts use the following syntax to include PlantUML_ diagrams:
 
 Rendered images will bu put in the output/images folder.
 
+**NOTE:** ``pandoc-plantuml`` is broken from pandoc 1.16 cause an API change in pandoc ``Image`` function. I'm working on a fix but in the meanwhile use a version of pandoc prior to ``1.16`` .
+
 Debugging
 ---------
 The plugin can produce debugging informations to help to locate errors. To enable debugging execute ``pelican`` in debug mode:

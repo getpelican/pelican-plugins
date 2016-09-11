@@ -42,7 +42,7 @@ import Text.Pandoc.JSON
 import Data.ByteString.Lazy (hGetContents, hPut)
 import Data.ByteString.Lazy.UTF8 (fromString)
 import Data.Digest.Pure.SHA (sha1, showDigest)
-import System.IO (hClose, hPutStr, IOMode(..), openBinaryFile)
+import System.IO (hClose, hPutStr, IOMode(..), openBinaryFile, hPutStrLn, stderr)
 import System.Process
 import System.Directory
 
@@ -55,6 +55,9 @@ processBlocks b =
 plantUMLToImg :: String -> IO Block
 plantUMLToImg content =  do
   path <- renderImage content
+  
+  --hPutStrLn stderr "dopo renderImage"
+
   return $ Para [Image [] (path, "")]
 
 renderImage :: String -> IO String
