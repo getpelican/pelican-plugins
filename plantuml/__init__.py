@@ -1,1 +1,1 @@
-from plantuml_rst import *
+from .plantuml_rst import *

@@ -6,24 +6,25 @@
 .. _plantuml: http://plantuml.sourceforge.net/
 """
 
+import sys
 import os
-import tempfile
-from zlib import adler32
-from subprocess import Popen, PIPE
 
 from docutils.nodes import image, literal_block
 from docutils.parsers.rst import Directive, directives
-from docutils import utils, nodes
+from pelican import signals, logger
 
-from pelican import logger, signals
+from .generateUmlDiagram import generate_uml_image
 
-global_siteurl = ""
 
-class PlantUML(Directive):
+global_siteurl = "" # URL of the site, filled on plugin initialization
+
+
+class PlantUML_rst(Directive):
+    """ reST directive for PlantUML """
     required_arguments = 0
     optional_arguments = 0
     has_content = True
-    
+
     global global_siteurl
 
     option_spec = {
@@ -33,80 +34,57 @@ class PlantUML(Directive):
     }
 
     def run(self):
-	source = self.state_machine.input_lines.source(self.lineno - self.state_machine.input_offset - 1)
-	source_dir = os.path.dirname(os.path.abspath(source))
-	source_dir = utils.relative_path(None, source_dir)
-
         path = os.path.abspath(os.path.join('output', 'images'))
         if not os.path.exists(path):
             os.makedirs(path)
 
         nodes = []
-
         body = '\n'.join(self.content)
-        tf = tempfile.NamedTemporaryFile(delete=True)
-        tf.write('@startuml\n')
-        tf.write(body.encode('utf8'))
-        tf.write('\n@enduml')
-        tf.flush()
-        
-        imgformat = self.options.get('format', 'png')
-        
-        if imgformat == 'png':
-            imgext = ".png"
-            outopt = "-tpng"
-        elif imgformat == 'svg':
-            imgext = ".svg"
-            outopt = "-tsvg"
-        else:
-	    logger.error("Bad uml image format: "+imgformat)
-
-        # make a name
-        name =  tf.name+imgext
-
-        alt = self.options.get('alt', 'uml diagram')
-        classes = self.options.pop('class', ['uml'])
-        cmdline = ['plantuml', '-o', path, outopt, tf.name ]
 
         try:
-            p = Popen(cmdline, stdout=PIPE, stderr=PIPE)
-            out, err = p.communicate()
-        except Exception, exc:
+            url = global_siteurl+'/'+generate_uml_image(path, body, "png")
+        except Exception as exc:
             error = self.state_machine.reporter.error(
-                'Failed to run plantuml: %s' % (exc, ),
+                'Failed to run plantuml: %s' % exc,
                 literal_block(self.block_text, self.block_text),
                 line=self.lineno)
             nodes.append(error)
         else:
-            if p.returncode == 0:
-	        # renaming output image using an hash code, just to not pullate 
-	        # output directory with a growing number of images
-                name = os.path.join(path, os.path.basename(name))
-	        newname = os.path.join(path, "%08x" % (adler32(body) & 0xffffffff))+imgext
-	        
-	        try: # for Windows
-		    os.remove(newname)  
-		except Exception, exc:
-		    logger.debug('File '+newname+' does not exist, not deleted')
-		
-	        os.rename(name, newname)
-                url = global_siteurl + '/images/' + os.path.basename(newname)
-                imgnode = image(uri=url, classes=classes, alt=alt)
-                nodes.append(imgnode)
-            else:
-                error = self.state_machine.reporter.error(
-                    'Error in "%s" directive: %s' % (self.name, err),
-                    literal_block(self.block_text, self.block_text),
-                    line=self.lineno)
-                nodes.append(error)
+            alt = self.options.get('alt', 'uml diagram')
+            classes = self.options.pop('class', ['uml'])
+            imgnode = image(uri=url, classes=classes, alt=alt)
+            nodes.append(imgnode)
 
         return nodes
 
+
 def custom_url(generator, metadata):
+    """ Saves globally the value of SITEURL configuration parameter """
     global global_siteurl
     global_siteurl = generator.settings['SITEURL']
-    
+
+
+def pelican_init(pelicanobj):
+    """ Prepare configurations for the MD plugin """
+    try:
+        import markdown
+        from plantuml_md import PlantUMLMarkdownExtension
+    except:
+        # Markdown not available
+        logger.debug("[plantuml] Markdown support not available")
+        return
+
+    # Register the Markdown plugin
+    config = { 'siteurl': pelicanobj.settings['SITEURL'] }
+
+    try:
+        pelicanobj.settings['MD_EXTENSIONS'].append(PlantUMLMarkdownExtension(config))
+    except:
+        logger.error("[plantuml] Unable to configure plantuml markdown extension")
+
+
 def register():
     """Plugin registration."""
+    signals.initialized.connect(pelican_init)
     signals.article_generator_context.connect(custom_url)
-    directives.register_directive('uml', PlantUML)
+    directives.register_directive('uml', PlantUML_rst)
