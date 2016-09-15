@@ -21,6 +21,7 @@ from pelican import signals
 
 from bs4 import BeautifulSoup
 from PIL import Image
+import pysvg.parser
 
 import logging
 logger = logging.getLogger(__name__)
@@ -31,76 +32,82 @@ def content_object_init(instance):
         content = instance._content
         soup = BeautifulSoup(content, 'html.parser')
 
-        if 'img' in content:
-            for img in soup('img'):
-                logger.debug('Better Fig. PATH: %s', instance.settings['PATH'])
+        for img in soup(['img', 'object']):
+            logger.debug('Better Fig. PATH: %s', instance.settings['PATH'])
+            if img.name == 'img':
                 logger.debug('Better Fig. img.src: %s', img['src'])
-
                 img_path, img_filename = path.split(img['src'])
+            else:
+                logger.debug('Better Fig. img.data: %s', img['data'])
+                img_path, img_filename = path.split(img['data'])
+            logger.debug('Better Fig. img_path: %s', img_path)
+            logger.debug('Better Fig. img_fname: %s', img_filename)
 
-                logger.debug('Better Fig. img_path: %s', img_path)
-                logger.debug('Better Fig. img_fname: %s', img_filename)
+            # Strip off {filename}, |filename| or /static
+            if img_path.startswith(('{filename}', '|filename|')):
+                img_path = img_path[10:]
+            elif img_path.startswith('/static'):
+                img_path = img_path[7:]
+            elif img_path.startswith('data:image'):
+                # Image is encoded in-line (not a file).
+                continue
+            else:
+                logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
 
-                # Strip off {filename}, |filename| or /static
-                if img_path.startswith(('{filename}', '|filename|')):
-                    img_path = img_path[10:]
-                elif img_path.startswith('/static'):
-                    img_path = img_path[7:]
-                elif img_path.startswith('data:image'):
-                    # Image is encoded in-line (not a file).
-                    continue
-                else:
-                    logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
+            # search src path list
+            # 1. Build the source image filename from PATH
+            # 2. Build the source image filename from STATIC_PATHS
 
-                # search src path list
-                # 1. Build the source image filename from PATH
-                # 2. Build the source image filename from STATIC_PATHS
+            # if img_path start with '/', remove it.
+            img_path = os.path.sep.join([el for el in img_path.split("/") if len(el) > 0])
 
-                # if img_path start with '/', remove it.
-                img_path = os.path.sep.join([el for el in img_path.split("/") if len(el) > 0])
+            # style: {filename}/static/foo/bar.png
+            src = os.path.join(instance.settings['PATH'], img_path, img_filename)
+            src_candidates = [src]
 
-                # style: {filename}/static/foo/bar.png
-                src = os.path.join(instance.settings['PATH'], img_path, img_filename)
-                src_candidates = [src]
+            # style: {filename}../static/foo/bar.png
+            src_candidates += [os.path.join(instance.settings['PATH'], static_path, img_path, img_filename) for static_path in instance.settings['STATIC_PATHS']]
 
-                # style: {filename}../static/foo/bar.png
-                src_candidates += [os.path.join(instance.settings['PATH'], static_path, img_path, img_filename) for static_path in instance.settings['STATIC_PATHS']]
+            src_candidates = [f for f in src_candidates if path.isfile(f) and access(f, R_OK)]
 
-                src_candidates = [f for f in src_candidates if path.isfile(f) and access(f, R_OK)]
+            if not src_candidates:
+                logger.error('Better Fig. Error: image not found: %s', src)
+                logger.debug('Better Fig. Skip src: %s', img_path + '/' + img_filename)
+                continue
 
-                if not src_candidates:
-                    logger.error('Better Fig. Error: image not found: %s', src)
-                    logger.debug('Better Fig. Skip src: %s', img_path + '/' + img_filename)
-                    continue
+            src = src_candidates[0]
+            logger.debug('Better Fig. src: %s', src)
 
-                src = src_candidates[0]
-                logger.debug('Better Fig. src: %s', src)
-
-                # Open the source image and query dimensions; build style string
-                try:
+            # Open the source image and query dimensions; build style string
+            try:
+                if img.name == 'img':
                     im = Image.open(src)
                     extra_style = 'width: {}px; height: auto;'.format(im.size[0])
-                except IOError as e:
-                    logger.debug('Better Fig. Failed to open: %s', src)
-                    extra_style = 'width: 100%; height: auto;'
-
-                if 'RESPONSIVE_IMAGES' in instance.settings and instance.settings['RESPONSIVE_IMAGES']:
-                    extra_style += ' max-width: 100%;'
-
-                if img.get('style'):
-                    img['style'] += extra_style
                 else:
-                    img['style'] = extra_style
+                    svg = pysvg.parser.parse(src)
+                    extra_style = 'width: {}px; height: auto;'.format(svg.get_width())
+            except IOError as e:
+                logger.debug('Better Fig. Failed to open: %s', src)
+                extra_style = 'width: 100%; height: auto;'
 
+            if 'RESPONSIVE_IMAGES' in instance.settings and instance.settings['RESPONSIVE_IMAGES']:
+                extra_style += ' max-width: 100%;'
+
+            if img.get('style'):
+                img['style'] += extra_style
+            else:
+                img['style'] = extra_style
+
+            if img.name == 'img':
                 if img['alt'] == img['src']:
                     img['alt'] = ''
 
-                fig = img.find_parent('div', 'figure')
-                if fig:
-                    if fig.get('style'):
-                        fig['style'] += extra_style
-                    else:
-                        fig['style'] = extra_style
+            fig = img.find_parent('div', 'figure')
+            if fig:
+                if fig.get('style'):
+                    fig['style'] += extra_style
+                else:
+                    fig['style'] = extra_style
 
         instance._content = soup.decode()
 
