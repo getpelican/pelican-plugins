@@ -1,1 +1,1 @@
-from .filetime_from_git import *
+from .registration import *
