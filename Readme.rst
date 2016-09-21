@@ -200,6 +200,8 @@ pelicanfly                Lets you type things like ``i ♥ :fa-coffee:`` in you
 
 Photos                    Add a photo or a gallery of photos to an article, or include photos in the body text. Resize photos as needed.
 
+permalink                 Enables a kind of permalink using html redirects.
+
 Pin to top                Pin Pelican's article(s) to top "Sticky article"
 
 PlantUML                  Allows you to define UML diagrams directly into rst documents using the great PlantUML tool
