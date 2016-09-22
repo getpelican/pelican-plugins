@@ -24,7 +24,8 @@ from . import avatars
 
 
 _all_comments = []
-pelican_writer = None
+_pelican_writer = None
+_pelican_obj = None
 
 def setdefault(pelican, settings):
     from pelican.settings import DEFAULT_CONFIG
@@ -62,8 +63,9 @@ def pelican_initialized(pelican):
         pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
     pelican.settings['ARTICLE_EXCLUDES'].append(
         pelican.settings['PELICAN_COMMENT_SYSTEM_DIR'])
-    global pelican_writer
-    pelican_writer = pelican.get_writer()
+
+    global _pelican_obj
+    _pelican_obj = pelican
 
 
 def initialize(article_generator):
@@ -77,6 +79,11 @@ def initialize(article_generator):
         article_generator.settings['PELICAN_COMMENT_SYSTEM_AUTHORS'],
     )
 
+    # Reset old states (autoreload mode)
+    global _all_comments
+    global _pelican_writer
+    _pelican_writer = _pelican_obj.get_writer()
+    _all_comments = []
 
 def warn_on_slug_collision(items):
     slugs = {}
@@ -121,7 +128,7 @@ def write_feed(gen, items, context, slug):
         return
 
     path = gen.settings['PELICAN_COMMENT_SYSTEM_FEED'] % slug
-    pelican_writer.write_feed(items, context, path)
+    _pelican_writer.write_feed(items, context, path)
 
 
 def process_comments(article_generator):
@@ -219,7 +226,6 @@ def pelican_finalized(pelican):
         return
     global _all_comments
     print('Processed %s comment(s)' % len(_all_comments))
-    _all_comments = []
 
 
 def register():

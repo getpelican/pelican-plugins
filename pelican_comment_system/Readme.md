@@ -11,6 +11,7 @@ Comments are stored in files in formats that can be processed by Pelican (e.g., 
  - Avatars and [Identicons](https://en.wikipedia.org/wiki/Identicon)
  - Comment Atom feed for each article
  - Easy styleable via themes
+ - Python 2 and 3 support
 
 
 See it in action here: [bernhard.scheirle.de](http://bernhard.scheirle.de/posts/2014/March/29/static-comments-via-email/)
@@ -37,3 +38,7 @@ To create identicons, the Python Image Library is needed. Therefore you either n
     pip install Pillow
 
 If you don't want avatars or identicons, this plugin works fine without PIL/Pillow. You will, however, see a warning that identicons are deactivated (as expected).
+
+## Change Log
+
+The change log can be found in the [CHANGELOG.md](./CHANGELOG.md) file.
