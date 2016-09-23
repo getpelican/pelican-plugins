@@ -2,7 +2,10 @@
 """
 Wrap python git interface for compatibility with older/newer version
 """
-import itertools
+try:
+    from itertools import zip_longest
+except ImportError:
+    from six.moves import zip_longest
 import logging
 import os
 from time import mktime
@@ -19,7 +22,7 @@ def grouper(iterable, n, fillvalue=None):
     '''
     # grouper('ABCDEFG', 3, 'x') --> ABC DEF Gxx
     args = [iter(iterable)] * n
-    return itertools.izip_longest(fillvalue=fillvalue, *args)
+    return zip_longest(fillvalue=fillvalue, *args)
 
 
 class _GitWrapperCommon(object):
