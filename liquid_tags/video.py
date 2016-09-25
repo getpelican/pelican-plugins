@@ -14,9 +14,11 @@ Example
 
 Output
 ------
-<video width='100%' height='480' preload='none' controls poster='http://site.com/poster-frame.jpg'>
-   <source src='http://site.com/video.mp4' type='video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"'/>
-</video>
+<span class="videobox">
+	<video width='100%' height='480' preload='none' controls poster='http://site.com/poster-frame.jpg'>
+	   <source src='http://site.com/video.mp4' type='video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"'/>
+	</video>
+</span>
 
 [1] https://github.com/imathis/octopress/blob/master/plugins/video_tag.rb
 """
