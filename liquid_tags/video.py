@@ -50,7 +50,7 @@ def video(preprocessor, tag, markup):
 
     if any(videos):
         video_out = """
-        <div class="videobox">
+        <span class="videobox">
             <video width="{width}" height="{height}" preload="none" controls poster="{poster}">
         """.format(width=width, height=height, poster=poster).strip()
 
@@ -61,7 +61,7 @@ def video(preprocessor, tag, markup):
                                  "{0}".format(ext))
             video_out += ("<source src='{0}' "
                           "{1}>".format(vid, VID_TYPEDICT[ext]))
-        video_out += "</video></div>"
+        video_out += "</video></span>"
     else:
         raise ValueError("Error processing input, "
                          "expected syntax: {0}".format(SYNTAX))
