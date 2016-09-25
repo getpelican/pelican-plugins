@@ -15,13 +15,13 @@ Example
 
 Output
 ------
-<div style="width:640px; height:480px;">
+<span style="width:640px; height:480px;">
     <iframe
         src="//player.vimeo.com/video/10739054?title=0&amp;byline=0&amp;portrait=0"
         width="640" height="480" frameborder="0"
         webkitallowfullscreen mozallowfullscreen allowfullscreen>
     </iframe>
-</div>
+</span>
 
 [1] https://gist.github.com/jamieowen/2063748
 """
@@ -48,13 +48,13 @@ def vimeo(preprocessor, tag, markup):
 
     if vimeo_id:
         vimeo_out = """
-            <div class="videobox">
+            <span class="videobox">
                 <iframe
                     src="//player.vimeo.com/video/{vimeo_id}?title=0&amp;byline=0&amp;portrait=0"
                     width="{width}" height="{height}" frameborder="0"
                     webkitAllowFullScreen mozallowfullscreen allowFullScreen>
                 </iframe>
-            </div>
+            </span>
         """.format(width=width, height=height, vimeo_id=vimeo_id).strip()
     else:
         raise ValueError("Error processing input, "
