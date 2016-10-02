@@ -10,11 +10,11 @@ Syntax
 
 Example
 -------
-{% video http://site.com/video.mp4 720 480 http://site.com/poster-frame.jpg %}
+{% video http://site.com/video.mp4 100% 480 http://site.com/poster-frame.jpg %}
 
 Output
 ------
-<video width='720' height='480' preload='none' controls poster='http://site.com/poster-frame.jpg'>
+<video width='100%' height='480' preload='none' controls poster='http://site.com/poster-frame.jpg'>
    <source src='http://site.com/video.mp4' type='video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"'/>
 </video>
 
@@ -26,7 +26,7 @@ from .mdx_liquid_tags import LiquidTags
 
 SYNTAX = "{% video url/to/video [url/to/video] [url/to/video] [width height] [url/to/poster] %}"
 
-VIDEO = re.compile(r'(/\S+|https?:\S+)(\s+(/\S+|https?:\S+))?(\s+(/\S+|https?:\S+))?(\s+(\d+)\s(\d+))?(\s+(/\S+|https?:\S+))?')
+VIDEO = re.compile(r'(/\S+|https?:\S+)(\s+(/\S+|https?:\S+))?(\s+(/\S+|https?:\S+))?(\s+(\d+\%?)\s(\d+\%?))?(\s+(/\S+|https?:\S+))?')
 
 VID_TYPEDICT = {'.mp4':"type='video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"'",
                 '.ogv':"type='video/ogg; codecs=theora, vorbis'",
