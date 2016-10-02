@@ -130,3 +130,6 @@
 [submodule "lightbox"]
 	path = lightbox
 	url = https://github.com/kura/lightbox
+[submodule "pelican-ipynb"]
+	path = pelican-ipynb
+	url = https://github.com/danielfrg/pelican-ipynb
