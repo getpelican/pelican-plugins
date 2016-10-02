@@ -57,7 +57,7 @@ Examples
 
 Output
 ------
-<div class="blockdiag" style="align: center;"><img src="data:image/png;base64,_BASE64_IMAGE DATA_/></div>
+<span class="blockdiag" style="align: center;"><img src="data:image/png;base64,_BASE64_IMAGE DATA_/></span>
 
 """
 
@@ -168,7 +168,7 @@ def blockdiag_parser(preprocessor, tag, markup):
 
         if output:
             # Return Base64 encoded image
-            return '<div class="blockdiag" style="align: center;"><img src="data:image/png;base64,%s"></div>' % base64.b64encode(output)
+            return '<span class="blockdiag" style="align: center;"><img src="data:image/png;base64,%s"></span>' % base64.b64encode(output)
     else:
         raise ValueError('Error processing input. '
                          'Expected syntax: {0}'.format(SYNTAX))
