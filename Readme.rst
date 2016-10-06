@@ -186,6 +186,8 @@ Section number            Adds section numbers for article headers, in the form 
 
 Share post                Creates share URLs of article
 
+Series                    Pelican plugin to support blog post series
+
 Simple footnotes          Adds footnotes to blog posts
 
 Sitemap                   Generates plain-text or XML sitemaps
