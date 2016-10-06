@@ -112,3 +112,6 @@
 [submodule "linkclass"]
 	path = pelican-linkclass
 	url = https://github.com/rlaboiss/pelican-linkclass
+[submodule "pelican-series"]
+	path = pelican-series
+	url = https://github.com/cprieto/pelican-series.git
