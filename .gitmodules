@@ -133,3 +133,6 @@
 [submodule "pelican-ipynb"]
 	path = pelican-ipynb
 	url = https://github.com/danielfrg/pelican-ipynb
+[submodule "pelican-series"]
+	path = pelican-series
+	url = https://github.com/cprieto/pelican-series.git
