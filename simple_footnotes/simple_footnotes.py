@@ -75,7 +75,7 @@ def parse_for_footnotes(article_or_page_generator):
                     ol.appendChild(li)
                     e.parentNode.removeChild(e)
                 dom.getElementsByTagName("body")[0].appendChild(ol)
-                s = html5lib.serializer.htmlserializer.HTMLSerializer(omit_optional_tags=False, quote_attr_values=True)
+                s = html5lib.serializer.HTMLSerializer(omit_optional_tags=False, quote_attr_values="always")
                 output_generator = s.serialize(html5lib.treewalkers.getTreeWalker("dom")(dom.getElementsByTagName("body")[0]))
                 article._content =  "".join(list(output_generator)).replace(
                     "<x-simple-footnote>", "[ref]").replace("</x-simple-footnote>", "[/ref]").replace(
