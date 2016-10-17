@@ -390,7 +390,7 @@ def detect_images_and_galleries(generators):
     """Runs generator on both pages and articles. """
     for generator in generators:
         if isinstance(generator, ArticlesGenerator):
-            for article in itertools.chain(generator.articles, generator.drafts):
+            for article in itertools.chain(generator.articles, generator.translations, generator.drafts):
                 detect_image(generator, article)
                 detect_gallery(generator, article)
         elif isinstance(generator, PagesGenerator):
