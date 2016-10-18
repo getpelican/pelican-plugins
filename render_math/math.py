@@ -166,10 +166,10 @@ def process_settings(pelicanobj):
 
         if key == 'responsive' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
-        
+
         # if key == 'force_tls' and isinstance(value, bool):
         #     mathjax_settings[key] = 'true' if value else 'false'
-        
+
         if key == 'responsive_break' and isinstance(value, int):
             mathjax_settings[key] = str(value)
 
@@ -197,6 +197,17 @@ def process_settings(pelicanobj):
                 value = 'default'
 
             mathjax_settings[key] = value
+
+        # Full validation of the macros dict would be tedious; It needs
+        # to be a dictionary with string keys and string or
+        # list-of-string-and-single-digit-integer values
+        # and even then you are not guaranteed it is
+        # a valid macro without running it.
+        # Since this is a feature for advanced users,
+        # we rely on those advanced users to use their brains.
+        if key == 'macros' and isinstance(value, dict):
+            mathjax_settings[key] = value
+            #More natural for the template, json.dumps(value)
 
     return mathjax_settings
 
