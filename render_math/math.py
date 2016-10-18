@@ -341,7 +341,10 @@ def process_rst_and_summaries(content_generators):
 
     for generator in content_generators:
         if isinstance(generator, generators.ArticlesGenerator):
-            for article in generator.articles + generator.translations:
+            for article in (
+                    generator.articles +
+                    generator.translations +
+                    generator.drafts):
                 rst_add_mathjax(article)
                 #optionally fix truncated formulae in summaries.
                 if process_summary.mathjax_script is not None:
