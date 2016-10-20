@@ -133,3 +133,6 @@
 [submodule "pelican-ipynb"]
 	path = pelican-ipynb
 	url = https://github.com/danielfrg/pelican-ipynb
+[submodule "deadlinks"]
+	path = deadlinks
+	url = https://github.com/silentlamb/pelican-deadlinks.git
