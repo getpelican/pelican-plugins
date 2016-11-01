@@ -232,6 +232,8 @@ Series                    Groups related articles into a series
 
 Share post                Creates share URLs of article
 
+Show Source               Place a link to the source text of your posts.
+
 Simple footnotes          Adds footnotes to blog posts
 
 Sitemap                   Generates plain-text or XML sitemaps
