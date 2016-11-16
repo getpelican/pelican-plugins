@@ -49,8 +49,12 @@ def get_subcategories(generator, metadata):
                 'subcategory', '{savepath}.html')
     if 'SUBCATEGORY_URL' not in generator.settings:
         generator.settings['SUBCATEGORY_URL'] = 'subcategory/{fullurl}.html'
-    
-    category_list = text_type(metadata.get('category')).split('/')
+
+    if 'subcategory_path' in metadata:
+        category_list = text_type(metadata.get('subcategory_path')).split('/')
+    else:
+        category_list = text_type(metadata.get('category')).split('/')
+
     category = (category_list.pop(0)).strip()
     category = Category(category, generator.settings)
     metadata['category'] = category
