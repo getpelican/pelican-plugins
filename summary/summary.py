@@ -9,6 +9,7 @@ body of your articles.
 from __future__ import unicode_literals
 from pelican import signals
 from pelican.generators import ArticlesGenerator, StaticGenerator, PagesGenerator
+import re
 
 def initialized(pelican):
     from pelican.settings import DEFAULT_CONFIG
@@ -75,6 +76,9 @@ def extract_summary(instance):
             content = content.replace(begin_marker, '', 1)
         if end_summary:
             content = content.replace(end_marker, '', 1)
+
+    summary = re.sub(r"<div.*>", "", summary)
+    summary = re.sub(r"</div>", "", summary)
 
     instance._content = content
     instance._summary = summary
