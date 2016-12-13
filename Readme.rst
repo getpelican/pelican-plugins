@@ -216,6 +216,8 @@ Random article            Generates a html file which redirect to a random artic
 
 Read More link            Inserts an inline "read more" or "continue" link into the last html element of the object summary
 
+Another Read More Link    Inserting a comment ``<!-- more -->`` into your post will prevent the post content below this mark from being displayed on the index page for the blog posts, a "Continue →" button links to the full post.
+
 Related posts             Adds the ``related_posts`` variable to the article's context
 
 Render Math               Render mathematics in content via the MathJax Javascript engine

@@ -136,3 +136,6 @@
 [submodule "deadlinks"]
 	path = deadlinks
 	url = https://github.com/silentlamb/pelican-deadlinks.git
+[submodule "another_read_more_link"]
+        path = another_read_more_link
+        url = https://github.com/fangpeishi/another_read_more_link.git
