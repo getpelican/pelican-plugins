@@ -2,6 +2,63 @@
 
 Use Photos to add a photo or a gallery of photos to an article, or to include photos in the body text. Photos are kept separately, as an organized library of high resolution photos, and resized as needed.
 
+## How to install and configure
+
+The plug-in requires `Pillow`: the Python Imaging Library and optionally `Piexif`, whose installation are outside the scope of this document.
+
+The plug-in resizes the referred photos, and generates thumbnails for galleries and associated photos, based on the following configuration and default values:
+
+`PHOTO_LIBRARY = "~/Pictures"`
+:	Absolute path to the folder where the original photos are kept, organized in sub-folders.
+
+`PHOTO_GALLERY = (1024, 768, 80)`
+:	For photos in galleries, maximum width and height, plus JPEG quality as a percentage. This would typically be the size of the photo displayed when the reader clicks a thumbnail.
+
+`PHOTO_ARTICLE = (760, 506, 80)`
+:	For photos associated with articles, maximum width, height, and quality. The maximum size would typically depend on the needs of the theme. 760px is suitable for the theme `notmyidea`.
+
+`PHOTO_THUMB = (192, 144, 60)`
+:	For thumbnails, maximum width, height, and quality.
+
+`PHOTO_RESIZE_JOBS = 5`
+: Number of parallel resize jobs to be run. Defaults to 1.
+
+`PHOTO_WATERMARK = True`
+: Adds a watermark to all photos in articles and pages. Defaults to using your site name.
+
+`PHOTO_WATERMARK_TEXT' = SITENAME`
+: Allow the user to change the watermark text or remove it completely. By default it uses [SourceCodePro-Bold](http://www.adobe.com/products/type/font-information/source-code-pro-readme.html) as the font.
+
+`PHOTO_WATERMARK_IMG = ''`
+: Allows the user to add an image in addition to or as the only watermark. Set the variable to the location.
+
+**The following features require the piexif library**
+`PHOTO_EXIF_KEEP = True`
+: Keeps the exif of the input photo.
+
+`PHOTO_EXIF_REMOVE_GPS = True`
+: Removes any GPS information from the files exif data.
+
+`PHOTO_EXIF_COPYRIGHT = 'COPYRIGHT'`
+: Attaches an author and a license to the file. Choices include:
+	- `COPYRIGHT`: Copyright
+	- `CC0`: Public Domain
+	- `CC-BY-NC-ND`: Creative Commons Attribution-NonCommercial-NoDerivatives
+	- `CC-BY-NC-SA`: Creative Commons Attribution-NonCommercial-ShareAlike
+	- `CC-BY`: Creative Commons Attribution
+	- `CC-BY-SA`: Creative Commons Attribution-ShareAlike
+	- `CC-BY-NC`: Creative Commons Attribution-NonCommercial
+	- `CC-BY-ND`: Creative Commons Attribution-NoDerivatives
+
+`PHOTO_EXIF_COPYRIGHT_AUTHOR = 'Your Name Here'`
+: Adds an author name to the photo's exif and copyright statement. Defaults to `AUTHOR` value from the `pelicanconf.py`
+
+The plug-in automatically resizes the photos and publishes them to the following output folder:
+
+    ./output/photos
+
+**WARNING:** The plug-in can take hours to resize 40,000 photos, therefore, photos and thumbnails are only generated once. Clean the output folders to regenerate the resized photos again.
+
 ## How to use
 
 Maintain an organized library of high resolution photos somewhere on disk, using folders to group related images. The default path `~/Pictures` is convenient for Mac OS X users.
@@ -11,6 +68,7 @@ Maintain an organized library of high resolution photos somewhere on disk, using
 * To use an image in the body of the text, just use the syntax `{photo}folder/image.jpg` instead of the usual `{filename}/images/image.jpg`.
 * To associate an image with an article, add the metadata field `image: {photo}folder/image.jpg` to an article. Use associated images to improve navigation. For compatibility, the syntax `image: {filename}/images/image.jpg` is also accepted.
 
+### Exif, Captions, and Blacklists
 Folders of photos may optionally have three text files, where each line describes one photo. You can use the `#` to comment out a line. Generating these optional files is left as an exercise for the reader (but consider using Phil Harvey's [exiftool](http://www.sno.phy.queensu.ca/~phil/exiftool/)). See below for one method of extracting exif data.
 
 `exif.txt`
@@ -34,7 +92,7 @@ Folders of photos may optionally have three text files, where each line describe
 	this-one-will-be-skipped-too.jpg
 	# but-this-file-will-NOT-be-skipped.jpg
 	this-one-will-be-also-skipped.jpg
-	
+
 
 Here is an example Markdown article that shows the three use cases:
 
@@ -45,41 +103,7 @@ Here is an example Markdown article that shows the three use cases:
 	Here are my best photos, taken with my favorite camera:
 	![]({photo}mybag/camera.jpg).
 
-## How to install and configure
-
-The plug-in requires Pillow, the Python Imaging Library, whose installation is outside the scope of this document.
-
-The plug-in resizes the referred photos, and generates thumbnails for galleries and associated photos, based on the following configuration and default values:
-
-`PHOTO_LIBRARY = "~/Pictures"`
-:	Absolute path to the folder where the original photos are kept, organized in sub-folders.
-
-`PHOTO_GALLERY = (1024, 768, 80)`
-:	For photos in galleries, maximum width and height, plus JPEG quality as a percentage. This would typically be the size of the photo displayed when the reader clicks a thumbnail.
-
-`PHOTO_ARTICLE = ( 760, 506, 80)`
-:	For photos associated with articles, maximum width, height, and quality. The maximum size would typically depend on the needs of the theme. 760px is suitable for the theme `notmyidea`.
-
-`PHOTO_THUMB = (192, 144, 60)`
-:	For thumbnails, maximum width, height, and quality.
-
-`PHOTO_RESIZE_JOBS = 5`
-: Number of parallel resize jobs to be run. Defaults to 1.
-
-`PHOTO_WATERMARK = True`
-: Adds a watermark to all photos in articles and pages. Defaults to using your site name.
-
-`PHOTO_WATERMARK_TEXT' = SITENAME`
-: Allow the user to change the watermark text or remove it completely. By default it uses [SourceCodePro-Bold](http://www.adobe.com/products/type/font-information/source-code-pro-readme.html) as the font.
-
-`PHOTO_WATERMARK_IMG = ''`
-: Allows the user to add an image in addition to or as the only watermark. Set the variable to the location.
-
-The plug-in automatically resizes the photos and publishes them to the following output folder:
-
-    ./output/photos
-
-**WARNING:** The plug-in can take hours to resize 40,000 photos, therefore, photos and thumbnails are only generated once. Clean the output folders to regenerate the resized photos again.
+The default behavior of the Photos plugin removes the exif information from the file. If you would like to keep the exif information, you can install the `piexif` library for python and add the following settings to keep some or all of the exif information. This feature is not a replacement for the `exif.txt` feature but in addition to that feature. This feature currently only works with jpeg input files.
 
 ## How to change the Jinja templates
 
@@ -221,7 +245,7 @@ If you are using bootstrap, the following code is an example of how one could cr
 
 ## Exiftool example
 
-You can add the following stanza to your fab file if you are using fabric to generate the appropriate text files for your galleries. You need to set the location of `Exiftool` control files.
+You can add the following stanza to your fab file if you are using `fabric` to generate the appropriate text files for your galleries. You need to set the location of `Exiftool` control files.
 
 ```Python
 def photo_gallery_gen(location):
