@@ -51,6 +51,7 @@ import warnings
 import re
 import os
 from functools import partial
+from io import open
 
 from .mdx_liquid_tags import LiquidTags
 
@@ -324,7 +325,7 @@ def notebook(preprocessor, tag, markup):
                             **subcell_kwarg)
 
     # read and parse the notebook
-    with open(nb_path) as f:
+    with open(nb_path, encoding='utf-8') as f:
         nb_text = f.read()
         if IPYTHON_VERSION < 3:
             nb_json = IPython.nbformat.current.reads_json(nb_text)
