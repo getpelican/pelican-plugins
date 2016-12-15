@@ -32,7 +32,7 @@ PLUGIN_PATHS = ['../../']
 PLUGINS = ['i18n_subsites']
 
 THEME = 'localized_theme'
-JINJA_EXTENSIONS = ['jinja2.ext.i18n']
+JINJA_ENVIRONMENT = {'extensions': ['jinja2.ext.i18n']}
 
 from blinker import signal
 tmpsig = signal('tmpsig')
