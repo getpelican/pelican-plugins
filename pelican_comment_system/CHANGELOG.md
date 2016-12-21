@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## x.x.x – TBA
+## 1.2.2 – 2016-12-19
+### Fixed
+- Correct jQuery expression in cancelReply method  [PR #820](https://github.com/getpelican/pelican-plugins/pull/820)
+
+## 1.2.1 – 2016-09-22
 ### Fixed
 - Add support for the autoreload mode of pelican [PR #782](https://github.com/getpelican/pelican-plugins/pull/782) [Fixes pelican#1949](https://github.com/getpelican/pelican/issues/1949)
 
