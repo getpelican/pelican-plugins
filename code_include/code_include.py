@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 import os.path
 
+import docutils.utils  # Workaround for docutils circular import bug
+                       # in 0.10: http://sourceforge.net/p/docutils/bugs/214/
 from docutils import io, nodes, statemachine, utils
 from docutils.utils.error_reporting import SafeString, ErrorString
 from docutils.parsers.rst import directives, Directive
