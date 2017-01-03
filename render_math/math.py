@@ -168,7 +168,7 @@ def process_settings(pelicanobj):
 
         if key == 'process_summary' and isinstance(value, bool):
             if value and BeautifulSoup is None:
-                print("BeautifulSoup4 is needed for summaries to be processed by render_math\nPlease install it")
+                logger.warn("BeautifulSoup4 is needed for summaries to be processed by render_math\nPlease install it")
                 value = False
 
             mathjax_settings[key] = value
@@ -265,10 +265,10 @@ def configure_typogrify(pelicanobj, mathjax_settings):
         pelicanobj.settings['TYPOGRIFY'] = False  # disable Typogrify
 
         if isinstance(e, ImportError):
-            print("\nTypogrify is not installed, so it is being ignored.\nIf you want to use it, please install via: pip install typogrify\n")
+            logger.warn("\nTypogrify is not installed, so it is being ignored.\nIf you want to use it, please install via: pip install typogrify\n")
 
         if isinstance(e, TypeError):
-            print("\nA more recent version of Typogrify is needed for the render_math module.\nPlease upgrade Typogrify to the latest version (anything equal or above version 2.0.7 is okay).\nTypogrify will be turned off due to this reason.\n")
+            logger.warn("\nA more recent version of Typogrify is needed for the render_math module.\nPlease upgrade Typogrify to the latest version (anything equal or above version 2.0.7 is okay).\nTypogrify will be turned off due to this reason.\n")
 
 def process_mathjax_script(mathjax_settings):
     """Load the mathjax script template from file, and render with the settings"""
