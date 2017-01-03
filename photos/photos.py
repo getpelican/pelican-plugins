@@ -59,6 +59,8 @@ def initialized(pelican):
     DEFAULT_CONFIG.setdefault('PHOTO_EXIF_AUTOROTATE', True)
     DEFAULT_CONFIG.setdefault('PHOTO_EXIF_COPYRIGHT', False)
     DEFAULT_CONFIG.setdefault('PHOTO_EXIF_COPYRIGHT_AUTHOR', DEFAULT_CONFIG['SITENAME'])
+    DEFAULT_CONFIG.setdefault('PHOTO_LIGHTBOX_GALLERY_ATTR', 'data-lightbox')
+    DEFAULT_CONFIG.setdefault('PHOTO_LIGHTBOX_CAPTION_ATTR', 'data-title')
 
     DEFAULT_CONFIG['queue_resize'] = {}
     DEFAULT_CONFIG['created_galleries'] = {}
@@ -83,6 +85,8 @@ def initialized(pelican):
         pelican.settings.setdefault('PHOTO_EXIF_AUTOROTATE', True)
         pelican.settings.setdefault('PHOTO_EXIF_COPYRIGHT', False)
         pelican.settings.setdefault('PHOTO_EXIF_COPYRIGHT_AUTHOR', pelican.settings['AUTHOR'])
+        pelican.settings.setdefault('PHOTO_LIGHTBOX_GALLERY_ATTR', 'data-lightbox')
+        pelican.settings.setdefault('PHOTO_LIGHTBOX_CAPTION_ATTR', 'data-title')
 
 
 def read_notes(filename, msg=None):
@@ -311,37 +315,115 @@ def detect_content(content):
     def replacer(m):
         what = m.group('what')
         value = m.group('value')
-        origin = m.group('path')
+        tag = m.group('tag')
+        output = m.group(0)
 
-        if what == 'photo':
+        if what in ('photo', 'lightbox'):
             if value.startswith('/'):
                 value = value[1:]
+
             path = os.path.join(
                 os.path.expanduser(settings['PHOTO_LIBRARY']),
-                value)
-            if not os.path.isfile(path):
-                logger.error('photos: No photo %s', path)
+                value
+            )
+
+            if os.path.isfile(path):
+                photo_prefix = os.path.splitext(value)[0].lower()
+
+                if what == 'photo':
+                    photo_article = photo_prefix + 'a.jpg'
+                    enqueue_resize(
+                        path,
+                        os.path.join('photos', photo_article),
+                        settings['PHOTO_ARTICLE']
+                    )
+
+                    output = ''.join((
+                        '<',
+                        m.group('tag'),
+                        m.group('attrs_before'),
+                        m.group('src'),
+                        '=',
+                        m.group('quote'),
+                        os.path.join(settings['SITEURL'], 'photos', photo_article),
+                        m.group('quote'),
+                        m.group('attrs_after'),
+                    ))
+
+                elif what == 'lightbox' and tag == 'img':
+                    photo_gallery = photo_prefix + '.jpg'
+                    enqueue_resize(
+                        path,
+                        os.path.join('photos', photo_gallery),
+                        settings['PHOTO_GALLERY']
+                    )
+
+                    photo_thumb = photo_prefix + 't.jpg'
+                    enqueue_resize(
+                        path,
+                        os.path.join('photos', photo_thumb),
+                        settings['PHOTO_THUMB']
+                    )
+
+                    lightbox_attr_list = ['']
+
+                    gallery_name = value.split('/')[0]
+                    lightbox_attr_list.append('{}="{}"'.format(
+                        settings['PHOTO_LIGHTBOX_GALLERY_ATTR'],
+                        gallery_name
+                    ))
+
+                    captions = read_notes(
+                        os.path.join(os.path.dirname(path), 'captions.txt'),
+                        msg = 'photos: No captions for gallery'
+                    )
+                    caption = captions.get(os.path.basename(path)) if captions else None
+                    if caption:
+                        lightbox_attr_list.append('{}="{}"'.format(
+                            settings['PHOTO_LIGHTBOX_CAPTION_ATTR'],
+                            caption
+                        ))
+
+                    lightbox_attrs = ' '.join(lightbox_attr_list)
+
+                    output = ''.join((
+                        '<a href=',
+                        m.group('quote'),
+                        os.path.join(settings['SITEURL'], 'photos', photo_gallery),
+                        m.group('quote'),
+                        lightbox_attrs,
+                        '><img',
+                        m.group('attrs_before'),
+                        'src=',
+                        m.group('quote'),
+                        os.path.join(settings['SITEURL'], 'photos', photo_thumb),
+                        m.group('quote'),
+                        m.group('attrs_after'),
+                        '</a>'
+                    ))
+
             else:
-                photo = os.path.splitext(value)[0].lower() + 'a.jpg'
-                origin = os.path.join(settings['SITEURL'], 'photos', photo)
-                enqueue_resize(
-                    path,
-                    os.path.join('photos', photo),
-                    settings['PHOTO_ARTICLE'])
-        return ''.join((m.group('markup'), m.group('quote'), origin,
-                        m.group('quote')))
+                logger.error('photos: No photo %s', path)
+
+        return output
 
     if hrefs is None:
         regex = r"""
-            (?P<markup><\s*[^\>]*  # match tag with src and href attr
-                (?:href|src)\s*=)
-
-            (?P<quote>["\'])      # require value to be quoted
+            <\s*
+            (?P<tag>[^\s\>]+)  # detect the tag
+            (?P<attrs_before>[^\>]*)
+            (?P<src>href|src)  # match tag with src and href attr
+            \s*=
+            (?P<quote>["\'])  # require value to be quoted
             (?P<path>{0}(?P<value>.*?))  # the url value
-            \2""".format(content.settings['INTRASITE_LINK_REGEX'])
+            (?P=quote)
+            (?P<attrs_after>[^\>]*>)
+        """.format(
+            content.settings['INTRASITE_LINK_REGEX']
+        )
         hrefs = re.compile(regex, re.X)
 
-    if content._content and '{photo}' in content._content:
+    if content._content and ('{photo}' in content._content or '{lightbox}' in content._content):
         settings = content.settings
         content._content = hrefs.sub(replacer, content._content)
 
