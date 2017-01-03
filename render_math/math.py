@@ -37,6 +37,9 @@ from pelican import signals, generators
 from jinja2 import Environment, PackageLoader
 import json
 
+import logging
+logger = logging.getLogger(__name__)
+
 jinja_env = Environment(
     loader=PackageLoader('render_math', 'templates'),
     trim_blocks=True,
@@ -51,7 +54,13 @@ except ImportError as e:
 try:
     from . pelican_mathjax_markdown_extension import PelicanMathJaxExtension
 except ImportError as e:
+    logger.warning(
+        '`github_activity` failed to load dependency'
+        '`PelicanMathJaxExtension`. '
+        'Mathjax rendering will not be available for markdown.'
+    )
     PelicanMathJaxExtension = None
+
 
 def process_settings(pelicanobj):
     """Sets user specified MathJax settings (see README for more details)"""
