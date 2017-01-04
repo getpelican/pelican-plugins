@@ -57,6 +57,18 @@ class TestRepresentativeImage(unittest.TestCase):
         self.assertEqual(article.featured_image, TEST_CUSTOM_IMAGE_URL)
         self.assertEqual(article.summary, TEST_SUMMARY_WITHOUTIMAGE)
 
+    def test_extract_image_with_indexing(self):
+        args = {
+            'content': TEST_CONTENT,
+            'metadata': {
+                'summary': TEST_SUMMARY_WITHOUTIMAGE,
+                'image': '0'
+            },
+        }
+
+        article = Article(**args)
+        self.assertEqual(article.featured_image, TEST_CONTENT_IMAGE_URL
+
 if __name__ == '__main__':
     unittest.main()
         

@@ -9,8 +9,12 @@ def images_extraction(instance):
     representativeImage = None
     if type(instance) in (Article, Draft, Page):
         if 'image' in instance.metadata:
-            representativeImage = instance.metadata['image']
-
+            try:
+                ix = int(instance.metadata['image'])
+            except ValueError:
+                representativeImage = instance.metadata['image']
+        else:
+            ix = 0
         # Process Summary:
         # If summary contains images, extract one to be the representativeImage and remove images from summary
         soup = BeautifulSoup(instance.summary, 'html.parser')
@@ -26,9 +30,11 @@ def images_extraction(instance):
         # If there are no image in summary, look for it in the content body
         if not representativeImage:
             soup = BeautifulSoup(instance._content, 'html.parser')
-            imageTag = soup.find('img')
+            imageTag = soup.find_all('img')
             if imageTag:
-                representativeImage = imageTag['src']
+                if len(imageTag) < (ix + 1):
+                    raise ValueError('Image index exceeds number of images in document')
+                representativeImage = imageTag[ix]['src']
 
         # Set the attribute to content instance
         instance.featured_image = representativeImage
