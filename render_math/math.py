@@ -269,10 +269,17 @@ def mathjax_for_markdown(pelicanobj, mathjax_script, mathjax_settings):
 
     # Instantiate markdown extension and append it to the current extensions
     try:
-        if isinstance(pelicanobj.settings.get('MD_EXTENSIONS'), list): # pelican 3.6.3 and earlier
-            pelicanobj.settings['MD_EXTENSIONS'].append(PelicanMathJaxExtension(config))
+        # pelican 3.6.3 and earlier
+        if isinstance(pelicanobj.settings.get('MD_EXTENSIONS'), list):
+            pelicanobj.settings['MD_EXTENSIONS'].append(
+                PelicanMathJaxExtension(config)
+            )
         else:
-            pelicanobj.settings['MARKDOWN']['extension_configs'].update({PelicanMathJaxExtension(config):{}})
+            pelicanobj.settings['MARKDOWN'].setdefault(
+                'extensions', []
+            ).append(
+                PelicanMathJaxExtension(config)
+            )
     except:
         sys.excepthook(*sys.exc_info())
         sys.stderr.write("\nError - the pelican mathjax markdown extension failed to configure. MathJax is non-functional.\n")
