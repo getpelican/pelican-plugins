@@ -68,7 +68,7 @@ class TestWebAssetsRelativeURLS(TestWebAssets):
         # Test that the Jinja2 extension was correctly added.
 
         from webassets.ext.jinja2 import AssetsExtension
-        self.assertIn(AssetsExtension, self.settings['JINJA_EXTENSIONS'])
+        self.assertIn(AssetsExtension, self.settings['JINJA_ENVIRONMENT']['extensions'])
 
     def test_compilation(self):
         # Compare the compiled css with the reference.

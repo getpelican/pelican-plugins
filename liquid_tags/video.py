@@ -14,9 +14,11 @@ Example
 
 Output
 ------
-<video width='100%' height='480' preload='none' controls poster='http://site.com/poster-frame.jpg'>
-   <source src='http://site.com/video.mp4' type='video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"'/>
-</video>
+<span class="videobox">
+	<video width='100%' height='480' preload='none' controls poster='http://site.com/poster-frame.jpg'>
+	   <source src='http://site.com/video.mp4' type='video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"'/>
+	</video>
+</span>
 
 [1] https://github.com/imathis/octopress/blob/master/plugins/video_tag.rb
 """
@@ -50,7 +52,7 @@ def video(preprocessor, tag, markup):
 
     if any(videos):
         video_out = """
-        <div class="videobox">
+        <span class="videobox">
             <video width="{width}" height="{height}" preload="none" controls poster="{poster}">
         """.format(width=width, height=height, poster=poster).strip()
 
@@ -61,7 +63,7 @@ def video(preprocessor, tag, markup):
                                  "{0}".format(ext))
             video_out += ("<source src='{0}' "
                           "{1}>".format(vid, VID_TYPEDICT[ext]))
-        video_out += "</video></div>"
+        video_out += "</video></span>"
     else:
         raise ValueError("Error processing input, "
                          "expected syntax: {0}".format(SYNTAX))

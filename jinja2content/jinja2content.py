@@ -29,9 +29,17 @@ class JinjaMarkdownReader(MarkdownReader):
 
         loaders = [FileSystemLoader(_dir) for _dir
                    in local_dirs + [theme_dir]]
-        self.env = Environment(trim_blocks=True, lstrip_blocks=True,
-                               extensions=self.settings['JINJA_EXTENSIONS'],
-                               loader=ChoiceLoader(loaders))
+        if 'JINJA_ENVIRONMENT' in self.settings: # pelican 3.7
+            jinja_environment = self.settings['JINJA_ENVIRONMENT']
+        else:
+            jinja_environment = {
+                'trim_blocks': True,
+                'lstrip_blocks': True,
+                'extensions': self.settings['JINJA_EXTENSIONS']
+            }
+        self.env = Environment(
+            loader=ChoiceLoader(loaders),
+            **jinja_environment)
 
     def read(self, source_path):
         """Parse content and metadata of markdown files.
@@ -39,8 +47,9 @@ class JinjaMarkdownReader(MarkdownReader):
         Rendering them as jinja templates first.
 
         """
+
         self._source_path = source_path
-        self._md = Markdown(extensions=self.extensions)
+        self._md = Markdown(extensions=self.settings['MARKDOWN']['extensions'])
 
         with pelican_open(source_path) as text:
             text = self.env.from_string(text).render()

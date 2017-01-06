@@ -270,7 +270,13 @@ def install_templates_translations(generator):
     Only if the 'jinja2.ext.i18n' jinja2 extension is enabled
     the translations for the current DEFAULT_LANG are installed.
     '''
-    if 'jinja2.ext.i18n' in generator.settings['JINJA_EXTENSIONS']:
+    if 'JINJA_ENVIRONMENT' in generator.settings: # pelican 3.7+
+        jinja_extensions = generator.settings['JINJA_ENVIRONMENT'].get(
+            'extensions', [])
+    else:
+        jinja_extensions = generator.settings['JINJA_EXTENSIONS']
+
+    if 'jinja2.ext.i18n' in jinja_extensions:
         domain = generator.settings.get('I18N_GETTEXT_DOMAIN', 'messages')
         localedir = generator.settings.get('I18N_GETTEXT_LOCALEDIR')
         if localedir is None:
