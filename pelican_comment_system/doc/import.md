@@ -1,16 +1,16 @@
-# Importing Commnets
+# Importing Comments
 
-**Note**: Contributrions to this section are welcomed!
+**Note**: Contributions to this section are welcomed!
 
-When moving to Pelican and the Pelican Commnet System, it may be desireable to move over your comments as well.
+When moving to Pelican and the Pelican Comment System, it may be desirable to move over your comments as well.
 
-The scritps to support this are found in the `import` directory.
+The scripts to support this are found in the `import` directory.
 
 ## Blogger
 
 Blogger is good in that it will give you an export of everything, but the bad news is it's one giant XML file. XML is great if you're a computer, but a bit of a pain if you're a human. 
 
-The code I used to export my comments from Blogger is found at [blogger_comment_export.py](https://github.com/MinchinWeb/pelican-plugins/tree/master/pelican_comment_system/import/blogger_comment_export.py).
+The code I used to export my comments from Blogger is found at [blogger_comment_export.py](../import/blogger_comment_export.py).
 
 To use it
 yourself, you will need to first adjust the constants at the beginning of the 
@@ -22,7 +22,7 @@ Comments will be exported into folders matching
 the Blogger slug of the post. The email for all authors will be `noreply@blogger.com`. The other file created will be `authors.txt`
 which lists the various comment authors, and a link to the profile
 picture used on Blogger. These pictures will need to be manually downloaded
-and then confiugred using the `PELICAN_COMMENT_SYSTEM_AUTHORS` setting.
+and then configured using the `PELICAN_COMMENT_SYSTEM_AUTHORS` setting.
 In my case, that looked like this:
 
 ```python
