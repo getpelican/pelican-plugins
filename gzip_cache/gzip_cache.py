@@ -42,6 +42,7 @@ EXCLUDE_TYPES = [
     # Internally-compressed fonts. gzip can often shave ~50 more bytes off,
     # but it's not worth it.
     '.woff',
+    '.woff2',
 ]
 
 COMPRESSION_LEVEL = 9 # Best Compression
