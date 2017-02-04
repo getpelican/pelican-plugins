@@ -33,7 +33,8 @@ pip install beautifulsoup4
 
 How Tipue Search works
 =========================
-
+JSON mode
+---------
 Tipue Search serializes the generated HTML into JSON. Format of JSON is as follows
 
 ```python
@@ -57,10 +58,48 @@ Tipue Search serializes the generated HTML into JSON. Format of JSON is as follo
 
 JSON is written to file `tipuesearch_content.json` which is created in the root of `output` directory.
 
+Static mode
+-----------
+>Static mode is the default mode for Tipue Search, and also the fastest. We recommend using Static mode wherever possible.
+
+Tipue Search serializes the generated HTML into 'tipuesearch_content.js'.
+
+>Static mode uses site content stored in the tipuesearch_content.js file. It contains the search data as a JavaScript object.
+
+__JS__
+
+```javascript
+var tipuesearch = {
+  "pages": [
+    {
+      "title": "Tipue",
+      "text": "",
+      "tags": "jQuery HTML5 CSS",
+      "url": "http://www.tipue.com"
+    },
+    {
+      "title": "Tipue Search, a site search engine jQuery plugin",
+      "text": "Tipue Search is a site search engine jQuery plugin. It's free, open source, responsive and fast. Tipue Search only needs a browser that supports jQuery. It doesn't need MySQL or similar. In Static mode it doesn't even need a web server.",
+      "tags": "JavaScript",
+      "url": "http://www.tipue.com/search"
+    },
+    {
+      "title": "Tipue Search Documentation",
+      "text": "Tipue Search is a site search engine jQuery plugin. It's free, open source, responsive and fast. Tipue Search uses various modes for loading content. Static mode uses a JavaScript object, while JSON mode uses JSON. Live mode grabs content from a list of pages dynamically.",
+      "tags": "docs",
+      "url": "http://www.tipue.com/search/docs"
+    }
+  ]
+};
+```
+File `tipuesearch_content.js` is created in the root of `output` directory.
+
 How to use
 ==========
 
 To utilize JSON Search mode, your theme needs to have Tipue Search properly configured in it. [Official documentation](http://www.tipue.com/search/docs/#json) has the required details.
+
+To utilize Static Serch mode. [Official documentation](http://www.tipue.com/search/docs/?d=1) has the required details.
 
 Pelican [Elegant Theme](https://github.com/talha131/pelican-elegant) and [Plumage
 theme](https://github.com/kdeldycke/plumage) have Tipue Search configured. You can view their
