@@ -201,7 +201,7 @@ def process_summary(article):
     """Ensures summaries are not cut off. Also inserts
     mathjax script so that math will be rendered"""
 
-    summary = article._get_summary()
+    summary = article.get_summary(article.get_siteurl())
     summary_parsed = BeautifulSoup(summary, 'html.parser')
     math = summary_parsed.find_all(class_='math')
 
