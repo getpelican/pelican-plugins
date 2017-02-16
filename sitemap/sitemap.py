@@ -137,6 +137,9 @@ class SitemapGenerator(object):
 
         if getattr(page, 'status', 'published') != 'published':
             return
+           
+        if getattr(page, 'private', 'False') == 'True':
+            return
 
         # We can disable categories/authors/etc by using False instead of ''
         if not page.save_as:
