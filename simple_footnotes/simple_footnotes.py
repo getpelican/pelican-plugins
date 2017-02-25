@@ -3,6 +3,7 @@
 
 from pelican import signals
 import html5lib
+import six
 
 RAW_FOOTNOTE_CONTAINERS = ["code"]
 
@@ -56,7 +57,7 @@ def parse_for_footnotes(article_or_page_generator):
                 numbera = dom.createElement(u"a")
                 numbera.setAttribute(u"href", u"#%s" % fnid)
                 numbera.setAttribute(u"class", u"simple-footnote")
-                numbera.appendChild(dom.createTextNode(unicode(count)))
+                numbera.appendChild(dom.createTextNode(six.text_type(count)))
                 txt = getText(footnote, recursive=True).replace(u"\n", u" ")
                 numbera.setAttribute(u"title", txt)
                 number.appendChild(numbera)
