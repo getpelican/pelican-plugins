@@ -7,7 +7,8 @@ import six
 
 RAW_FOOTNOTE_CONTAINERS = ["code"]
 
-def getText(node, recursive = False):
+
+def getText(node, recursive=False):
     """Get all the text associated with this node.
        With recursive == True, all text from child nodes is retrieved."""
     L = [u'']
@@ -17,8 +18,9 @@ def getText(node, recursive = False):
         else:
             if not recursive:
                 return None
-        L.append(getText(n) )
+        L.append(getText(n))
     return u''.join(L)
+
 
 def sequence_gen(genlist):
     for gen in genlist:
@@ -28,12 +30,13 @@ def sequence_gen(genlist):
 
 def parse_for_footnotes(article_or_page_generator):
     all_content = [
-      getattr(article_or_page_generator, attr, None) \
-      for attr in [u'articles',u'drafts',u'pages'] ]
-    all_content = [ x for x in all_content if x is not None ]
+        getattr(article_or_page_generator, attr, None) \
+        for attr in [u'articles', u'drafts', u'pages']]
+    all_content = [x for x in all_content if x is not None]
     for article in sequence_gen(all_content):
         if u"[ref]" in article._content and u"[/ref]" in article._content:
-            content = article._content.replace(u"[ref]", u"<x-simple-footnote>").replace(u"[/ref]", u"</x-simple-footnote>")
+            content = article._content.replace(u"[ref]", u"<x-simple-footnote>").replace(u"[/ref]",
+                                                                                         u"</x-simple-footnote>")
             parser = html5lib.HTMLParser(tree=html5lib.getTreeBuilder(u"dom"))
             dom = parser.parse(content)
             endnotes = []
@@ -80,8 +83,9 @@ def parse_for_footnotes(article_or_page_generator):
                     e.parentNode.removeChild(e)
                 dom.getElementsByTagName(u"body")[0].appendChild(ol)
                 s = html5lib.serializer.HTMLSerializer(omit_optional_tags=False, quote_attr_values='legacy')
-                output_generator = s.serialize(html5lib.treewalkers.getTreeWalker(u"dom")(dom.getElementsByTagName(u"body")[0]))
-                article._content =  u"".join(list(output_generator)).replace(
+                output_generator = s.serialize(
+                    html5lib.treewalkers.getTreeWalker(u"dom")(dom.getElementsByTagName(u"body")[0]))
+                article._content = u"".join(list(output_generator)).replace(
                     u"<x-simple-footnote>", u"[ref]").replace(u"</x-simple-footnote>", u"[/ref]").replace(
                     u"<body>", u"").replace(u"</body>", u"")
 
