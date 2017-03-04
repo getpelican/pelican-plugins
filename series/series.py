@@ -36,7 +36,7 @@ def aggregate_series(generator):
 
     # This uses items() which on Python2 is not a generator
     # but we are dealing with a small amount of data so
-    # there shouldn't be performance issues =)
+    # there shouldn't be performance issues.
     for series_name, series_articles in series.items():
         # This is not DRY but very simple to understand
         forced_order_articles = [
@@ -45,8 +45,8 @@ def aggregate_series(generator):
         date_order_articles = [
             art_tup for art_tup in series_articles if art_tup[0] is None]
 
-        forced_order_articles.sort(key=itemgetter(0))
-        date_order_articles.sort(key=itemgetter(1))
+        forced_order_articles.sort(key=lambda x: int(x[0]))
+        date_order_articles.sort(key=lambda x: x[1])
 
         all_articles = forced_order_articles + date_order_articles
         ordered_articles = [art_tup[2] for art_tup in all_articles]
