@@ -57,7 +57,8 @@ class Tipue_Search_JSON_Generator(object):
         node = {'title': page_title,
                 'text': page_text,
                 'tags': page_category,
-                'url': page_url}
+                'url': page_url,
+                'loc': page_url} # changed from 'url' following http://blog.siphos.be/2015/08/updates-on-my-pelican-adventure/ (an update to Pelican made it not work, because the update (e.g., in the theme folder, static/tipuesearch/tipuesearch.js is looking for the 'loc' attribute.
 
         self.json_nodes.append(node)
 
