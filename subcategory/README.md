@@ -91,3 +91,10 @@ to your Pelican configuration file:
 … and this will create a feed with `fullurl` of the subcategory. For example:
 
     feeds/category/subcategory.atom.xml
+
+Article paths can use new metadata values: subpath & suburl
+
+    ARTICLE_SAVE_AS = '{subpath}/articles/{slug}.html'
+    ARTICLE_URL = '{suburl}/articles/{slug}.html'
+
+    
