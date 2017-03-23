@@ -91,3 +91,11 @@ to your Pelican configuration file:
 … and this will create a feed with `fullurl` of the subcategory. For example:
 
     feeds/category/subcategory.atom.xml
+
+Article urls can also use the values of `subpath` and `suburl` in their
+definitions. These are equivalent to the `fullurl` and `savepath` of the most
+specific subcategory. If you have articles that don't have subcategories these
+values are set to the category slug.
+
+    ARTICLE_SAVE_AS = os.path.join('{subpath}' 'articles' '{slug}.html')
+    ARTICLE_URL = '{suburl}/articles/{slug}.html'
