@@ -100,7 +100,8 @@ def process_settings(pelicanobj):
     # http://docs.mathjax.org/en/latest/output.html#automatic-line-breaking
     mathjax_settings['linebreak_automatic'] = 'false'
 
-    # latex extensions that can be embedded inside mathjax - see # http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-extensions
+    # latex extensions that can be embedded inside mathjax - see
+    # http://docs.mathjax.org/en/latest/tex.html#tex-and-latex-extensions
     mathjax_settings['tex_extensions'] = ''
 
     # Tries to make displayed math responsive
@@ -122,7 +123,7 @@ def process_settings(pelicanobj):
 
     # Source for MathJax
     mathjax_settings['source'] = (
-        "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"
+        "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"
         "?config=TeX-AMS-MML_HTMLorMML'"
     )
 
