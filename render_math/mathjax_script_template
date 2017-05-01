@@ -10,11 +10,9 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
     }}
 
     var mathjaxscript = document.createElement('script');
-    var location_protocol = ({force_tls}) ? 'https' : document.location.protocol;
-    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = location_protocol + {source};
+    mathjaxscript.src = {source};
     mathjaxscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({{" +
         "    config: ['MMLorHTML.js']," +

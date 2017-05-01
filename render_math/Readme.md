@@ -95,8 +95,6 @@ is less than `responsive_break` (see below) and if so, sets `align` to `left`, `
 when setting `responsive_align` to `True`. **Default Value**: 768
  * `process_summary`: [boolean] ensures math will render in summaries and fixes math in that were cut off.
 Requires [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) be installed. **Default Value**: `True`
- * `force_tls`: [boolean] forces mathjax script to load from cdn using https. If set to false, will use document.location.protocol
-**Default Value**: `False`
  * `message_style`: [string] This value controls the verbosity of the messages in the lower left-hand corner. Set it to `None` to eliminate all messages.
 **Default Value**: normal
 

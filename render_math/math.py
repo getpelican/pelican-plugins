@@ -99,9 +99,6 @@ def process_settings(pelicanobj):
 
     # will fix up summaries if math is cut off. Requires BeautifulSoup.
     mathjax_settings['process_summary'] = BeautifulSoup is not None
-    # will force mathjax to be served by https
-    # if set as False, it will only use https if site is served using https
-    mathjax_settings['force_tls'] = 'false'
 
     # This value controls the verbosity of the messages
     # in the lower left-hand corner.
@@ -109,7 +106,7 @@ def process_settings(pelicanobj):
     mathjax_settings['message_style'] = 'normal'
 
     # Source for MathJax
-    mathjax_settings['source'] = "'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
+    mathjax_settings['source'] = "'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
 
     # Get the user specified settings
     try:
@@ -191,9 +188,6 @@ def process_settings(pelicanobj):
             mathjax_settings[key] = value
 
         if key == 'responsive' and isinstance(value, bool):
-            mathjax_settings[key] = 'true' if value else 'false'
-
-        if key == 'force_tls' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
 
         if key == 'responsive_break' and isinstance(value, int):
@@ -318,9 +312,17 @@ def mathjax_for_markdown(pelicanobj, mathjax_script, mathjax_settings):
 
     # Instantiate markdown extension and append it to the current extensions
     try:
-        pelicanobj.settings['MD_EXTENSIONS'].append(
-            PelicanMathJaxExtension(config)
-        )
+        # pelican 3.6.3 and earlier
+        if isinstance(pelicanobj.settings.get('MD_EXTENSIONS'), list):
+            pelicanobj.settings['MD_EXTENSIONS'].append(
+                PelicanMathJaxExtension(config)
+            )
+        else:
+            pelicanobj.settings['MARKDOWN'].setdefault(
+                'extensions', []
+            ).append(
+                PelicanMathJaxExtension(config)
+            )
     except:
         sys.excepthook(*sys.exc_info())
         sys.stderr.write("\nError - the pelican mathjax markdown extension failed to configure. MathJax is non-functional.\n")
@@ -396,7 +398,10 @@ def process_rst_and_summaries(content_generators):
 
     for generator in content_generators:
         if isinstance(generator, generators.ArticlesGenerator):
-            for article in generator.articles + generator.translations:
+            for article in (
+                    generator.articles +
+                    generator.translations +
+                    generator.drafts):
                 rst_add_mathjax(article)
                 # optionally fix truncated formulae in summaries.
                 if process_summary.mathjax_script is not None:

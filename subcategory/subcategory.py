@@ -87,6 +87,18 @@ def create_subcategories(generator):
                 parent = new_sub
                 actual_subcategories.append(parent)
         article.subcategories = actual_subcategories
+        """Add subpath and suburl to the article metadata. This allows the
+        the last subcategory's fullurl and savepath to be used when definining
+        Article URL's. If an article has no subcategories, the Category slug
+        is used instead
+        """
+        try:
+            last_subcat = article.subcategories[-1]
+            article.metadata['subpath'] = last_subcat.savepath
+            article.metadata['suburl'] = last_subcat.fullurl
+        except IndexError: #No Subcategory
+            article.metadata['subpath'] = article.category.slug
+            article.metadata['suburl'] = article.category.slug
 
 def generate_subcategories(generator, writer):
     write = partial(writer.write_file,
