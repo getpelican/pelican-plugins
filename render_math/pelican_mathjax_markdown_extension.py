@@ -11,6 +11,7 @@ citizen" of the blog
 import markdown
 from markdown.util import etree, AtomicString
 from markdown.treeprocessors import Treeprocessor
+from markdown.postprocessors import Postprocessor
 
 
 class PelicanMathJaxPattern(markdown.inlinepatterns.Pattern):
@@ -107,8 +108,8 @@ class PelicanMathJaxCorrectDisplayMath(Treeprocessor):
         return root
 
 
-class PelicanMathJaxAddJavaScript(Treeprocessor):
-    """Tree Processor for adding Mathjax JavaScript to the blog"""
+class PelicanMathJaxAddJavaScript(Postprocessor):
+    """PostProcessor for adding Mathjax JavaScript to the blog"""
 
     def __init__(self, pelican_mathjax_extension):
         self.pelican_mathjax_extension = pelican_mathjax_extension
@@ -202,7 +203,7 @@ class PelicanMathJaxExtension(markdown.Extension):
         # This must be last in the ordered dict,
         # hence it is given the position '_end'
         if self.getConfig('auto_insert'):
-            md.treeprocessors.add(
+            md.postprocessors.add(
                 'mathjax_addjavascript',
                 PelicanMathJaxAddJavaScript(self),
                 '_end')
