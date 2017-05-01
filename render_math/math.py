@@ -54,9 +54,11 @@ try:
     from . pelican_mathjax_markdown_extension import PelicanMathJaxExtension
 except ImportError as e:
     logger.warning(
-        '`render_math` failed to load dependency'
-        '`PelicanMathJaxExtension`. '
-        'Mathjax rendering will not be available for markdown.'
+        (
+            '`render_math` failed to load dependency '
+            '`PelicanMathJaxExtension` due to error {!r}. '
+            'Mathjax rendering will not be available for markdown.'
+        ).format(e)
     )
     PelicanMathJaxExtension = None
 
