@@ -9,6 +9,8 @@ Feeds can be generated for each subcategory, just like categories and tags.
 
 ##Usage##
 
+###Metadata###
+
 Subcategories are an extension to categories. Add subcategories to an article's
 category metadata using a `/` like this:
 
@@ -33,6 +35,21 @@ breadcrumb-style navigation you might try something like this:
     {% endfor %}
     </ol>
     </nav>
+
+###Subcategory folders###
+
+To specify subcategories using folders you can configure `PATH_METADATA`  
+to extract the article path (containing all category and subcategory folders) 
+into the `subcategory_path` metadata. The following settings would use all available 
+subcategories for the hierarchy:
+
+    PATH_METADATA= '(?P<subcategory_path>.*)/.*'
+
+You can limit the depth of generated subcategories by adjusting the regular expression
+to only include a specific number of path separators (`/`). For example, the following 
+would generate only a single level of subcategories regardless of the folder tree depth:
+
+    PATH_METADATA= '(?P<subcategory_path>[^/]*/[^/]*)/.*'
 
 ##Subcategory Names##
 
@@ -74,3 +91,11 @@ to your Pelican configuration file:
 … and this will create a feed with `fullurl` of the subcategory. For example:
 
     feeds/category/subcategory.atom.xml
+
+Article urls can also use the values of `subpath` and `suburl` in their
+definitions. These are equivalent to the `fullurl` and `savepath` of the most
+specific subcategory. If you have articles that don't have subcategories these
+values are set to the category slug.
+
+    ARTICLE_SAVE_AS = os.path.join('{subpath}' 'articles' '{slug}.html')
+    ARTICLE_URL = '{suburl}/articles/{slug}.html'

@@ -49,8 +49,12 @@ def get_subcategories(generator, metadata):
                 'subcategory', '{savepath}.html')
     if 'SUBCATEGORY_URL' not in generator.settings:
         generator.settings['SUBCATEGORY_URL'] = 'subcategory/{fullurl}.html'
-    
-    category_list = text_type(metadata.get('category')).split('/')
+
+    if 'subcategory_path' in metadata:
+        category_list = text_type(metadata.get('subcategory_path')).split('/')
+    else:
+        category_list = text_type(metadata.get('category')).split('/')
+
     category = (category_list.pop(0)).strip()
     category = Category(category, generator.settings)
     metadata['category'] = category
@@ -83,6 +87,18 @@ def create_subcategories(generator):
                 parent = new_sub
                 actual_subcategories.append(parent)
         article.subcategories = actual_subcategories
+        """Add subpath and suburl to the article metadata. This allows the
+        the last subcategory's fullurl and savepath to be used when definining
+        Article URL's. If an article has no subcategories, the Category slug
+        is used instead
+        """
+        try:
+            last_subcat = article.subcategories[-1]
+            article.metadata['subpath'] = last_subcat.savepath
+            article.metadata['suburl'] = last_subcat.fullurl
+        except IndexError: #No Subcategory
+            article.metadata['subpath'] = article.category.slug
+            article.metadata['suburl'] = article.category.slug
 
 def generate_subcategories(generator, writer):
     write = partial(writer.write_file,

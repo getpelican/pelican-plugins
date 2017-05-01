@@ -51,6 +51,7 @@ import warnings
 import re
 import os
 from functools import partial
+from io import open
 
 from .mdx_liquid_tags import LiquidTags
 
@@ -166,7 +167,7 @@ div.collapseheader {
 }
 </style>
 
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 <script type="text/javascript">
 init_mathjax = function() {
     if (window.MathJax) {
@@ -324,7 +325,7 @@ def notebook(preprocessor, tag, markup):
                             **subcell_kwarg)
 
     # read and parse the notebook
-    with open(nb_path) as f:
+    with open(nb_path, encoding='utf-8') as f:
         nb_text = f.read()
         if IPYTHON_VERSION < 3:
             nb_json = IPython.nbformat.current.reads_json(nb_text)

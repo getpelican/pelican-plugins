@@ -5,7 +5,7 @@ var CommentSystem = {
 	display_replyto_html: function(comment_content, article_slug, author) {return ''},
 
 	cancelReply: function() {
-		$('#commentForm_replyto').val("");
+		$('#pcs-comment-form-input-replyto').val("");
 		$('#pcs-comment-form-display-replyto').hide();
 	},
 

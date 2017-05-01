@@ -123,10 +123,16 @@
 	url = https://github.com/TC01/pelican-mboxreader
 [submodule "bootstrap-rst"]
 	path = bootstrap-rst
-	url = https://github.com/Alexqw/bootstrap-rst
+	url = https://github.com/aqw/bootstrap-rst
 [submodule "pelican-version"]
 	path = pelican-version
 	url = https://github.com/Shaked/pelican-version
 [submodule "lightbox"]
 	path = lightbox
 	url = https://github.com/kura/lightbox
+[submodule "pelican-ipynb"]
+	path = pelican-ipynb
+	url = https://github.com/danielfrg/pelican-ipynb
+[submodule "deadlinks"]
+	path = deadlinks
+	url = https://github.com/silentlamb/pelican-deadlinks.git

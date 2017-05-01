@@ -74,6 +74,8 @@ Custom article URLs       Adds support for defining different default URLs for d
 
 Dateish                   Treat arbitrary metadata fields as datetime objects
 
+Dead Links                Manage dead links (website not available, errors such as 403, 404)
+
 Disqus static comments    Adds a disqus_comments property to all articles. Comments are fetched at generation time using disqus API
 
 Encrypt content           Password protect pages and articles
@@ -229,6 +231,8 @@ Section number            Adds section numbers for article headers, in the form 
 Series                    Groups related articles into a series
 
 Share post                Creates share URLs of article
+
+Show Source               Place a link to the source text of your posts.
 
 Simple footnotes          Adds footnotes to blog posts
 

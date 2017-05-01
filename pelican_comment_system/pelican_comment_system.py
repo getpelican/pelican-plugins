@@ -23,6 +23,9 @@ from . comment import Comment
 from . import avatars
 
 
+__version__ = "1.3.0"
+
+
 _all_comments = []
 _pelican_writer = None
 _pelican_obj = None
