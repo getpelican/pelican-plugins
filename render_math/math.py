@@ -128,78 +128,38 @@ def process_settings(pelicanobj):
     )
 
     # Get the user specified settings
-    try:
-        settings = pelicanobj.settings['MATH_JAX']
-    except:
-        settings = None
+    settings = pelicanobj.settings.get('MATH_JAX', {})
 
     # If no settings have been specified, then return the defaults
     if not isinstance(settings, dict):
         return mathjax_settings
 
     # The following mathjax settings can be set via the settings dictionary
-    for key, value in ((key, settings[key]) for key in settings):
-        # Iterate over dictionary in a way that is compatible with both version 2
-        # and 3 of python
-
+    for key, value in settings.items():
         if key == 'align':
-            try:
-                typeVal = isinstance(value, basestring)
-            except NameError:
-                typeVal = isinstance(value, str)
-
-            if not typeVal:
-                continue
-
-            if value == 'left' or value == 'right' or value == 'center':
+            if value in ('left', 'right', 'center'):
                 mathjax_settings[key] = value
             else:
-                mathjax_settings[key] = 'center'
-
-        if key == 'indent':
+                raise ValueError(
+                    'unknown `render_math` config {}:{}`'.format(
+                        key, value
+                    )
+                )
+        elif key in ('indent', 'source', 'latex_preview', 'color'):
             mathjax_settings[key] = value
 
-        if key == 'source':
-            mathjax_settings[key] = value
+        elif key in (
+                    'show_menu', 'auto_insert',
+                    'process_escapes',  'linebreak_automatic',
+                    'responsive'
+                ):
+            mathjax_settings[key] = bool(value)
 
-        if key == 'show_menu' and isinstance(value, bool):
-            mathjax_settings[key] = value
-
-        if key == 'message_style':
+        elif key == 'message_style':
             mathjax_settings[key] = value if value is not None else 'none'
 
-        if key == 'auto_insert' and isinstance(value, bool):
-            mathjax_settings[key] = value
-
-        if key == 'process_escapes' and isinstance(value, bool):
-            mathjax_settings[key] = value
-
-        if key == 'latex_preview':
-            try:
-                typeVal = isinstance(value, basestring)
-            except NameError:
-                typeVal = isinstance(value, str)
-
-            if not typeVal:
-                continue
-
-            mathjax_settings[key] = value
-
-        if key == 'color':
-            try:
-                typeVal = isinstance(value, basestring)
-            except NameError:
-                typeVal = isinstance(value, str)
-
-            if not typeVal:
-                continue
-
-            mathjax_settings[key] = value
-
-        if key == 'linebreak_automatic' and isinstance(value, bool):
-            mathjax_settings[key] = value
-
-        if key == 'process_summary' and isinstance(value, bool):
+        elif key == 'process_summary':
+            value = bool(value)
             if value and BeautifulSoup is None:
                 logger.warn(
                     "BeautifulSoup4 is needed for summaries to be processed "
@@ -209,13 +169,10 @@ def process_settings(pelicanobj):
 
             mathjax_settings[key] = value
 
-        if key == 'responsive' and isinstance(value, bool):
-            mathjax_settings[key] = 'true' if value else 'false'
-
-        if key == 'responsive_break' and isinstance(value, int):
+        elif key == 'responsive_break':
             mathjax_settings[key] = str(value)
 
-        if key == 'tex_extensions' and isinstance(value, list):
+        elif key == 'tex_extensions':
             mathjax_settings[key] = value + [
                 'AMSmath.js',
                 'AMSsymbols.js',
@@ -223,26 +180,13 @@ def process_settings(pelicanobj):
                 'noUndefined.js'
             ]
 
-        if key == 'mathjax_font':
-            try:
-                typeVal = isinstance(value, basestring)
-            except NameError:
-                typeVal = isinstance(value, str)
-
-            if not typeVal:
-                continue
-
+        elif key == 'mathjax_font':
+            value = dict(
+                sanserif='SansSerif',
+                fraktur='Fraktur',
+                typewriter='Typewriter',
+            ).get(value, 'default')
             value = value.lower()
-
-            if value == 'sanserif':
-                value = 'SansSerif'
-            elif value == 'fraktur':
-                value = 'Fraktur'
-            elif value == 'typewriter':
-                value = 'Typewriter'
-            else:
-                value = 'default'
-
             mathjax_settings[key] = value
 
         # Full validation of the macros dict would be tedious; It needs
@@ -252,9 +196,14 @@ def process_settings(pelicanobj):
         # a valid macro without running it.
         # Since this is a feature for advanced users,
         # we rely on those advanced users to use their brains.
-        if key == 'macros' and isinstance(value, dict):
+        elif key == 'macros':
             mathjax_settings[key] = value
             # More natural for the template, json.dumps(value)
+
+        else:
+            logger.warn(
+                'unknown setting {}:{}'.format(key, value)
+            )
 
     return mathjax_settings
 
