@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.3.0 - 2017-01-10
+### Added
+- add [blogger_comment_export.py](import/blogger_comment_export.py) script to export comments from Blogger XML export and [associated documentation](docs/import.md) [PR #835](https://github.com/getpelican/pelican-plugins/pull/835)
+
 ## 1.2.2 – 2016-12-19
 ### Fixed
 - Correct jQuery expression in cancelReply method  [PR #820](https://github.com/getpelican/pelican-plugins/pull/820)

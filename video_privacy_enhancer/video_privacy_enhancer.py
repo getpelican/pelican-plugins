@@ -22,9 +22,11 @@ import re # For using regular expressions.
 import logging
 logger = logging.getLogger(__name__) # For using logger.debug() to log errors or other notes.
 
-import urllib 
+import six
+# import urllib.request
+import six.moves.urllib.request 
 
-import video_service_thumbnail_url_generating_functions as video_thumbnail_functions # These are functions defined in 'video_service_thumbnail_url_generating_functions.py', which is located in the same directory as this file. 
+from . import video_service_thumbnail_url_generating_functions as video_thumbnail_functions # These are functions defined in 'video_service_thumbnail_url_generating_functions.py', which is located in the same directory as this file. 
 
 """
 END OF LIBRARIES
@@ -115,7 +117,8 @@ def download_thumbnail(video_id_from_shortcode, video_thumbnail_url, video_servi
 	
 	# Check if the thumbnail for this video exists already (if it's been previously downloaded). If it doesn't, download it:
 	if not os.path.exists(pelican_output_path + "/" + output_directory_for_thumbnails + "/" + video_service_name + "_" + video_id_from_shortcode + ".jpg"): # If the thumbnail doesn't already exist...
-		urllib.urlretrieve(video_thumbnail_url, pelican_output_path + "/" + output_directory_for_thumbnails + "/" + video_service_name + "_" + video_id_from_shortcode + ".jpg") # Download the thumbnail. This follows the instructions at http://www.reelseo.com/youtube-thumbnail-image/ for downloading YouTube thumbnail images.
+		logger.debug("Video Privacy Enhancer Plugin: Downloading thumbnail from the following url: " + video_thumbnail_url)
+		six.moves.urllib.request.urlretrieve(video_thumbnail_url, pelican_output_path + "/" + output_directory_for_thumbnails + "/" + video_service_name + "_" + video_id_from_shortcode + ".jpg") # Download the thumbnail. This follows the instructions at http://www.reelseo.com/youtube-thumbnail-image/ for downloading YouTube thumbnail images.
 
 
 # A function to read through each page and post as it comes through from Pelican, find all instances of a shortcode (e.g., `!youtube(...)`) and change it into an HTML <img> element with the video thumbnail.
@@ -123,30 +126,21 @@ def download_thumbnail(video_id_from_shortcode, video_thumbnail_url, video_servi
 def process_shortcodes(data_passed_from_pelican):
 	dictionary_of_services = supported_video_services # This should be defined in the settings section above.
 	
-	# Good for debugging:
-	logger.debug("Video Privacy Enhancer Plugin: Using the following dictionary of video services:")
-	logger.debug(dictionary_of_services)
-	
 	if not data_passed_from_pelican._content: # If the item passed from Pelican has a "content" attribute (i.e., if it's not an image file or something else like that). NOTE: data_passed_from_pelican.content (without an underscore in front of 'content') seems to be read-only, whereas data_passed_from_pelican._content is able to be overwritten. This is somewhat explained in an IRC log from 2013-02-03 from user alexis to user webdesignhero_ at https://botbot.me/freenode/pelican/2013-02-01/?tz=America/Los_Angeles.
 		return # Exit the function, essentially passing over the (non-text) file.
 	
 	# Loop through services (e.g., youtube, vimeo), processing the output for each:
-	for video_service_name, video_service_information in dictionary_of_services.iteritems():
+	for video_service_name, video_service_information in six.iteritems(dictionary_of_services):
 		
 		# Good for debugging:
-		logger.debug("Video Privacy Enhancer Plugin: Currently processing the following video service information:")
-		logger.debug(video_service_name)
-		
 		logger.debug("Video Privacy Enhancer Plugin: The name of the current service being processed is '" + video_service_name + "'")
 		
 		shortcode_to_search_for_not_including_exclamation_point = video_service_information['shortcode_not_including_exclamation_point']
 		logger.debug("Video Privacy Enhancer Plugin: Currently looking for the shortcode '" + shortcode_to_search_for_not_including_exclamation_point + "'")
 		
 		function_for_generating_thumbnail_url = video_service_information['function_for_generating_thumbnail_url']
-		logger.debug("Video Privacy Enhancer Plugin: Using the following function name to get thumbnails for the current video service:")
-		logger.debug(function_for_generating_thumbnail_url)
 		
-		all_instances_of_the_shortcode = re.findall('\!' + shortcode_to_search_for_not_including_exclamation_point + '.*?\)', data_passed_from_pelican._content) # Use a regular expression to find every instance of, e.g., '!youtube' followed by anything up to the first matching ')'.
+		all_instances_of_the_shortcode = re.findall('(?<!\\\)\!' + shortcode_to_search_for_not_including_exclamation_point + '.*?\)', data_passed_from_pelican._content) # Use a regular expression to find every instance of, e.g., '!youtube' followed by anything up to the first matching ')'.
 		
 		if(len(all_instances_of_the_shortcode) > 0): # If the article/page HAS any shortcodes, go on. Otherwise, don't (to do so would inadvertantly wipe out the output content for that article/page).
 			replace_shortcode_in_text = "" # This just gives this an initial value before going into the loop below.

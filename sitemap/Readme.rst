@@ -44,6 +44,9 @@ use the following ``SITEMAP`` setting.
 If a key is missing or a value is incorrect, it will be replaced with the
 default value.
 
+You can also exclude an individual URL by adding metadata to it setting ``private``
+to ``True``.
+
 The sitemap is saved in ``<output_path>/sitemap.<format>``.
 
 .. note::

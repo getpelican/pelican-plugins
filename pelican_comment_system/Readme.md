@@ -24,6 +24,7 @@ Bernhard Scheirle  | <http://bernhard.scheirle.de> | <https://github.com/Scheirl
 
  - [Quickstart Guide](doc/quickstart.md)
  - [Installation and basic usage](doc/installation.md)
+ - [Import existing comments](doc/import.md)
  - [Avatars and identicons](doc/avatars.md)
  - [Comment Atom feed](doc/feed.md)
  

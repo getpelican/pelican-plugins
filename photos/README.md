@@ -66,6 +66,7 @@ Maintain an organized library of high resolution photos somewhere on disk, using
 * To create a gallery of photos, add the metadata field `gallery: {photo}folder` to an article. To simplify the transition from the plug-in Gallery, the syntax `gallery: {filename}folder` is also accepted.
 * You can now have multiple galleries. The galleries need to be seperated by a comma in the metadata field. The syntax is gallery: `{photo}folder, {photo}folder2`. You can also add titles to your galleries. The syntax is: `{photo}folder, {photo}folder2{This is a title}`. Using the following example the first gallery would have the title of the folder location and the second would have the title `This is a tile.`
 * To use an image in the body of the text, just use the syntax `{photo}folder/image.jpg` instead of the usual `{filename}/images/image.jpg`.
+* To use an image in the body of the text, which can be used with [Lightbox](http://lokeshdhakar.com/projects/lightbox2/) just use the syntax `{lightbox}folder/image.jpg`. For use with other implementations, the gallery and caption attribute names can be set with `PHOTO_LIGHTBOX_GALLERY_ATTR` and `PHOTO_LIGHTBOX_CAPTION_ATTR`.
 * To associate an image with an article, add the metadata field `image: {photo}folder/image.jpg` to an article. Use associated images to improve navigation. For compatibility, the syntax `image: {filename}/images/image.jpg` is also accepted.
 
 ### Exif, Captions, and Blacklists
@@ -94,7 +95,7 @@ Folders of photos may optionally have three text files, where each line describe
 	this-one-will-be-also-skipped.jpg
 
 
-Here is an example Markdown article that shows the three use cases:
+Here is an example Markdown article that shows the four use cases:
 
 	title: My Article
 	gallery: {photo}favorite
@@ -102,6 +103,7 @@ Here is an example Markdown article that shows the three use cases:
 
 	Here are my best photos, taken with my favorite camera:
 	![]({photo}mybag/camera.jpg).
+	![]({lightbox}mybag/flash.jpg).
 
 The default behavior of the Photos plugin removes the exif information from the file. If you would like to keep the exif information, you can install the `piexif` library for python and add the following settings to keep some or all of the exif information. This feature is not a replacement for the `exif.txt` feature but in addition to that feature. This feature currently only works with jpeg input files.
 
