@@ -128,6 +128,8 @@ Image Process             Automates the processing of images based on their clas
 
 Interlinks                Lets you add frequently used URLs to your markup using short keywords
 
+ipynb2pelican             Jupyter Notebooks reader using first Cell to store metadata
+
 Jinja2 Content            Allows the use of Jinja2 template code in articles, including ``include`` and ``import`` statements. Replacement for pelican-jinja2content.
 
 Just table                Easily create tables in articles
