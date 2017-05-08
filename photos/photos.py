@@ -259,7 +259,11 @@ def resize_worker(orig, resized, spec, settings):
     im = Image.open(orig)
 
     if ispiexif and settings['PHOTO_EXIF_KEEP'] and im.format == 'JPEG':  # Only works with JPEG exif for sure.
-        im, exif_copy = manipulate_exif(im, settings)
+        try:
+            im, exif_copy = manipulate_exif(im, settings)
+        except:
+            logger.info('photos: no EXIF or EXIF error in {}'.format(orig))
+            exif_copy = b''
     else:
         exif_copy = b''
 
