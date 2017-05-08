@@ -202,6 +202,8 @@ Pelican Page Hierarchy    Creates a URL hierarchy for pages that matches the fil
 
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
 
+Pelican Plotly            Allows you to embed raw plotly figures (json data) using the [plotly] tag
+
 Pelican Themes Generator  Generates theme screenshots from the Pelican Themes repository
 
 pelican-rdf                Allows the processing of .rdf vocabularies, and the generation of a lightweight documentation.
