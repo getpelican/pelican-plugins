@@ -144,4 +144,4 @@
 	url = https://github.com/davidlesieur/similar_posts.git
 [submodule "pelican-plotly"]
 	path = pelican-plotly
-	url = git://github.com/ran404/pelican-plotly.git
+	url = https://github.com/ran404/pelican-plotly.git
