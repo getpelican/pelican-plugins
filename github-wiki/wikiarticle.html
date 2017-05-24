@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}{{ meta.title }} - {{ SITENAME }}{% endblock %}
+
+{% block head %}<script src="{{ SITEURL }}/theme/js/wiki.js"></script>{% endblock %}
+
+{% block banner %}{{ meta.title }}{% endblock banner %}
+
+{% block content %}
+
+<div class="article-content">
+
+  <h1 class="article-title">{{ meta.title }}</h1>
+
+  <nav><a class="wiki-nav-button">Expand Menu</a> / <a class="wiki-crumbs" href="{{ SITEURL }}/wiki/Home.html">Home</a>
+  {% set total_path = SITEURL + "/wiki" %}
+  {% for page, type in breadcrumbs %}
+    {% set total_path = total_path + "/" + page %}
+    {% if type == "a" %}
+      / <a class="wiki-crumbs" href="{{ total_path }}">{{ page }}</a>
+    {% elif type == "p" %}
+      / <p class="wiki-crumbs">{{ page }}</p>
+    {% endif %}
+  {% endfor %}</nav>
+  <nav class="wiki-nav">
+    <ul class="wiki-links nodisplay">
+    {% set vars = {'level': 0} %}
+    {% for link in links %}
+      {% if link[0] != "_Footer.md" %}
+        {% set linklevel = link[2] %}
+        {% if linklevel > vars.level %}
+          {% if vars.update({'level':linklevel}) %} {% endif %}
+          <ul class="nodisplay">
+        {% elif linklevel < vars.level %}
+          {% for i in range(vars.level - linklevel) %}
+            </ul>
+          {% endfor %}
+          {% if vars.update({'level':linklevel}) %} {% endif %}
+        {% endif %}
+        {% if not loop.last %}
+          {% if links[loop.index][2] > vars.level %}
+            {% if link[1] == "indexdir" %}
+              <li class="wiki-link"><a href="{{ SITEURL }}/wiki/{{ link[0].replace('.md','.html') }}">{{ link[0].replace('.md','') }}</a> <a class="wiki-dir-expander">+</a></li>
+            {% else %}
+              <li class="wiki-link">{{ link[0].replace('.md','') }} <a class="wiki-dir-expander">+</a></li>
+            {% endif %}
+          {% else %}
+            <li class="wiki-link"><a href="{{ SITEURL }}/wiki/{{ link[0].replace('.md','.html') }}">{{ link[0].replace('.md','') }}</a></li>
+          {% endif %}
+        {% else %}
+          <li class="wiki-link"><a href="{{ SITEURL }}/wiki/{{ link[0].replace('.md','.html') }}">{{ link[0].replace('.md','') }}</a></li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    </ul>
+  </nav>
+
+  {{ content }}
+  
+  <p>
+    <a href="https://github.com/YOUR_USER/YOUR_REPO/wiki/{{ file.replace(".md","") }}/_edit">Edit page.</a><br>
+    <a href="https://github.com/YOUR_USER/YOUR_REPO/wiki/_new">Add new page.</a>
+  </p>
+  
+</div>
+
+{% endblock %}
