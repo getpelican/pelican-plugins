@@ -16,7 +16,7 @@ def add_related_posts(generator):
     numentries = generator.settings.get('RELATED_POSTS_MAX', 5)
     # Skip all posts in the same category as the article
     skipcategory = generator.settings.get('RELATED_POSTS_SKIP_SAME_CATEGORY', False)
-    for article in generator.articles:
+    for article in chain(generator.articles, generator.drafts):
         # set priority in case of forced related posts
         if hasattr(article,'related_posts'):
             # split slugs 

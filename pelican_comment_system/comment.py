@@ -52,7 +52,7 @@ class Comment(Content):
         return None
 
     def __lt__(self, other):
-        return self.metadata['date'] < other.metadata['date']
+        return self.date < other.date
 
     def sortReplies(self):
         for r in self.replies:

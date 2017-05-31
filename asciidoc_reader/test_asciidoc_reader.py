@@ -41,7 +41,10 @@ class AsciiDocReaderTest(unittest.TestCase):
         }
 
         for key, value in expected.items():
-            self.assertEqual(value, page.metadata[key], key)
+            self.assertEqual(value, page.metadata[key], (
+                'Metadata attribute \'%s\' does not match expected value.\n'
+                'Expected: %s\n'
+                'Actual: %s') % (key, value, page.metadata[key]))
 
     def test_article_with_asc_options(self):
         # test to ensure the ASCIIDOC_OPTIONS is being used
@@ -58,3 +61,7 @@ class AsciiDocReaderTest(unittest.TestCase):
                     'the lazy dog&#8217;s back.</p>'
                     '</div>\n</div>\n</div>\n')
         self.assertEqual(page.content, expected)
+
+
+if __name__ == '__main__':
+    unittest.main()

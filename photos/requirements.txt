@@ -1,1 +1,2 @@
-PIL
+Pillow
+piexif>=1.0.5

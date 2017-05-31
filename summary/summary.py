@@ -9,6 +9,7 @@ body of your articles.
 from __future__ import unicode_literals
 from pelican import signals
 from pelican.generators import ArticlesGenerator, StaticGenerator, PagesGenerator
+import re
 
 def initialized(pelican):
     from pelican.settings import DEFAULT_CONFIG
@@ -16,11 +17,13 @@ def initialized(pelican):
                               '<!-- PELICAN_BEGIN_SUMMARY -->')
     DEFAULT_CONFIG.setdefault('SUMMARY_END_MARKER',
                               '<!-- PELICAN_END_SUMMARY -->')
+    DEFAULT_CONFIG.setdefault('SUMMARY_USE_FIRST_PARAGRAPH', False)
     if pelican:
         pelican.settings.setdefault('SUMMARY_BEGIN_MARKER',
                                     '<!-- PELICAN_BEGIN_SUMMARY -->')
         pelican.settings.setdefault('SUMMARY_END_MARKER',
                                     '<!-- PELICAN_END_SUMMARY -->')
+        pelican.settings.setdefault('SUMMARY_USE_FIRST_PARAGRAPH', False)
 
 def extract_summary(instance):
     # if summary is already specified, use it
@@ -35,6 +38,8 @@ def extract_summary(instance):
 
     begin_marker = instance.settings['SUMMARY_BEGIN_MARKER']
     end_marker   = instance.settings['SUMMARY_END_MARKER']
+    use_first_paragraph = instance.settings['SUMMARY_USE_FIRST_PARAGRAPH']
+    remove_markers = True
 
     content = instance._content
     begin_summary = -1
@@ -42,6 +47,12 @@ def extract_summary(instance):
     if begin_marker:
         begin_summary = content.find(begin_marker)
     if end_marker:
+        end_summary = content.find(end_marker)
+
+    if begin_summary == -1 and end_summary == -1 and use_first_paragraph:
+        begin_marker, end_marker = '<p>', '</p>'
+        remove_markers = False
+        begin_summary = content.find(begin_marker)
         end_summary = content.find(end_marker)
 
     if begin_summary == -1 and end_summary == -1:
@@ -59,11 +70,15 @@ def extract_summary(instance):
 
     summary = content[begin_summary:end_summary]
 
-    # remove the markers from the content
-    if begin_summary:
-        content = content.replace(begin_marker, '', 1)
-    if end_summary:
-        content = content.replace(end_marker, '', 1)
+    if remove_markers:
+        # remove the markers from the content
+        if begin_summary:
+            content = content.replace(begin_marker, '', 1)
+        if end_summary:
+            content = content.replace(end_marker, '', 1)
+
+    summary = re.sub(r"<div.*>", "", summary)
+    summary = re.sub(r"</div>", "", summary)
 
     instance._content = content
     instance._summary = summary

@@ -1,0 +1,1 @@
+from .permalinks import register

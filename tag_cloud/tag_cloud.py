@@ -7,26 +7,30 @@ This plugin generates a tag cloud from available tags
 from __future__ import unicode_literals
 
 from collections import defaultdict
-from operator import attrgetter, itemgetter
+from operator import itemgetter
 
 import logging
 import math
 import random
 
-from pelican import signals, contents
+from pelican import signals
 
 logger = logging.getLogger(__name__)
+
 
 def set_default_settings(settings):
     settings.setdefault('TAG_CLOUD_STEPS', 4)
     settings.setdefault('TAG_CLOUD_MAX_ITEMS', 100)
     settings.setdefault('TAG_CLOUD_SORTING', 'random')
+    settings.setdefault('TAG_CLOUD_BADGE', False)
+
 
 def init_default_config(pelican):
     from pelican.settings import DEFAULT_CONFIG
     set_default_settings(DEFAULT_CONFIG)
     if(pelican):
-           set_default_settings(pelican.settings)
+            set_default_settings(pelican.settings)
+
 
 def generate_tag_cloud(generator):
     tag_cloud = defaultdict(int)
@@ -43,12 +47,18 @@ def generate_tag_cloud(generator):
     steps = generator.settings.get('TAG_CLOUD_STEPS')
 
     # calculate word sizes
-    tag_cloud = [
-        (
+    def generate_tag(tag, count):
+        tag = (
             tag,
             int(math.floor(steps - (steps - 1) * math.log(count)
                 / (math.log(max_count)or 1)))
         )
+        if generator.settings.get('TAG_CLOUD_BADGE'):
+            tag += (count,)
+        return tag
+
+    tag_cloud = [
+        generate_tag(tag, count)
         for tag, count in tag_cloud
     ]
 
@@ -69,9 +79,10 @@ def generate_tag_cloud(generator):
                        "falling back to 'random'", sorting)
         random.shuffle(tag_cloud)
 
-    #make available in context
+    # make available in context
     generator.tag_cloud = tag_cloud
     generator._update_context(['tag_cloud'])
+
 
 def register():
     signals.initialized.connect(init_default_config)

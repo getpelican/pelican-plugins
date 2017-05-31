@@ -46,14 +46,15 @@ def init(pelican_output_path, identicon_output_path, identicon_data,
     global _identicon_size
     global _initialized
     global _authors
-    if _initialized:
-        return
+    global _missingAvatars
+
     _identicon_save_path = os.path.join(pelican_output_path,
                                         identicon_output_path)
     _identicon_output_path = identicon_output_path
     _identicon_data = identicon_data
     _identicon_size = identicon_size
     _authors = authors
+    _missingAvatars = []
     _initialized = True
 
 
@@ -95,8 +96,10 @@ def getAvatarPath(comment_id, metadata):
 
 def generateAndSaveMissingAvatars():
     _createIdenticonOutputFolder()
+    global _missingAvatars
     for code in _missingAvatars:
         avatar_path = '%s.png' % code
         avatar = identicon.render_identicon(int(code, 16), _identicon_size)
         avatar_save_path = os.path.join(_identicon_save_path, avatar_path)
         avatar.save(avatar_save_path, 'PNG')
+    _missingAvatars = []

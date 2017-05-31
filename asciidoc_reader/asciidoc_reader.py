@@ -10,6 +10,7 @@ File extension should be ``.asc``, ``.adoc``, or ``asciidoc``.
 from pelican.readers import BaseReader
 from pelican.utils import pelican_open
 from pelican import signals
+import six
 
 try:
     # asciidocapi won't import on Py3
@@ -50,8 +51,10 @@ class AsciiDocReader(BaseReader):
 
         metadata = {}
         for name, value in ad.asciidoc.document.attributes.items():
+            if value is None:
+                continue
             name = name.lower()
-            metadata[name] = self.process_metadata(name, value)
+            metadata[name] = self.process_metadata(name, six.text_type(value))
         if 'doctitle' in metadata:
             metadata['title'] = metadata['doctitle']
         return content, metadata

@@ -24,6 +24,7 @@ class TestPhotos(unittest.TestCase):
         cls.settings['PLUGINS'] = [photos]
         cls.settings['CACHE_CONTENT'] = False
         cls.settings['OUTPUT_PATH'] = cls.temp_path
+        cls.settings['SITEURL'] = 'http://getpelican.com/sub'
         photos.initialized(cls)
         cls.generator = ArticlesGenerator(
             context=cls.settings.copy(), settings=cls.settings,
@@ -78,7 +79,7 @@ class TestPhotos(unittest.TestCase):
 
     def test_photo_article_body(self):
         expected = ('<p>Here is my best photo, again.</p>\n'
-                    '<p><img alt="" src="/photos/agallery/besta.jpg" />.</p>')
+                    '<p><img alt="" src="http://getpelican.com/sub/photos/agallery/besta.jpg" />.</p>')
         self.assertEqual(expected, self.get_article('photo').content)
 
     def test_filename_article_image(self):
@@ -106,15 +107,15 @@ class TestPhotos(unittest.TestCase):
     def test_queue_resize(self):
         expected = [
             ('photos/agallery/best.jpg',
-                ('test_data/agallery/best.jpg', (1024, 768, 80))),
+                ('./test_data/agallery/best.jpg', (1024, 768, 80))),
             ('photos/agallery/besta.jpg',
-                ('test_data/agallery/best.jpg', (760, 506, 80))),
+                ('./test_data/agallery/best.jpg', (760, 506, 80))),
             ('photos/agallery/bestt.jpg',
-                ('test_data/agallery/best.jpg', (192, 144, 60))),
+                ('./test_data/agallery/best.jpg', (192, 144, 60))),
             ('photos/agallery/night.jpg',
-                ('test_data/agallery/night.png', (1024, 768, 80))),
+                ('./test_data/agallery/night.png', (1024, 768, 80))),
             ('photos/agallery/nightt.jpg',
-                ('test_data/agallery/night.png', (192, 144, 60)))]
+                ('./test_data/agallery/night.png', (192, 144, 60)))]
         self.assertEqual(sorted(expected), sorted(photos.queue_resize.items()))
 
 if __name__ == '__main__':

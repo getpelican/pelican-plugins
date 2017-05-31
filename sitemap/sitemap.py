@@ -8,6 +8,7 @@ The sitemap plugin generates plain-text or XML sitemaps.
 
 from __future__ import unicode_literals
 
+import re
 import collections
 import os.path
 
@@ -81,6 +82,8 @@ class SitemapGenerator(object):
             'pages': 0.5
         }
 
+        self.sitemapExclude = []
+
         config = settings.get('SITEMAP', {})
 
         if not isinstance(config, dict):
@@ -89,6 +92,7 @@ class SitemapGenerator(object):
             fmt = config.get('format')
             pris = config.get('priorities')
             chfreqs = config.get('changefreqs')
+            self.sitemapExclude = config.get('exclude', [])
 
             if fmt not in ('xml', 'txt'):
                 warning("sitemap plugin: SITEMAP['format'] must be `txt' or `xml'")
@@ -133,6 +137,9 @@ class SitemapGenerator(object):
 
         if getattr(page, 'status', 'published') != 'published':
             return
+           
+        if getattr(page, 'private', 'False') == 'True':
+            return
 
         # We can disable categories/authors/etc by using False instead of ''
         if not page.save_as:
@@ -161,12 +168,15 @@ class SitemapGenerator(object):
             chfreq = self.changefreqs['indexes']
 
         pageurl = '' if page.url == 'index.html' else page.url
-        
-        #Exclude URLs from the sitemap:
-        sitemapExclude = []
 
+        #Exclude URLs from the sitemap:
         if self.format == 'xml':
-            if pageurl not in sitemapExclude:
+            flag = False
+            for regstr in self.sitemapExclude:
+                if re.match(regstr, pageurl):
+                    flag = True
+                    break
+            if not flag:
                 fd.write(XML_URL.format(self.siteurl, pageurl, lastmod, chfreq, pri))
         else:
             fd.write(self.siteurl + '/' + pageurl + '\n')
@@ -230,6 +240,20 @@ class SitemapGenerator(object):
                                 date=self.now,
                                 url=standard_page_url,
                                 save_as=standard_page_url)
+                self.write_url(fake, fd)
+
+            # add template pages
+            # We use items for Py3k compat. .iteritems() otherwise
+            for path, template_page_url in self.context['TEMPLATE_PAGES'].items():
+
+                # don't add duplicate entry for index page
+                if template_page_url == 'index.html':
+                    continue
+
+                fake = FakePage(status='published',
+                                date=self.now,
+                                url=template_page_url,
+                                save_as=template_page_url)
                 self.write_url(fake, fd)
 
             for page in pages:

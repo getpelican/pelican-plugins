@@ -8,7 +8,7 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
         indent = (screen.width < {responsive_break}) ? "0em" : indent;
         linebreak = (screen.width < {responsive_break}) ? 'true' : linebreak;
     }}
-    
+
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
@@ -22,6 +22,7 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
         "    displayAlign: '"+ align +"'," +
         "    displayIndent: '"+ indent +"'," +
         "    showMathMenu: {show_menu}," +
+        "    messageStyle: '{message_style}'," +
         "    tex2jax: {{ " +
         "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
         "        displayMath: [ ['$$','$$'] ]," +
