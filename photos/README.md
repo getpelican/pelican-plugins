@@ -75,7 +75,7 @@ Folders of photos may optionally have three text files, where each line describe
 `exif.txt`
 :	Associates compact technical information with photos, typically the camera settings. For example:
 
-	best:jpg: Canon EOS 5D Mark II - 20mm f/8 1/250s ISO 100
+	best.jpg: Canon EOS 5D Mark II - 20mm f/8 1/250s ISO 100
 	night.jpg: Canon EOS 5D Mark II - 47mm f/8 5s ISO 100
 	# new.jpg: Canon EOS 5D Mark II - 47mm f/8 5s ISO 100
 
