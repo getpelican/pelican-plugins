@@ -57,14 +57,11 @@ class PlantUML_rst(Directive):
 
         return nodes
 
-
-def custom_url(generator, metadata):
-    """ Saves globally the value of SITEURL configuration parameter """
-    global global_siteurl
-    global_siteurl = generator.settings['SITEURL']
-
-
 def pelican_init(pelicanobj):
+
+    global global_siteurl
+    global_siteurl = pelicanobj.settings['SITEURL']
+
     """ Prepare configurations for the MD plugin """
     try:
         import markdown
@@ -86,5 +83,4 @@ def pelican_init(pelicanobj):
 def register():
     """Plugin registration."""
     signals.initialized.connect(pelican_init)
-    signals.article_generator_context.connect(custom_url)
     directives.register_directive('uml', PlantUML_rst)
