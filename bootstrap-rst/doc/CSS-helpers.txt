@@ -1,0 +1,68 @@
+Helper classes
+===============================================================================
+
+Contextual colors
+-----------------
+Convey meaning through color with a handful of emphasis utility classes. These
+may also be applied to links and will darken on hover just like our default
+link styles.
+
+.. container:: bs-example
+
+   | :text-muted:`Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.`
+   | :text-primary:`Nullam id dolor id nibh ultricies vehicula ut id elit.`
+   | :text-success:`Duis mollis, est non commodo luctus, nisi erat porttitor ligula.`
+   | :text-info:`Maecenas sed diam eget risus varius blandit sit amet non magna.`
+   | :text-warning:`Etiam porta sem malesuada magna mollis euismod.`
+   | :text-danger:`Donec ullamcorper nulla non metus auctor fringilla.`
+
+.. code:: rst
+   :class: highlight
+
+   :text-muted:`Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.`
+   :text-primary:`Nullam id dolor id nibh ultricies vehicula ut id elit.`
+   :text-success:`Duis mollis, est non commodo luctus, nisi erat porttitor ligula.`
+   :text-info:`Maecenas sed diam eget risus varius blandit sit amet non magna.`
+   :text-warning:`Etiam porta sem malesuada magna mollis euismod.`
+   :text-danger:`Donec ullamcorper nulla non metus auctor fringilla.`
+
+
+
+Contextual background
+---------------------
+
+Similar to the contextual text color classes, easily set the background of an
+element to any contextual class. Anchor components will darken on hover, just
+like the text classes.
+
+
+.. container:: bs-example bs-example-bg-classes
+
+   .. container:: bg-primary
+
+      Nullam id dolor id nibh ultricies vehicula ut id elit.
+
+   .. container:: bg-success
+
+      Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+
+   .. container:: bg-info
+
+      Maecenas sed diam eget risus varius blandit sit amet non magna.
+
+   .. container:: bg-warning
+
+      Etiam porta sem malesuada magna mollis euismod.
+
+   .. container:: bg-danger
+
+      Donec ullamcorper nulla non metus auctor fringilla.
+
+.. code:: rst
+   :class: highlight
+
+   :bg-primary:`Nullam id dolor id nibh ultricies vehicula ut id elit.`
+   :bg-success:`Duis mollis, est non commodo luctus, nisi erat porttitor ligula.`
+   :bg-info:`Maecenas sed diam eget risus varius blandit sit amet non magna.`
+   :bg-warning:`Etiam porta sem malesuada magna mollis euismod.`
+   :bg-danger:`Donec ullamcorper nulla non metus auctor fringilla.`

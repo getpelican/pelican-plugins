@@ -1,0 +1,292 @@
+Tables
+======
+
+Basic example
+-------------
+
+For basic styling—light padding and only horizontal dividers—add the base class
+.table to any `<table>`. It may seem super redundant, but given the widespread
+use of tables for other plugins like calendars and date pickers, we've opted to
+isolate our custom table styles.
+
+.. container:: bs-example
+
+   = ========== ========= ========
+   # First Name Last Name Username
+   = ========== ========= ========
+   1 Mark       Otto      @mdo
+   2 Jacob      Thornton  @fat
+   3 Larry      the Bird  @twitter
+   = ========== ========= ========
+
+.. code::
+   :class: highlight
+
+   = ========== ========= ========
+   # First Name Last Name Username
+   = ========== ========= ========
+   1 Mark       Otto      @mdo
+   2 Jacob      Thornton  @fat
+   3 Larry      the Bird  @twitter
+   = ========== ========= ========
+
+
+Striped rows
+------------
+
+Use `table-striped` to add zebra-striping to any table row within the `<tbody>`.
+
+.. ----------------------------------------------------------------------------
+.. callout:: danger
+
+   :h4:`Cross-browser compatibility`
+   Striped tables are styled via the `:nth-child` CSS selector, which is not
+   available in Internet Explorer 8.
+.. ----------------------------------------------------------------------------
+
+
+.. container:: bs-example
+
+   .. class:: table-striped
+
+      = ========== ========= ========
+      # First Name Last Name Username
+      = ========== ========= ========
+      1 Mark       Otto      @mdo
+      2 Jacob      Thornton  @fat
+      3 Larry      the Bird  @twitter
+      = ========== ========= ========
+
+.. code::
+   :class: highlight
+
+   .. class:: table-striped
+
+      = ========== ========= ========
+      # First Name Last Name Username
+      = ========== ========= ========
+      1 Mark       Otto      @mdo
+      2 Jacob      Thornton  @fat
+      3 Larry      the Bird  @twitter
+      = ========== ========= ========
+
+Bordered table
+--------------
+
+Add `table-bordered` for borders on all sides of the table and cells.
+
+.. container:: bs-example
+
+   .. class:: table-bordered table-striped
+
+      = ========== ========= ========
+      # First Name Last Name Username
+      = ========== ========= ========
+      1 Mark       Otto      @mdo
+      2 Jacob      Thornton  @fat
+      3 Larry      the Bird  @twitter
+      = ========== ========= ========
+
+.. code::
+   :class: highlight
+
+   .. class:: table-bordered table-striped
+
+      = ========== ========= ========
+      # First Name Last Name Username
+      = ========== ========= ========
+      1 Mark       Otto      @mdo
+      2 Jacob      Thornton  @fat
+      3 Larry      the Bird  @twitter
+      = ========== ========= ========
+
+Hover rows
+----------
+
+Add `table-hover` to enable a hover state on table rows within a `<tbody>`.
+
+.. container:: bs-example
+
+   .. class:: table-hover
+
+      = ========== ========= ========
+      # First Name Last Name Username
+      = ========== ========= ========
+      1 Mark       Otto      @mdo
+      2 Jacob      Thornton  @fat
+      3 Larry      the Bird  @twitter
+      = ========== ========= ========
+
+.. code::
+   :class: highlight
+
+   .. class:: table-hover
+
+      = ========== ========= ========
+      # First Name Last Name Username
+      = ========== ========= ========
+      1 Mark       Otto      @mdo
+      2 Jacob      Thornton  @fat
+      3 Larry      the Bird  @twitter
+      = ========== ========= ========
+
+
+Condensed table
+---------------
+
+Add `table-condensed` to make tables more compact by cutting cell padding in half.
+
+.. container:: bs-example
+
+   .. class:: table-condensed
+
+      = ========== ========= ========
+      # First Name Last Name Username
+      = ========== ========= ========
+      1 Mark       Otto      @mdo
+      2 Jacob      Thornton  @fat
+      3 Larry      the Bird  @twitter
+      = ========== ========= ========
+
+.. code::
+   :class: highlight
+
+   .. class:: table-condensed
+
+      = ========== ========= ========
+      # First Name Last Name Username
+      = ========== ========= ========
+      1 Mark       Otto      @mdo
+      2 Jacob      Thornton  @fat
+      3 Larry      the Bird  @twitter
+      = ========== ========= ========
+
+Contextual classes
+------------------
+
+Use contextual classes to color table rows or individual cells.
+
+.. container:: bs-example
+
+   .. list-table::
+      :widths: 10 30 30 30
+
+      * - #
+        - Column heading
+        - Column heading
+        - Column heading
+
+      * .. class:: active
+
+           - 1
+           - Column content
+           - Column content
+           - Column content
+
+      * - 2
+        - Column heading
+        - Column heading
+        - Column heading
+
+      * .. class:: success
+
+           - 3
+           - Column content
+           - Column content
+           - Column content
+
+      * - 4
+        - Column heading
+        - Column heading
+        - Column heading
+
+      * .. class:: warning
+
+           - 5
+           - Column content
+           - Column content
+           - Column content
+
+      * - 6
+        - Column heading
+        - Column heading
+        - Column heading
+
+
+      * .. class:: danger
+
+           - 7
+           - Column content
+           - Column content
+           - Column content
+
+      * - 8
+        - Column heading
+        - Column heading
+        - Column heading
+
+
+      * .. class:: info
+
+           - 9
+           - Column content
+           - Column content
+           - Column content
+
+.. code::
+   :class: highlight
+
+   .. list-table::
+      :widths: 10 30 30 30
+
+      * - #
+        - Column heading
+        - Column heading
+        - Column heading
+
+      * .. class:: active
+
+           - 1
+           - Column content
+           - Column content
+           - Column content
+
+
+
+Responsive tables
+-----------------
+
+Create responsive tables by wrapping any `.table` in `.table-responsive` to
+make them scroll horizontally up to small devices (under 768px). When viewing
+on anything larger than 768px wide, you will not see any difference in these
+tables.
+
+
+.. container:: bs-example
+
+   .. container:: table-responsive
+
+      .. class:: table-bordered table-striped
+
+         = ============= ============= ============= ============= =============
+         # Table heading Table heading Table heading Table heading Table heading
+         = ============= ============= ============= ============= =============
+         1 Table cell    Table cell    Table cell    Table cell    Table cell
+         2 Table cell    Table cell    Table cell    Table cell    Table cell
+         3 Table cell    Table cell    Table cell    Table cell    Table cell
+         = ============= ============= ============= ============= =============
+
+.. code::
+   :class: highlight
+
+   .. container:: table-responsive
+
+      .. class:: table-bordered table-striped
+
+         = ============= ============= ============= ============= =============
+         # Table heading Table heading Table heading Table heading Table heading
+         = ============= ============= ============= ============= =============
+         1 Table cell    Table cell    Table cell    Table cell    Table cell
+         2 Table cell    Table cell    Table cell    Table cell    Table cell
+         3 Table cell    Table cell    Table cell    Table cell    Table cell
+         = ============= ============= ============= ============= =============

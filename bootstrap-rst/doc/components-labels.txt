@@ -1,0 +1,64 @@
+Labels
+===============================================================================
+
+Examples
+--------
+
+.. container:: bs-example
+
+   :h1:`Example heading <span class="label label-default">New</span>`
+
+   :h2:`Example heading <span class="label label-default">New</span>`
+
+   :h3:`Example heading <span class="label label-default">New</span>`
+
+   :h4:`Example heading <span class="label label-default">New</span>`
+
+   :h5:`Example heading <span class="label label-default">New</span>`
+
+   :h6:`Example heading <span class="label label-default">New</span>`
+
+
+.. code::
+   :class: highlight
+
+   h1. Example heading :label-default:`New`
+   ========================================
+
+   h2. Example heading :label-default:`New`
+   ----------------------------------------
+
+   h3. Example heading :label-default:`New`
+   ++++++++++++++++++++++++++++++++++++++++
+
+   h4. Example heading :label-default:`New`
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   h5. Example heading :label-default:`New`
+   ****************************************
+
+   h6. Example heading :label-default:`New`
+   ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+
+
+Available variations
+--------------------
+
+.. container:: bs-example
+
+   :label-default:`Default`
+   :label-primary:`Primary`
+   :label-success:`Success`
+   :label-info:`Info`
+   :label-warning:`Warning`
+   :label-danger:`Danger`
+
+.. code::
+   :class: highlight
+
+   :label-default:`Default`
+   :label-primary:`Primary`
+   :label-success:`Success`
+   :label-info:`Info`
+   :label-warning:`Warning`
+   :label-danger:`Danger`

@@ -1,0 +1,140 @@
+Progress bars
+===============================================================================
+.. lead:: Provide up-to-date feedback on the progress of a workflow or action
+          with simple yet flexible progress bars.
+.. ----------------------------------------------------------------------------
+
+.. callout:: danger
+
+   :h4:`Cross-browser compatibility`
+   Progress bars use CSS3 transitions and animations to achieve some of their
+   effects. These features are not supported in Internet Explorer 9 and below
+   or older versions of Firefox. Opera 12 does not support animations.
+
+
+Basic example
+-------------
+
+Default progress bar.
+
+.. container:: bs-example
+
+   .. progress:: 60%
+
+.. code::
+   :class: highlight
+
+   .. progress:: 60%
+
+
+With label
+----------
+
+Remove the `.sr-only` class from within the progress bar to show a visible
+percentage. For low percentages, consider adding a `min-width` to ensure the
+label's text is fully visible.
+
+.. container:: bs-example
+
+   .. progress:: 60%
+      :label: 60%
+
+.. code::
+   :class: highlight
+
+   .. progress:: 60%
+      :label: 60%
+
+
+Contextual alternatives
+-----------------------
+
+Progress bars use some of the same button and alert classes for consistent
+styles.
+
+.. container:: bs-example
+
+   .. progress:: 40%
+      :class: success
+
+   .. progress:: 20%
+      :class: info
+
+   .. progress:: 60%
+      :class: warning
+
+   .. progress:: 80%
+      :class: danger
+
+.. code::
+   :class: highlight
+
+   .. progress:: 40%
+      :class: success
+
+   .. progress:: 20%
+      :class: info
+
+   .. progress:: 60%
+      :class: warning
+
+   .. progress:: 80%
+      :class: danger
+
+
+Striped
+-------
+
+Uses a gradient to create a striped effect. Not available in IE8.
+
+.. container:: bs-example
+
+   .. progress:: 40%
+      :class: success striped
+
+   .. progress:: 20%
+      :class: info striped
+
+   .. progress:: 60%
+      :class: warning striped
+
+   .. progress:: 80%
+      :class: danger striped
+
+.. code::
+   :class: highlight
+
+   .. progress:: 40%
+      :class: success striped
+
+   .. progress:: 20%
+      :class: info striped
+
+   .. progress:: 60%
+      :class: warning striped
+
+   .. progress:: 80%
+      :class: danger striped
+
+
+Animated
+--------
+
+Add `.active` to `.progress-striped` to animate the stripes right to left. Not
+available in IE9 and below.
+
+.. container:: bs-example
+
+   .. progress:: 45%
+      :class: active
+
+.. code::
+   :class: highlight
+
+   .. progress:: 45%
+      :class: active
+
+Stacked
+-------
+
+:text-muted:`N/A`
