@@ -27,25 +27,19 @@ def article_url(content):
     site_url = content.settings['SITEURL']
     return quote(('%s/%s' % (site_url, content.url)).encode('utf-8'))
 
-
-def article_summary(content):
-    return quote(BeautifulSoup(content.summary, 'html.parser').get_text().strip().encode('utf-8'))
-
-
 def share_post(content):
     if isinstance(content, contents.Static):
         return
     title = article_title(content)
     url = article_url(content)
-    summary = article_summary(content)
 
     tweet = ('%s%s%s' % (title, quote(' '), url)).encode('utf-8')
     diaspora_link = 'https://sharetodiaspora.github.io/?title=%s&url=%s' % (title, url)
     facebook_link = 'http://www.facebook.com/sharer/sharer.php?u=%s' % url
     gplus_link = 'https://plus.google.com/share?url=%s' % url
     twitter_link = 'http://twitter.com/home?status=%s' % tweet
-    linkedin_link = 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&summary=%s&source=%s' % (
-        url, title, summary, url
+    linkedin_link = 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&source=%s' % (
+        url, title, url
     )
 
     mail_link = 'mailto:?subject=%s&amp;body=%s' % (title, url)
