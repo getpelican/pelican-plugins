@@ -35,6 +35,11 @@ import sys
 
 from pelican import signals, generators
 
+python_major_version = sys.version_info.major
+
+if python_major_version == 2:
+    str = basestring
+
 try:
     from bs4 import BeautifulSoup
 except ImportError as e:
@@ -90,10 +95,7 @@ def process_settings(pelicanobj):
         # and 3 of python
 
         if key == 'align':
-            try:
-                typeVal = isinstance(value, basestring)
-            except NameError:
-                typeVal = isinstance(value, str)
+            typeVal = isinstance(value, str)
 
             if not typeVal:
                 continue
@@ -122,10 +124,7 @@ def process_settings(pelicanobj):
             mathjax_settings[key] = 'true' if value else 'false'
 
         if key == 'latex_preview':
-            try:
-                typeVal = isinstance(value, basestring)
-            except NameError:
-                typeVal = isinstance(value, str)
+            typeVal = isinstance(value, str)
 
             if not typeVal:
                 continue
@@ -133,10 +132,7 @@ def process_settings(pelicanobj):
             mathjax_settings[key] = value
 
         if key == 'color':
-            try:
-                typeVal = isinstance(value, basestring)
-            except NameError:
-                typeVal = isinstance(value, str)
+            typeVal = isinstance(value, str)
 
             if not typeVal:
                 continue
@@ -161,19 +157,13 @@ def process_settings(pelicanobj):
 
         if key == 'tex_extensions' and isinstance(value, list):
             # filter string values, then add '' to them
-            try:
-                value = filter(lambda string: isinstance(string, basestring), value)
-            except NameError:
-                value = filter(lambda string: isinstance(string, str), value)
+            value = filter(lambda string: isinstance(string, str), value)
 
             value = map(lambda string: "'%s'" % string, value)
             mathjax_settings[key] = ',' + ','.join(value)
 
         if key == 'mathjax_font':
-            try:
-                typeVal = isinstance(value, basestring)
-            except NameError:
-                typeVal = isinstance(value, str)
+            typeVal = isinstance(value, str)
 
             if not typeVal:
                 continue
@@ -197,7 +187,10 @@ def process_summary(article):
     """Ensures summaries are not cut off. Also inserts
     mathjax script so that math will be rendered"""
 
-    summary = article._get_summary()
+    try:
+        summary = article.get_summary(article.get_siteurl())
+    except:
+        summary = article._get_summary()
     summary_parsed = BeautifulSoup(summary, 'html.parser')
     math = summary_parsed.find_all(class_='math')
 
