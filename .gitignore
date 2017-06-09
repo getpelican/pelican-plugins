@@ -1,6 +1,10 @@
+*~
+._*
+.*.swp
+.*.swo
 *.pyc
 *.log
-*~
+.DS_Store
 .directory
 .idea
 .project
