@@ -1,15 +1,15 @@
 from thumbnailer import _resizer
 from unittest import TestCase, main
-import os.path as path
+import os
 from PIL import Image
 
 class ThumbnailerTests(TestCase):
 
     def path(self, filename):
-        return path.join(self.img_path, filename)
+        return os.path.join(self.img_path, filename)
 
     def setUp(self):
-        self.img_path = path.join(path.dirname(__file__), "test_data")
+        self.img_path = os.path.join(os.path.dirname(__file__), "test_data")
         self.img = Image.open(self.path("sample_image.jpg"))
 
     def testSquare(self):
@@ -35,10 +35,10 @@ class ThumbnailerTests(TestCase):
 class ThumbnailerFilenameTest(TestCase):
 
     def path(self, *parts):
-        return path.join(self.img_path, *parts)
+        return os.path.join(self.img_path, *parts)
 
     def setUp(self):
-        self.img_path = path.join(path.dirname(__file__), "test_data")
+        self.img_path = os.path.join(os.path.dirname(__file__), "test_data")
 
     def testRoot(self):
         """Test a file that is in the root of img_path."""
