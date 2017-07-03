@@ -136,3 +136,6 @@
 [submodule "deadlinks"]
 	path = deadlinks
 	url = https://github.com/silentlamb/pelican-deadlinks.git
+[submodule "pelican-commits"]
+	path = pelican-commits
+	url = https://github.com/drummyfish/pelican-commits
