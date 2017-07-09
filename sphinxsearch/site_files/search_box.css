@@ -1,0 +1,46 @@
+/* Search form */
+#custom-search-input {
+    margin: 0px;
+
+    /* fix superposition of github ruban on search box */
+    z-index: 1;
+
+    /* put in superposition of header => correct by mediaqueries on small screens */
+    position: relative;
+    top: -75px;
+}
+/* Small devices (tablets, 970px (@screen-md-max) and up) */
+@media (max-width: 970px) {
+    #custom-search-input {
+
+    /* put in superposition of header => correct by mediaqueries on small screens */
+    top: 0px;
+    }
+}
+
+#custom-search-input .input-group{
+    border: solid 1px #ccc;
+    border-radius: 6px;
+}
+
+#custom-search-input .form-control{
+    border: 0;
+    height: 30px;
+}
+
+#custom-search-input button{
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover{
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
+}
+ 

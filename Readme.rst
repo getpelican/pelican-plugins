@@ -240,6 +240,8 @@ Sitemap                   Generates plain-text or XML sitemaps
 
 Slim                      Render theme template files via Plim, a Python port of Slim, instead of Jinja
 
+Sphinxsearch              Provides a support of Sphinxsearch for Pelican, allowing users to search keywords on the texts proposed on a website.
+
 Static comments           Allows you to add static comments to an article
 
 Subcategory               Adds support for subcategories
