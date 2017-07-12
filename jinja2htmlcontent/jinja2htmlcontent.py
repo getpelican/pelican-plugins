@@ -40,6 +40,9 @@ class JinjaHTMLReader(HTMLReader):
         self.env = Environment(
             loader=ChoiceLoader(loaders),
             **jinja_environment)
+        if 'JINJA_FILTERS' in self.settings:
+            custom_filters = self.settings['JINJA_FILTERS']
+            self.env.filters.update(custom_filters)
 
     def read(self, filename):
         """
