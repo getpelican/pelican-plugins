@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Testseite</title><link href="http://example.com/test/de/" rel="alternate"></link><link href="http://example.com/test/feeds_all.atom.xml" rel="self"></link><id>http://example.com/test/de/</id><updated>2014-09-15T00:00:00+00:00</updated><entry><title>Přeložený článek</title><link href="http://example.com/test/de/../cz/translated-article.html" rel="alternate"></link><published>2014-09-15T00:00:00+00:00</published><updated>2014-09-15T00:00:00+00:00</updated><author><name>Der Tester</name></author><id>tag:example.com,2014-09-15:/test/de/../cz/translated-article.html</id><summary type="html">&lt;p&gt;Jednoduchý článek s překlady.
+Zde je odkaz na &lt;a class="reference external" href="http://example.com/test/de/../images/img.png"&gt;nějaký obrázek&lt;/a&gt;.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Jednoduchý článek s překlady.
+Zde je odkaz na &lt;a class="reference external" href="http://example.com/test/de/../images/img.png"&gt;nějaký obrázek&lt;/a&gt;.&lt;/p&gt;
+</content></entry><entry><title>Ein übersetzter Artikel</title><link href="http://example.com/test/de/translated-article.html" rel="alternate"></link><published>2014-09-14T00:00:00+00:00</published><updated>2014-09-14T00:00:00+00:00</updated><author><name>Der Tester</name></author><id>tag:example.com,2014-09-14:/test/de/translated-article.html</id><summary type="html">&lt;p&gt;Ein einfacher Artikel mit einer Übersetzung.
+Hier ist ein Link zur &lt;a class="reference external" href="http://example.com/test/de/../images/img.png"&gt;einigem Bild&lt;/a&gt;.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Ein einfacher Artikel mit einer Übersetzung.
+Hier ist ein Link zur &lt;a class="reference external" href="http://example.com/test/de/../images/img.png"&gt;einigem Bild&lt;/a&gt;.&lt;/p&gt;
+</content></entry><entry><title>A translated article</title><link href="http://example.com/test/de/../translated-article.html" rel="alternate"></link><published>2014-09-13T00:00:00+00:00</published><updated>2014-09-13T00:00:00+00:00</updated><author><name>Der Tester</name></author><id>tag:example.com,2014-09-13:/test/de/../translated-article.html</id><summary type="html">&lt;p&gt;A simple article with a translation.
+Here is a link to &lt;a class="reference external" href="http://example.com/test/de/../images/img.png"&gt;some image&lt;/a&gt;.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;A simple article with a translation.
+Here is a link to &lt;a class="reference external" href="http://example.com/test/de/../images/img.png"&gt;some image&lt;/a&gt;.&lt;/p&gt;
+</content></entry></feed>

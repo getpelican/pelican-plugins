@@ -22,9 +22,9 @@ def add_gravatar(generator, metadata):
     #then add gravatar url
     if 'email' in metadata.keys():
         email_bytes = six.b(metadata['email']).lower()
-        gravatar_url = "http://www.gravatar.com/avatar/" + \
+        gravatar_url = "https://www.gravatar.com/avatar/" + \
                         hashlib.md5(email_bytes).hexdigest()
-        metadata["author_gravatar"] = gravatar_url
+        metadata['author_gravatar'] = gravatar_url
 
 
 def register():

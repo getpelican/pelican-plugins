@@ -14,17 +14,23 @@ Example
 
 Output
 ------
-<iframe width="640" height="480" src="http://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+
+<span class="videobox">
+    <iframe
+        width="640" height="480" src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+        frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>
+    </iframe>
+</span>
 
 [1] https://gist.github.com/jamieowen/2063748
 """
-import os
 import re
 from .mdx_liquid_tags import LiquidTags
 
 SYNTAX = "{% youtube id [width height] %}"
 
-YOUTUBE = re.compile(r'([\S]+)(\s+(\d+)\s(\d+))?')
+YOUTUBE = re.compile(r'([\S]+)(\s+([\d%]+)\s([\d%]+))?')
+
 
 @LiquidTags.register('youtube')
 def youtube(preprocessor, tag, markup):
@@ -41,13 +47,13 @@ def youtube(preprocessor, tag, markup):
 
     if youtube_id:
         youtube_out = """
-            <div class="videobox">
+            <span class="videobox">
                 <iframe width="{width}" height="{height}"
-                        src='http://www.youtube.com/v/{youtube_id}'
-                        frameborder='0'
-                        webkitAllowFullScreen mozallowfullscreen allowFullScreen>
+                    src='https://www.youtube.com/embed/{youtube_id}'
+                    frameborder='0' webkitAllowFullScreen mozallowfullscreen
+                    allowFullScreen>
                 </iframe>
-            </div>
+            </span>
         """.format(width=width, height=height, youtube_id=youtube_id).strip()
     else:
         raise ValueError("Error processing input, "
@@ -56,6 +62,6 @@ def youtube(preprocessor, tag, markup):
     return youtube_out
 
 
-#----------------------------------------------------------------------
+# ---------------------------------------------------
 # This import allows image tag to be a Pelican plugin
-from liquid_tags import register
+from liquid_tags import register  # noqa

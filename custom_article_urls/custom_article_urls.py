@@ -27,13 +27,17 @@ def custom_url(generator, metadata):
 
         if pattern_matched:
             #only alter url if hasn't been set in the metdata
+            ignore = False
             if ('url', 'save_as') in metadata:
                 """ if both url and save_as are set in the metadata already
                 then there is already a custom url set, skip this one
                 """
-                pass
-            else:
-                temp_article = Article(None, metadata=metadata)
+                ignore = True
+            elif ('status' in metadata) and (metadata['status'] == 'draft'):
+                ignore = True
+
+            if not ignore:
+                temp_article = Article("", metadata=metadata)
                 url_format = pattern_matched['URL']
                 save_as_format = pattern_matched['SAVE_AS']
                 url = url_format.format(**temp_article.url_format)

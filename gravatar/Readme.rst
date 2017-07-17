@@ -9,7 +9,7 @@ account.
 
 Alternatively, you can provide an email address from within article metadata.
 
-In ReSTructuredText::
+In reSTructuredText::
 
     :email:  john.doe@example.com
 
@@ -18,6 +18,6 @@ In Markdown::
     Email:  john.doe@example.com
 
 If the email address is defined via at least one of the two methods above, the
-``author_gravatar`` variable is added to the article's context. For markdown,
-it is critical the 'E' in Email is capitalized.
+``author_gravatar`` variable is added to the article's context. For Markdown,
+it is critical that the 'E' in ``Email`` is capitalized.
 

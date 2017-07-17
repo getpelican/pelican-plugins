@@ -26,3 +26,24 @@ Setting name (followed by default value)  What does it do?
                                           <http://www.methods.co.nz/asciidoc/userguide.html#X5>`_
                                           for possible values.
 ========================================  =======================================================
+
+Example file header
+-------------------
+
+Following the `example <https://github.com/getpelican/pelican/blob/master/docs/content.rst#file-metadata>`_ in the main pelican documentation:
+
+.. code-block:: none
+
+  = My super title
+
+  :date: 2010-10-03 10:20
+  :modified: 2010-10-04 18:40
+  :tags: thats, awesome
+  :category: yeah
+  :slug: my-super-post
+  :authors: Alexis Metaireau, Conan Doyle
+  :summary: Short version for index and feeds
+
+  == title level 2
+    
+  and so on...

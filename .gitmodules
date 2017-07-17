@@ -43,3 +43,96 @@
 [submodule "pelican-langcategory"]
 	path = pelican-langcategory
 	url = https://github.com/CNBorn/pelican-langcategory.git
+[submodule "pandoc_reader"]
+	path = pandoc_reader
+	url = https://github.com/liob/pandoc_reader.git
+[submodule "bootstrapify"]
+	path = bootstrapify
+	url = https://github.com/ingwinlu/pelican-bootstrapify.git
+[submodule "pelican-jinja2content"]
+	path = pelican-jinja2content
+	url = https://github.com/joachimneu/pelican-jinja2content.git
+[submodule "panorama"]
+	path = panorama
+	url = https://github.com/romainx/panorama.git
+[submodule "pelican-genealogy"]
+	path = pelican-genealogy
+	url = https://github.com/zappala/pelican-genealogy
+[submodule "image_process"]
+	path = image_process
+	url = https://github.com/whiskyechobravo/image_process
+[submodule "pelican-open_graph"]
+	path = pelican-open_graph
+	url = https://github.com/whiskyechobravo/pelican-open_graph.git
+[submodule "replacer"]
+	path = replacer
+	url = https://github.com/narusemotoki/replacer
+[submodule "pelican-toc"]
+	path = pelican-toc
+	url = https://github.com/ingwinlu/pelican-toc
+[submodule "multimarkdown_reader"]
+	path = multimarkdown_reader
+	url = https://github.com/dames57/multimarkdown_reader.git
+[submodule "pelican_javascript"]
+	path = pelican_javascript
+	url = https://github.com/mortada/pelican_javascript.git
+[submodule "loadcsv"]
+	path = loadcsv
+	url = https://github.com/e9t/pelican-loadcsv
+[submodule "org_pandoc_reader"]
+	path = org_pandoc_reader
+	url = https://github.com/jo-tham/org_pandoc_reader.git
+[submodule "pdf-img"]
+	path = pdf-img
+	url = https://github.com/cmacmackin/pdf-img.git
+[submodule "pelican-cite"]
+	path = pelican-cite
+	url = https://github.com/cmacmackin/pelican-cite.git
+[submodule "figure-ref"]
+	path = figure-ref
+	url = https://github.com/cmacmackin/figure-ref
+[submodule "encrypt-content"]
+	path = encrypt-content
+	url = https://github.com/mindcruzer/pelican-encrypt-content
+[submodule "md-metayaml"]
+	path = md-metayaml
+	url = https://github.com/joachimneu/pelican-md-metayaml
+[submodule "backreftranslate"]
+	path = backreftranslate
+	url = https://github.com/daltonmatos/pelican-plugin-backref-translate
+[submodule "category_order"]
+	path = category_order
+	url = https://github.com/jhshi/pelican.plugins.category_order.git
+[submodule "ga_page_view"]
+	path = ga_page_view
+	url = https://github.com/jhshi/pelican.plugins.ga_page_view.git
+[submodule "post_revision"]
+	path = post_revision
+	url = https://github.com/jhshi/pelican.plugins.post_revision
+[submodule "linkclass"]
+	path = pelican-linkclass
+	url = https://github.com/rlaboiss/pelican-linkclass
+[submodule "just_table"]
+	path = just_table
+	url = https://github.com/burakkose/just_table
+[submodule "ace_editor"]
+	path = ace_editor
+	url = https://github.com/mothsART/ace_editor.git
+[submodule "mboxreader"]
+	path = pelican-mboxreader
+	url = https://github.com/TC01/pelican-mboxreader
+[submodule "bootstrap-rst"]
+	path = bootstrap-rst
+	url = https://github.com/aqw/bootstrap-rst
+[submodule "pelican-version"]
+	path = pelican-version
+	url = https://github.com/Shaked/pelican-version
+[submodule "lightbox"]
+	path = lightbox
+	url = https://github.com/kura/lightbox
+[submodule "pelican-ipynb"]
+	path = pelican-ipynb
+	url = https://github.com/danielfrg/pelican-ipynb
+[submodule "deadlinks"]
+	path = deadlinks
+	url = https://github.com/silentlamb/pelican-deadlinks.git

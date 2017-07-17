@@ -2,10 +2,19 @@ import os
 from pelican import signals
 
 
-def add_gallery_post(generator):
+def get_content_path(pelican):
+    return pelican.settings.get('PATH')
 
-    contentpath = generator.settings.get('PATH')
-    gallerycontentpath = os.path.join(contentpath,'images/gallery')
+
+def get_gallery_path(pelican):
+    gallery_path = pelican.settings.get('GALLERY_PATH', 'images/gallery')
+    content_path = get_content_path(pelican)
+
+    return os.path.join(content_path, gallery_path)
+
+
+def add_gallery_post(generator):
+    gallerycontentpath = get_gallery_path(generator)
 
     for article in generator.articles:
         if 'gallery' in article.metadata.keys():
@@ -16,17 +25,34 @@ def add_gallery_post(generator):
 
             if(os.path.isdir(articlegallerypath)):
                 for i in os.listdir(articlegallerypath):
-                    if not a.startswith('.') and os.path.isfile(os.path.join(os.path.join(gallerycontentpath, album), i)):
+                    if not i.startswith('.') and os.path.isfile(os.path.join(os.path.join(gallerycontentpath, album), i)):
                         galleryimages.append(i)
 
             article.album = album
             article.galleryimages = sorted(galleryimages)
 
 
-def generate_gallery_page(generator):
+def add_gallery_page(generator):
+    gallerycontentpath = get_gallery_path(generator)
 
-    contentpath = generator.settings.get('PATH')
-    gallerycontentpath = os.path.join(contentpath,'images/gallery')
+    for page in generator.pages:
+        if 'gallery' in page.metadata.keys():
+            album = page.metadata.get('gallery')
+            galleryimages = []
+
+            pagegallerypath=os.path.join(gallerycontentpath, album)
+
+            if(os.path.isdir(pagegallerypath)):
+                for i in os.listdir(pagegallerypath):
+                    if not i.startswith('.') and os.path.isfile(os.path.join(os.path.join(gallerycontentpath, album), i)):
+                        galleryimages.append(i)
+
+            page.album = album
+            page.galleryimages = sorted(galleryimages)
+
+
+def generate_gallery_page(generator):
+    gallerycontentpath = get_gallery_path(generator)
 
     for page in generator.pages:
         if page.metadata.get('template') == 'gallery':
@@ -46,3 +72,4 @@ def generate_gallery_page(generator):
 def register():
     signals.article_generator_finalized.connect(add_gallery_post)
     signals.page_generator_finalized.connect(generate_gallery_page)
+    signals.page_generator_finalized.connect(add_gallery_page)
