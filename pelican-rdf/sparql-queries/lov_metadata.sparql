@@ -1,0 +1,11 @@
+PREFIX owl:	<http://www.w3.org/2002/07/owl#>
+PREFIX dc:	<http://purl.org/dc/elements/1.1/>
+PREFIX cc:	<http://creativecommons.org/ns#>
+SELECT ?iri ?license ?description ?version ?title
+WHERE {
+	?iri rdf:type owl:Ontology;
+		cc:license ?license;
+		dc:description ?description;
+		dc:title ?title;
+		owl:versionInfo ?version.
+} LIMIT 1
