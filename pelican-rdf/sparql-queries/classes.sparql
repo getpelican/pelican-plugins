@@ -1,0 +1,12 @@
+PREFIX owl:	<http://www.w3.org/2002/07/owl#>
+PREFIX dc:	<http://purl.org/dc/elements/1.1/>
+PREFIX cc:	<http://creativecommons.org/ns#>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?class ?comment ?label
+WHERE {
+	?class rdf:type owl:Class.
+	OPTIONAL { ?class rdfs:comment ?comment.}
+	OPTIONAL { ?label rdfs:label ?label.}
+	OPTIONAL { ?class rdfs:subClassOf ?superclass.}
+} GROUP BY ?class
