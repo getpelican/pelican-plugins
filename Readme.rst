@@ -68,6 +68,8 @@ Code include              Includes Pygments highlighted code in reStructuredText
 
 Collate content           Makes categories of content available to the template as lists through a ``collations`` attribute
 
+Commits                   List commits of given GitHub repository.
+
 Creole reader             Allows you to write your posts using the wikicreole syntax
 
 Custom article URLs       Adds support for defining different default URLs for different categories
