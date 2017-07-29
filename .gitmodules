@@ -136,3 +136,6 @@
 [submodule "deadlinks"]
 	path = deadlinks
 	url = https://github.com/silentlamb/pelican-deadlinks.git
+[submodule "pelican_json_feed"]
+    path = pelican_json_feed
+    url = https://github.com/andrewheiss/pelican_json_feed.git

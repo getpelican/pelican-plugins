@@ -184,6 +184,8 @@ pelican_javascript        Allows you to embed Javascript and CSS files into indi
 
 Pelican Jinja2Content     Allows the use of Jinja2 template code in articles, including ``include`` and ``import`` statements
 
+Pelican JSON Feed         Generates a `JSON Feed <https://jsonfeed.org/>`__ file for your site
+
 Pelican Link Class        Set class attribute of ``<a>`` elements according to whether the link is external or internal
 
 Pelican Page Hierarchy    Creates a URL hierarchy for pages that matches the filesystem hierarchy of their sources
