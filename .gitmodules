@@ -136,3 +136,6 @@
 [submodule "deadlinks"]
 	path = deadlinks
 	url = https://github.com/silentlamb/pelican-deadlinks.git
+[submodule "pelican-ert"]
+	path = pelican-ert
+	url = https://github.com/nogaems/pelican-ert.git
