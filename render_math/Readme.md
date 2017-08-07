@@ -52,6 +52,14 @@ the math output in the summary.
 To restore math, [BeautifulSoup4](https://pypi.python.org/pypi/beautifulsoup4/4.4.0)
 is used. If it is not installed, no summary processing will happen.
 
+### Load custom LaTeX macros
+
+If you use the same macros over and over, it's a good idea to not repeat yourself defining them in multiple Markdown or reStructuredText documents. What you can do instead is tell the plugin absolute paths for text files containing macro definitions. 
+
+If the same macro name has multiple definitions, the last one is used and a warning is printed to stdout.
+
+See below in the Usage section for examples.
+
 Usage
 -----
 ### Templates
@@ -95,13 +103,19 @@ is less than `responsive_break` (see below) and if so, sets `align` to `left`, `
 when setting `responsive_align` to `True`. **Default Value**: 768
  * `process_summary`: [boolean] ensures math will render in summaries and fixes math in that were cut off.
 Requires [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) be installed. **Default Value**: `True`
+ * `force_tls`: [boolean] forces mathjax script to load from cdn using https. If set to false, will use document.location.protocol
+**Default Value**: `False`
  * `message_style`: [string] This value controls the verbosity of the messages in the lower left-hand corner. Set it to `None` to eliminate all messages.
 **Default Value**: normal
+* `macros`: [list] each element of the list is a [string] containing the absolute path to a file with macro definitions.
+**Default Value**: `[]`
 
 #### Settings Examples
-Make math render in blue and displaymath align to the left:
+Make math render in blue, displaymath align to the left and load macros from `/home/user/latex-macros.tex`:
 
-    MATH_JAX = {'color':'blue','align':left}
+    macros = ['/home/user/latex-macros.tex']
+    MATH_JAX = {'color': 'blue', 'align': 'left', 'macros': macros}
+
 
 Use the [color](http://docs.mathjax.org/en/latest/tex.html#color) and
 [mhchem](http://docs.mathjax.org/en/latest/tex.html#mhchem) extensions:
