@@ -172,6 +172,8 @@ Pelican Cite              Produces inline citations and a bibliography in articl
 
 Pelican Comment System    Allows you to add static comments to your articles
 
+pelican-ert               Allows you to add estimated reading time of an article
+
 Pelican-flickr            Brings your Flickr photos & sets into your static website
 
 Pelican Genealogy         Add surnames and people so metadata and context can be accessed from within a theme to provide surname and person pages
