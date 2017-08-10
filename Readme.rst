@@ -172,6 +172,8 @@ Pelican Cite              Produces inline citations and a bibliography in articl
 
 Pelican Comment System    Allows you to add static comments to your articles
 
+pelican-ert               Allows you to add estimated reading time of an article
+
 Pelican-flickr            Brings your Flickr photos & sets into your static website
 
 Pelican Genealogy         Add surnames and people so metadata and context can be accessed from within a theme to provide surname and person pages
@@ -191,6 +193,8 @@ Pelican Page Hierarchy    Creates a URL hierarchy for pages that matches the fil
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
 
 Pelican Themes Generator  Generates theme screenshots from the Pelican Themes repository
+
+pelican-rdf                Allows the processing of .rdf vocabularies, and the generation of a lightweight documentation.
 
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
 
