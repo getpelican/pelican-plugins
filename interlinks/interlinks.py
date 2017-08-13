@@ -53,7 +53,7 @@ def parse_links(instance):
 				if name in interlinks:
 					hi = url.replace(name+">",interlinks[name])
 					img['src'] = hi
-				content = content.replace(old_tag, str(link))
+				content = content.replace(old_tag, str(img))
 
 		instance._content = content
 
