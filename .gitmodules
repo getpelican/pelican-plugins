@@ -138,4 +138,7 @@
 	url = https://github.com/silentlamb/pelican-deadlinks.git
 [submodule "orgmode_reader"]
 	path = orgmode_reader
-	url = git@github.com:honmaple/orgmode_reader.git
+	url = https://github.com/honmaple/orgmode_reader.git
+[submodule "pelican-ert"]
+	path = pelican-ert
+	url = https://github.com/nogaems/pelican-ert.git
