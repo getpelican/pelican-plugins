@@ -132,12 +132,19 @@ def resize_thumbnails(pelican):
 
     in_path = _image_path(pelican)
 
+    include_regex = pelican.settings.get('THUMBNAIL_INCLUDE_REGEX')
+    if include_regex:
+        pattern = re.compile(include_regex)
+        is_included = lambda name: pattern.match(name)
+    else:
+        is_included = lambda name: not name.startswith('.')
+
     sizes = pelican.settings.get('THUMBNAIL_SIZES', DEFAULT_THUMBNAIL_SIZES)
     resizers = dict((k, _resizer(k, v, in_path)) for k,v in sizes.items())
     logger.debug("Thumbnailer Started")
     for dirpath, _, filenames in os.walk(in_path):
         for filename in filenames:
-            if not filename.startswith('.'):
+            if is_included(filename):
                 for name, resizer in resizers.items():
                     in_filename = path.join(dirpath, filename)
                     out_path = get_out_path(pelican, in_path, in_filename, name)
