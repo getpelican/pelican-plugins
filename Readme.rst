@@ -100,6 +100,8 @@ Gallery                   Allows an article to contain an album of pictures
 
 Gist directive            This plugin adds a ``gist`` reStructuredText directive.
 
+GitHub wiki               Converts a flat github wiki into a structured read only wiki on your site
+
 GitHub activity           On the template side, you just have to iterate over the ``github_activity`` variable
 
 Global license            Allows you to define a ``LICENSE`` setting and adds the contents of that license variable to the article's context
