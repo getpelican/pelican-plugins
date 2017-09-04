@@ -135,11 +135,11 @@ The other LaTeX commands which usually invoke display math mode from text mode
 are supported,
 and are automatically treated like `$$`-style displayed math 
 in that they are rendered "block" style on their own lines.
-For example, `begin{equation}` x^2 `\end{equation}`,
+For example, `\begin{equation}` x^2 `\end{equation}`,
 will be rendered in its own block with a right justified equation number
 at the top of the block. This equation number can be referenced in the document.
 To do this, use a `label` inside of the equation format and then refer to that label
-using `ref`. For example: `begin{equation}` `\label{eq}` X^2 `\end{equation}`. 
+using `ref`. For example: `\begin{equation}` `\label{eq}` X^2 `\end{equation}`. 
 Now refer to that equation number by `$`\ref{eq}`$`.
 
 reStructuredText
