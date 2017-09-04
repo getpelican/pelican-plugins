@@ -1,0 +1,441 @@
+Typography
+===============================================================================
+
+Headings
+--------
+
+All HTML headings, :code:`<h1>` through :code:`<h6>`, are available. :code:`.h1`
+through :code:`.h6` classes are also available, for when you want to match the font
+styling of a heading but still want your text to be displayed inline.
+
+.. container:: bs-example
+
+   .. list-table::
+      :widths: 75 25
+      :class: table
+
+      * - :h1:`h1. Bootstrap heading`
+        - **Semibold 36 px**
+      * - :h2:`h2. Bootstrap heading`
+        - **Semibold 30 px**
+      * - :h3:`h3. Bootstrap heading`
+        - **Semibold 24 px**
+      * - :h4:`h4. Bootstrap heading`
+        - **Semibold 18 px**
+      * - :h5:`h5. Bootstrap heading`
+        - **Semibold 14 px**
+      * - :h6:`h6. Bootstrap heading`
+        - **Semibold 12 px**
+
+.. code::
+   :class: highlight
+
+   h1. Bootstrap heading
+   =====================
+
+   h2. Bootstrap heading
+   ---------------------
+
+   h3. Bootstrap heading
+   +++++++++++++++++++++
+
+   h4. Bootstrap heading
+   ~~~~~~~~~~~~~~~~~~~~~
+
+   h5. Bootstrap heading
+   *********************
+
+   h6. Bootstrap heading
+   ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+
+Create lighter, secondary text in any heading with a generic :code:`small` tag.
+
+
+.. container:: bs-example
+
+   .. list-table::
+      :widths: 100
+      :class: table
+
+      * - :h1:`h1. Bootstrap heading <small>Secondary text</small>`
+      * - :h2:`h2. Bootstrap heading <small>Secondary text</small>`
+      * - :h3:`h3. Bootstrap heading <small>Secondary text</small>`
+      * - :h4:`h4. Bootstrap heading <small>Secondary text</small>`
+      * - :h5:`h5. Bootstrap heading <small>Secondary text</small>`
+      * - :h6:`h6. Bootstrap heading <small>Secondary text</small>`
+
+.. code::
+   :class: highlight
+
+   h1. Bootstrap heading :small:`Secondary text`
+   =============================================
+
+   h2. Bootstrap heading :small:`Secondary text`
+   ---------------------------------------------
+
+   h3. Bootstrap heading :small:`Secondary text`
+   +++++++++++++++++++++++++++++++++++++++++++++
+
+   h4. Bootstrap heading :small:`Secondary text`
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   h5. Bootstrap heading :small:`Secondary text`
+   *********************************************
+
+   h6. Bootstrap heading :small:`Secondary text`
+   ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
+
+
+Body copy
+---------
+
+Bootstrap's global default `font-size` is **14px**, with a line-height of
+**1.428**. This is applied to the `<body>` and all paragraphs. In addition,
+`<p>` (paragraphs) receive a bottom margin of half their computed line-height
+(10px by default).
+
+
+.. container:: bs-example
+
+   Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque
+   penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id
+   dolor id nibh ultricies vehicula.
+
+   Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+   ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Duis
+   mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia
+   odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla.
+
+   Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id
+   elit non mi porta gravida at eget metus. Duis mollis, est non commodo
+   luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+
+.. code::
+   :class: highlight
+
+   ...
+
+
+Lead body copy
+++++++++++++++
+
+Make a paragraph stand out by adding lead.
+
+
+.. container:: bs-example
+
+   .. lead:: Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
+             auctor. Duis mollis, est non commodo luctus.
+
+
+.. code::
+   :class: highlight
+
+
+   .. lead:: Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
+             auctor. Duis mollis, est non commodo luctus.
+
+
+Built with Less
++++++++++++++++
+
+The typographic scale is based on two Less variables in **variables.less**:
+`@font-size-base` and `@line-height-base`. The first is the base font-size used
+throughout and the second is the base line-height. We use those variables and
+some simple math to create the margins, paddings, and line-heights of all our
+type and more. Customize them and Bootstrap adapts.
+
+
+Emphasis
+--------
+Make use of HTML's default emphasis tags with lightweight styles.
+
+
+Small text
+++++++++++
+
+For de-emphasizing inline or blocks of text, use the `small` tag to set text at
+85% the size of the parent. Heading elements receive their own font-size for
+nested `small` elements.
+
+.. container:: bs-example
+
+   :small:`This line of text is meant to be treated as fine print.`
+
+
+.. code::
+   :class: highlight
+
+   :small:`This line of text is meant to be treated as fine print.`
+
+
+Bold
+++++
+
+For emphasizing a snippet of text with a heavier font-weight.
+
+.. container:: bs-example
+
+   The following snippet of text is **rendered as bold text**.
+
+.. code::
+   :class: highlight
+
+   The following snippet of text is **rendered as bold text**.
+
+
+Italics
++++++++
+
+For emphasizing a snippet of text with italics.
+
+.. container:: bs-example
+
+   The following snippet of text is *rendered as italicized text*.
+
+.. code::
+   :class: highlight
+
+   The following snippet of text is *rendered as italicized text*.
+
+
+.. admonition:: :h4:`Alternate elements`
+   :class: bs-callout bs-callout-info
+
+   Feel free to use `<b>` and `<i>` in HTML5. `<b>` is meant to highlight words or
+   phrases without conveying additional importance while `<i>` is mostly for
+   voice, technical terms, etc.
+
+
+Alignment classes
++++++++++++++++++
+
+Easily realign text to components with text alignment classes.
+
+.. container:: bs-example
+
+   .. class:: text-left
+
+      Left aligned text.
+
+   .. class:: text-center
+
+      Center aligned text.
+
+   .. class:: text-right
+
+      Right aligned text.
+
+   .. class:: text-justify
+
+      Justified text.
+
+
+.. code::
+   :class: highlight
+
+   .. class:: text-left
+
+      Left aligned text.
+
+   .. class:: text-center
+
+      Center aligned text.
+
+   .. class:: text-right
+
+      Right aligned text.
+
+   .. class:: text-justify
+
+      Justified text.
+
+
+
+Lists
+-----
+
+Unordered
++++++++++
+
+A list of items in which the order does *not* explicitly matter.
+
+.. container:: bs-example
+
+   * Lorem ipsum dolor sit amet
+   * Consectetur adipiscing elit
+   * Integer molestie lorem at massa
+   * Facilisis in pretium nisl aliquet
+   * Nulla volutpat aliquam velit
+
+     * Phasellus iaculis neque
+     * Purus sodales ultricies
+     * Vestibulum laoreet porttitor sem
+     * Ac tristique libero volutpat at
+
+   * Faucibus porta lacus fringilla vel
+   * Aenean sit amet erat nunc
+   * Eget porttitor lorem
+
+.. code::
+   :class: highlight
+
+   * Lorem ipsum dolor sit amet
+   * Consectetur adipiscing elit
+     ...
+
+
+Ordered
++++++++
+
+A list of items in which the order *does* matter.
+
+.. container:: bs-example
+
+   1. Lorem ipsum dolor sit amet
+   #. Consectetur adipiscing elit
+   #. Integer molestie lorem at massa
+   #. Facilisis in pretium nisl aliquet
+   #. Nulla volutpat aliquam velit
+   #. Faucibus porta lacus fringilla vel
+   #. Aenean sit amet erat nunc
+   #. Eget porttitor lorem
+
+.. code::
+   :class: highlight
+
+   1. Lorem ipsum dolor sit amet
+   #. Consectetur adipiscing elit
+      ...
+
+Unstyled
+++++++++
+
+Remove the default `list-style` and left margin on list items (immediate children
+only). **This only applies to immediate children list items**, meaning you will
+need to add the class for any nested lists as well.
+
+.. container:: bs-example
+
+   .. class:: list-unstyled
+
+      * Lorem ipsum dolor sit amet
+      * Consectetur adipiscing elit
+      * Integer molestie lorem at massa
+      * Facilisis in pretium nisl aliquet
+      * Nulla volutpat aliquam velit
+
+        * Phasellus iaculis neque
+        * Purus sodales ultricies
+        * Vestibulum laoreet porttitor sem
+        * Ac tristique libero volutpat at
+
+      * Faucibus porta lacus fringilla vel
+      * Aenean sit amet erat nunc
+      * Eget porttitor lorem
+
+.. code::
+   :class: highlight
+
+   .. class:: list-unstyled
+
+      * Lorem ipsum dolor sit amet
+      * Consectetur adipiscing elit
+        ...
+
+
+Inline
+++++++
+
+.. container:: bs-example
+
+   .. class:: list-inline
+
+      * Lorem ipsum
+      * Phasellus iaculis
+      * Nulla volutpat
+
+.. code::
+   :class: highlight
+
+   .. class:: list-inline
+
+      * Lorem ipsum
+      * Phasellus iaculis
+      * Nulla volutpat
+
+
+Description
++++++++++++
+
+.. container:: bs-example
+
+   A list of terms with their associated descriptions.
+
+   Description lists
+    A description list is perfect for defining terms.
+
+   Euismod
+    Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+    Donec id elit non mi porta gravida at eget metus.
+
+   Malesuada porta
+    Etiam porta sem malesuada magna mollis euismod.
+
+
+.. code::
+   :class: highlight
+
+   Description lists
+    A description list is perfect for defining terms.
+
+   Euismod
+    Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+    Donec id elit non mi porta gravida at eget metus.
+
+   Malesuada porta
+    Etiam porta sem malesuada magna mollis euismod.
+
+
+Horizontal description
+~~~~~~~~~~~~~~~~~~~~~~
+
+Make terms and descriptions in <dl> line up side-by-side. Starts off stacked
+like default <dl>s, but when the navbar expands, so do these.
+
+.. container:: bs-example
+
+   .. class:: dl-horizontal
+
+      Description lists
+       A description list is perfect for defining terms.
+
+      Euismod
+       Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+       Donec id elit non mi porta gravida at eget metus.
+
+      Malesuada porta
+       Etiam porta sem malesuada magna mollis euismod.
+
+.. code::
+   :class: highlight
+
+   .. class:: dl-horizontal
+
+      Description lists
+       A description list is perfect for defining terms.
+
+      Euismod
+       Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+       Donec id elit non mi porta gravida at eget metus.
+
+      Malesuada porta
+       Etiam porta sem malesuada magna mollis euismod.
+
+
+.. admonition:: :h4:`Auto-truncating`
+   :class: bs-callout bs-callout-info
+
+   Horizontal description lists will truncate terms that are too long to fit in
+   the left column with `text-overflow`. In narrower viewports, they will change
+   to the default stacked layout.

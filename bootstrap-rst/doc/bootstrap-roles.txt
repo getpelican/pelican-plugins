@@ -1,0 +1,21 @@
+.. ----------------------------------------------------------------------------
+.. Bootstrap RST - role definitions
+.. ----------------------------------------------------------------------------
+
+.. role:: small
+.. role:: kbd
+.. role:: badge
+
+.. role:: text-muted
+.. role:: text-primary
+.. role:: text-success
+.. role:: text-info
+.. role:: text-warning
+.. role:: text-danger
+
+.. role:: bg-muted
+.. role:: bg-primary
+.. role:: bg-success
+.. role:: bg-info
+.. role:: bg-warning
+.. role:: bg-danger

@@ -121,9 +121,6 @@
 [submodule "mboxreader"]
 	path = pelican-mboxreader
 	url = https://github.com/TC01/pelican-mboxreader
-[submodule "bootstrap-rst"]
-	path = bootstrap-rst
-	url = https://github.com/aqw/bootstrap-rst
 [submodule "pelican-version"]
 	path = pelican-version
 	url = https://github.com/Shaked/pelican-version

@@ -1,0 +1,210 @@
+Pagination
+===============================================================================
+.. lead:: Provide pagination links for your site or app with the multi-page
+          pagination component, or the simpler pager alternative.
+.. ----------------------------------------------------------------------------
+
+Default pagination
+------------------
+
+Simple pagination inspired by Rdio, great for apps and search results. The
+large block is hard to miss, easily scalable, and provides large click areas.
+
+
+
+.. container:: bs-example
+
+   .. class:: pagination
+
+      * `« <#>`_
+      * `1 <#>`_
+      * `2 <#>`_
+      * `3 <#>`_
+      * `4 <#>`_
+      * `5 <#>`_
+      * `» <#>`_
+
+.. code::
+   :class: highlight
+
+   .. class:: pagination
+
+      * `« <#>`_
+      * `1 <#>`_
+      * `2 <#>`_
+      * `3 <#>`_
+      * `4 <#>`_
+      * `5 <#>`_
+      * `» <#>`_
+
+
+Disabled and active states
+--------------------------
+
+Links are customizable for different circumstances. Use `.disabled` for
+unclickable links and `.active` to indicate the current page.
+
+
+.. container:: bs-example
+
+   .. class:: pagination
+
+      * .. item-class:: disabled
+        `« <#>`_
+      * .. item-class:: active
+        `1 <#>`_
+      * `2 <#>`_
+      * `3 <#>`_
+      * `4 <#>`_
+      * `5 <#>`_
+      * `» <#>`_
+
+.. code::
+   :class: highlight
+
+   .. class:: pagination
+
+      * .. item-class:: disabled
+        `« <#>`_
+      * .. item-class:: active
+        `1 <#>`_
+      * `2 <#>`_
+      * `3 <#>`_
+      * `4 <#>`_
+      * `5 <#>`_
+      * `» <#>`_
+
+Sizing
+------
+
+Fancy larger or smaller pagination? Add `.pagination-lg` or `.pagination-sm` for
+additional sizes.
+
+.. container:: bs-example
+
+   .. class:: pagination pagination-lg
+
+      * `« <#>`_
+      * `1 <#>`_
+      * `2 <#>`_
+      * `3 <#>`_
+      * `4 <#>`_
+      * `5 <#>`_
+      * `» <#>`_
+
+   |
+
+   .. class:: pagination
+
+      * `« <#>`_
+      * `1 <#>`_
+      * `2 <#>`_
+      * `3 <#>`_
+      * `4 <#>`_
+      * `5 <#>`_
+      * `» <#>`_
+
+   |
+
+   .. class:: pagination pagination-sm
+
+      * `« <#>`_
+      * `1 <#>`_
+      * `2 <#>`_
+      * `3 <#>`_
+      * `4 <#>`_
+      * `5 <#>`_
+      * `» <#>`_
+
+.. code::
+   :class: highlight
+
+
+   .. class:: pagination pagination-lg
+
+      ...
+
+   .. class:: pagination
+
+      ...
+
+   .. class:: pagination pagination-sm
+
+      ...
+
+
+Pager
+===============================================================================
+
+Quick previous and next links for simple pagination implementations with light
+markup and styles. It's great for simple sites like blogs or magazines.
+
+Default example
+---------------
+
+By default, the pager centers links.
+
+.. container:: bs-example
+
+   .. class:: pager
+
+      * `Previous <#>`_
+      * `Next <#>`_
+
+.. code::
+   :class: highlight
+
+   .. class:: pager
+
+      * `Previous <#>`_
+      * `Next <#>`_
+
+
+Aligned links
+-------------
+
+Alternatively, you can align each link to the sides:
+
+.. container:: bs-example
+
+   .. class:: pager
+
+      * .. item-class:: previous
+        `← Older <#>`_
+      * .. item-class:: next
+        `Newer → <#>`_
+
+.. code::
+   :class: highlight
+
+   .. class:: pager
+
+      * .. item-class:: previous
+        `← Older <#>`_
+      * .. item-class:: next
+        `Newer → <#>`_
+
+
+Optional disabled state
+-----------------------
+
+Pager links also use the general `disabled` utility class from the pagination.
+
+.. container:: bs-example
+
+   .. class:: pager
+
+      * .. item-class:: previous disabled
+        `← Older <#>`_
+      * .. item-class:: next
+        `Newer → <#>`_
+
+.. code::
+   :class: highlight
+
+   .. class:: pager
+
+      * .. item-class:: previous disabled
+        `← Older <#>`_
+      * .. item-class:: next
+        `Newer → <#>`_

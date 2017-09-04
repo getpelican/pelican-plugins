@@ -1,0 +1,37 @@
+Glyphicons
+===============================================================================
+
+Available glyphs
+----------------
+
+Includes 200 glyphs in font format from the Glyphicon Halflings
+set. `Glyphicons <http://glyphicons.com>`_ Halflings are normally not available
+for free, but their creator has made them available for Bootstrap free of
+cost. As a thank you, we only ask that you include a link back to `Glyphicons
+<http://glyphicons.com>`_ whenever possible.
+
+.. include:: glyphicons-list.txt
+
+How to use
+----------
+
+For performance reasons, all icons require a base class and individual icon
+class. To use, place the following code just about anywhere. Be sure to leave a
+space between the icon and text for proper padding.
+
+.. callout:: danger
+
+   :h4:`Don't mix with other`
+   Icon classes cannot be directly combined with other components. They should
+   not be used along with other classes on the same element. Instead, add a
+   nested `<span>` and apply the icon classes to the `<span>`.
+
+.. container:: bs-example
+
+   |search| |star|
+
+
+.. code::
+   :class: highlight
+
+   |search| |star|

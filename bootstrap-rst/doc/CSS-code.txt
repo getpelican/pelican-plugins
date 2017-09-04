@@ -1,0 +1,48 @@
+Code
+===============================================================================
+
+Inline
+------
+
+Wrap inline snippets of code with `:code:`.
+
+.. container:: bs-example
+
+   For example, `<section>` should be wrapped as inline.
+
+.. code::
+   :class: highlight
+
+   For example, :code:`<section>` should be wrapped as inline.
+
+User input
+----------
+
+Use the `:kbd:` to indicate input that is typically entered via keyboard.
+
+.. container:: bs-example
+
+   To switch directories, type :kbd:`cd` followed by the name of the directory.
+
+.. code::
+   :class: highlight
+
+   To switch directories, type :kbd:`cd` followed by the name of the directory.
+
+Basic block
+-----------
+
+Use `.. code::` for multiple lines of code. Be sure to escape any angle brackets in
+the code for proper rendering.
+
+.. container:: bs-example
+
+   Sample text here...
+
+.. code::
+   :class: highlight
+
+   Sample text here...
+
+You may optionally add the pre-scrollable class, which will set a max-height
+of 350px and provide a y-axis scrollbar.
