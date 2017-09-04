@@ -46,8 +46,9 @@ def share_post(content):
     linkedin_link = 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&summary=%s&source=%s' % (
         url, title, summary, url
     )
-
-    mail_link = 'mailto:?subject=%s&amp;body=%s' % (title, url)
+    
+    email_address = content.settings['EMAIL_ADDRESS']
+    mail_link = 'mailto:%s?subject=%s&amp;body=%s' % (email_address, title, url)
 
     share_links = {
                    'diaspora': diaspora_link,
