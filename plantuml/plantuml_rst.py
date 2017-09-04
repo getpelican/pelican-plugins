@@ -65,7 +65,7 @@ def pelican_init(pelicanobj):
     """ Prepare configurations for the MD plugin """
     try:
         import markdown
-        from plantuml_md import PlantUMLMarkdownExtension
+        from .plantuml_md import PlantUMLMarkdownExtension
     except:
         # Markdown not available
         logger.debug("[plantuml] Markdown support not available")
@@ -75,7 +75,11 @@ def pelican_init(pelicanobj):
     config = { 'siteurl': pelicanobj.settings['SITEURL'] }
 
     try:
-        pelicanobj.settings['MD_EXTENSIONS'].append(PlantUMLMarkdownExtension(config))
+        if 'MD_EXTENSIONS' in pelicanobj.settings.keys(): # pre pelican 3.7.0
+            pelicanobj.settings['MD_EXTENSIONS'].append(PlantUMLMarkdownExtension(config))
+        elif 'MARKDOWN' in pelicanobj.settings.keys() and \
+             not ('extension_configs' in pelicanobj.settings['MARKDOWN']['extension_configs']):  # from pelican 3.7.0
+            pelicanobj.settings['MARKDOWN']['extension_configs']['plantuml.plantuml_md'] = {}
     except:
         logger.error("[plantuml] Unable to configure plantuml markdown extension")
 
