@@ -39,11 +39,10 @@ def share_post(content):
     url = article_url(content)
     summary = article_summary(content)
 
-    tweet = ('%s%s%s' % (title, quote(' '), url)).encode('utf-8')
     diaspora_link = 'https://sharetodiaspora.github.io/?title=%s&url=%s' % (title, url)
     facebook_link = 'http://www.facebook.com/sharer/sharer.php?u=%s' % url
     gplus_link = 'https://plus.google.com/share?url=%s' % url
-    twitter_link = 'http://twitter.com/home?status=%s' % tweet
+    twitter_link = 'https://twitter.com/intent/tweet?text=%s&url=%s' % (title, url)
     linkedin_link = 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&summary=%s&source=%s' % (
         url, title, summary, url
     )
@@ -78,4 +77,3 @@ def register():
         # NOTE: This results in #314 so shouldn't really be relied on
         # https://github.com/getpelican/pelican-plugins/issues/314
         signals.content_object_init.connect(share_post)
-
