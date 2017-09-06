@@ -1,4 +1,9 @@
-# Feed Summary #
+# DEPRECATED — Do Not Use #
+
+**As noted in the [Pelican 3.7 release notes](https://blog.getpelican.com/pelican-3.7-released.html), RSS feeds now provide summaries by default, so this plugin is no longer relevant and will eventually be removed from this repository.**
+
+-----------------------
+
 This plugin allows article summaries to be used in ATOM and RSS feeds instead of the entire article. It uses the
 built-in pelican `Summary:` metadata.
 
