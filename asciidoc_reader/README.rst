@@ -1,18 +1,19 @@
 AsciiDoc Reader
 ###############
 
-This plugin allows you to use `AsciiDoc <http://www.methods.co.nz/asciidoc/>`_ 
-to write your posts. File extension should be ``.asc``, ``.adoc``, 
+This plugin allows you to use `AsciiDoc <http://www.methods.co.nz/asciidoc/>`_
+to write your posts. File extension should be ``.asc``, ``.adoc``,
 or ``.asciidoc``.
 
 Dependency
 ----------
 
-If you want to use AsciiDoc you need to install it from `source
-<http://www.methods.co.nz/asciidoc/INSTALL.html>`_ or use your operating
-system's package manager.
+There are two command line utilities commonly used to render AsciiDoc:
+``asciidoc`` and ``asciidoctor``. One of the two will need to be installed and
+on the PATH.
 
-**Note**: AsciiDoc does not work with Python 3, so you should be using Python 2.
+**Note**: The ``asciidoctor`` utility is recommended since the original
+``asciidoc`` is no longer maintained.
 
 Settings
 --------
@@ -20,11 +21,10 @@ Settings
 ========================================  =======================================================
 Setting name (followed by default value)  What does it do?
 ========================================  =======================================================
+``ASCIIDOC_CMD = asciidoc``               Selects which utility to use for rendering. Will
+                                          autodetect utility if not provided.
 ``ASCIIDOC_OPTIONS = []``                 A list of options to pass to AsciiDoc. See the `manpage
                                           <http://www.methods.co.nz/asciidoc/manpage.html>`_.
-``ASCIIDOC_BACKEND = 'html5'``            Backend format for output. See the `documentation 
-                                          <http://www.methods.co.nz/asciidoc/userguide.html#X5>`_
-                                          for possible values.
 ========================================  =======================================================
 
 Example file header
@@ -45,5 +45,5 @@ Following the `example <https://github.com/getpelican/pelican/blob/master/docs/c
   :summary: Short version for index and feeds
 
   == title level 2
-    
+
   and so on...
