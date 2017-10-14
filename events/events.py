@@ -31,6 +31,13 @@ TIME_MULTIPLIERS = {
     's': 'seconds'
 }
 
+RECURRENCE_FREQ = [
+    'daily',
+    'weekly',
+    'monthly',
+    'yearly'
+]
+
 events = []
 localized_events = defaultdict(list)
 Event = namedtuple("Event", "dtstart dtend metadata")
