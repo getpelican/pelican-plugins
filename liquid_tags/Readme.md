@@ -220,6 +220,17 @@ comment line `# <!-- collapse=False -->` will be expanded on load but
 can be collapsed by tapping on their header. Cells without collapsed
 comments are rendered as standard code input cells.
 
+## Configuration settings in custom tags
+
+Tags do not have access to the full Pelicans settings, and instead arrange for 
+the variables to be passed to the tag.  For tag authors who plan to add their 
+tag as in-tree tags, they can just add the variables they need to an array in 
+`mdx_liquid_tags.py`, but out-of-tree tags can specify which variables they 
+need by including a tuple of (variable, default value, helptext) in the 
+user's `pelicanconf.py` settings:
+
+    LIQUID_CONFIGS = (('PATH', '.', "The default path"), ('SITENAME', 'Default Sitename', 'The name of the site'))
+
 ## Testing
 
 To test the plugin in multiple environments we use [tox](http://tox.readthedocs.org/en/latest/). To run the entire test suite:
