@@ -32,7 +32,13 @@ h: hours
 m: minutes
 s: seconds
 
-You can also specify an optional "location"
+You can also specify an optional "location" or "event-recurrence" with
+the followed frequence:
+
+daily
+weekly
+monthly
+yearly
 
 Example in ReST format::
 
