@@ -18,7 +18,7 @@ from pelican import signals, utils
 from collections import namedtuple, defaultdict
 import icalendar
 import logging
-import os.path
+import os
 import pytz
 
 log = logging.getLogger(__name__)
@@ -138,6 +138,11 @@ def generate_ical_file(generator):
 
         ical.add_component(ie)
 
+    # If the directory for the ICS file don't exist, make it
+    ics_fname_dir = os.path.dirname(ics_fname)
+    if not os.path.exists(ics_fname_dir):
+        os.makedirs(ics_fname_dir)
+        
     with open(ics_fname, 'wb') as f:
         f.write(ical.to_ical())
 
