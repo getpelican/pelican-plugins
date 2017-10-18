@@ -1,53 +1,82 @@
-events ----
+Events plugin
+=============
 
-This plugin scans blog posts for an events. It also generates an `.ical`
-calendar file.
+This plugin let you declare an event in your blog posts by using their
+metadatas. An Icalendar file is generated with all events.
+
 
 Dependencies
-============
+------------
 
 This plugin depends on the `icalendar` package, which can be installed
-using APT or RPM or, if you are unlucky, via pip:
+using APT, DNF/YUM or pip:
 
-    pip install icalendar
+```sh
+pip install icalendar
+```
+
+
+Settings
+--------
+
+You can define settings with the `PLUGIN_EVENTS` variable:
+
+```python
+PLUGIN_EVENTS = {
+    'ics_fname': 'calendar.ics',
+}
+```
+
+Settings:
+- `ics_fname`: Where the Icalendar file is written
+
 
 Usage
-=====
+-----
 
-Add the following to pelicanconf.py::
+When you write an article, you can use theses metadatas
+- `event-start`: When the event will start in "YYYY-MM-DD hh:mm"
+- `event-end`: When the event will stop in "YYYY-MM-DD hh:mm"
+- `event-duration`: How many times the event will continue [1]
+- `event-location`: Where the event take place
 
-:   
+[1] To specify the event duration, use a number followed by a time unit:
+- `w`: weeks
+- `d`: days
+- `h`: hours
+- `m`: minutes
+- `s`: seconds
 
-    PLUGIN\_EVENTS = {
 
-    :   'ics\_fname': 'calendar.ics',
-
-    }
-
-Create articles and usual and add the "event-start" metadata to turn
-them into events. The event start is independent of the article "date".
-"event-start" is in "YYYY-MM-DD hh:mm" format. Also add "event-end", in
-the same format, or "event-duration" as a number followed by a
-dimension:
-
-w: weeks d: days h: hours m: minutes s: seconds
-
-You can also specify an optional "location"
+Exemples
+--------
 
 Example in ReST format:
+```ReST
+:event-start: 2015-01-21 10:30
+:event-duration: 2h
+:event-location: somewhere
+```
 
-    :event-start: 2015-01-21 10:30
-    :event-duration: 2h
-    :location: somewhere
+Example in Markdown format:
+```markdown
+Event-start: 2015-01-21 10:30
+Event-duration: 2h
+Event-location: somewhere
+```
 
-To generate an sorted event list in a dedicated page copy the
-events\_list.html template under the templates directory in your theme,
-then create a page:
 
-content/pages/events\_list.rst:
+Dedicated page
+--------------
 
-    Events list
-    ###########
-    :slug: events-list
-    :summary:
-    :template: events_list
+To generate an sorted event list in a dedicated page:
+- Copy the `events_list.html` template under the templates directory of your theme
+- Create a page for this list, for exemple in `content/pages/events_list.rst`
+- Write these metadatas in your page:
+```ReST
+Events list
+###########
+:slug: events-list
+:summary:
+:template: events_list
+```
