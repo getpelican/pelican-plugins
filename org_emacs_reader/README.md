@@ -1,4 +1,4 @@
-# Org Reader
+# Org Emacs Reader
 
 Publish Emacs Org files alongside the rest of your website or blog.
 
