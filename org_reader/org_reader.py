@@ -38,10 +38,11 @@ class OrgReader(BaseReader):
         ]
         """
         no_more_header = False
+        expr_metadata = re.compile(r'^#\+[a-zA-Z]+:.*')
         header = []
         content = []
         for line in text_lines:
-            metadata = re.match(r'^#\+[a-zA-Z]+:.*', line)
+            metadata = expr_metadata.match(line)
             if metadata and not no_more_header:
                 header.append(line)
             else:
@@ -57,7 +58,12 @@ class OrgReader(BaseReader):
         Return:
         A dict containing metadatas
         """
-        pass
+        expr_metadata = re.compile(r'^#\+([a-zA-Z]+):(.*)')
+        return {
+            expr_metadata.match(line).group(1).lower()
+            : expr_metadata.match(line).group(2).strip()
+            for line in text_lines
+        }
 
     def read(self, source_path):
         """
