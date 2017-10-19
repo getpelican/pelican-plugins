@@ -50,7 +50,7 @@ class OrgReader(BaseReader):
                 content.append(line)
         return header, content 
 
-    def _parse_metadata(self, text_lines):
+    def _parse_metadatas(self, text_lines):
         """
         From a given Org text, return the metadatas 
         Keyword Arguments:
