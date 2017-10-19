@@ -58,6 +58,8 @@ class OrgReader(BaseReader):
         Return:
         A dict containing metadatas
         """
+        if not text_lines:
+            return {}
         expr_metadata = re.compile(r'^#\+([a-zA-Z]+):(.*)')
         return {
             expr_metadata.match(line).group(1).lower()
