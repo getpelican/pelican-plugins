@@ -73,5 +73,12 @@ class OrgReader(BaseReader):
         Keyword Arguments:
         source_path -- Path to the Org file to parse
         """
-        pass
+        self._source_path = source_path
+        with pelican_open as text:
+            text_lines = list(text.splitlines())
+
+        header, content = self._separate_header_and_content(text_lines)
+        metadatas = self._parse_metadatas(header)
+        content_html = org_to_html("\n".join(content))
+        return content_html, metadatas
     
