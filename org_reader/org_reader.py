@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import re
-from orgpython import org_to_html
+from orgco import convert_html
 from pelican import signals
 from pelican.readers import BaseReader
 from pelican.utils import pelican_open
@@ -23,6 +23,13 @@ class OrgReader(BaseReader):
     enabled = True
     file_extensions = ['org']
 
+    def __init__(self, *args, **kargs):
+        """Init object construct with this class"""
+        super(OrgReader, self).__init__(*args, **kargs)
+        settings = self.settings['ORGMODE']
+        settings.setdefault('code_highlight', True)
+        self.code_highlight = settings['code_highlight']
+    
     def _separate_header_and_content(self, text_lines):
         """
         From a given Org text, return the header separate from the content.
@@ -83,7 +90,8 @@ class OrgReader(BaseReader):
             : self.process_metadata(key, value)
             for key, value in metadatas.items()
         }
-        content_html = org_to_html("\n".join(content))
+        content_html = convert_html("\n".join(content),
+                                    highlight=self.code_highlight)
         return content_html, metadatas_processed
     
 def add_reader(readers):
