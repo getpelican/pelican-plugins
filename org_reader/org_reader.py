@@ -48,4 +48,12 @@ class OrgReader(BaseReader):
         A dict containing metadatas
         """
         pass
+
+    def read(self, source_path):
+        """
+        Parse content and metadata of Org files
+        Keyword Arguments:
+        source_path -- Path to the Org file to parse
+        """
+        pass
     
