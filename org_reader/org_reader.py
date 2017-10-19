@@ -82,3 +82,9 @@ class OrgReader(BaseReader):
         content_html = org_to_html("\n".join(content))
         return content_html, metadatas
     
+def add_reader(readers):
+    for ext in OrgReader.file_extensions:
+        readers.reader_classes[ext] = OrgReader
+
+def register():
+    signals.readers_init.connect(add_reader)
