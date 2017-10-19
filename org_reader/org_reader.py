@@ -38,3 +38,14 @@ class OrgReader(BaseReader):
         ]
         """
         pass
+
+    def _parse_metadata(self, text_lines):
+        """
+        From a given Org text, return the metadatas 
+        Keyword Arguments:
+        text_lines -- A list, each item is a line of the texte
+        Return:
+        A dict containing metadatas
+        """
+        pass
+    
