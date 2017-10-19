@@ -6,14 +6,14 @@ Version 1.1.
 
 Relevant Pelican settings:
 
-- ORG_READER_EMACS_LOCATION: Required. Location of Emacs binary.
+- ORG_EMACS_READER_EMACS_LOCATION: Required. Location of Emacs binary.
 
-- ORG_READER_EMACS_SETTINGS: Optional. An absolute path to an Elisp file, to
+- ORG_EMACS_READER_EMACS_SETTINGS: Optional. An absolute path to an Elisp file, to
   run per invocation. Useful for initializing the `package` Emacs library if
   that's where your Org mode comes from, or any modifications to Org Export-
   related variables.
 
-- ORG_READER_BACKEND: Optional. A custom backend to provide to Org. Defaults
+- ORG_EMACS_READER_BACKEND: Optional. A custom backend to provide to Org. Defaults
   to 'html.
 
 To provide metadata to Pelican, the following properties can be defined in
@@ -50,7 +50,7 @@ from pelican import readers
 from pelican import signals
 
 
-ELISP = os.path.join(os.path.dirname(__file__), 'org_reader.el')
+ELISP = os.path.join(os.path.dirname(__file__), 'org_emacs_reader.el')
 LOG = logging.getLogger(__name__)
 
 
@@ -64,19 +64,19 @@ class OrgReader(readers.BaseReader):
 
     def __init__(self, settings):
         super(OrgReader, self).__init__(settings)
-        assert 'ORG_READER_EMACS_LOCATION' in self.settings, \
-            "No ORG_READER_EMACS_LOCATION specified in settings"
+        assert 'ORG_EMACS_READER_EMACS_LOCATION' in self.settings, \
+            "No ORG_EMACS_READER_EMACS_LOCATION specified in settings"
 
     def read(self, filename):
         LOG.info("Reading Org file {0}".format(filename))
-        cmd = [self.settings['ORG_READER_EMACS_LOCATION']]
+        cmd = [self.settings['ORG_EMACS_READER_EMACS_LOCATION']]
         cmd.extend(self.EMACS_ARGS)
 
-        if 'ORG_READER_EMACS_SETTINGS' in self.settings:
+        if 'ORG_EMACS_READER_EMACS_SETTINGS' in self.settings:
             cmd.append('-l')
-            cmd.append(self.settings['ORG_READER_EMACS_SETTINGS'])
+            cmd.append(self.settings['ORG_EMACS_READER_EMACS_SETTINGS'])
 
-        backend = self.settings.get('ORG_READER_BACKEND', "'html")
+        backend = self.settings.get('ORG_EMACS_READER_BACKEND', "'html")
 
         cmd.append('-l')
         cmd.append(ELISP)
