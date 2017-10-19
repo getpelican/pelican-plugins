@@ -22,4 +22,19 @@ class OrgReader(BaseReader):
     """Reader for Org files"""
     enabled = True
     file_extensions = ['org']
-    
+
+    def _separate_header_and_content(self, text_lines):
+        """
+        From a given Org text, return the header separate from the content.
+        The given text must be separate line by line and be a list.
+        The return is a list of two items: header and content.
+        Theses two items are text separate line by line in format of a list
+        Keyword Arguments:
+        text_lines -- A list, each item is a line of the texte
+        Return:
+        [
+          header   -- A list, each item is a line of the texte
+          content  -- A list, each item is a line of the texte
+        ]
+        """
+        pass
