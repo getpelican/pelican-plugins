@@ -37,7 +37,17 @@ class OrgReader(BaseReader):
           content  -- A list, each item is a line of the texte
         ]
         """
-        pass
+        no_more_header = False
+        header = []
+        content = []
+        for line in text_lines:
+            metadata = re.match(r'^#\+[a-zA-Z]+:.*', line)
+            if metadata and not no_more_header:
+                header.append(line)
+            else:
+                no_more_header = True
+                content.append(line)
+        return header, content 
 
     def _parse_metadata(self, text_lines):
         """
