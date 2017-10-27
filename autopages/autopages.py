@@ -3,6 +3,7 @@ import os
 import os.path
 
 from pelican import signals
+from pelican.contents import Page
 
 
 logger = logging.getLogger("autopages")
@@ -22,17 +23,17 @@ def yield_files(root):
                 continue
             yield os.path.join(dirpath, filename)
 
-def make_page(readers, filename):
+def make_page(readers, context, filename):
     base_path, filename = os.path.split(filename)
-    page = readers.read_file(base_path, filename)
+    page = readers.read_file(base_path, filename, Page, None, context)
     slug, _ = os.path.splitext(filename)
     return slug, page
 
-def make_pages(readers, path):
+def make_pages(readers, context, path):
     pages = {}
     for filename in yield_files(path):
         try:
-            slug, page = make_page(readers, filename)
+            slug, page = make_page(readers, context, filename)
         except Exception:
             logger.exception("Could not make autopage for %r", filename)
             continue
@@ -42,14 +43,15 @@ def make_pages(readers, path):
 def create_autopages(article_generator):
     settings = article_generator.settings
     readers = article_generator.readers
+    context = article_generator.context
 
     authors_path = settings.get("AUTHOR_PAGE_PATH", "authors")
     categories_path = settings.get("CATEGORY_PAGE_PATH", "categories")
     tags_path = settings.get("TAG_PAGE_PATH", "tags")
 
-    author_pages = make_pages(readers, authors_path)
-    category_pages = make_pages(readers, categories_path)
-    tag_pages = make_pages(readers, tags_path)
+    author_pages = make_pages(readers, context, authors_path)
+    category_pages = make_pages(readers, context, categories_path)
+    tag_pages = make_pages(readers, context, tags_path)
 
     for author, _ in article_generator.authors:
         author.page = author_pages.get(author.slug, "")
