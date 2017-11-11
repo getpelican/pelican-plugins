@@ -21,7 +21,7 @@ class Txt2tagsReader(BaseReader):
                 content = "\n".join(text[i:])
                 break
 
-        t2t_cmd = [r"txt2tags", r"--encoding=utf-8", r"--target=html", r"--infile=-", r"--outfile=-"]
+        t2t_cmd = [r"txt2tags", r"--encoding=utf-8", r"--target=html", r"--infile=-", r"--outfile=-", r"--no-headers"]
 
         proc = subprocess.Popen(t2t_cmd,
                                 stdin = subprocess.PIPE,
