@@ -38,7 +38,7 @@ You can use the following metadata in your content:
 - `event-start`: When the event will start in "YYYY-MM-DD hh:mm"
 - `event-end`: When the event will stop in "YYYY-MM-DD hh:mm"
 - `event-duration`: The duration of the event [1]
-- `event-location`: Where the event take place
+- `event-location`: Where the event takes place
 
 [1] To specify the event duration, use a number followed by a time unit:
 - `w`: weeks
