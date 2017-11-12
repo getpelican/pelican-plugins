@@ -51,8 +51,8 @@ You can use the following metadata in your content:
 Examples
 --------
 
-Example in ReST format:
-```ReST
+Example in reST format:
+```reST
 :event-start: 2015-01-21 10:30
 :event-duration: 2h
 :event-location: somewhere
@@ -73,7 +73,7 @@ To generate an sorted event list in a dedicated page:
 - Copy the `events_list.html` template under the templates directory of your theme
 - Create a page for this list, for exemple in `content/pages/events_list.rst`
 - Write these metadatas in your page:
-```ReST
+```reST
 Events list
 ###########
 :slug: events-list
