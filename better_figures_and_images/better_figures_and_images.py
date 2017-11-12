@@ -43,39 +43,46 @@ def content_object_init(instance):
             logger.debug('Better Fig. img_path: %s', img_path)
             logger.debug('Better Fig. img_fname: %s', img_filename)
 
-            # Strip off {filename}, |filename| or /static
-            if img_path.startswith(('{filename}', '|filename|')):
-                img_path = img_path[10:]
-            elif img_path.startswith('/static'):
-                img_path = img_path[7:]
-            elif img_path.startswith('data:image'):
-                # Image is encoded in-line (not a file).
-                continue
+            # Pelican 3.5+ supports {attach} macro for auto copy, in this use case the content does not exist in output
+            # due to the fact it has not been copied, hence we take it from the source (same as current document)
+            if img_filename.startswith('{attach}'):
+                img_path = os.path.dirname(instance.source_path)
+                img_filename = img_filename[8:]
+                src = os.path.join(img_path, img_filename)
             else:
-                logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
+                # Strip off {filename}, |filename| or /static
+                if img_path.startswith(('{filename}', '|filename|')):
+                    img_path = img_path[10:]
+                elif img_path.startswith('/static'):
+                    img_path = img_path[7:]
+                elif img_path.startswith('data:image'):
+                    # Image is encoded in-line (not a file).
+                    continue
+                else:
+                    logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
 
-            # search src path list
-            # 1. Build the source image filename from PATH
-            # 2. Build the source image filename from STATIC_PATHS
+                # search src path list
+                # 1. Build the source image filename from PATH
+                # 2. Build the source image filename from STATIC_PATHS
 
-            # if img_path start with '/', remove it.
-            img_path = os.path.sep.join([el for el in img_path.split("/") if len(el) > 0])
+                # if img_path start with '/', remove it.
+                img_path = os.path.sep.join([el for el in img_path.split("/") if len(el) > 0])
 
-            # style: {filename}/static/foo/bar.png
-            src = os.path.join(instance.settings['PATH'], img_path, img_filename)
-            src_candidates = [src]
+                # style: {filename}/static/foo/bar.png
+                src = os.path.join(instance.settings['PATH'], img_path, img_filename)
+                src_candidates = [src]
 
-            # style: {filename}../static/foo/bar.png
-            src_candidates += [os.path.join(instance.settings['PATH'], static_path, img_path, img_filename) for static_path in instance.settings['STATIC_PATHS']]
+                # style: {filename}../static/foo/bar.png
+                src_candidates += [os.path.join(instance.settings['PATH'], static_path, img_path, img_filename) for static_path in instance.settings['STATIC_PATHS']]
 
-            src_candidates = [f for f in src_candidates if path.isfile(f) and access(f, R_OK)]
+                src_candidates = [f for f in src_candidates if path.isfile(f) and access(f, R_OK)]
 
-            if not src_candidates:
-                logger.error('Better Fig. Error: image not found: %s', src)
-                logger.debug('Better Fig. Skip src: %s', img_path + '/' + img_filename)
-                continue
+                if not src_candidates:
+                    logger.error('Better Fig. Error: image not found: %s', src)
+                    logger.debug('Better Fig. Skip src: %s', img_path + '/' + img_filename)
+                    continue
 
-            src = src_candidates[0]
+                src = src_candidates[0]
             logger.debug('Better Fig. src: %s', src)
 
             # Open the source image and query dimensions; build style string
