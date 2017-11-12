@@ -71,7 +71,7 @@ Dedicated page
 
 To generate a sorted event list in its own dedicated page:
 - Copy the `events_list.html` template under the templates directory of your theme
-- Create a page for this list, for exemple in `content/pages/events_list.rst`
+- Create a page for this list, for example in `content/pages/events_list.rst`
 - Write these metadatas in your page:
 ```reST
 Events list
