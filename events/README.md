@@ -48,7 +48,7 @@ You can use the following metadata in your content:
 - `s`: seconds
 
 
-Exemples
+Examples
 --------
 
 Example in ReST format:
