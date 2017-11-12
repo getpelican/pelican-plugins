@@ -31,6 +31,13 @@ TIME_MULTIPLIERS = {
     's': 'seconds'
 }
 
+RECURRENCE_FREQ = [
+    'daily',
+    'weekly',
+    'monthly',
+    'yearly'
+]
+
 events = []
 localized_events = defaultdict(list)
 Event = namedtuple("Event", "dtstart dtend metadata")
@@ -135,6 +142,9 @@ def generate_ical_file(generator):
         )
         if 'event-location' in e.metadata:
             ie.add('location', e.metadata['event-location'])
+        if 'event-reccurence' in e.metadata:
+            if e.metadata['event-reccurence'] in RECURRENCE_FREQ:
+                ie.add('recur', "FREQ=" + e.metadata['event-reccurence'].upper())
 
         ical.add_component(ie)
 
