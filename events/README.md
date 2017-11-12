@@ -34,7 +34,7 @@ Settings:
 Usage
 -----
 
-When you write an article, you can use theses metadatas
+You can use the following metadata in your content:
 - `event-start`: When the event will start in "YYYY-MM-DD hh:mm"
 - `event-end`: When the event will stop in "YYYY-MM-DD hh:mm"
 - `event-duration`: How many times the event will continue [1]
