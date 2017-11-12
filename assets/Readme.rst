@@ -96,10 +96,10 @@ theme's top-level directory:
 
 .. code-block:: python
 
-   ASSET_SOURCE_PATHS = (
+   ASSET_SOURCE_PATHS = [
        'vendor/css',
        'scss',
-   )
+       ]
 
 .. _Webassets: https://github.com/miracle2k/webassets
 .. _Webassets documentation: http://webassets.readthedocs.org/en/latest/builtin_filters.html
