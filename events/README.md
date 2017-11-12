@@ -1,8 +1,8 @@
 Events plugin
 =============
 
-This plugin let you declare an event in your blog posts by using their
-metadatas. An iCal file is generated with all events.
+This plugin allows you to put events in your content via metadata. An
+iCal file is generated containing all events.
 
 
 Dependencies
