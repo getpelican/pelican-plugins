@@ -138,7 +138,7 @@ def generate_ical_file(generator):
 
         ical.add_component(ie)
 
-    # If the directory for the ICS file don't exist, make it
+    # If the directory for the ICS file doesn't exist, create it
     ics_fname_dir = os.path.dirname(ics_fname)
     if not os.path.exists(ics_fname_dir):
         os.makedirs(ics_fname_dir)
