@@ -53,6 +53,15 @@ dictionary must be given (but can be empty) in the ``I18N_SUBSITES`` dictionary
 	    }
 	}
 
+You must also have the following in your pelican configuration
+
+.. code-block:: python
+    JINJA_ENVIRONMENT = {
+        'extensions': ['jinja2.ext.i18n'],
+    }
+
+
+
 Default and special overrides
 -----------------------------
 The settings overrides may contain arbitrary settings, however, there
