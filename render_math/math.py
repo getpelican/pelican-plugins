@@ -264,10 +264,10 @@ def mathjax_for_markdown(pelicanobj, mathjax_script, mathjax_settings):
         sys.stderr.write("\nError - the pelican mathjax markdown extension failed to configure. MathJax is non-functional.\n")
         sys.stderr.flush()
 
-def mathjax_for_rst(pelicanobj, mathjax_script):
+def mathjax_for_rst(pelicanobj, mathjax_script, mathjax_settings):
     """Setup math for RST"""
     docutils_settings = pelicanobj.settings.get('DOCUTILS_SETTINGS', {})
-    docutils_settings['math_output'] = 'MathJax'
+    docutils_settings.setdefault('math_output', 'MathJax %s' % mathjax_settings['source'])
     pelicanobj.settings['DOCUTILS_SETTINGS'] = docutils_settings
     rst_add_mathjax.mathjax_script = mathjax_script
 
@@ -292,7 +292,7 @@ def pelican_init(pelicanobj):
         mathjax_for_markdown(pelicanobj, mathjax_script, mathjax_settings)
 
     # Configure Mathjax For RST
-    mathjax_for_rst(pelicanobj, mathjax_script)
+    mathjax_for_rst(pelicanobj, mathjax_script, mathjax_settings)
 
     # Set process_summary's mathjax_script variable
     process_summary.mathjax_script = None
