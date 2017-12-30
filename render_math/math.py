@@ -187,7 +187,7 @@ def process_summary(article):
     """Ensures summaries are not cut off. Also inserts
     mathjax script so that math will be rendered"""
 
-    summary = article._get_summary()
+    summary = article.summary
     summary_parsed = BeautifulSoup(summary, 'html.parser')
     math = summary_parsed.find_all(class_='math')
 
@@ -198,6 +198,12 @@ def process_summary(article):
             full_text = content_parsed.find_all(class_='math')[len(math)-1].get_text()
             math[-1].string = "%s ..." % full_text
             summary = summary_parsed.decode()
+
+        # clear memoization cache
+        import functools
+        if isinstance(article.get_summary, functools.partial):
+            memoize_instance = article.get_summary.func.__self__
+            memoize_instance.cache.clear()
 
         article._summary = "%s<script type='text/javascript'>%s</script>" % (summary, process_summary.mathjax_script)
 
