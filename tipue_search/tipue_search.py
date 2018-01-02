@@ -30,6 +30,7 @@ class Tipue_Search_JSON_Generator(object):
         self.output_path = output_path
         self.context = context
         self.siteurl = settings.get('SITEURL')
+        self.relative_urls = settings.get('RELATIVE_URLS')
         self.tpages = settings.get('TEMPLATE_PAGES')
         self.output_path = output_path
         self.json_nodes = []
@@ -49,7 +50,9 @@ class Tipue_Search_JSON_Generator(object):
 
         page_category = page.category.name if getattr(page, 'category', 'None') != 'None' else ''
 
-        page_url = page.url if page.url else '.'
+        page_url = '.'
+        if page.url:
+            page_url = page.url if self.relative_urls else (self.siteurl + '/' + page.url)
 
         node = {'title': page_title,
                 'text': page_text,
