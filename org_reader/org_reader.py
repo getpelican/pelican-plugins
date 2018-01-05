@@ -84,9 +84,13 @@ class OrgReader(readers.BaseReader):
         cmd.append('--eval')
         cmd.append(self.ELISP_EXEC.format(filename, backend))
 
-        LOG.debug("OrgReader: running command `{0}`".format(cmd))
+        LOG.debug("OrgReader: running command `%s`" % (' '.join(cmd)))
 
-        json_result = subprocess.check_output(cmd, universal_newlines=True)
+        try:
+            json_result = subprocess.check_output(cmd, universal_newlines=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            print("Failed error: output %s" % e.output)
+            raise e
         json_output = json.loads(json_result)
 
         # get default slug from .org filename
