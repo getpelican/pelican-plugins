@@ -30,6 +30,7 @@ template builders that want to adjust the look and feel of
 the math.  See README for more details.
 """
 
+import collections
 import os
 import sys
 
@@ -75,10 +76,12 @@ def process_settings(pelicanobj):
     mathjax_settings['responsive_break'] = '768'  # The break point at which it math is responsively aligned (in pixels)
     mathjax_settings['mathjax_font'] = 'default'  # forces mathjax to use the specified font.
     mathjax_settings['process_summary'] = BeautifulSoup is not None  # will fix up summaries if math is cut off. Requires beautiful soup
+    mathjax_settings['force_tls'] = 'false'  # will force mathjax to be served by https - if set as False, it will only use https if site is served using https
     mathjax_settings['message_style'] = 'normal'  # This value controls the verbosity of the messages in the lower left-hand corner. Set it to "none" to eliminate all messages
+    mathjax_settings['macros'] = '{}'
 
     # Source for MathJax
-    mathjax_settings['source'] = "'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
+    mathjax_settings['source'] = "'//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
 
     # Get the user specified settings
     try:
@@ -153,6 +156,9 @@ def process_settings(pelicanobj):
         if key == 'responsive' and isinstance(value, bool):
             mathjax_settings[key] = 'true' if value else 'false'
 
+        if key == 'force_tls' and isinstance(value, bool):
+            mathjax_settings[key] = 'true' if value else 'false'       
+
         if key == 'responsive_break' and isinstance(value, int):
             mathjax_settings[key] = str(value)
 
@@ -181,7 +187,129 @@ def process_settings(pelicanobj):
 
             mathjax_settings[key] = value
 
+        if key == 'macros':
+            text_lines = []
+            macros = parse_tex_macros(value)
+            for macro in macros:
+                if 'args' in macro.keys():
+                    # number of arguments > 1
+                    text_lines.append("{0}: ['{1}', {2}]".format(macro['name'], macro['definition'], macro['args']))
+                else:
+                    text_lines.append("{0}: '{1}'".format(macro['name'], macro['definition']))
+            mathjax_settings[key] = '{' + ", ".join(text_lines) + '}'
+
     return mathjax_settings
+
+def _load_macro_definitions(*args):
+    """Returns list of lines from files, use absolute path.
+
+    Example: [{'filename': '/home/user/defs.text', 'line_num': 1,
+     'def': '\newcommand{\circ}{2 \pi R}'}]"""
+    output_lines = []
+    for arg in args:
+        with open(arg, 'rt') as input_file:
+            lines = input_file.read().splitlines()
+            for index, value in enumerate(lines):
+                if value.strip() == '': continue
+                line_num = index + 1
+                line = {'filename': arg, 'line_num': line_num, 'def': value}
+                output_lines.append(line)
+    return output_lines
+
+def _filter_duplicates(*macros):
+    """Returns a modified copy of the input list of macros by keeping
+    only the last definition of each duplicate item. Also, if a macro is
+    defined multiple times, a warning is printed to stdout.
+    Unique items are left untouched.
+    """
+    names = []
+    for macro in macros:
+        names.append(macro['name'])
+
+    seen = set()
+    # duplicate_indices contains the index of the first time an element appears
+    # more than once in names
+    duplicate_indices = [names.index(item)
+                         for item, count in collections.Counter(names).items()
+                         if count > 1]
+    unique_indices = [names.index(item)
+                      for item, count in collections.Counter(names).items()
+                      if count == 1]
+    if len(duplicate_indices) > 0:
+        duplicates = []
+        for i in duplicate_indices:
+            name = macros[i]['name']
+            duplicate = {'name': name, 'where':[]}
+            for j in macros:
+                if j['name'] == name:
+                    duplicate['where'].append((j['line'], j['file']))
+            duplicates.append(duplicate)
+        exception_text = "WARNING: macros where defined more than once, the last definition is used\n"
+        for dup in duplicates:
+            exception_text += "Macro {} defined in\n".format(dup['name'].strip('\\'))
+            for place in dup['where']:
+                exception_text += "{}, line {}\n".format(place[1], place[0])
+        print(exception_text)
+    # I need the last definition for each duplicate definition
+    last_duplicated_indices = []
+    for i, v in enumerate(duplicate_indices):
+        all_indices = []
+        for j, name in enumerate(names):
+            if name == names[v]:
+                all_indices.append(j)
+        last =  max(all_indices)
+        last_duplicated_indices.append(last)
+
+    filtered = [elem for i, elem in enumerate(macros)
+                if i in unique_indices + last_duplicated_indices]
+    return filtered
+
+def parse_tex_macros(args):
+    # ogni arg è un file
+    macros = []
+    for arg in args:
+        lines = _load_macro_definitions(arg)
+        for line in lines:
+            macros.append(_parse_macro(line))
+    _filter_duplicates(*macros)
+    # remove line and file keys from temp_macros
+    # (added for debug in case of duplicates)
+    return [{k: v for k, v in elem.items()
+             if k in ['name', 'definition', 'args']}
+            for elem in macros]
+
+def _parse_macro(arg):
+    """Returns a macro from input raw text.
+
+     The TeX macro definition is read and translated to a
+     dictionary containing the name without backslash and the definition;
+     if arguments are present, their number is added too.
+
+     Backslashes in the definition are added in order to ensure the proper
+    form in the final html page.
+
+     Example:
+    >  {'name': 'pd',
+         'definition': '\\\\\\\\frac{\\\\\\\\partial #1}{\\\\\\\\partial #2}',
+         'args': 2,
+         'file': '/home/user/commands.tex',
+         'line': 1}"""
+    splitted = arg['def'].split('{')
+    name_number = splitted[1].split('}')
+    name = name_number[0].strip('\\')
+    # for the definition, remove the last character from the last string which is }
+    # remember that strings are immutable objects in python
+    last_def_token = splitted[-1][:-1]
+    splitted_def = splitted[2:-1] + [last_def_token]
+    complete_def = '{'.join(splitted_def).replace('\\','\\\\\\\\')
+    final_command = {'line': arg['line_num'], 'file': arg['filename'],
+                     'name': name,
+                     'definition': complete_def}
+    if name_number[1]:
+        # the number of arguments is defined, therefore name_number[1] is not null string
+        args_number = name_number[1].lstrip('[').rstrip(']')
+        final_command['args'] = args_number
+    return final_command
 
 def process_summary(article):
     """Ensures summaries are not cut off. Also inserts
@@ -256,7 +384,7 @@ def mathjax_for_markdown(pelicanobj, mathjax_script, mathjax_settings):
     # Instantiate markdown extension and append it to the current extensions
     try:
         if isinstance(pelicanobj.settings.get('MD_EXTENSIONS'), list): # pelican 3.6.3 and earlier
-            pelicanobj.settings['MD_EXTENSIONS'].append(PelicanMathJaxExtension(config))
+           pelicanobj.settings['MD_EXTENSIONS'].append(PelicanMathJaxExtension(config))
         else:
             pelicanobj.settings['MARKDOWN'].setdefault('extensions', []).append(PelicanMathJaxExtension(config))
     except:
@@ -345,4 +473,5 @@ def process_rst_and_summaries(content_generators):
 def register():
     """Plugin registration"""
     signals.initialized.connect(pelican_init)
+    # repeated
     signals.all_generators_finalized.connect(process_rst_and_summaries)
