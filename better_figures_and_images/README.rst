@@ -1,7 +1,7 @@
 Requirements
 ------------
 
-* pip install pillow beautifulsoup4
+* pip install pillow beautifulsoup4 pysvg-py3
 
 Summary
 =======
