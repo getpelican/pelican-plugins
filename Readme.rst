@@ -188,6 +188,8 @@ Pelican Jinja2Content     Allows the use of Jinja2 template code in articles, in
 
 Pelican Link Class        Set class attribute of ``<a>`` elements according to whether the link is external or internal
 
+Pelican Meetup Info       Include your Meetup.com group and event information on generated pages and articles
+
 Pelican Page Hierarchy    Creates a URL hierarchy for pages that matches the filesystem hierarchy of their sources
 
 Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is not defined.
