@@ -177,7 +177,7 @@ init_mathjax = function() {
                 inlineMath: [ ['$','$'], ["\\(","\\)"] ],
                 displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
             },
-            displayAlign: 'left', // Change this to 'center' to center equations.
+            displayAlign: 'center', // Change this to 'center' to center equations.
             "HTML-CSS": {
                 styles: {'.MathJax_Display': {"margin": 0}}
             }
@@ -265,6 +265,7 @@ def custom_highlighter(source, language='ipython', metadata=None):
 SYNTAX = "{% notebook /path/to/notebook.ipynb [ cells[start:end] ] [ language[language] ] %}"
 FORMAT = re.compile(r"""^(\s+)?(?P<src>\S+)(\s+)?((cells\[)(?P<start>-?[0-9]*):(?P<end>-?[0-9]*)(\]))?(\s+)?((language\[)(?P<language>-?[a-z0-9\+\-]*)(\]))?(\s+)?$""")
 
+import re
 
 @LiquidTags.register('notebook')
 def notebook(preprocessor, tag, markup):
@@ -337,6 +338,12 @@ def notebook(preprocessor, tag, markup):
 
     (body, resources) = exporter.from_notebook_node(nb_json)
 
+
+    for h in '123456':
+        body = body.replace('<h%s' % h, '<h%s class="ipynb"' % h)
+
+    body = '<div class="ipynb">\n\n' + body + "\n\n</div>"
+
     # if we haven't already saved the header, save it here.
     if not notebook.header_saved:
         print ("\n ** Writing styles to _nb_header.html: "
@@ -345,6 +352,49 @@ def notebook(preprocessor, tag, markup):
         header = '\n'.join(CSS_WRAPPER.format(css_line)
                            for css_line in resources['inlining']['css'])
         header += JS_INCLUDE
+
+        # # replace the highlight tags
+        header = header.replace('highlight', 'highlight-ipynb')
+        header = header.replace('html, body', '\n'.join(('pre.ipynb {',
+                                                         '  color: black;',
+                                                         '  background: #f7f7f7;',
+                                                         '  border: 0;',
+                                                         '  box-shadow: none;',
+                                                         '  margin-bottom: 0;',
+                                                         '  padding: 0;'
+                                                         '}\n',
+                                                         'html, body')))
+        # # create a special div for notebook
+        header = header.replace('body {', 'div.ipynb {')
+
+        header = header.replace('body{margin:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;line-height:20px;color:#000;background-color:#fff}', '')
+        # # specialize headers
+        header = header.replace('html, body,',
+                                '\n'.join((('h1.ipynb h2.ipynb h3.ipynb '
+                                            'h4.ipynb h5.ipynb h6.ipynb {'),
+                                           'h1.ipynb h2.ipynb ... {',
+                                           '  margin: 0;',
+                                           '  padding: 0;',
+                                           '  border: 0;',
+                                           '  font-size: 100%;',
+                                           '  font: inherit;',
+                                           '  vertical-align: baseline;',
+                                           '}\n',
+                                           'html, body,')))
+
+
+
+        #
+        #
+        # # comment out document-level formatting
+        header = header.replace('html, body,',
+                                '/*html, body,*/')
+        header = header.replace('body{background-color:#fff}',
+                                '/*body{background-color:#fff}*/')
+        header = header.replace('body{background-color:#fff;position:absolute;left:0;right:0;top:0;bottom:0;overflow:visible}',
+                                '/*body{background-color:#fff;position:absolute;left:0;right:0;top:0;bottom:0;overflow:visible}*/')
+        header = header.replace('h1, h2, h3, h4, h5, h6,',
+                                '/*h1, h2, h3, h4, h5, h6,*/')
 
         with open('_nb_header.html', 'w') as f:
             f.write(header)
