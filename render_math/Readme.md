@@ -118,7 +118,7 @@ Markdown
 This plugin implements a custom extension for markdown resulting in math
 being a "first class citizen" for Pelican. 
 
-###Inlined Math
+### Inlined Math
 Math between `$`..`$`, for example, `$`x^2`$`, will be rendered inline
 with respect to the current html block. Note: To use inline math, there
 must *not* be any whitespace before the ending `$`. So for example:
@@ -126,11 +126,11 @@ must *not* be any whitespace before the ending `$`. So for example:
  * **Relevant inline math**: `$e=mc^2$`
  * **Will not render as inline math**: `$40 vs $50`
 
-###Displayed Math
+### Displayed Math
 Math between `$$`..`$$` will be rendered "block style", for example, `$$`x^2`$$`, will be rendered centered in a
 new paragraph.
 
-####Other Latex  Display Math commands
+#### Other Latex  Display Math commands
 The other LaTeX commands which usually invoke display math mode from text mode
 are supported,
 and are automatically treated like `$$`-style displayed math 
@@ -147,14 +147,14 @@ reStructuredText
 If there is math detected in reStructuredText document, the plugin will automatically
 set the [math_output](http://docutils.sourceforge.net/docs/user/config.html#math-output) configuration setting to `MathJax`.
 
-###Inlined Math
+### Inlined Math
 Inlined math needs to use the [math role](http://docutils.sourceforge.net/docs/ref/rst/roles.html#math):
 
 ```
 The area of a circle is :math:`A_\text{c} = (\pi/4) d^2`.
 ```
 
-###Displayed Math
+### Displayed Math
 Displayed math uses the [math block](http://docutils.sourceforge.net/docs/ref/rst/directives.html#math):
 
 ```
