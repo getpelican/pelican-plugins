@@ -29,6 +29,7 @@ CATEGORIES_SAVE_AS = ''
 TAGS_SAVE_AS = ''
 
 PLUGIN_PATHS = ['../../']
-PLUGINS = ['liquid_tags.notebook']
+PLUGINS = ['liquid_tags.notebook', 'liquid_tags.generic']
 
 NOTEBOOK_DIR = 'notebooks'
+LIQUID_CONFIGS = (('PATH', '.', "The default path"), ('THEME', '', 'The theme in use'), ('SITENAME', 'Default Sitename', 'The name of the site'), ('AUTHOR', '', 'Name of the blog author'))
