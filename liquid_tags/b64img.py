@@ -24,7 +24,10 @@ Output
 """
 import re
 import base64
-import urllib2
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 from .mdx_liquid_tags import LiquidTags
 import six
 
