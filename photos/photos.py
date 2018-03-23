@@ -110,7 +110,7 @@ def read_notes(filename, msg=None):
                     notes[line] = ''
     except Exception as e:
         if msg:
-            logger.warning('{} at file {}'.format(msg, filename))
+            logger.info('{} at file {}'.format(msg, filename))
         logger.debug('read_notes issue: {} at file {}. Debug message:{}'.format(msg, filename, e))
     return notes
 
