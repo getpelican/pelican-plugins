@@ -2,12 +2,12 @@ Optimize Images Plugin For Pelican
 ==================================
 
 This plugin applies lossless compression on JPEG and PNG images, with no
-effect on image quality. It uses [jpegtran][1], [OptiPNG][2] and [svgo][3]. 
+effect on image quality. It uses [jpegtran][], [OptiPNG][] and [svgo][]. 
 It assumes that all of these tools are installed on system path.
 
-[1]: http://jpegclub.org/jpegtran/              "jpegtran"
-[2]: http://optipng.sourceforge.net/            "OptiPNG"
-[3]: https://github.com/svg/svgo				"SVGO"
+[jpegtran]: http://jpegclub.org/jpegtran/
+[OptiPNG]: http://optipng.sourceforge.net/
+[SVGO]: https://github.com/svg/svgo
 
 
 Installation
