@@ -24,4 +24,4 @@ Then use as follows by adding the following to your settings.py:
 Usage
 -----
 The plugin will activate and optimize images upon `finalized` signal of
-pelican.
+Pelican.
