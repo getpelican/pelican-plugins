@@ -130,6 +130,8 @@ Interlinks                Lets you add frequently used URLs to your markup using
 
 Jinja2 Content            Allows the use of Jinja2 template code in articles, including ``include`` and ``import`` statements. Replacement for pelican-jinja2content.
 
+JPEG Reader               Create image gallery pages based on content of JPEG metadata
+
 Just table                Allows you to easily create and manage tables. You can embed the tables into posts with a simple way.
 
 Libravatar                Allows inclusion of user profile pictures from libravatar.org
