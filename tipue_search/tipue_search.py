@@ -48,7 +48,8 @@ class Tipue_Search_JSON_Generator(object):
         page_text = soup_text.get_text(' ', strip=True).replace('“', '"').replace('”', '"').replace('’', "'").replace('¶', ' ').replace('^', '&#94;')
         page_text = ' '.join(page_text.split())
 
-        page_category = page.category.name if getattr(page, 'category', 'None') != 'None' else ''
+        page_tags = ' '.join([t.name for t in page.tags]) if hasattr(page, 'tags') else ''
+        page_category = page.category.name if hasattr(page, 'category') else ''
 
         page_url = '.'
         if page.url:
@@ -56,7 +57,7 @@ class Tipue_Search_JSON_Generator(object):
 
         node = {'title': page_title,
                 'text': page_text,
-                'tags': page_category,
+                'tags': ' '.join([page_tags, page_category]),
                 'url': page_url}
 
         self.json_nodes.append(node)
