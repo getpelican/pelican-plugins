@@ -168,18 +168,37 @@ are a few extra steps required for this plugin. First, you must install IPython:
 
       pip install ipython==2.4.1
 
+> It's worth trying later versions of IPython. I've had success with `ipython==6.2.1` as well.
+
+Make sure you have also nbconvert installed:
+
+      pip install nbconvert
+
 After running Pelican on content containing an IPython notebook tag, a file
-called `_nb_header.html` will be generated in the main directory. The content
-of this file should be included in the header of your theme. An easy way to
-accomplish this is to add the following to your theme’s header template…
+called `_nb_header.html` will be generated in the main directory. 
+The first time, you might encounter the following error:
+
+	FileNotFoundError: [Errno 2] No such file or directory: '_nb_header.html'
+
+In that case, create the empty file first, and retry:
+
+	touch _nb_header.html
+
+The content of this file should be included in the header of your theme.
+An easy way to accomplish this is to add the following to your theme’s
+header template…
 
       {% if EXTRA_HEADER %}
       {{ EXTRA_HEADER }}
       {% endif %}
 
-… and in your settings file, include the line:
+… and in your settings file, if you use legacy python include the line:
 
       EXTRA_HEADER = open('_nb_header.html').read().decode('utf-8')
+
+If you use pyton 3.4+, use the following line:
+
+      EXTRA_HEADER = open('_nb_header.html').read()
 
 This will insert the proper CSS formatting into your generated document.
 
