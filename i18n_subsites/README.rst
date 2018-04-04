@@ -56,6 +56,7 @@ dictionary must be given (but can be empty) in the ``I18N_SUBSITES`` dictionary
 You must also have the following in your pelican configuration
 
 .. code-block:: python
+
     JINJA_ENVIRONMENT = {
         'extensions': ['jinja2.ext.i18n'],
     }
@@ -144,6 +145,42 @@ to link to the main site.
 
 This short `howto <./implementing_language_buttons.rst>`_ shows two
 example implementations of language buttons.
+
+
+Automatically redirect to browser's default language
+====================================================
+
+If you implemented language buttons as explained above, you can also setup some
+JavaScript to automatically reload a page using the browser's accepted lang.
+
+You need to copy the ``accept-lang.js`` file to your ``static/js`` folder and
+load it via your ``base.html`` template adding this line somewhere at the
+bottom:
+
+.. code-block:: html
+
+    <script src="/theme/js/accept-lang.js"></script>
+
+If your default language is not english, you also have to declare a JavaScript
+variable ``default_lang`` *before* the line that loads ``accept-lang.js``:
+
+.. code-block:: html
+
+    <script type="text/javascript">var default_lang = "{{DEFAULT_LANG}}"; </script>
+
+How language redirection works
+------------------------------
+
+The script checks the lang only at the first page of a navigation on the
+website (i.e. if there is no referrer or if the referrer does not contain your
+website's domain). This way, if the user clicks on a particular lang via the
+language buttons, he will stick to the choosen language.
+
+The script then compares the current website lang and the browser's wanted
+lang. If it's not a match, the script tries to find a link to the correct
+translation in the page. If at least one corresponding link is found, it clicks
+on the first one, and that's why it needs language buttons.
+
 
 Usage notes
 ===========
