@@ -78,7 +78,7 @@ def process_settings(pelicanobj):
     mathjax_settings['message_style'] = 'normal'  # This value controls the verbosity of the messages in the lower left-hand corner. Set it to "none" to eliminate all messages
 
     # Source for MathJax
-    mathjax_settings['source'] = "'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML'"
+    mathjax_settings['source'] = "'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML'"
 
     # Get the user specified settings
     try:
