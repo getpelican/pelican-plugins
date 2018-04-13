@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 import base64
 import hashlib
-import os
 import logging
+import os
+
 from pelican.utils import strftime
-from .utils import string_to_bool
-from .utils import datetime_from_timestamp
+
 from .registration import content_git_object_init
+from .utils import datetime_from_timestamp
+from .utils import string_to_bool
 
 
 logger = logging.getLogger(__name__)
@@ -112,6 +114,7 @@ def git_permalink(content, git_content):
     if permalink_id_metadata_key in content.metadata:
         content.metadata[permalink_id_metadata_key] = (
             ','.join((
-                content.metadata[permalink_id_metadata_key], git_permalink_id)))
+                content.metadata[permalink_id_metadata_key], git_permalink_id))
+        )
     else:
         content.metadata[permalink_id_metadata_key] = git_permalink_id
