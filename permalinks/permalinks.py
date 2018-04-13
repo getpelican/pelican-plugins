@@ -82,9 +82,9 @@ def get_permalink_ids_iter(self):
     Method to get permalink ids from content. To be bound to the class last thing
     '''
     permalink_id_key = self.settings['PERMALINK_ID_METADATA_KEY']
-    permalink_ids_raw = self.metadata.get(permalink_id_key, '')
+    permalink_ids = self.metadata.get(permalink_id_key, '')
 
-    for permalink_id in permalink_ids_raw.split(','):
+    for permalink_id in permalink_ids.split(','):
         if permalink_id:
             yield permalink_id.strip()
 
@@ -98,7 +98,7 @@ def get_permalink_ids(self):
 def get_permalink_path(self):
     """Get just path component of permalink."""
     try:
-        first_permalink_id = self.get_permalink_ids_iter().next()
+        first_permalink_id = next(self.get_permalink_ids_iter())
     except StopIteration:
         return None
 
