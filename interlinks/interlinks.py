@@ -34,7 +34,7 @@ def parse_links(instance):
             text = BeautifulSoup(
                 content, "html.parser", parse_only=SoupStrainer("a"))
             for link in text.find_all("a", href=re.compile("(.+?)>")):
-                old_tag = str(link)
+                old_tag = link.decode()
                 url = link.get('href')
                 m = re.search(r"(.+?)>", url).groups()
                 name = m[0]
@@ -42,13 +42,13 @@ def parse_links(instance):
                     hi = url.replace(name + ">", interlinks[name])
                     link['href'] = hi
 
-                content = content.replace(old_tag, str(link))
+                content = content.replace(old_tag, link.decode())
 
         if '<img' in content:
             text = BeautifulSoup(
                 content, "html.parser", parse_only=SoupStrainer("img"))
             for img in text.find_all('img', src=re.compile("(.+?)>")):
-                old_tag = str(img)
+                old_tag = img.decode()
                 url = img.get('src')
                 m = re.search(r"(.+?)>", url).groups()
                 name = m[0]
@@ -56,7 +56,9 @@ def parse_links(instance):
                     hi = url.replace(name+">", interlinks[name])
                     img['src'] = hi
                 content = content.replace(
-                    old_tag.replace("&gt;", ">").replace("/>", ">"), str(img))
+                    old_tag.replace("&gt;", ">").replace("/>", ">"),
+                    img.decode()
+                )
 
         instance._content = content
 
