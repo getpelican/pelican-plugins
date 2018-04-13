@@ -20,7 +20,7 @@ def article_url(content):
     Get the URL for an item of content
     '''
     return '{content.settings[SITEURL]}/{content.url}'.format(
-        content=content).encode('utf-8')
+        content=content)
 
 
 REDIRECT_STRING = '''
