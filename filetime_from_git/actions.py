@@ -79,6 +79,14 @@ def git_sha_metadata(content, git_content):
     content.metadata['gitsha_oldest'] = str(git_content.get_oldest_commit())
 
 
+def update_hash_from_str(hsh, str_input):
+    """
+    Convert a str to object supporting buffer API and update a hash with it.
+    """
+    byte_input = str(str_input).encode("UTF-8")
+    hsh.update(byte_input)
+
+
 @content_git_object_init.connect
 def git_permalink(content, git_content):
     '''
@@ -95,9 +103,10 @@ def git_permalink(content, git_content):
         return
 
     permalink_hash = hashlib.sha1()
-    permalink_hash.update(str(git_content.get_oldest_commit()))
-    permalink_hash.update(str(git_content.get_oldest_filename()))
-    git_permalink_id = base64.urlsafe_b64encode(permalink_hash.digest())
+    update_hash_from_str(permalink_hash, git_content.get_oldest_commit())
+    update_hash_from_str(permalink_hash, git_content.get_oldest_filename())
+    git_permalink_id_raw = base64.urlsafe_b64encode(permalink_hash.digest())
+    git_permalink_id = git_permalink_id_raw.decode("UTF-8")
     permalink_id_metadata_key = content.settings['PERMALINK_ID_METADATA_KEY']
 
     if permalink_id_metadata_key in content.metadata:

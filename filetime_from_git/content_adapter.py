@@ -75,7 +75,7 @@ class GitContentAdapter(object):
         '''
         commit_and_name_iter = self.git.get_commits_and_names_iter(
             self.content.source_path)
-        _commit, name = commit_and_name_iter.next()
+        _commit, name = next(commit_and_name_iter)
         return name
 
     @memoized
