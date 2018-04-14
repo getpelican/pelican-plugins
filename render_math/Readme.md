@@ -97,6 +97,8 @@ when setting `responsive_align` to `True`. **Default Value**: 768
 Requires [BeautifulSoup4](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) be installed. **Default Value**: `True`
  * `message_style`: [string] This value controls the verbosity of the messages in the lower left-hand corner. Set it to `None` to eliminate all messages.
 **Default Value**: normal
+ * `inline_math`: [list] delimiter for Mathjax inline math, if not set, defaults to `$`-delimiters. Example: `[[r'\(', r'\)']]`
+ * `display_math`: [list] delimiter for Mathjax display math, if not set, defaults to `$$`-delimiters. Example: `[[r'$$', r'$$']]`
 
 #### Settings Examples
 Make math render in blue and displaymath align to the left:

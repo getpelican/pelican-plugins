@@ -32,6 +32,7 @@ the math.  See README for more details.
 
 import os
 import sys
+import json
 
 from pelican import signals, generators
 
@@ -76,6 +77,10 @@ def process_settings(pelicanobj):
     mathjax_settings['mathjax_font'] = 'default'  # forces mathjax to use the specified font.
     mathjax_settings['process_summary'] = BeautifulSoup is not None  # will fix up summaries if math is cut off. Requires beautiful soup
     mathjax_settings['message_style'] = 'normal'  # This value controls the verbosity of the messages in the lower left-hand corner. Set it to "none" to eliminate all messages
+    mathjax_settings['inline_math'] = None  # List of begin/end delimiters of inline math, None defaults to previous behavior
+    mathjax_settings['display_math'] = None  # List of begin/end delimiters of display (line) math, None defaults to previous behavior
+    mathjax_settings['inline_math_str'] = r'[["\\\\(","\\\\)"]]'  # Mathjax JS inline_math config string
+    mathjax_settings['display_math_str'] = r'[["$$","$$"]]'  # Mathjax JS display_math config string
 
     # Source for MathJax
     mathjax_settings['source'] = "'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML'"
@@ -181,6 +186,16 @@ def process_settings(pelicanobj):
 
             mathjax_settings[key] = value
 
+        if key == 'inline_math':
+            mathjax_settings[key] = value
+            if value:
+                mathjax_settings[key + '_str'] = json.dumps(value).replace('\\', '\\\\')
+
+        if key == 'display_math':
+            mathjax_settings[key] = value
+            if value:
+                mathjax_settings[key + '_str'] = json.dumps(value).replace('\\', '\\\\')
+
     return mathjax_settings
 
 def process_summary(article):
@@ -258,6 +273,8 @@ def mathjax_for_markdown(pelicanobj, mathjax_script, mathjax_settings):
     config['mathjax_script'] = mathjax_script
     config['math_tag_class'] = 'math'
     config['auto_insert'] = mathjax_settings['auto_insert']
+    config['inline_math'] = mathjax_settings['inline_math']
+    config['display_math'] = mathjax_settings['display_math']
 
     # Instantiate markdown extension and append it to the current extensions
     try:
