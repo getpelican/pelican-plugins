@@ -107,7 +107,7 @@ def get_permalink_path(self):
     except StopIteration:
         return None
 
-    return '/{settings[PERMALINK_PATH]}/{first_permalink}'.format(
+    return '/{settings[PERMALINK_PATH]}/{first_permalink}.html'.format(
         settings=self.settings, first_permalink=first_permalink_id)
 
 
