@@ -25,7 +25,7 @@ def minify(pelican):
         for name in filenames:
             if os.path.splitext(name)[1] in ('.css','.js'):
                 filepath = os.path.join(dirpath, name)
-                logger.info('minifiy %s', filepath)
+                logger.info('minify %s', filepath)
                 verbose = '-v' if SHOW_OUTPUT else ''
                 call("yuicompressor {} --charset utf-8 {} -o {}".format(
                     verbose, filepath, filepath), shell=True)
