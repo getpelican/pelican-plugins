@@ -52,6 +52,7 @@ def content_object_init(instance):
 
             # Pelican 3.5+ supports {attach} macro for auto copy, in this use case the content does not exist in output
             # due to the fact it has not been copied, hence we take it from the source (same as current document)
+            src = None
             if img_filename.startswith('{attach}'):
                 img_path = os.path.dirname(instance.source_path)
                 img_filename = img_filename[8:]
