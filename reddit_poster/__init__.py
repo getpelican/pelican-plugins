@@ -9,16 +9,11 @@ from collections import OrderedDict
 
 from pelican import signals
 from pelican.generators import Generator
-import logging
-log = logging.getLogger(__name__)
-
-
-import praw
 from functools import partial
+import logging
+import praw
 
-def find_post(sub):
-    pass
-
+log = logging.getLogger(__name__)
 
 def make_posts(generator, metadata, url):
     """
