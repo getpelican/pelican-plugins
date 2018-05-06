@@ -5,3 +5,5 @@ REDDIT_POSTER_AUTH = {
     'client_secret': 'secret',
     'user_agent': 'python:pelican_redditposter:1 by /u/jappieofficial'
 }
+# a sub where all the posts get collected
+REDDIT_POSTER_COLLECT_SUB = "jappie"
