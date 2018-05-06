@@ -27,6 +27,13 @@ or pass them each time as command line options.
 
 https://praw.readthedocs.io/en/latest/code_overview/models/subreddit.html#praw.models.Subreddit.search
 https://praw.readthedocs.io/en/latest/code_overview/models/subreddit.html#praw.models.Subreddit.submit
+
+## Dependencies
++ praw 5.4
+
+On fedora the praw in yum is too old, however the pip requests doesn't 
+work for some reason, so I installed praw with pip and requests with dnf 
+which seems to work (requests probably needed some sys lib or something)
 """
 
 from collections import OrderedDict
@@ -42,10 +49,10 @@ def find_post(sub):
     pass
 
 
-def fetch_posts(generator, metadata):
+def make_posts(generator, metadata):
+    """
+    """
     reddit = generator.get_reddit()
-    print("reddit is")
-    print(reddit)
     # TODO init once
     if metadata.get('status') == "draft": # people don't want to post drafts
         print("ignoring draft")
@@ -56,19 +63,34 @@ def fetch_posts(generator, metadata):
         print("SUBMITTING TO REDDIT")
         print("SUBMITTING TO REDDIT")
         print("SUBMITTING TO REDDIT")
+        print(metadata)
         sub = reddit.subreddit('jappie')
+        results = sub.search("title:%s" % metadata['title'])
+        if len([result for result in results]) > 0:
+            print("ignoring this one, already has")
+            return
         sub.submit(metadata['title'], selftext="Attempts to make this work with the script")
         print(metadata['title'], sub)
 
 
 
 def init_reddit(generator):
-    print("reddit initialized")
-    print(generator.settings['REDDIT_POSTER_AUTH'])
+    """
+    this is a hack to make sure the reddit object keeps track of a session
+    trough article scanning, speeding up networking as the connection can be 
+    kept alive.
+    """
     reddit = praw.Reddit(**generator.settings['REDDIT_POSTER_AUTH'])
-    print("read only %s " % reddit.read_only)
     generator.get_reddit = lambda: reddit # .. openworld has it's merrits
-
+def content_written(generator, content):
+    print('---- wirritgn some more!')
+    print(content.title)
+    print(content.filename)
+    print(content.url)
+    print(content.metadata)
+    print(type(content))
+    print('----')
 def register():
+    signals.article_generator_write_article.connect(content_written)
     signals.article_generator_init.connect(init_reddit)
-    signals.article_generator_context.connect(fetch_posts)
+    signals.article_generator_context.connect(make_posts)
