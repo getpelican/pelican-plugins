@@ -3,7 +3,7 @@
 Neighbor Articles Plugin for Pelican
 ====================================
 
-This plugin adds ``next_article`` (newer) and ``prev_article`` (older) 
+This plugin adds ``next_article`` (newer) and ``prev_article`` (older)
 variables to the article's context
 """
 from pelican import signals
@@ -37,10 +37,10 @@ def set_neighbors(articles, next_name, prev_name):
             exec(
             "translation.{} = get_translation(prv, translation.lang)".format(
                 prev_name))
-      
+
 def neighbors(generator):
     set_neighbors(generator.articles, 'next_article', 'prev_article')
-    
+
     for category, articles in generator.categories:
         articles.sort(key=(lambda x: x.date), reverse=(True))
         set_neighbors(

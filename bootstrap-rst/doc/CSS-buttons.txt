@@ -1,0 +1,185 @@
+Buttons
+===============================================================================
+
+Options
+-------
+
+Use any of the available button classes to quickly create a styled button.
+
+.. container:: bs-example
+
+   .. button:: Default
+
+   .. button:: Primary
+      :class: primary
+
+   .. button:: Success
+      :class: success
+
+   .. button:: Info
+      :class: info
+
+   .. button:: Warning
+      :class: warning
+
+   .. button:: Danger
+      :class: danger
+
+   .. button:: Link
+      :class: link
+
+.. code::
+   :class: highlight
+
+   .. button:: Default
+      :class: default
+
+   .. button:: Primary
+      :class: primary
+
+   .. button:: Success
+      :class: success
+
+   .. button:: Info
+      :class: info
+
+   .. button:: Warning
+      :class: warning
+
+   .. button:: Danger
+      :class: danger
+
+   .. button:: Link
+      :class: link
+
+
+Sizes
+-----
+
+Fancy larger or smaller buttons? Add :code:`large`, :code:`small`, or
+:code:`tiny` for additional sizes.
+
+.. container:: bs-example
+
+   .. button:: Large button
+      :class: primary large
+   .. button:: Large button
+      :class: large
+
+   |
+
+   .. button:: Default button
+      :class: primary
+   .. button:: Default button
+
+   |
+
+   .. button:: Small button
+      :class: primary small
+   .. button:: Small button
+      :class: small
+
+   |
+
+   .. button:: Tiny button
+      :class: primary tiny
+   .. button:: Tiny button
+      :class: tiny
+
+.. code::
+   :class: highlight
+
+   .. button:: Large button
+      :class: primary large
+
+   .. button:: Large button
+      :class: large
+
+   .. button:: Default button
+      :class: primary
+
+   .. button:: Default button
+
+   .. button:: Small button
+      :class: primary small
+
+   .. button:: Small button
+      :class: small
+
+   .. button:: Tiny button
+      :class: primary tiny
+
+   .. button:: Tiny button
+      :class: tiny
+
+Create block level buttons—those that span the full width of a parent by adding
+:code:`block`.
+
+.. container:: bs-example
+
+   .. container:: well
+
+      .. button:: Block level button
+         :class: primary large block
+
+      .. button:: Block level button
+         :class: large block
+
+.. code::
+   :class: highlight
+
+   .. button:: Block level button
+      :class: primary large block
+
+   .. button:: Block level button
+      :class: large block
+
+
+Active state
+------------
+Buttons will appear pressed (with a darker background, darker border, and inset
+shadow) when :code:`active`.
+
+.. container:: bs-example
+
+   .. button:: Primary button
+      :class: primary large active
+
+   .. button:: Button
+      :class: large active
+
+
+.. code::
+   :class: highlight
+
+   .. button:: Primary button
+      :class: primary large active
+
+   .. button:: Button
+      :class: large active
+
+
+
+Disabled state
+--------------
+
+Make buttons look unclickable by fading them back 50% using the :code:`disabled`
+option.
+
+.. container:: bs-example
+
+   .. button:: Primary button
+      :class: primary large disabled
+
+   .. button:: Button
+      :class: large disabled
+
+
+.. code::
+   :class: highlight
+
+   .. button:: Primary button
+      :class: primary large disabled
+
+   .. button:: Button
+      :class: large disabled

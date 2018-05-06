@@ -88,9 +88,9 @@ For example::
         font-size: 120%;
     }
 
-    ...
+    /* ... add li.tag-3 etc, as much as needed */
 
-    ul.tagcloud .list-group-item <span>.badge {
+    ul.tagcloud .list-group-item span.badge {
         background-color: grey;
         color: white;
     }

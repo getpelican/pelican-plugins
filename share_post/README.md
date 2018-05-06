@@ -11,6 +11,9 @@ Author Email    | talha131@gmail.com
 Author Homepage | http://onCrashReboot.com
 Github Account  | https://github.com/talha131
 
+## Contributors:
+* [Jonathan DEKHTIAR](https://github.com/DEKHTIARJonathan) - contact@jonathandekhtiar.eu
+
 Why do you need it?
 ===================
 
@@ -39,9 +42,12 @@ How to Use
 `article.share_post`. Keys of the dictionary are as follows,
 
 1. `facebook`
-1. `google-plus`
-1. `email`
-1. `twitter`
+2. `google-plus`
+3. `email`
+4. `twitter`
+5. `diaspora`
+6. `linkedin`
+7. `hacker-news`
 
 Template Example
 ================
@@ -58,6 +64,10 @@ Template Example
         <a href="{{article.share_post['facebook']}}" target="_blank" title="Share on Facebook">Facebook</a>
         ❄
         <a href="{{article.share_post['google-plus']}}" target="_blank" title="Share on Google Plus">Google+</a>
+        ❄
+        <a href="{{article.share_post['linkedin']}}" target="_blank" title="Share on LinkedIn">LinkedIn</a>
+        ❄
+        <a href="{{article.share_post['hacker-news']}}" target="_blank" title="Share on HackerNews">HackerNews</a>
         ❄
         <a href="{{article.share_post['email']}}" target="_blank" title="Share via Email">Email</a>
     </p>

@@ -43,15 +43,16 @@ def generate_tag_cloud(generator):
 
     tags = list(map(itemgetter(1), tag_cloud))
     if tags:
-        max_count = max(tags)
+        max_count = tags[0]
+        min_count = tags[-1]
     steps = generator.settings.get('TAG_CLOUD_STEPS')
 
     # calculate word sizes
     def generate_tag(tag, count):
         tag = (
             tag,
-            int(math.floor(steps - (steps - 1) * math.log(count)
-                / (math.log(max_count)or 1)))
+            int(math.floor(steps - (steps - 1) * math.log(count - min_count + 1)
+                / (math.log(max_count - min_count + 1) or 1)))
         )
         if generator.settings.get('TAG_CLOUD_BADGE'):
             tag += (count,)

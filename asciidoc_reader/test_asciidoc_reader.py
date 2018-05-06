@@ -7,12 +7,12 @@ import os
 from pelican.readers import Readers
 from pelican.tests.support import unittest, get_settings
 
-from .asciidoc_reader import asciidoc_enabled
+from .asciidoc_reader import ENABLED
 
 CUR_DIR = os.path.dirname(__file__)
 CONTENT_PATH = os.path.join(CUR_DIR, 'test_data')
 
-@unittest.skipUnless(asciidoc_enabled, "asciidoc isn't installed")
+@unittest.skipUnless(ENABLED, "asciidoc isn't installed")
 class AsciiDocReaderTest(unittest.TestCase):
     def read_file(self, path, **kwargs):
         # Isolate from future API changes to readers.read_file
@@ -23,15 +23,17 @@ class AsciiDocReaderTest(unittest.TestCase):
         # Ensure the asc extension is being processed by the correct reader
         page = self.read_file(
             path='article_with_asc_extension.asc')
-        expected = ('<div class="sect1">\n'
+        expected = ('<div class="sect1">'
                     '<h2 id="_used_for_pelican_test">'
-                    'Used for pelican test</h2>\n'
-                    '<div class="sectionbody">\n'
+                    'Used for pelican test</h2>'
+                    '<div class="sectionbody">'
                     '<div class="paragraph">'
                     '<p>The quick brown fox jumped over '
                     'the lazy dog&#8217;s back.</p>'
-                    '</div>\n</div>\n</div>\n')
-        self.assertEqual(page.content, expected)
+                    '</div></div></div>')
+        actual = "".join(page.content.splitlines())
+        expected = "".join(expected.splitlines())
+        self.assertEqual(actual, expected)
         expected = {
             'category': 'Blog',
             'author': 'Author O. Article',
@@ -39,7 +41,6 @@ class AsciiDocReaderTest(unittest.TestCase):
             'date': datetime.datetime(2011, 9, 15, 9, 5),
             'tags': ['Linux', 'Python', 'Pelican'],
         }
-
         for key, value in expected.items():
             self.assertEqual(value, page.metadata[key], (
                 'Metadata attribute \'%s\' does not match expected value.\n'
@@ -50,17 +51,19 @@ class AsciiDocReaderTest(unittest.TestCase):
         # test to ensure the ASCIIDOC_OPTIONS is being used
         page = self.read_file(path='article_with_asc_options.asc',
             ASCIIDOC_OPTIONS=["-a revision=1.0.42"])
-        expected = ('<div class="sect1">\n'
+        expected = ('<div class="sect1">'
                     '<h2 id="_used_for_pelican_test">'
-                    'Used for pelican test</h2>\n'
-                    '<div class="sectionbody">\n'
+                    'Used for pelican test</h2>'
+                    '<div class="sectionbody">'
                     '<div class="paragraph">'
-                    '<p>version 1.0.42</p></div>\n'
+                    '<p>version 1.0.42</p></div>'
                     '<div class="paragraph">'
                     '<p>The quick brown fox jumped over '
                     'the lazy dog&#8217;s back.</p>'
-                    '</div>\n</div>\n</div>\n')
-        self.assertEqual(page.content, expected)
+                    '</div></div></div>')
+        actual = "".join(page.content.splitlines())
+        expected = "".join(expected.splitlines())
+        self.assertEqual(actual, expected)
 
 
 if __name__ == '__main__':

@@ -128,10 +128,12 @@ class _GitWrapper(_GitWrapperCommon):
         :returns: Sequence of commit objects. Newest to oldest
 
         .. NOTE ::
-            If this fails it could be that your gitpython version is out of sync with the git
-            binary on your distro. Make sure you use the correct gitpython version.
+            If this fails it could be that your gitpython version is out of
+            sync with the git binary on your distro.
+            Make sure you use the correct gitpython version.
 
-            Alternatively enabling GIT_FILETIME_FOLLOW may also make your problem go away.
+            Alternatively enabling GIT_FILETIME_FOLLOW may also make your
+            problem go away.
         '''
         return list(self.repo.iter_commits(paths=path))
 

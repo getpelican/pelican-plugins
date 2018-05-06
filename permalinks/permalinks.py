@@ -3,14 +3,15 @@
 This plugin enables a kind of permalink which can be used to refer to a piece
 of content which is resistant to the file being moved or renamed.
 """
-import logging
 import itertools
+import logging
 import os
 import os.path
+
 from pelican import signals
 from pelican.generators import Generator
-from pelican.utils import mkdir_p
 from pelican.utils import clean_output_dir
+from pelican.utils import mkdir_p
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +54,8 @@ class PermalinkGenerator(Generator):
         '''
         self.permalink_output_path = os.path.join(
             self.output_path, self.settings['PERMALINK_PATH'])
-        self.permalink_id_metadata_key = self.settings['PERMALINK_ID_METADATA_KEY']
+        self.permalink_id_metadata_key = (
+            self.settings['PERMALINK_ID_METADATA_KEY'])
 
     def generate_output(self, writer=None):
         '''
@@ -79,26 +81,29 @@ class PermalinkGenerator(Generator):
 
 def get_permalink_ids_iter(self):
     '''
-    Method to get permalink ids from content. To be bound to the class last thing
+    Method to get permalink ids from content. To be bound to the class last
+    thing.
     '''
     permalink_id_key = self.settings['PERMALINK_ID_METADATA_KEY']
-    permalink_ids_raw = self.metadata.get(permalink_id_key, '')
+    permalink_ids = self.metadata.get(permalink_id_key, '')
 
-    for permalink_id in permalink_ids_raw.split(','):
+    for permalink_id in permalink_ids.split(','):
         if permalink_id:
             yield permalink_id.strip()
 
 
 def get_permalink_ids(self):
     '''
-    Method to get permalink ids from content. To be bound to the class last thing
+    Method to get permalink ids from content. To be bound to the class last
+    thing.
     '''
     return list(self.get_permalink_ids_iter())
+
 
 def get_permalink_path(self):
     """Get just path component of permalink."""
     try:
-        first_permalink_id = self.get_permalink_ids_iter().next()
+        first_permalink_id = next(self.get_permalink_ids_iter())
     except StopIteration:
         return None
 
@@ -131,12 +136,14 @@ def add_permalink_methods(content_inst):
             permalink_method.__name__,
             permalink_method.__get__(content_inst, content_inst.__class__))
 
+
 def add_permalink_option_defaults(pelicon_inst):
     '''
     Add perlican defaults
     '''
     pelicon_inst.settings.setdefault('PERMALINK_PATH', 'permalinks')
-    pelicon_inst.settings.setdefault('PERMALINK_ID_METADATA_KEY', 'permalink_id')
+    pelicon_inst.settings.setdefault(
+        'PERMALINK_ID_METADATA_KEY', 'permalink_id')
 
 
 def get_generators(_pelican_object):

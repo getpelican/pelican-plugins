@@ -1,0 +1,53 @@
+Wells
+===============================================================================
+
+Default well
+------------
+
+Use the well as a simple effect on an element to give it an inset effect.
+
+.. container:: bs-example
+
+   .. class:: well
+
+      Look, I'm in a well!
+
+.. code::
+   :class: highlight
+
+   .. class:: well
+
+      Look, I'm in a well!
+
+
+Optional classes
+----------------
+
+Control padding and rounded corners with two optional modifier classes.
+
+.. container:: bs-example
+
+   .. class:: well well-lg
+
+      Look, I'm in a well!
+
+.. code::
+   :class: highlight
+
+   .. class:: well well-lg
+
+      Look, I'm in a well!
+
+
+.. container:: bs-example
+
+   .. class:: well well-sm
+
+      Look, I'm in a well!
+
+.. code::
+   :class: highlight
+
+   .. class:: well well-sm
+
+      Look, I'm in a well!

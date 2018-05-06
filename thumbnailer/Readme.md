@@ -23,6 +23,7 @@ Configuration
   The generated filename will be `originalname_thumbnailname.ext` unless `THUMBNAIL_KEEP_NAME` is set.
 * `THUMBNAIL_KEEP_NAME` is a Boolean that, if set, puts the file with the original name in a thumbnailname folder, named like the key in `THUMBNAIL_SIZES`.
 * `THUMBNAIL_KEEP_TREE` is a Boolean that, if set, saves the image directory tree.
+* `THUMBNAIL_INCLUDE_REGEX` is an optional string that is used as regular expression to restrict thumbnailing to matching files. By default all files not starting with a dot are respected.
 
 Sizes can be specified using any of the following formats:
 

@@ -20,6 +20,9 @@ The plug-in resizes the referred photos, and generates thumbnails for galleries 
 `PHOTO_THUMB = (192, 144, 60)`
 :	For thumbnails, maximum width, height, and quality.
 
+`PHOTO_SQUARE_THUMB = False`
+:	Crops thumbnails to make them square.
+
 `PHOTO_RESIZE_JOBS = 5`
 : Number of parallel resize jobs to be run. Defaults to 1.
 

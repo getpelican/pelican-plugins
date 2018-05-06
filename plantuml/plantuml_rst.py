@@ -57,18 +57,15 @@ class PlantUML_rst(Directive):
 
         return nodes
 
-
-def custom_url(generator, metadata):
-    """ Saves globally the value of SITEURL configuration parameter """
-    global global_siteurl
-    global_siteurl = generator.settings['SITEURL']
-
-
 def pelican_init(pelicanobj):
+
+    global global_siteurl
+    global_siteurl = pelicanobj.settings['SITEURL']
+
     """ Prepare configurations for the MD plugin """
     try:
         import markdown
-        from plantuml_md import PlantUMLMarkdownExtension
+        from .plantuml_md import PlantUMLMarkdownExtension
     except:
         # Markdown not available
         logger.debug("[plantuml] Markdown support not available")
@@ -78,7 +75,11 @@ def pelican_init(pelicanobj):
     config = { 'siteurl': pelicanobj.settings['SITEURL'] }
 
     try:
-        pelicanobj.settings['MD_EXTENSIONS'].append(PlantUMLMarkdownExtension(config))
+        if 'MD_EXTENSIONS' in pelicanobj.settings.keys(): # pre pelican 3.7.0
+            pelicanobj.settings['MD_EXTENSIONS'].append(PlantUMLMarkdownExtension(config))
+        elif 'MARKDOWN' in pelicanobj.settings.keys() and \
+             not ('extension_configs' in pelicanobj.settings['MARKDOWN']['extension_configs']):  # from pelican 3.7.0
+            pelicanobj.settings['MARKDOWN']['extension_configs']['plantuml.plantuml_md'] = {}
     except:
         logger.error("[plantuml] Unable to configure plantuml markdown extension")
 
@@ -86,5 +87,4 @@ def pelican_init(pelicanobj):
 def register():
     """Plugin registration."""
     signals.initialized.connect(pelican_init)
-    signals.article_generator_context.connect(custom_url)
     directives.register_directive('uml', PlantUML_rst)

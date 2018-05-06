@@ -1,5 +1,8 @@
 import re
 
+import pytest
+pytest.skip("Test is currently broken, see pelican pr #1618", allow_module_level=True)
+
 from pelican.tests.support import unittest
 
 from . import notebook

@@ -41,7 +41,10 @@ def inline_markdown_extension(pelicanobj, config):
 
     # Instantiate Markdown extension and append it to the current extensions
     try:
-        pelicanobj.settings['MD_EXTENSIONS'].append(PelicanInlineMarkdownExtension(config))
+        if isinstance(pelicanobj.settings.get('MD_EXTENSIONS'), list):  # pelican 3.6.3 and earlier
+            pelicanobj.settings['MD_EXTENSIONS'].append(PelicanInlineMarkdownExtension(config))
+        else:
+            pelicanobj.settings['MARKDOWN'].setdefault('extensions', []).append(PelicanInlineMarkdownExtension(config))
     except:
         sys.excepthook(*sys.exc_info())
         sys.stderr.write("\nError - the pelican Markdown extension failed to configure. Inline Markdown extension is non-functional.\n")
