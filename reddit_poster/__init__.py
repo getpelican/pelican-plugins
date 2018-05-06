@@ -2,6 +2,9 @@
 Reddit poster posts articles to reddit
 ===================================
 
+You can use the 'subreddit' attribute in you articles to specify which 
+subbreddit the article should be post in aside of your default sub.
+
 We look for the subreddit in the metadata.
 Then try to find a post that has the same title as this article.
 If we can't find a post we create it.
@@ -24,6 +27,7 @@ code. These should all be considered private.
 This script will expect these values to be set in the settings.
 You should store them for real in either an ignored file, environment variables,
 or pass them each time as command line options.
+Also make sure to set your SITEURL, for proper backlinks
 
 https://praw.readthedocs.io/en/latest/code_overview/models/subreddit.html#praw.models.Subreddit.search
 https://praw.readthedocs.io/en/latest/code_overview/models/subreddit.html#praw.models.Subreddit.submit
@@ -40,6 +44,8 @@ from collections import OrderedDict
 
 from pelican import signals
 from pelican.generators import Generator
+import logging
+log = logging.getLogger(__name__)
 
 
 import praw
@@ -49,28 +55,38 @@ def find_post(sub):
     pass
 
 
-def make_posts(generator, metadata):
+def make_posts(generator, metadata, url):
     """
+    Make posts on reddit if it's not a draft, on whatever subs are specified
     """
     reddit = generator.get_reddit()
-    # TODO init once
+    if reddit is None:
+        log.info("Reddit plugin not enabled")
+        return
     if metadata.get('status') == "draft": # people don't want to post drafts
-        print("ignoring draft")
+        log.debug("ignoring draft %s" % metadata['title'])
         return
 
-    if 'subreddit' in metadata.keys():
-        print("SUBMITTING TO REDDIT")
-        print("SUBMITTING TO REDDIT")
-        print("SUBMITTING TO REDDIT")
-        print("SUBMITTING TO REDDIT")
-        print(metadata)
-        sub = reddit.subreddit('jappie')
-        results = sub.search("title:%s" % metadata['title'])
-        if len([result for result in results]) > 0:
-            print("ignoring this one, already has")
-            return
-        sub.submit(metadata['title'], selftext="Attempts to make this work with the script")
-        print(metadata['title'], sub)
+    sub = reddit.subreddit(generator.settings['REDDIT_POSTER_COLLECT_SUB'])
+    results = sub.search("title:%s" % metadata['title'])
+    if len([result for result in results]) > 0:
+        log.debug("ignoring %s because it is already on reddit" % metadata['title'])
+        # post already was made to this sub
+        return
+    log.debug("Putting in collect sub")
+    sub.submit(metadata['title'], url=url)
+    if not 'subreddit' in metadata.keys():
+        log.debug("stopping %s because it has no subreddit key" % metadata['title'])
+        return
+
+    log.debug("Posting in marked subs")
+    for subreddit in metadata['subreddit'].split(' '):
+        log.debug("Posting in %s" % subreddit)
+        sub = reddit.subreddit(subreddit)
+        try:
+            sub.submit(metadata['title'], url=url)
+        except praw.exceptions.APIException as e:
+            log.error("got an api exception: ", e)
 
 
 
@@ -80,17 +96,22 @@ def init_reddit(generator):
     trough article scanning, speeding up networking as the connection can be 
     kept alive.
     """
-    reddit = praw.Reddit(**generator.settings['REDDIT_POSTER_AUTH'])
+    auth_dict = generator.settings.get('REDDIT_POSTER_AUTH')
+    if auth_dict is None:
+        log.info("Could not find REDDIT_POSTER_AUTH key in settings, reddit plugin won't function")
+        generator.get_reddit = lambda: None
+        return
+
+    reddit = praw.Reddit(**auth_dict)
     generator.get_reddit = lambda: reddit # .. openworld has it's merrits
+
 def content_written(generator, content):
-    print('---- wirritgn some more!')
-    print(content.title)
-    print(content.filename)
-    print(content.url)
-    print(content.metadata)
-    print(type(content))
-    print('----')
+    """
+    create a url and call make posts (which has less information)
+    """
+    url = "%s/%s" % (generator.settings.get('SITEURL', 'http://localhost:8000'), content.url)
+    make_posts(generator, content.metadata, url)
+
 def register():
     signals.article_generator_write_article.connect(content_written)
     signals.article_generator_init.connect(init_reddit)
-    signals.article_generator_context.connect(make_posts)
