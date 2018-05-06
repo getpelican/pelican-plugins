@@ -28,7 +28,7 @@ def make_posts(generator, metadata, url):
         return
 
     sub = reddit.subreddit(generator.settings['REDDIT_POSTER_COLLECT_SUB'])
-    results = sub.search("title:%s" % metadata['title'])
+    results = sub.search(metadata['title'])
     if len([result for result in results]) > 0:
         log.debug("ignoring %s because it is already on reddit" % metadata['title'])
         # post already was made to this sub
