@@ -27,26 +27,18 @@ def make_posts(generator, metadata, url):
         log.debug("ignoring draft %s" % metadata['title'])
         return
 
-    sub = reddit.subreddit(generator.settings['REDDIT_POSTER_COLLECT_SUB'])
-    results = sub.search(metadata['title'])
-    if len([result for result in results]) > 0:
-        log.debug("ignoring %s because it is already on reddit" % metadata['title'])
-        # post already was made to this sub
-        return
-    log.debug("Putting in collect sub")
-    sub.submit(metadata['title'], url=url)
-    if not 'subreddit' in metadata.keys():
-        log.debug("stopping %s because it has no subreddit key" % metadata['title'])
-        return
+    subreddits = metadata.get('subreddit')
+    subreddits = [] if subreddits is None else subreddits.split(' ')
+    subreddits.add(generator.settings['REDDIT_POSTER_COLLECT_SUB'])
 
-    log.debug("Posting in marked subs")
-    for subreddit in metadata['subreddit'].split(' '):
+    log.debug("Posting in marked subs: %s", subreddits)
+    for subreddit in subreddits:
         log.debug("Posting in %s" % subreddit)
         sub = reddit.subreddit(subreddit)
         try:
-            sub.submit(metadata['title'], url=url)
+            sub.submit(metadata['title'], url=url, resubmit=False)
         except praw.exceptions.APIException as e:
-            log.error("got an api exception: ", e)
+            log.error("got an api exception: %s", e)
 
 
 
