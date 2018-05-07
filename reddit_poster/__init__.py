@@ -33,6 +33,8 @@ def make_posts(generator, metadata, url):
 
     log.debug("Posting in marked subs: %s", subreddits)
     for subreddit in subreddits:
+        if subreddit == '':
+            continue
         log.debug("Posting in %s" % subreddit)
         sub = reddit.subreddit(subreddit)
         results = sub.search(metadata['title'])
