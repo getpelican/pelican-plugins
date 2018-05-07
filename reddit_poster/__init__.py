@@ -35,6 +35,11 @@ def make_posts(generator, metadata, url):
     for subreddit in subreddits:
         log.debug("Posting in %s" % subreddit)
         sub = reddit.subreddit(subreddit)
+        results = sub.search(metadata['title'])
+        if len([result for result in results]) > 0:
+            log.debug("ignoring %s because it is already on sub %s " % (metadata['title'], subreddit))
+            # post already was made to this sub
+            continue
         try:
             sub.submit(metadata['title'], url=url, resubmit=False)
         except praw.exceptions.APIException as e:
