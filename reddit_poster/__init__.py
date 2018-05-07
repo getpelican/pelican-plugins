@@ -44,6 +44,9 @@ def make_posts(generator, metadata, url):
             sub.submit(metadata['title'], url=url, resubmit=False)
         except praw.exceptions.APIException as e:
             log.error("got an api exception: %s", e)
+        except AssertionError as e:
+            log.error("Received an assertion error %s", e)
+            continue
 
 
 
