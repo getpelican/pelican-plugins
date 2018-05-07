@@ -29,7 +29,7 @@ def make_posts(generator, metadata, url):
 
     subreddits = metadata.get('subreddit')
     subreddits = [] if subreddits is None else subreddits.split(' ')
-    subreddits.add(generator.settings['REDDIT_POSTER_COLLECT_SUB'])
+    subreddits.append(generator.settings['REDDIT_POSTER_COLLECT_SUB'])
 
     log.debug("Posting in marked subs: %s", subreddits)
     for subreddit in subreddits:
