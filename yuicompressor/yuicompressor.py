@@ -7,9 +7,6 @@ import os
 
 logger = logging.getLogger(__name__)
 
-# Display command output on DEBUG and TRACE
-SHOW_OUTPUT = logger.getEffectiveLevel() <= logging.DEBUG
-
 """
 Minify CSS and JS files in output path
 with Yuicompressor from Yahoo
@@ -27,9 +24,7 @@ def minify(pelican):
             if os.path.splitext(name)[1] in ('.css','.js'):
                 filepath = os.path.join(dirpath, name)
                 logger.info('minifiy %s', filepath)
-                check_call([executable] +
-                           ('--verbose' if SHOW_OUTPUT else []) +
-                           ['--charset', 'utf-8', filepath, '-o', filepath])
+                check_call([executable, '--charset', 'utf-8', filepath, '-o', filepath])
 
 def register():
     signals.finalized.connect(minify)
