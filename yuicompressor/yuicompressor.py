@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from pelican import signals
-from subprocess import call
+from subprocess import check_call
 import logging
 import os
 
@@ -28,7 +28,7 @@ def minify(pelican):
                 filepath = os.path.join(dirpath, name)
                 logger.info('minifiy %s', filepath)
                 verbose = '-v' if SHOW_OUTPUT else ''
-                call("{} {} --charset utf-8 {} -o {}".format(
+                check_call("{} {} --charset utf-8 {} -o {}".format(
                     executable, verbose, filepath, filepath), shell=True)
 
 def register():
