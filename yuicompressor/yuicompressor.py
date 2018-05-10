@@ -27,9 +27,9 @@ def minify(pelican):
             if os.path.splitext(name)[1] in ('.css','.js'):
                 filepath = os.path.join(dirpath, name)
                 logger.info('minifiy %s', filepath)
-                verbose = '-v' if SHOW_OUTPUT else ''
-                check_call("{} {} --charset utf-8 {} -o {}".format(
-                    executable, verbose, filepath, filepath), shell=True)
+                check_call([executable] +
+                           ('--verbose' if SHOW_OUTPUT else []) +
+                           ['--charset', 'utf-8', filepath, '-o', filepath])
 
 def register():
     signals.finalized.connect(minify)
