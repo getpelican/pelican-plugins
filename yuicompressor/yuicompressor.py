@@ -21,14 +21,15 @@ def minify(pelican):
       Minify CSS and JS with YUI Compressor
       :param pelican: The Pelican instance
     """
+    executable = pelican.settings.get('YUICOMPRESSOR_EXECUTABLE', 'yuicompressor')
     for dirpath, _, filenames in os.walk(pelican.settings['OUTPUT_PATH']):
         for name in filenames:
             if os.path.splitext(name)[1] in ('.css','.js'):
                 filepath = os.path.join(dirpath, name)
                 logger.info('minifiy %s', filepath)
                 verbose = '-v' if SHOW_OUTPUT else ''
-                call("yuicompressor {} --charset utf-8 {} -o {}".format(
-                    verbose, filepath, filepath), shell=True)
+                call("{} {} --charset utf-8 {} -o {}".format(
+                    executable, verbose, filepath, filepath), shell=True)
 
 def register():
     signals.finalized.connect(minify)
