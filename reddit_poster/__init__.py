@@ -15,6 +15,17 @@ import praw
 
 log = logging.getLogger(__name__)
 
+def cross_post(reddit, submission, subs):
+    subreddits = [] if subs is None else subs.split(' ')
+    log.debug("Posting in marked subs: %s", subreddits)
+    for sub in subreddits:
+        if sub == '':
+            continue
+        log.debug("Posting in %s" % sub)
+        subreddit = reddit.subreddit(sub)
+        subreddit.subscribe() # must be subscribed to crosspost
+        submission.crosspost(subreddit)
+
 def make_posts(generator, metadata, url):
     """
     Make posts on reddit if it's not a draft, on whatever subs are specified
@@ -27,29 +38,20 @@ def make_posts(generator, metadata, url):
         log.debug("ignoring draft %s" % metadata['title'])
         return
 
-    subreddits = metadata.get('subreddit')
-    subreddits = [] if subreddits is None else subreddits.split(' ')
-    subreddits.append(generator.settings['REDDIT_POSTER_COLLECT_SUB'])
-
-    log.debug("Posting in marked subs: %s", subreddits)
-    for subreddit in subreddits:
-        if subreddit == '':
-            continue
-        log.debug("Posting in %s" % subreddit)
-        sub = reddit.subreddit(subreddit)
-        results = sub.search(metadata['title'])
-        if len([result for result in results]) > 0:
-            log.debug("ignoring %s because it is already on sub %s " % (metadata['title'], subreddit))
-            # post already was made to this sub
-            continue
-        try:
-            sub.submit(metadata['title'], url=url, resubmit=False)
-        except praw.exceptions.APIException as e:
-            log.error("got an api exception: %s", e)
-        except AssertionError as e:
-            log.error("Received an assertion error %s", e)
-            continue
-
+    collection = generator.settings['REDDIT_POSTER_COLLECT_SUB']
+    sub = reddit.subreddit(collection)
+    results = sub.search(metadata['title'])
+    if len([result for result in results]) > 0:
+        log.debug("ignoring %s because it is already on sub %s " % (metadata['title'], collection))
+        # post already was made to this sub
+        return
+    try:
+        submission = sub.submit(metadata['title'], url=url)
+        cross_post(reddit, submission, metadata.get('subreddit'))
+    except praw.exceptions.APIException as e:
+        log.error("got an api exception: %s", e)
+    except AssertionError as e:
+        log.error("Received an assertion error %s", e)
 
 
 def init_reddit(generator):
