@@ -46,7 +46,7 @@ def make_posts(generator, metadata, url):
         # post already was made to this sub
         return
     try:
-        submission = sub.submit(metadata['title'], url=url)
+        submission = sub.submit(metadata['title'], url=url, resubmit=False)
         cross_post(reddit, submission, metadata.get('subreddit'))
     except praw.exceptions.APIException as e:
         log.error("got an api exception: %s", e)
