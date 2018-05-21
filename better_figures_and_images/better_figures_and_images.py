@@ -22,6 +22,7 @@ from pelican import signals
 from bs4 import BeautifulSoup
 from PIL import Image
 import pysvg.parser
+import cssutils
 
 import logging
 logger = logging.getLogger(__name__)
@@ -43,24 +44,37 @@ def content_object_init(instance):
             logger.debug('Better Fig. img_path: %s', img_path)
             logger.debug('Better Fig. img_fname: %s', img_filename)
 
+            # If the image already has attributes... then we can skip it. Assuming it's already optimised
+            if 'style' in img.attrs:
+                sheet = cssutils.parseStyle(img['style'])
+                if len(sheet.width) > 0 or len(sheet.height) > 0:
+                    continue
+
             # Pelican 3.5+ supports {attach} macro for auto copy, in this use case the content does not exist in output
             # due to the fact it has not been copied, hence we take it from the source (same as current document)
             if img_filename.startswith('{attach}'):
                 img_path = os.path.dirname(instance.source_path)
                 img_filename = img_filename[8:]
                 src = os.path.join(img_path, img_filename)
-            else:
+            elif img_path.startswith(('{filename}', '|filename|')):
                 # Strip off {filename}, |filename| or /static
-                if img_path.startswith(('{filename}', '|filename|')):
-                    img_path = img_path[10:]
-                elif img_path.startswith('/static'):
-                    img_path = img_path[7:]
-                elif img_path.startswith('data:image'):
-                    # Image is encoded in-line (not a file).
-                    continue
+                img_path = img_path[10:]
+            elif img_path.startswith('/static'):
+                img_path = img_path[7:]
+            elif img_path.startswith('data:image'):
+                # Image is encoded in-line (not a file).
+                continue
+            else:
+                # Check the location in the output as some plugins create them there.
+                output_path = path.dirname(instance.save_as)
+                image_output_location = path.join(instance.settings['OUTPUT_PATH'], output_path, img_filename)
+                if path.isfile(image_output_location):
+                    src = image_output_location
+                    logger.info('{src} located in output, missing from content.'.format(src=img_filename))
                 else:
-                    logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
+                    logger.warning('Better Fig. Error: img_path should start with either {attach}, {filename}, |filename| or /static')
 
+            if src is None:
                 # search src path list
                 # 1. Build the source image filename from PATH
                 # 2. Build the source image filename from STATIC_PATHS

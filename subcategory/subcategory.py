@@ -62,8 +62,7 @@ def get_subcategories(generator, metadata):
     sub_list = []
     parent = category.name
     for subcategory in category_list:
-        subcategory.strip()
-        subcategory = parent + '/' + subcategory
+        subcategory = parent + '/' + subcategory.strip()
         sub_list.append(subcategory)
         parent = subcategory
     metadata['subcategories'] = sub_list

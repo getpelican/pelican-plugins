@@ -130,6 +130,8 @@ Interlinks                    Lets you add frequently used URLs to your markup u
 
 Jinja2 Content                Allows the use of Jinja2 template code in articles, including ``include`` and ``import`` statements. Replacement for pelican-jinja2content.
 
+JPEG Reader                   Create image gallery pages based on content of JPEG metadata
+
 Just table                    Allows you to easily create and manage tables. You can embed the tables into posts with a simple way.
 
 Libravatar                    Allows inclusion of user profile pictures from libravatar.org
@@ -190,6 +192,8 @@ Pelican Jinja2Content         Allows the use of Jinja2 template code in articles
 
 Pelican Link Class            Set class attribute of ``<a>`` elements according to whether the link is external or internal
 
+Pelican Meetup Info       Include your Meetup.com group and event information on generated pages and articles
+
 Pelican Page Hierarchy        Creates a URL hierarchy for pages that matches the filesystem hierarchy of their sources
 
 Pelican Page Order            Adds a ``page_order`` attribute to all pages if one is not defined.
@@ -221,6 +225,10 @@ Post statistics               Calculates various statistics about a post and sto
 Random article                Generates a html file which redirect to a random article
 
 Read More link                Inserts an inline "read more" or "continue" link into the last html element of the object summary
+
+Readtime                      Adds article estimated read time calculator to the site, in the form of '<n> minutes'. 
+
+Related posts                 Adds the ``related_posts`` variable to the article's context
 
 Related posts                 Adds the ``related_posts`` variable to the article's context
 

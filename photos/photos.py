@@ -24,6 +24,7 @@ try:
     from PIL import ImageDraw
     from PIL import ImageEnhance
     from PIL import ImageFont
+    from PIL import ImageOps
 except ImportError:
     logger.error('PIL/Pillow not found')
 
@@ -45,6 +46,7 @@ def initialized(pelican):
     DEFAULT_CONFIG.setdefault('PHOTO_GALLERY', (1024, 768, 80))
     DEFAULT_CONFIG.setdefault('PHOTO_ARTICLE', (760, 506, 80))
     DEFAULT_CONFIG.setdefault('PHOTO_THUMB', (192, 144, 60))
+    DEFAULT_CONFIG.setdefault('PHOTO_SQUARE_THUMB', False)
     DEFAULT_CONFIG.setdefault('PHOTO_GALLERY_TITLE', '')
     DEFAULT_CONFIG.setdefault('PHOTO_ALPHA_BACKGROUND_COLOR', (255, 255, 255))
     DEFAULT_CONFIG.setdefault('PHOTO_WATERMARK', False)
@@ -71,6 +73,7 @@ def initialized(pelican):
         pelican.settings.setdefault('PHOTO_GALLERY', (1024, 768, 80))
         pelican.settings.setdefault('PHOTO_ARTICLE', (760, 506, 80))
         pelican.settings.setdefault('PHOTO_THUMB', (192, 144, 60))
+        pelican.settings.setdefault('PHOTO_SQUARE_THUMB', False)
         pelican.settings.setdefault('PHOTO_GALLERY_TITLE', '')
         pelican.settings.setdefault('PHOTO_ALPHA_BACKGROUND_COLOR', (255, 255, 255))
         pelican.settings.setdefault('PHOTO_WATERMARK', False)
@@ -107,7 +110,7 @@ def read_notes(filename, msg=None):
                     notes[line] = ''
     except Exception as e:
         if msg:
-            logger.warning('{} at file {}'.format(msg, filename))
+            logger.info('{} at file {}'.format(msg, filename))
         logger.debug('read_notes issue: {} at file {}. Debug message:{}'.format(msg, filename, e))
     return notes
 
@@ -268,6 +271,10 @@ def resize_worker(orig, resized, spec, settings):
         exif_copy = b''
 
     icc_profile = im.info.get("icc_profile", None)
+
+    if settings['PHOTO_SQUARE_THUMB'] and spec == settings['PHOTO_THUMB']:
+        im = ImageOps.fit(im, (spec[0], spec[1]), Image.ANTIALIAS)
+
     im.thumbnail((spec[0], spec[1]), Image.ANTIALIAS)
     directory = os.path.split(resized)[0]
 
