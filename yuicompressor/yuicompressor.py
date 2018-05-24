@@ -23,7 +23,7 @@ def minify(pelican):
         for name in filenames:
             if os.path.splitext(name)[1] in ('.css','.js'):
                 filepath = os.path.join(dirpath, name)
-                logger.info('minifiy %s', filepath)
+                logger.info('minify %s', filepath)
                 check_call([executable, '--charset', 'utf-8', filepath, '-o', filepath])
 
 def register():
