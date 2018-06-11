@@ -15,9 +15,6 @@ def getText(node, recursive=False):
     for n in node.childNodes:
         if n.nodeType in (node.TEXT_NODE, node.CDATA_SECTION_NODE):
             L.append(n.data)
-        else:
-            if not recursive:
-                return None
         L.append(getText(n))
     return u''.join(L)
 
