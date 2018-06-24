@@ -136,6 +136,9 @@
 [submodule "pelican-ert"]
 	path = pelican-ert
 	url = https://github.com/nogaems/pelican-ert.git
+[submodule "pelican-advance-embed-tweet"]
+	path = pelican-advance-embed-tweet
+	url = git@github.com:fundor333/pelican-advance-embed-tweet.git
 [submodule "pelican_meetup_info"]
 	path = pelican_meetup_info
 	url = https://github.com/tylerdave/pelican-meetup-info.git
