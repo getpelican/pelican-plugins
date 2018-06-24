@@ -72,6 +72,8 @@ Creole reader             Allows you to write your posts using the wikicreole sy
 
 Custom article URLs       Adds support for defining different default URLs for different categories
 
+CTags generator           Generates a "tags" file following the CTags in the "content/" directory, to provide autocompletion for code editors that support it.
+
 Dateish                   Treat arbitrary metadata fields as datetime objects
 
 Dead Links                Manage dead links (website not available, errors such as 403, 404)
