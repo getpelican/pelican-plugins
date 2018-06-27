@@ -12,6 +12,7 @@ from pelican.generators import Generator
 from functools import partial
 import logging
 import praw
+import lxml.html
 
 log = logging.getLogger(__name__)
 
@@ -31,22 +32,23 @@ def make_posts(generator, metadata, url):
     Make posts on reddit if it's not a draft, on whatever subs are specified
     """
     reddit = generator.get_reddit()
+    title =  lxml.html.fromstring(metadata['title']).text_content()
     if reddit is None:
         log.info("Reddit plugin not enabled")
         return
     if metadata.get('status') == "draft": # people don't want to post drafts
-        log.debug("ignoring draft %s" % metadata['title'])
+        log.debug("ignoring draft %s" % title)
         return
 
     collection = generator.settings['REDDIT_POSTER_COLLECT_SUB']
     sub = reddit.subreddit(collection)
-    results = sub.search(metadata['title'])
+    results = sub.search(title)
     if len([result for result in results]) > 0:
-        log.debug("ignoring %s because it is already on sub %s " % (metadata['title'], collection))
+        log.debug("ignoring %s because it is already on sub %s " % (title, collection))
         # post already was made to this sub
         return
     try:
-        submission = sub.submit(metadata['title'], url=url, resubmit=False)
+        submission = sub.submit(title, url=url, resubmit=False)
         cross_post(reddit, submission, metadata.get('subreddit'))
     except praw.exceptions.APIException as e:
         log.error("got an api exception: %s", e)
