@@ -1,102 +1,125 @@
-# Copyright (C) 2017  Sébastien Gendre
+"""
+Org Reader
+==========
 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+Version 1.1.
 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+Relevant Pelican settings:
 
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import re
-from orgco import convert_html
+- ORG_READER_EMACS_LOCATION: Required. Location of Emacs binary.
+
+- ORG_READER_EMACS_SETTINGS: Optional. An absolute path to an Elisp file, to
+  run per invocation. Useful for initializing the `package` Emacs library if
+  that's where your Org mode comes from, or any modifications to Org Export-
+  related variables.
+
+- ORG_READER_BACKEND: Optional. A custom backend to provide to Org. Defaults
+  to 'html.
+
+To provide metadata to Pelican, the following properties can be defined in
+the org file's header:
+
+#+TITLE: The Title Of This BlogPost
+#+DATE: 2001-01-01
+#+CATEGORY: blog-category
+#+AUTHOR: My Name
+#+PROPERTY: LANGUAGE en
+#+PROPERTY: SUMMARY hello, this is the description
+#+PROPERTY: SLUG test_slug
+#+PROPERTY: MODIFIED [2015-12-29 Di]
+#+PROPERTY: TAGS my, first, tags
+#+PROPERTY: SAVE_AS alternative_filename.html
+
+- The TITLE is the only mandatory header property
+- Timestamps (DATE and MODIFIED) are optional and can be either a string of
+  %Y-%m-%d or an org timestamp
+- The property names (SUMMARY, SLUG, MODIFIED, TAGS, SAVE_AS) can be either
+  lower-case or upper-case
+- The slug is automatically the filename of the Org file, if not explicitly
+  specified
+- It is not possible to pass an empty property to Pelican.  For this plugin,
+  it makes no difference if a property is present in the Org file and left
+  empty, or if it is not defined at all.
+
+"""
+import os
+import json
+import logging
+import subprocess
+from pelican import readers
 from pelican import signals
-from pelican.readers import BaseReader
-from pelican.utils import pelican_open
 
-class OrgReader(BaseReader):
-    """Reader for Org files"""
+
+ELISP = os.path.join(os.path.dirname(__file__), 'org_emacs_reader.el')
+LOG = logging.getLogger(__name__)
+
+
+class OrgEmacsReader(readers.BaseReader):
     enabled = True
+
+    EMACS_ARGS = ["-Q", "--batch"]
+    ELISP_EXEC = "(org->pelican \"{0}\" {1})"
+
     file_extensions = ['org']
 
-    def __init__(self, *args, **kargs):
-        """Init object construct with this class"""
-        super(OrgReader, self).__init__(*args, **kargs)
-        settings = self.settings['ORGMODE']
-        settings.setdefault('code_highlight', True)
-        self.code_highlight = settings['code_highlight']
-    
-    def _separate_header_and_content(self, text_lines):
-        """
-        From a given Org text, return the header separate from the content.
-        The given text must be separate line by line and be a list.
-        The return is a list of two items: header and content.
-        Theses two items are text separate line by line in format of a list
-        Keyword Arguments:
-        text_lines -- A list, each item is a line of the texte
-        Return:
-        [
-          header   -- A list, each item is a line of the texte
-          content  -- A list, each item is a line of the texte
-        ]
-        """
-        no_more_header = False
-        expr_metadata = re.compile(r'^#\+[a-zA-Z]+:.*')
-        header = []
-        content = []
-        for line in text_lines:
-            metadata = expr_metadata.match(line)
-            if metadata and not no_more_header:
-                header.append(line)
-            else:
-                no_more_header = True
-                content.append(line)
-        return header, content 
+    def __init__(self, settings):
+        super(OrgEmacsReader, self).__init__(settings)
+        assert 'ORG_READER_EMACS_LOCATION' in self.settings, \
+            "No ORG_READER_EMACS_LOCATION specified in settings"
 
-    def _parse_metadatas(self, text_lines):
-        """
-        From a given Org text, return the metadatas 
-        Keyword Arguments:
-        text_lines -- A list, each item is a line of the texte
-        Return:
-        A dict containing metadatas
-        """
-        if not text_lines:
-            return {}
-        expr_metadata = re.compile(r'^#\+([a-zA-Z]+):(.*)')
-        return {
-            expr_metadata.match(line).group(1).lower()
-            : expr_metadata.match(line).group(2).strip()
-            for line in text_lines
-        }
+    def read(self, filename):
+        LOG.info("Reading Org file {0}".format(filename))
+        cmd = [self.settings['ORG_READER_EMACS_LOCATION']]
+        cmd.extend(self.EMACS_ARGS)
 
-    def read(self, source_path):
-        """
-        Parse content and metadata of Org files
-        Keyword Arguments:
-        source_path -- Path to the Org file to parse
-        """
-        with pelican_open(source_path) as text:
-            text_lines = list(text.splitlines())
+        if 'ORG_READER_EMACS_SETTINGS' in self.settings:
+            cmd.append('-l')
+            cmd.append(self.settings['ORG_READER_EMACS_SETTINGS'])
 
-        header, content = self._separate_header_and_content(text_lines)
-        metadatas = self._parse_metadatas(header)
-        metadatas_processed = {
-            key
-            : self.process_metadata(key, value)
-            for key, value in metadatas.items()
-        }
-        content_html = convert_html("\n".join(content),
-                                    highlight=self.code_highlight)
-        return content_html, metadatas_processed
-    
+        backend = self.settings.get('ORG_READER_BACKEND', "'html")
+
+        cmd.append('-l')
+        cmd.append(ELISP)
+
+        cmd.append('--eval')
+        cmd.append(self.ELISP_EXEC.format(filename, backend))
+
+        LOG.debug("OrgEmacsReader: running command `{0}`".format(cmd))
+
+        json_result = subprocess.check_output(cmd, universal_newlines=True)
+        json_output = json.loads(json_result)
+
+        # get default slug from .org filename
+        default_slug, _ = os.path.splitext(os.path.basename(filename))
+
+        metadata = {'title': json_output['title'] or '',
+                    'date': json_output['date'] or '',
+                    'author': json_output['author'] or '',
+                    'lang': json_output['language'] or '',
+                    'category': json_output['category'] or '',
+                    'slug': json_output['slug'] or default_slug,
+                    'modified': json_output['modified'] or '',
+                    'tags': json_output['tags'] or '',
+                    'save_as': json_output['save_as'] or '',
+                    'summary': json_output['summary'] or ''}
+
+        # remove empty strings when necessary
+        for key in ['save_as', 'modified', 'lang', 'summary']:
+            if not metadata[key]:
+                metadata.pop(key)
+
+        parsed = {}
+        for key, value in metadata.items():
+            parsed[key] = self.process_metadata(key, value)
+
+        content = json_output['post']
+
+        return content, parsed
+
+
 def add_reader(readers):
-    for ext in OrgReader.file_extensions:
-        readers.reader_classes[ext] = OrgReader
+    readers.reader_classes['org'] = OrgEmacsReader
+
 
 def register():
     signals.readers_init.connect(add_reader)
