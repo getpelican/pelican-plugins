@@ -39,7 +39,7 @@ with local development when ``SITEURL == ''``.
 Language buttons showing all available languages, current is active
 ...................................................................
 
-The ``extra_siteurls`` dictionary is a mapping of all languages to the
+The ``lang_subsites`` dictionary is a mapping of all languages to the
 ``SITEURL`` of the respective (sub-)sites. This template sets the
 language of the current (sub-)site as active.
 
