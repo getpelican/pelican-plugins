@@ -246,6 +246,8 @@ Share post                Creates share URLs of article
 
 Show Source               Place a link to the source text of your posts.
 
+Similar Posts             Adds a list of similar posts to every article's context.
+
 Simple footnotes          Adds footnotes to blog posts
 
 Sitemap                   Generates plain-text or XML sitemaps
