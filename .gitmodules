@@ -139,3 +139,6 @@
 [submodule "pelican_meetup_info"]
 	path = pelican_meetup_info
 	url = https://github.com/tylerdave/pelican-meetup-info.git
+[submodule "similar_posts"]
+	path = similar_posts
+	url = https://github.com/davidlesieur/similar_posts.git
