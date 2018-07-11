@@ -154,6 +154,8 @@ Math Render               Gives pelican the ability to render mathematics
 
 Mbox Reader               Generate articles automatically via email, given a path to a Unix mbox
 
+Multi Neighbors           Adds a list of newer articles and a list of older articles to every article's context.
+
 Multi parts posts         Allows you to write multi-part posts
 
 Neighbor articles         Adds ``next_article`` (newer) and ``prev_article`` (older) variables to the article's context
