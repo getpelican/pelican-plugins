@@ -23,8 +23,7 @@ def minify(pelican):
             if os.path.splitext(name)[1] in ('.css','.js'):
                 filepath = os.path.join(dirpath, name)
                 logger.info('minify %s', filepath)
-                check_call("yuicompressor --charset utf-8 {} -o {}".format(
-                    filepath, filepath), shell=True)
+                check_call(['yuicompressor', '--charset', 'utf-8', filepath, '-o', filepath])
 
 def register():
     signals.finalized.connect(minify)
