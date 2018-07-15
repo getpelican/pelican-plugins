@@ -9,8 +9,8 @@ logger = logging.getLogger(__name__)
 
 """
 Minify CSS and JS files in output path
-with Yuicompressor from Yahoo
-Required : pip install yuicompressor
+with YUI Compressor from Yahoo.
+Required: an existing installation of YUI Compressor.
 """
 
 def minify(pelican):
