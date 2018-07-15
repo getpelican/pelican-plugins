@@ -8,8 +8,7 @@ import os
 logger = logging.getLogger(__name__)
 
 """
-Minify CSS and JS files in output path
-with YUI Compressor from Yahoo.
+Minify CSS and JS files in output path with YUI Compressor from Yahoo.
 Required: an existing installation of YUI Compressor.
 """
 
