@@ -28,7 +28,7 @@ def initialized(pelican):
 def extract_summary(instance):
     # if summary is already specified, use it
     # if there is no content, there's nothing to do
-    if hasattr(instance, '_summary'):
+    if hasattr(instance, '_summary') or 'summary' in instance.metadata:
         instance.has_summary = True
         return
 
@@ -81,7 +81,13 @@ def extract_summary(instance):
     summary = re.sub(r"</div>", "", summary)
 
     instance._content = content
-    instance._summary = summary
+    # default_status was added to Pelican Content objects after 3.7.1.
+    # Its use here is strictly to decide on how to set the summary.
+    # There's probably a better way to do this but I couldn't find it.
+    if hasattr(instance, 'default_status'):
+        instance.metadata['summary'] = summary
+    else:
+        instance._summary = summary
     instance.has_summary = True
 
 
