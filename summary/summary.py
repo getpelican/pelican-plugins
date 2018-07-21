@@ -41,7 +41,7 @@ def extract_summary(instance):
     use_first_paragraph = instance.settings['SUMMARY_USE_FIRST_PARAGRAPH']
     remove_markers = True
 
-    content = instance._content
+    content = instance._update_content(instance._content, instance.settings['SITEURL'])
     begin_summary = -1
     end_summary = -1
     if begin_marker:
