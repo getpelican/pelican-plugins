@@ -50,7 +50,7 @@ from pelican import readers
 from pelican import signals
 
 
-ELISP = os.path.join(os.path.dirname(__file__), 'org_emacs_reader.el')
+ELISP = os.path.join(os.path.dirname(__file__), 'org_reader.el')
 LOG = logging.getLogger(__name__)
 
 
