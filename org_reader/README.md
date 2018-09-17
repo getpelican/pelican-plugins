@@ -2,18 +2,18 @@
 
 Publish Emacs Org files alongside the rest of your website or blog.
 
-- `ORG_EMACS_READER_EMACS_LOCATION`: Required. Location of Emacs binary.
+- `ORG_READER_EMACS_LOCATION`: Required. Location of Emacs binary.
   If you use `Emacs for Mac OS X`,
   the location should be `/Applications/Emacs.app/Contents/MacOS/Emacs`,
   rather than `/usr/bin/emacs`.
 
-- `ORG_EMACS_READER_EMACS_SETTINGS`: Optional. An absolute path to an Elisp file, to
+- `ORG_READER_EMACS_SETTINGS`: Optional. An absolute path to an Elisp file, to
   run per invocation. Useful for initializing the `package` Emacs library if
   that's where your Org mode comes from, or any modifications to Org Export-
   related variables. If you want to use your standard emacs init file, you 
   can ignore this variable.
 
-- `ORG_EMACS_READER_BACKEND`: Optional. A custom backend to provide to Org. Defaults
+- `ORG_READER_BACKEND`: Optional. A custom backend to provide to Org. Defaults
   to `'html`.
 
 To provide metadata to Pelican, the following properties can be defined in

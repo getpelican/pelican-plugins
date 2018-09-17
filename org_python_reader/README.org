@@ -1,4 +1,4 @@
-* Org Reader plugin
+* Org Python Reader plugin
 
 This plugin add the possibility to write your pages and blog posts in
 Org format from Emacs Org-mode.
@@ -26,7 +26,7 @@ software.
    
    Exemple:
    #+BEGIN_SRC python
-   PLUGINS = ['org_reader']
+   PLUGINS = ['org_python_reader']
    #+END_SRC
 
 ** Settings
