@@ -130,6 +130,8 @@ Image Process             Automates the processing of images based on their clas
 
 Interlinks                Lets you add frequently used URLs to your markup using short keywords
 
+Jdate                     Change locale date to Jalali/Persian.
+
 Jinja2 Content            Allows the use of Jinja2 template code in articles, including ``include`` and ``import`` statements. Replacement for pelican-jinja2content.
 
 JPEG Reader               Create image gallery pages based on content of JPEG metadata
