@@ -13,7 +13,8 @@ CTAGS_TEMPLATE = '''{% for tag, articles in tags_articles %}
 
 def generate_ctags(article_generator, writer):
     tags_file_path = os.path.join(article_generator.path, 'tags')
-    article_generator.settings.setdefault('WRITE_SELECTED', []).append(tags_file_path)
+    if article_generator.settings.get('WRITE_SELECTED'):
+        article_generator.settings['WRITE_SELECTED'].append(tags_file_path)
     writer.output_path = article_generator.path
     try:
         writer.write_file('tags', article_generator.env.from_string(CTAGS_TEMPLATE), article_generator.context,
