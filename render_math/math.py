@@ -187,7 +187,9 @@ def process_summary(article):
     """Ensures summaries are not cut off. Also inserts
     mathjax script so that math will be rendered"""
 
-    summary = article.summary
+    if not hasattr(article, '_summary'):
+        return
+    summary = article._summary
     summary_parsed = BeautifulSoup(summary, 'html.parser')
     math = summary_parsed.find_all(class_='math')
 
