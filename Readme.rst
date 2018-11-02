@@ -58,6 +58,8 @@ bootstrap-rst             Provides most (though not all) of Bootstrap's features
 
 bootstrapify              Automatically add bootstraps default classes to your content
 
+Bundler - Cache Busting   Bundles CSS and JS (it doesn't minify) and provide cache busting for better change detection
+
 Category Order            Order categories (and tags) by the number of articles in that category (or tag).
 
 CJK auto spacing          Inserts spaces between Chinese/Japanese/Korean characters and English words
