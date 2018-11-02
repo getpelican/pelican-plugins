@@ -244,6 +244,8 @@ Section number            Adds section numbers for article headers, in the form 
 
 Series                    Groups related articles into a series
 
+Service Worker            Create an offline-first service worker at build time based on a template, PWA ready.
+
 Share post                Creates share URLs of article
 
 Show Source               Place a link to the source text of your posts.
