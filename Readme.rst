@@ -54,6 +54,8 @@ Better code samples       Wraps ``table`` blocks with ``div > .hilitewrapper > .
 
 Better figures/samples    Adds a ``style="width: ???px; height: auto;"`` attribute to any ``<img>`` tags in the content
 
+Blur thumbnails           Automatically create blurred thumbnails for all the images. (similar to Mediums blog)
+
 bootstrap-rst             Provides most (though not all) of Bootstrap's features as rst directives
 
 bootstrapify              Automatically add bootstraps default classes to your content
