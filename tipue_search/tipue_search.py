@@ -83,7 +83,7 @@ class Tipue_Search_JSON_Generator(object):
 
 
     def generate_output(self, writer):
-        path = os.path.join(self.output_path, 'tipuesearch_content.json')
+        path = os.path.join(self.output_path, 'tipuesearch_content.js')
 
         pages = self.context['pages'] + self.context['articles']
 
@@ -96,9 +96,11 @@ class Tipue_Search_JSON_Generator(object):
         for page in pages:
             self.create_json_node(page)
         root_node = {'pages': self.json_nodes}
+        
+        root_node_js = 'var tipuesearch = ' + json.dumps(root_node, separators=(',', ':'), ensure_ascii=False) + ';'
 
         with open(path, 'w', encoding='utf-8') as fd:
-            json.dump(root_node, fd, separators=(',', ':'), ensure_ascii=False)
+            fd.write(root_node_js)
 
 
 def get_generators(generators):
