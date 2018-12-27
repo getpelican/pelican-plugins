@@ -49,7 +49,8 @@ def get_subcategories(generator, metadata):
                 'subcategory', '{savepath}.html')
     if 'SUBCATEGORY_URL' not in generator.settings:
         generator.settings['SUBCATEGORY_URL'] = 'subcategory/{fullurl}.html'
-    if 'subcategory' not in generator.settings['PAGINATED_TEMPLATES']:
+    if ('PAGINATED_TEMPLATES' in generator.settings and
+        'subcategory' not in generator.settings['PAGINATED_TEMPLATES']):
         generator.settings['PAGINATED_TEMPLATES']['subcategory'] = None
 
     if 'subcategory_path' in metadata:
