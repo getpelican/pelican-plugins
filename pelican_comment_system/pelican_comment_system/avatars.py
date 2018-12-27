@@ -88,7 +88,7 @@ def getAvatarPath(comment_id, metadata):
 
     code = md5.hexdigest()
 
-    if not code in _missingAvatars:
+    if code not in _missingAvatars:
         _missingAvatars.append(code)
 
     return os.path.join(_identicon_output_path, '%s.png' % code)

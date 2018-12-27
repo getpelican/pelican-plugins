@@ -23,12 +23,13 @@ from . comment import Comment
 from . import avatars
 
 
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 
 
 _all_comments = []
 _pelican_writer = None
 _pelican_obj = None
+
 
 def setdefault(pelican, settings):
     from pelican.settings import DEFAULT_CONFIG
@@ -88,10 +89,11 @@ def initialize(article_generator):
     _pelican_writer = _pelican_obj.get_writer()
     _all_comments = []
 
+
 def warn_on_slug_collision(items):
     slugs = {}
     for comment in items:
-        if not comment.slug in slugs:
+        if comment.slug not in slugs:
             slugs[comment.slug] = [comment]
         else:
             slugs[comment.slug].append(comment)
@@ -99,7 +101,8 @@ def warn_on_slug_collision(items):
     for slug, itemList in slugs.items():
         len_ = len(itemList)
         if len_ > 1:
-            logger.warning('There are %s comments with the same slug: %s', len_, slug)
+            logger.warning('There are %s comments with the same slug: %s',
+                           len_, slug)
             for x in itemList:
                 logger.warning('    %s', x.source_path)
 
@@ -138,10 +141,12 @@ def process_comments(article_generator):
     for article in article_generator.articles:
         add_static_comments(article_generator, article)
 
+
 def mirror_to_translations(article):
     for translation in article.translations:
         translation.comments_count = article.comments_count
         translation.comments = article.comments
+
 
 def add_static_comments(gen, content):
     if gen.settings['PELICAN_COMMENT_SYSTEM'] is not True:
@@ -204,9 +209,10 @@ def add_static_comments(gen, content):
                 found_parent = True
                 break
         if not found_parent:
-            logger.warning('Comment "%s/%s" is a reply to non-existent comment "%s". '
-                'Make sure the replyto attribute is set correctly.',
-                content.slug, reply.slug, reply.replyto)
+            logger.warning('Comment "%s/%s" is a reply to non-existent '
+                           'comment "%s". Make sure the replyto attribute is '
+                           'set correctly.',
+                           content.slug, reply.slug, reply.replyto)
 
     count = 0
     for comment in comments:
