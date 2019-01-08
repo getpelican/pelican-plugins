@@ -26,10 +26,7 @@ def default():
 
 def fix_unicode(val):
     if sys.version_info < (3,0):
-        val = unicode(val.decode("utf-8"))
-    else:
-        # This fixes an issue with character substitutions, e.g. 'ñ' to 'Ã±'.
-        val = str.encode(val, "latin-1").decode("utf-8")
+        return unicode(val.decode("utf-8"))
     return val
 
 ALLOWED_CMDS = ["asciidoc", "asciidoctor"]
