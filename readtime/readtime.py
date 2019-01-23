@@ -2,8 +2,10 @@ import re
 import math
 
 from pelican import signals
-from html.parser import HTMLParser  #use html.parser for Python 3.6
-
+try
+    from html.parser import HTMLParser  # use html.parser for Python 3.6
+except ImportError:
+    from HTMLParser import HTMLParser   # HTMLParser for legacy Python
 
 # http://en.wikipedia.org/wiki/Words_per_minute
 WPM = 230.0
