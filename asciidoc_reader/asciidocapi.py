@@ -243,7 +243,7 @@ class AsciiDocAPI(object):
                 self.asciidoc.execute(self.cmd, opts.values, args)
             finally:
                 self.messages = self.asciidoc.messages[:]
-        except SystemExit, e:
+        except SystemExit as e:
             if e.code:
                 raise AsciiDocError(self.messages[-1])
 

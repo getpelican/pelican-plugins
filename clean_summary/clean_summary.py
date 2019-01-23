@@ -20,7 +20,7 @@ def init(pelican):
 
 
 def clean_summary(instance):
-    if type(instance) == Article:
+    if isinstance(instance, Article):
         summary = instance.summary
         summary = BeautifulSoup(instance.summary, 'html.parser')
         images = summary.findAll('img')

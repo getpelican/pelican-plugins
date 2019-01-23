@@ -19,7 +19,7 @@ def dateish(generator):
         for field in generator.settings['DATEISH_PROPERTIES']:
             if hasattr(article, field):
                 value = getattr(article, field)
-                if type(value) == list:
+                if isinstance(value, list):
                     setattr(article, field, [get_date(d) for d in value])
                 else:
                     setattr(article, field, get_date(value))

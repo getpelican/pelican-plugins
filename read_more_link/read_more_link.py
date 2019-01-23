@@ -49,7 +49,7 @@ def insert_read_more_link(instance):
     """
 
     # only deals with Article type
-    if type(instance) != contents.Article: return
+    if not isinstance(instance, contents.Article): return
 
 
     SUMMARY_MAX_LENGTH = instance.settings.get('SUMMARY_MAX_LENGTH')
