@@ -8,6 +8,7 @@ before_install:
 install:
     - pip install nose
     - pip install -e git://github.com/getpelican/pelican.git#egg=pelican
-    - pip install beautifulsoup4 disqus-python python-hglib icalendar Markdown Pillow requests
+    - pip install apiclient beautifulsoup4 disqus-python gensim gitpython html5lib icalendar
+    - pip install Markdown Pillow praw pysvg python-hglib requests xhtml2pdf unitywebgl
     - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then pip install webassets cssmin; fi
 script: nosetests
