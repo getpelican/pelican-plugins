@@ -9,7 +9,7 @@ install:
     - pip install nose
     - pip install -e git://github.com/getpelican/pelican.git#egg=pelican
     - pip install beautifulsoup4 cssutils disqus-python gensim gitpython google-api-python-client google_compute_engine
-    - pip install html5lib icalendar ipython lxml Markdown oauth2-client Pillow praw pysvg python-hglib requests rst2pdf
+    - pip install html5lib icalendar ipython lxml Markdown oauth2client Pillow praw pysvg python-hglib requests rst2pdf
     - pip install xhtml2pdf
     - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then pip install webassets cssmin; fi
 script: nosetests
