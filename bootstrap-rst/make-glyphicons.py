@@ -1,3 +1,4 @@
+from __future__ import print_function
 glyphs = """<span class="glyphicon glyphicon-asterisk"></span>
 <span class="glyphicon glyphicon-plus"></span>
 <span class="glyphicon glyphicon-euro"></span>
@@ -210,14 +211,14 @@ glyphs = glyphs.split('\n')
 #    print ""
 
 
-print ".. row::"
+print(".. row::")
 for i, glyph in enumerate(glyphs):
     if i % 50 == 0:
-        print ""
-        print "   .. column::"
-        print "      :width: 3"
-        print ""
-        print "      .. list:: list-unstyled"
-        print ""
+        print("")
+        print("   .. column::")
+        print("      :width: 3")
+        print("")
+        print("      .. list:: list-unstyled")
+        print("")
     name = glyph[33:-9]
-    print "         * |%s| : %s" % (name,name)
+    print("         * |%s| : %s" % (name,name))
