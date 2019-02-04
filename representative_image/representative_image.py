@@ -39,6 +39,8 @@ def run_plugin(generators):
         if isinstance(generator, ArticlesGenerator):
             for article in generator.articles:
                 images_extraction(article)
+                for translation in article.translations:
+                    images_extraction(translation)
 
 
 def register():
