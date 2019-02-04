@@ -51,6 +51,7 @@ Output
 
 import base64
 import re
+from errno import EINVAL, EPIPE
 from .mdx_liquid_tags import LiquidTags
 
 SYNTAX = '{% dot graphviz [program] [dot code] %}'
