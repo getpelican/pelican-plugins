@@ -42,7 +42,8 @@ class PlantUML_rst(Directive):
         body = '\n'.join(self.content)
 
         try:
-            url = global_siteurl+'/'+generate_uml_image(path, body, "png")
+            uml_format = self.options.get('format', 'png')
+            url = global_siteurl+'/'+generate_uml_image(path, body, uml_format)
         except Exception as exc:
             error = self.state_machine.reporter.error(
                 'Failed to run plantuml: %s' % exc,
