@@ -64,9 +64,22 @@ In addition to the instructions from Tipue, the following has to be added in `pe
 ```python
 PLUGIN_PATH = 'plugins'
 PLUGINS = ['tipue_search']
-DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'authors', 'archives', 'search']```
+DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'authors', 'archives', 'search']
+```
 
-Furthermore, the generated JS variable has to be sourced in the relevant html pages.
+Furthermore, the generated JavaScript variable has to be sourced in the relevant html pages.
 
 ```html
-<script src="{{ SITEURL }}tipuesearch_content.js"></script>```
+<script src="{{ SITEURL }}tipuesearch_content.js"></script>
+```
+
+Pelican [Elegant Theme](https://github.com/talha131/pelican-elegant) and [Plumage theme](https://github.com/kdeldycke/plumage) have Tipue Search configured. You can view their code to understand the configuration.
+
+Backward Compatibility
+======================
+
+This plugin requires Tipue Search Version 7.0 or higher.
+
+Tipue used to expect content in a json file. Around Version 7.0, Tipue maintainers made a switch to JavaScript variable. tipue_search plugin was updated to reflect this change in commit `4a5f171fc`. Latest version of tipue_search plugin will not work with older versions of Tipue Search.
+
+If you are using older Tipue Search, prior to 7.0 release, then you will find old version of tipue_search plugin in commit `2dcdca8c8`. 
