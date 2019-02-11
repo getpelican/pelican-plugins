@@ -61,7 +61,7 @@ class RmdReader(readers.BaseReader):
     file_extensions = ['Rmd', 'rmd']
 
     @property
-    def enabled():
+    def enabled(self):
         return RMD
 
     # You need to have a read method, which takes a filename and returns
