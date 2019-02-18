@@ -59,7 +59,6 @@ def share_post(content):
     mail_link       = 'mailto:?subject=%s&amp;body=%s' % (title, url)
     diaspora_link   = 'https://sharetodiaspora.github.io/?title=%s&url=%s' % (title, url)
     facebook_link   = 'https://www.facebook.com/sharer/sharer.php?u=%s' % url
-    gplus_link      = 'https://plus.google.com/share?url=%s' % url
     twitter_link    = 'https://twitter.com/intent/tweet?text=%s&url=%s%s%s' % (title, url, via, hastags)
     hackernews_link = 'https://news.ycombinator.com/submitlink?t=%s&u=%s' % (title, url)
     linkedin_link   = 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&summary=%s&source=%s' % (
@@ -70,7 +69,6 @@ def share_post(content):
         'diaspora'   : diaspora_link,
         'twitter'    : twitter_link,
         'facebook'   : facebook_link,
-        'google-plus': gplus_link,
         'linkedin'   : linkedin_link,
         'hacker-news': hackernews_link,
         'email'      : mail_link
