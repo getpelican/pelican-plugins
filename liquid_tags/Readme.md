@@ -179,7 +179,8 @@ accomplish this is to add the following to your theme’s header template…
 
 … and in your settings file, include the line:
 
-      EXTRA_HEADER = open('_nb_header.html').read().decode('utf-8')
+      from io import open
+      EXTRA_HEADER = open('_nb_header.html', encoding='utf-8').read()
 
 This will insert the proper CSS formatting into your generated document.
 

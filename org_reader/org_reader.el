@@ -1,6 +1,11 @@
 (require 'json)
 (require 'org)
 (require 'ox)
+(require 'package)
+
+;; htmlize is needed for SRC blocks
+(setq package-load-list '((htmlize t)))
+(package-initialize)
 
 (defun org->pelican (filename backend)
   (progn
@@ -14,8 +19,7 @@
             ; convert MODIFIED prop to string
             (modifiedstr (cdr (assoc-string "MODIFIED" org-file-properties t)))
             ; prepare date property
-            (dateobj (car (plist-get (org-export-get-environment) ':date)))
-            )
+            (dateobj (car (plist-get (org-export-get-environment) ':date))))
 
         ; check if #+TITLE: is given and give sensible error message if not
         (if (symbolp (car (plist-get org-export-env :title)))
@@ -51,11 +55,4 @@
                  :modified (if (stringp modifiedstr)
                                (org-read-date nil nil modifiedstr nil)
                              "")
-                 :post (org-export-as backend nil nil t)
-                 )
-                )
-               )
-        )
-      )
-    )
-  )
+                 :post (org-export-as backend nil nil t))))))))

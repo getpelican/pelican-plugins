@@ -1,13 +1,13 @@
 import six
 from pelican import signals
-from pelican.contents import Article, Draft, Page
+from pelican.contents import Article, Page
 from pelican.generators import ArticlesGenerator
 from bs4 import BeautifulSoup
 
 
 def images_extraction(instance):
     representativeImage = None
-    if type(instance) in (Article, Draft, Page):
+    if type(instance) in (Article, Page):
         if 'image' in instance.metadata:
             representativeImage = instance.metadata['image']
 
@@ -39,6 +39,8 @@ def run_plugin(generators):
         if isinstance(generator, ArticlesGenerator):
             for article in generator.articles:
                 images_extraction(article)
+                for translation in article.translations:
+                    images_extraction(translation)
 
 
 def register():

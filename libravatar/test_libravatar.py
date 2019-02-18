@@ -1,4 +1,5 @@
 """Unit testing suite for the Libravatar Plugin"""
+from __future__ import print_function
 
 ## Copyright (C) 2015  Rafael Laboissiere <rafael@laboissiere.net>
 ##
@@ -66,7 +67,7 @@ class TestLibravatarURL (unittest.TestCase):
         fid = open (os.path.join (self.output_path, 'test.html'), 'r')
         found = False
         for line in fid.readlines ():
-            print line
+            print(line)
             if re.search (LIBRAVATAR_BASE_URL + MD5_HASH + options, line):
                 found = True
                 break

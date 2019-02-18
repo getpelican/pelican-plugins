@@ -135,7 +135,7 @@ Output:
    :alt: Sample sequence diagram
 
 
-Same diagram with Pyhton-Markdown_ syntax:
+Same diagram with Python-Markdown_ syntax:
 
 .. code-block:: markdown
 

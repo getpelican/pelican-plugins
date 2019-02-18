@@ -72,6 +72,8 @@ Creole reader             Allows you to write your posts using the wikicreole sy
 
 Custom article URLs       Adds support for defining different default URLs for different categories
 
+CTags generator           Generates a "tags" file following the CTags in the "content/" directory, to provide autocompletion for code editors that support it.
+
 Dateish                   Treat arbitrary metadata fields as datetime objects
 
 Dead Links                Manage dead links (website not available, errors such as 403, 404)
@@ -151,6 +153,10 @@ Markdown-metaYAML         Pelican reader to enable YAML-style metadata in markdo
 Math Render               Gives pelican the ability to render mathematics
 
 Mbox Reader               Generate articles automatically via email, given a path to a Unix mbox
+
+More Categories           Multiple categories per article; nested categories (`foo/bar, foo/baz`)
+
+Multi Neighbors           Adds a list of newer articles and a list of older articles to every article's context.
 
 Multi parts posts         Allows you to write multi-part posts
 
@@ -243,6 +249,8 @@ Series                    Groups related articles into a series
 Share post                Creates share URLs of article
 
 Show Source               Place a link to the source text of your posts.
+
+Similar Posts             Adds a list of similar posts to every article's context.
 
 Simple footnotes          Adds footnotes to blog posts
 

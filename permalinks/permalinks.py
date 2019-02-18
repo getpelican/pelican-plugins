@@ -21,7 +21,7 @@ def article_url(content):
     Get the URL for an item of content
     '''
     return '{content.settings[SITEURL]}/{content.url}'.format(
-        content=content).encode('utf-8')
+        content=content)
 
 
 REDIRECT_STRING = '''
@@ -107,7 +107,7 @@ def get_permalink_path(self):
     except StopIteration:
         return None
 
-    return '/{settings[PERMALINK_PATH]}/{first_permalink}'.format(
+    return '/{settings[PERMALINK_PATH]}/{first_permalink}.html'.format(
         settings=self.settings, first_permalink=first_permalink_id)
 
 

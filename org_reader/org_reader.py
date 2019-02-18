@@ -54,7 +54,7 @@ ELISP = os.path.join(os.path.dirname(__file__), 'org_reader.el')
 LOG = logging.getLogger(__name__)
 
 
-class OrgReader(readers.BaseReader):
+class OrgEmacsReader(readers.BaseReader):
     enabled = True
 
     EMACS_ARGS = ["-Q", "--batch"]
@@ -63,7 +63,7 @@ class OrgReader(readers.BaseReader):
     file_extensions = ['org']
 
     def __init__(self, settings):
-        super(OrgReader, self).__init__(settings)
+        super(OrgEmacsReader, self).__init__(settings)
         assert 'ORG_READER_EMACS_LOCATION' in self.settings, \
             "No ORG_READER_EMACS_LOCATION specified in settings"
 
@@ -84,7 +84,7 @@ class OrgReader(readers.BaseReader):
         cmd.append('--eval')
         cmd.append(self.ELISP_EXEC.format(filename, backend))
 
-        LOG.debug("OrgReader: running command `{0}`".format(cmd))
+        LOG.debug("OrgEmacsReader: running command `{0}`".format(cmd))
 
         json_result = subprocess.check_output(cmd, universal_newlines=True)
         json_output = json.loads(json_result)
@@ -118,7 +118,7 @@ class OrgReader(readers.BaseReader):
 
 
 def add_reader(readers):
-    readers.reader_classes['org'] = OrgReader
+    readers.reader_classes['org'] = OrgEmacsReader
 
 
 def register():

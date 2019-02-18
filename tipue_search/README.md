@@ -1,7 +1,7 @@
 Tipue Search
 ============
 
-A Pelican plugin to serialize generated HTML to JSON that can be used by jQuery plugin - Tipue Search.
+A Pelican plugin to serialize generated HTML to a JS variable that can be used by jQuery plugin - Tipue Search.
 
 Copyright (c) Talha Mansoor
 
@@ -17,10 +17,7 @@ Why do you need it?
 Static sites do not offer search feature out of the box. [Tipue Search](http://www.tipue.com/search/)
 is a jQuery plugin that search the static site without using any third party service, like DuckDuckGo or Google.
 
-Tipue Search offers 4 search modes. Its [JSON search mode](http://www.tipue.com/search/docs/json/) is the best search mode
-especially for large sites.
-
-Tipue's JSON search mode requires the textual content of site in JSON format.
+Tipue search requires the textual content of site in a JS variable.
 
 Requirements
 ============
@@ -34,10 +31,10 @@ pip install beautifulsoup4
 How Tipue Search works
 =========================
 
-Tipue Search serializes the generated HTML into JSON. Format of JSON is as follows
+Tipue Search serializes the generated HTML into JSON and saves it into a JS variable. Format of JSON is as follows
 
-```python
-{
+```javascript
+var tipuesearch = {
     "pages": [
         { 
             "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero.",
@@ -52,16 +49,37 @@ Tipue Search serializes the generated HTML into JSON. Format of JSON is as follo
             "title": "Review of the book Lorem Ipsum"
         }
     ]
-}
+};
 ```
 
-JSON is written to file `tipuesearch_content.json` which is created in the root of `output` directory.
+JS variable is written to file `tipuesearch_content.js` which is created in the root of `output` directory.
 
 How to use
 ==========
 
-To utilize JSON Search mode, your theme needs to have Tipue Search properly configured in it. [Official documentation](http://www.tipue.com/search/docs/#json) has the required details.
+Your theme needs to have Tipue Search properly configured in it. [Official documentation](http://www.tipue.com/search/help/) has the required details.
 
-Pelican [Elegant Theme](https://github.com/talha131/pelican-elegant) and [Plumage
-theme](https://github.com/kdeldycke/plumage) have Tipue Search configured. You can view their
-code to understand the configuration.
+In addition to the instructions from Tipue, the following has to be added in `pelicanconf.py`.
+
+```python
+PLUGIN_PATH = 'plugins'
+PLUGINS = ['tipue_search']
+DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'authors', 'archives', 'search']
+```
+
+Furthermore, the generated JavaScript variable has to be sourced in the relevant html pages.
+
+```html
+<script src="{{ SITEURL }}tipuesearch_content.js"></script>
+```
+
+Pelican [Elegant Theme](https://github.com/talha131/pelican-elegant) and [Plumage theme](https://github.com/kdeldycke/plumage) have Tipue Search configured. You can view their code to understand the configuration.
+
+Backward Compatibility
+======================
+
+This plugin requires Tipue Search Version 7.0 or higher.
+
+Tipue used to expect content in a json file. Around Version 7.0, Tipue maintainers made a switch to JavaScript variable. tipue_search plugin was updated to reflect this change in commit `4a5f171fc`. Latest version of tipue_search plugin will not work with older versions of Tipue Search.
+
+If you are using older Tipue Search, prior to 7.0 release, then you will find old version of tipue_search plugin in commit `2dcdca8c8`. 

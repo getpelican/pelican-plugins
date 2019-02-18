@@ -34,12 +34,12 @@ class Matrix2D(list):
         list.__init__(self, initial)
 
     def clear(self):
-        for i in xrange(9):
+        for i in range(9):
             self[i] = 0.
 
     def set_identity(self):
         self.clear()
-        for i in xrange(3):
+        for i in range(3):
             self[i] = 1.
 
     def __str__(self):
