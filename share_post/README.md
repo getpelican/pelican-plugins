@@ -42,12 +42,11 @@ How to Use
 `article.share_post`. Keys of the dictionary are as follows,
 
 1. `facebook`
-2. `google-plus`
-3. `email`
-4. `twitter`
-5. `diaspora`
-6. `linkedin`
-7. `hacker-news`
+1. `email`
+1. `twitter`
+1. `diaspora`
+1. `linkedin`
+1. `hacker-news`
 
 Template Example
 ================
@@ -62,8 +61,6 @@ Template Example
         <a href="{{article.share_post['twitter']}}" target="_blank" title="Share on Twitter">Twitter</a>
         ❄
         <a href="{{article.share_post['facebook']}}" target="_blank" title="Share on Facebook">Facebook</a>
-        ❄
-        <a href="{{article.share_post['google-plus']}}" target="_blank" title="Share on Google Plus">Google+</a>
         ❄
         <a href="{{article.share_post['linkedin']}}" target="_blank" title="Share on LinkedIn">LinkedIn</a>
         ❄
