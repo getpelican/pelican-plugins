@@ -347,6 +347,8 @@ def process_rst_and_summaries(content_generators):
         elif isinstance(generator, generators.PagesGenerator):
             for page in generator.pages:
                 rst_add_mathjax(page)
+            for page in generator.hidden_pages:
+                rst_add_mathjax(page)
 
 def register():
     """Plugin registration"""
