@@ -104,7 +104,7 @@ class RmdReader(readers.BaseReader):
 opts_knit$set(unnamed.chunk.label="{unnamed_chunk_label}")
 render_markdown()
 hook_plot <- knit_hooks$get('plot')
-knit_hooks$set(plot=function(x, options) hook_plot(paste0("{{filename}}/", x), options))
+knit_hooks$set(plot=function(x, options) hook_plot(paste0("{{static}}/", x), options))
             '''.format(unnamed_chunk_label=chunk_label))
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
