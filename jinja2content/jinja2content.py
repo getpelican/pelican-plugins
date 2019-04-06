@@ -37,6 +37,7 @@ class JinjaContentMixin:
         self.env = Environment(
             loader=ChoiceLoader(loaders),
             **jinja_environment)
+        self.env.globals = self.settings
 
 
     def read(self, source_path):
