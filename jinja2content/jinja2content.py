@@ -10,7 +10,7 @@ from jinja2 import Environment, FileSystemLoader, ChoiceLoader
 import os
 from pelican import signals
 from pelican.readers import MarkdownReader, HTMLReader, RstReader
-from pelican.utils import pelican_open
+from pelican.utils import pelican_open, DateFormatter
 from tempfile import NamedTemporaryFile
 
 class JinjaContentMixin:
@@ -37,7 +37,8 @@ class JinjaContentMixin:
         self.env = Environment(
             loader=ChoiceLoader(loaders),
             **jinja_environment)
-        self.env.globals = self.settings
+        self.env.globals.update(self.settings)
+        self.env.filters.update({'strftime': DateFormatter()})
 
 
     def read(self, source_path):
