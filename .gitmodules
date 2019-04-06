@@ -142,3 +142,6 @@
 [submodule "similar_posts"]
 	path = similar_posts
 	url = https://github.com/davidlesieur/similar_posts.git
+[submodule "latex-prerender"]
+	path = latex-prerender
+	url = https://gitlab.com/thousandyardstare/pelican-latex-prerender.git
