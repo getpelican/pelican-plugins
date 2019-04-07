@@ -8,6 +8,8 @@ gives Pelican the ability to use Mathjax as a "first class
 citizen" of the blog
 """
 
+import re
+
 import markdown
 
 from markdown.util import etree
@@ -16,18 +18,23 @@ from markdown.util import AtomicString
 class PelicanMathJaxPattern(markdown.inlinepatterns.Pattern):
     """Inline markdown processing that matches mathjax"""
 
-    def __init__(self, pelican_mathjax_extension, tag, pattern):
+    def __init__(self, pelican_mathjax_extension, tag, pattern, custom_regex):
         super(PelicanMathJaxPattern,self).__init__(pattern)
         self.math_tag_class = pelican_mathjax_extension.getConfig('math_tag_class')
         self.pelican_mathjax_extension = pelican_mathjax_extension
         self.tag = tag
+        self.custom_regex = custom_regex
 
     def handleMatch(self, m):
         node = markdown.util.etree.Element(self.tag)
         node.set('class', self.math_tag_class)
 
-        prefix = '\\(' if m.group('prefix') == '$' else m.group('prefix')
-        suffix = '\\)' if m.group('suffix') == '$' else m.group('suffix')
+        if self.custom_regex:
+            prefix = m.group('prefix')
+            suffix = m.group('suffix')
+        else:
+            prefix = '\\(' if m.group('prefix') == '$' else m.group('prefix')
+            suffix = '\\)' if m.group('suffix') == '$' else m.group('suffix')
         node.text = markdown.util.AtomicString(prefix + m.group('math') + suffix)
 
         # If mathjax was successfully matched, then JavaScript needs to be added
@@ -126,12 +133,16 @@ class PelicanMathJaxExtension(markdown.Extension):
             self.config['mathjax_script'] = ['', 'Mathjax JavaScript script']
             self.config['math_tag_class'] = ['math', 'The class of the tag in which mathematics is wrapped']
             self.config['auto_insert'] = [True, 'Determines if mathjax script is automatically inserted into content']
+            self.config['inline_math'] = [[], 'Begin/End delimiters of inline math']
+            self.config['display_math'] = [[], 'Begin/End delimiters of display math']
             super(PelicanMathJaxExtension,self).__init__(**config)
         except AttributeError:
             # Markdown versions < 2.5
             config['mathjax_script'] = [config['mathjax_script'], 'Mathjax JavaScript script']
             config['math_tag_class'] = [config['math_tag_class'], 'The class of the tag in which mathematic is wrapped']
             config['auto_insert'] = [config['auto_insert'], 'Determines if mathjax script is automatically inserted into content']
+            config['inline_math'] = [config['inline_math'], 'Begin/End delimiters of inline math']
+            config['display_math'] = [config['display_math'], 'Begin/End delimiters of display math']
             super(PelicanMathJaxExtension,self).__init__(config)
 
         # Used as a flag to determine if javascript
@@ -139,15 +150,25 @@ class PelicanMathJaxExtension(markdown.Extension):
         self.mathjax_needed = False
 
     def extendMarkdown(self, md, md_globals):
+        custom_inline = bool(self.getConfig('inline_math'))
+        custom_display = bool(self.getConfig('display_math'))
+
         # Regex to detect mathjax
-        mathjax_inline_regex = r'(?P<prefix>\$)(?P<math>.+?)(?P<suffix>(?<!\s)\2)'
-        mathjax_display_regex = r'(?P<prefix>\$\$|\\begin\{(.+?)\})(?P<math>.+?)(?P<suffix>\2|\\end\{\3\})'
+        if custom_inline:
+            mathjax_inline_regex = self._make_regex(self.getConfig('inline_math'), escape=True)
+        else:
+            mathjax_inline_regex = self._make_regex([(r'\$', r'(?<!\s)\2')], escape=False)
+
+        if custom_display:
+            mathjax_display_regex = self._make_regex(self.getConfig('display_math'), escape=True)
+        else:
+            mathjax_display_regex = self._make_regex([(r'\$\$|\\begin\{(.+?)\}', r'\2|\\end\{\3\}')], escape=False)
 
         # Process mathjax before escapes are processed since escape processing will
         # intefer with mathjax. The order in which the displayed and inlined math
         # is registered below matters
-        md.inlinePatterns.add('mathjax_displayed', PelicanMathJaxPattern(self, 'div', mathjax_display_regex), '<escape')
-        md.inlinePatterns.add('mathjax_inlined', PelicanMathJaxPattern(self, 'span', mathjax_inline_regex), '<escape')
+        md.inlinePatterns.add('mathjax_displayed', PelicanMathJaxPattern(self, 'div', mathjax_display_regex, custom_inline), '<escape')
+        md.inlinePatterns.add('mathjax_inlined', PelicanMathJaxPattern(self, 'span', mathjax_inline_regex, custom_display), '<escape')
 
         # Correct the invalid HTML that results from teh displayed math (<div> tag within a <p> tag) 
         md.treeprocessors.add('mathjax_correctdisplayedmath', PelicanMathJaxCorrectDisplayMath(self), '>inline')
@@ -156,3 +177,11 @@ class PelicanMathJaxExtension(markdown.Extension):
         # be last in the ordered dict (hence it is given the position '_end')
         if self.getConfig('auto_insert'):
             md.treeprocessors.add('mathjax_addjavascript', PelicanMathJaxAddJavaScript(self), '_end')
+
+    def _make_regex(self, delim, escape):
+        def escape_fn(s):
+            return re.escape(s) if escape else s
+
+        prefixes = '|'.join(escape_fn(p) for p, s in delim)
+        suffixes = '|'.join(escape_fn(s) for p, s in delim)
+        return r'(?P<prefix>%s)(?P<math>.+?)(?P<suffix>%s)' % (prefixes, suffixes)

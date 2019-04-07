@@ -24,8 +24,8 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
         "    showMathMenu: {show_menu}," +
         "    messageStyle: '{message_style}'," +
         "    tex2jax: {{ " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
+        '        inlineMath: {inline_math_str},' +
+        '        displayMath: {display_math_str},' +
         "        processEscapes: {process_escapes}," +
         "        preview: '{latex_preview}'," +
         "    }}, " +
