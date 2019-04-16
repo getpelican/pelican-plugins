@@ -42,13 +42,12 @@ pip install beautifulsoup4
 `article.share_post`. Keys of the dictionary are as follows,
 
 1. `facebook`
-2. `google-plus`
-3. `email`
-4. `twitter`
-5. `diaspora`
-6. `linkedin`
-7. `hacker-news`
-8. `reddit`
+2. `email`
+3. `twitter`
+4. `diaspora`
+5. `linkedin`
+6. `hacker-news`
+7. `reddit`
 
 ## Template Example
 
@@ -62,8 +61,6 @@ pip install beautifulsoup4
     <a href="{{article.share_post['twitter']}}" target="_blank" title="Share on Twitter">Twitter</a>
     ❄
     <a href="{{article.share_post['facebook']}}" target="_blank" title="Share on Facebook">Facebook</a>
-    ❄
-    <a href="{{article.share_post['google-plus']}}" target="_blank" title="Share on Google Plus">Google+</a>
     ❄
     <a href="{{article.share_post['linkedin']}}" target="_blank" title="Share on LinkedIn">LinkedIn</a>
     ❄
