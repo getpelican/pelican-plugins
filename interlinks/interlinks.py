@@ -55,10 +55,15 @@ def parse_links(instance):
                 if name in interlinks:
                     hi = url.replace(name+">", interlinks[name])
                     img['src'] = hi
+
+                # generated output has no trailing slash; match for replacement
+                repaired_old_tag = old_tag.replace("/>", ">")
+
                 content = content.replace(
-                    old_tag.replace("&gt;", ">").replace("/>", ">"),
+                    repaired_old_tag,
                     img.decode()
                 )
+
 
         instance._content = content
 
