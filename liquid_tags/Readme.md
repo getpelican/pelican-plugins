@@ -94,10 +94,22 @@ If you experience issues with code generation (e.g., missing closing tags),
 add `SUMMARY_MAX_LENGTH = None` to your settings file.
 
 ## Speakerdeck Tag
-To insert a Speakerdeck viewer into your content, enable the
-`liquid_tags.speakerdeck` plugin and add the following to your source document:
 
-    {% speakerdeck speakerdeck_id %}
+To insert a Speakerdeck viewer into your content, follow these steps:
+
+1. Enable the `liquid_tags.soundcloud` plugin
+2. Add the following to your source document:
+
+  ```html
+  {% speakerdeck speakerdeck_id [ratio] %}
+  ```
+
+### Note
+
+- The ratio is a decimal number and is optional.
+- Ratio accept decimal number and digit after decimal is optional.
+- If ratio is not specified, then it will be `1.33333333333333` (4/3).
+- An example value for the ration can be `1.77777777777777` (16/9).
 
 ## Video Tag
 To insert HTML5-friendly video into your content, enable the `liquid_tags.video`
