@@ -1,8 +1,9 @@
 import six
+from bs4 import BeautifulSoup
+
 from pelican import signals
 from pelican.contents import Article, Page
 from pelican.generators import ArticlesGenerator
-from bs4 import BeautifulSoup
 
 
 def images_extraction(instance):
@@ -12,7 +13,8 @@ def images_extraction(instance):
             representativeImage = instance.metadata['image']
 
         # Process Summary:
-        # If summary contains images, extract one to be the representativeImage and remove images from summary
+        # If summary contains images, extract one to be the representativeImage
+        # and remove images from summary
         soup = BeautifulSoup(instance.summary, 'html.parser')
         images = soup.find_all('img')
         for i in images:
@@ -20,7 +22,8 @@ def images_extraction(instance):
                 representativeImage = i['src']
             i.extract()
         if len(images) > 0:
-            # set _summary field which is based on metadata. summary field is only based on article's content and not settable
+            # set _summary field which is based on metadata. summary field is
+            # only based on article's content and not settable
             instance._summary = six.text_type(soup)
 
         # If there are no image in summary, look for it in the content body
@@ -32,6 +35,9 @@ def images_extraction(instance):
 
         # Set the attribute to content instance
         instance.featured_image = representativeImage
+        instance.featured_alt = instance.metadata.get('alt', None)
+        instance.featured_link = instance.metadata.get('link', None)
+        instance.featured_caption = instance.metadata.get('caption', None)
 
 
 def run_plugin(generators):
