@@ -1,19 +1,18 @@
 #!/bin/sh
 import unittest
 
+import representative_image
 from jinja2.utils import generate_lorem_ipsum
+from pelican.contents import Article
 
-# Generate content with image 
-TEST_CONTENT_IMAGE_URL = 'https://testimage.com/test.jpg' 
-TEST_CONTENT = str(generate_lorem_ipsum(n=3, html=True)) + '<img src="' + TEST_CONTENT_IMAGE_URL + '"/>'+ str(generate_lorem_ipsum(n=2,html=True))
+# Generate content with image
+TEST_CONTENT_IMAGE_URL = 'https://testimage.com/test.jpg'
+TEST_CONTENT = str(generate_lorem_ipsum(n=3, html=True)) + '<img src="' + TEST_CONTENT_IMAGE_URL + '"/>'+ str(generate_lorem_ipsum(n=2,html=True))  # noqa
 TEST_SUMMARY_IMAGE_URL = 'https://testimage.com/summary.jpg'
 TEST_SUMMARY_WITHOUTIMAGE = str(generate_lorem_ipsum(n=1, html=True))
-TEST_SUMMARY_WITHIMAGE = TEST_SUMMARY_WITHOUTIMAGE + '<img src="' + TEST_SUMMARY_IMAGE_URL + '"/>'
-TEST_CUSTOM_IMAGE_URL = 'https://testimage.com/custom.jpg' 
+TEST_SUMMARY_WITHIMAGE = TEST_SUMMARY_WITHOUTIMAGE + '<img src="' + TEST_SUMMARY_IMAGE_URL + '"/>'  # noqa
+TEST_CUSTOM_IMAGE_URL = 'https://testimage.com/custom.jpg'
 
-
-from pelican.contents import Article
-import representative_image
 
 class TestRepresentativeImage(unittest.TestCase):
 
@@ -21,7 +20,7 @@ class TestRepresentativeImage(unittest.TestCase):
         super(TestRepresentativeImage, self).setUp()
         representative_image.register()
 
-    def test_extract_image_from_content(self): 
+    def test_extract_image_from_content(self):
         args = {
             'content': TEST_CONTENT,
             'metadata': {
@@ -57,12 +56,6 @@ class TestRepresentativeImage(unittest.TestCase):
         self.assertEqual(article.featured_image, TEST_CUSTOM_IMAGE_URL)
         self.assertEqual(article.summary, TEST_SUMMARY_WITHOUTIMAGE)
 
+
 if __name__ == '__main__':
     unittest.main()
-        
-
-
-
-
-
-
