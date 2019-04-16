@@ -35,6 +35,9 @@ def images_extraction(instance):
 
         # Set the attribute to content instance
         instance.featured_image = representativeImage
+        instance.featured_alt = instance.metadata.get('alt', None)
+        instance.featured_link = instance.metadata.get('link', None)
+        instance.featured_caption = instance.metadata.get('caption', None)
 
 
 def run_plugin(generators):
