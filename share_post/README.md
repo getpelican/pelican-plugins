@@ -13,6 +13,7 @@ Github Account  | https://github.com/talha131
 
 ## Contributors:
 * [Jonathan DEKHTIAR](https://github.com/DEKHTIARJonathan) - contact@jonathandekhtiar.eu
+* [Paolo Melchiorre](https://github.com/pauloxnet) - [www.paulox.net](https://www.paulox.net/)
 
 Why do you need it?
 ===================
@@ -42,16 +43,18 @@ How to Use
 `article.share_post`. Keys of the dictionary are as follows,
 
 1. `facebook`
-1. `email`
-1. `twitter`
-1. `diaspora`
-1. `linkedin`
-1. `hacker-news`
+2. `google-plus`
+3. `email`
+4. `twitter`
+5. `diaspora`
+6. `linkedin`
+7. `hacker-news`
+8. `reddit`
 
 Template Example
 ================
 
-```python
+```html
 {% if article.share_post and article.status != 'draft' %}
 <section>
     <p id="post-share-links">
@@ -67,6 +70,8 @@ Template Example
         <a href="{{article.share_post['hacker-news']}}" target="_blank" title="Share on HackerNews">HackerNews</a>
         ❄
         <a href="{{article.share_post['email']}}" target="_blank" title="Share via Email">Email</a>
+        ❄
+        <a href="{{article.share_post['reddit']}}" target="_blank" title="Share via Reddit">Reddit</a>
     </p>
 </section>
 {% endif %}

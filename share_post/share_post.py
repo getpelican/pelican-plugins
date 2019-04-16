@@ -34,9 +34,6 @@ def article_summary(content):
 
 def twitter_hastags(content):
     tags = getattr(content, 'tags', [])
-    category = getattr(content, 'category', '')
-    if category:
-        tags.append(category)
     hashtags = ','.join((tag.slug for tag in tags))
     return '' if not hashtags else '&hashtags=%s' % hashtags
 
@@ -64,6 +61,7 @@ def share_post(content):
     linkedin_link   = 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&summary=%s&source=%s' % (
         url, title, summary, url
     )
+    reddit_link     = 'https://www.reddit.com/submit?url=%s&title=%s' % (url, title)
 
     content.share_post = {
         'diaspora'   : diaspora_link,
@@ -71,7 +69,8 @@ def share_post(content):
         'facebook'   : facebook_link,
         'linkedin'   : linkedin_link,
         'hacker-news': hackernews_link,
-        'email'      : mail_link
+        'email'      : mail_link,
+        'reddit'     : reddit_link,
     }
 
 
