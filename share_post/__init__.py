@@ -1,1 +1,1 @@
-from .share_post import *
+from .share_post import *  # noqa
