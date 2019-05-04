@@ -68,6 +68,8 @@ Code include              Includes Pygments highlighted code in reStructuredText
 
 Collate content           Makes categories of content available to the template as lists through a ``collations`` attribute
 
+Cookie hint               Adds a small banner at the bottom of every html page which shows the user the this website uses cookies (DSGVO)
+
 Creole reader             Allows you to write your posts using the wikicreole syntax
 
 Custom article URLs       Adds support for defining different default URLs for different categories
