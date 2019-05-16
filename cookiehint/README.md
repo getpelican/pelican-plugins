@@ -11,3 +11,7 @@ COOKIE_HINT = {
 }
 
 ```
+
+## Requirements
+
+You need `jquery` to use this plugin. 

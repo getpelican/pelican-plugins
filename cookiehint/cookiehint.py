@@ -6,16 +6,7 @@ Cookie Hint
 With this plugin you can display hint if your website uses cookies to the user.
 
 """
-import os
-
 from pelican import signals, generators
-from pelican.utils import pelican_open
-
-PLUGIN_DIR = os.path.dirname(os.path.realpath(__file__))
-
-JS_LIBRARIES = [
-  PLUGIN_DIR + '/script.js'
-]
 
 plugin_content = {
    'text' : "This website uses cookies. Please read my privacy policy.",
