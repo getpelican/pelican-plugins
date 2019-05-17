@@ -178,6 +178,8 @@ PDF Images                If an img tag contains a PDF, EPS or PS file as a sour
 
 Pelican Cite              Produces inline citations and a bibliography in articles and pages, using a BibTeX file.
 
+pelican_cjk               Improves the typesetting of generated HTML for Chinese, Japanese, and Korean content.
+
 Pelican Comment System    Allows you to add static comments to your articles
 
 pelican-ert               Allows you to add estimated reading time of an article
