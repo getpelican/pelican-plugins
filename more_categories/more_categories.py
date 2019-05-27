@@ -36,10 +36,12 @@ class Category(URLWrapper):
     @property
     def slug(self):
         if self._slug is None:
-            substitutions = self.settings.get('SLUG_SUBSTITUTIONS', ())
-            substitutions += tuple(self.settings.get('CATEGORY_SUBSTITUTIONS',
-                                                     ()))
-            self._slug = slugify(self.shortname, substitutions)
+            if 'CATEGORY_REGEX_SUBSTITUTIONS' in self.settings:
+                subs = self.settings['CATEGORY_REGEX_SUBSTITUTIONS']
+            else:
+                subs = self.settings.get('SLUG_REGEX_SUBSTITUTIONS', [])
+            self._slug = slugify(self.shortname, regex_subs=subs)
+            print(self._slug)
             if self.parent:
                 self._slug = self.parent.slug + '/' + self._slug
         return self._slug

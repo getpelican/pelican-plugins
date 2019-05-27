@@ -31,8 +31,15 @@ class TestArticlesGenerator(unittest.TestCase):
         including ancestor categories"""
 
         cats_generated = [cat.name for cat, _ in self.generator.categories]
-        cats_expected = ['default', 'foo', 'foo/bar', 'foo/baz',]
+        cats_expected = ['default', 'foo', 'foo/bar', 'foo/b#az',]
         self.assertEqual(sorted(cats_generated), sorted(cats_expected))
+
+    def test_categories_slug(self):
+        """Test whether category slug substitutions are used"""
+
+        slugs_generated = [cat.slug for cat, _ in self.generator.categories]
+        slugs_expected = ['default', 'foo', 'foo/bar', 'foo/baz',]
+        self.assertEqual(sorted(slugs_generated), sorted(slugs_expected))
 
     def test_assign_articles_to_categories(self):
         """Test whether articles are correctly assigned to categories,
