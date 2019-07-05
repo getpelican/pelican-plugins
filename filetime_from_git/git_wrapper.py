@@ -36,7 +36,7 @@ class _GitWrapperCommon(object):
             HOME=os.getcwd(),
             XDG_CONFIG_HOME=os.getcwd()
         )
-        self.repo = Repo(os.path.abspath('.'))
+        self.repo = Repo(os.path.abspath("."), search_parent_directories=True)
 
     def is_file_managed_by_git(self, path):
         '''
