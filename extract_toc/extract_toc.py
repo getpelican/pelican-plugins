@@ -29,6 +29,8 @@ def extract_toc(content):
         toc = soup.find('div', class_='toc')
         if toc:
             toc.extract()
+            if len(toc.find_next('ul').find_all('li')) == 0:
+                toc = None
 
     # default reStructuredText reader
     if not toc and readers.RstReader.enabled and extension in readers.RstReader.file_extensions:
