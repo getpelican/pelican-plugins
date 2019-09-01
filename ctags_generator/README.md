@@ -4,8 +4,7 @@ This plugin generates a `tags` file following the [CTags format](http://ctags.so
 to provide autocompletion for code editors that support it.
 
 
-Installation
-------------
+## Installation
 
 To enable, add the following to your settings.py:
 
@@ -13,3 +12,10 @@ To enable, add the following to your settings.py:
     PLUGINS = ['ctags_generator']
 
 `PLUGIN_PATH` can be a path relative to your settings file or an absolute path.
+
+
+## Tests
+
+To execute them:
+
+    nosetests -w ctags_generator
