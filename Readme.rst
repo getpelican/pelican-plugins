@@ -246,6 +246,8 @@ Section number            Adds section numbers for article headers, in the form 
 
 Series                    Groups related articles into a series
 
+Shaarli poster            Upload newly redacted articles onto a specified `Shaarli <https://github.com/shaarli/Shaarli>`__ instance.
+
 Share post                Creates share URLs of article
 
 Show Source               Place a link to the source text of your posts.
