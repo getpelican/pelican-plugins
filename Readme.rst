@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/getpelican/pelican-plugins.svg?branch=master
+    :target: https://travis-ci.org/getpelican/pelican-plugins
+
 Pelican Plugins
 ###############
 
