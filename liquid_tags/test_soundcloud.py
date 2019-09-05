@@ -1,6 +1,10 @@
-from . import soundcloud
+import unittest
+import sys
 import pytest
+from . import soundcloud
 
+if 'nosetests' in sys.argv[0]:
+    raise unittest.SkipTest('Those tests are pytest-compatible only')
 
 @pytest.mark.parametrize('input,expected', [
     ('https://soundcloud.com/forss/in-paradisum',
