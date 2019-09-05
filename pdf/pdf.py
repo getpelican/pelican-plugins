@@ -85,7 +85,7 @@ class PdfGenerator(Generator):
             # rst2pdf casts the text to str and will break if it finds
             # non-escaped characters. Here we nicely escape them to XML/HTML
             # entities before proceeding
-            text = text.encode('ascii', 'xmlcharrefreplace')
+            text = text.encode('ascii', 'xmlcharrefreplace').decode()
         else:
             # We don't support this format
             logger.warn('Ignoring unsupported file ' + obj.source_path)

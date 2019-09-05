@@ -17,8 +17,7 @@ class TestPdfGeneration(unittest.TestCase):
     def setUp(self, override=None):
         self.temp_path = mkdtemp(prefix='pelicantests.')
         settings = {
-            'PATH': os.path.join(os.path.dirname(CUR_DIR), '..', 'test_data',
-                                 'content'),
+            'PATH': os.path.join(CUR_DIR, '..', 'test_data', 'content'),
             'OUTPUT_PATH': self.temp_path,
             'PLUGINS': [pdf],
             'LOCALE': locale.normalize('en_US'),
