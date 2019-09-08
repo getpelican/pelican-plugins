@@ -284,6 +284,8 @@ Unity WebGL               Easily embed Unity3d games into posts and pages
 
 Video Privacy Enhancer    Increases user privacy by stopping YouTube, Google, et al from placing cookies via embedded video
 
+Webring                   Add a webring to your site from a list of web feeds (e.g. RSS/Atom)
+
 W3C validate              Submits generated HTML content to the W3C Markup Validation Service
 
 Yuicompressor             Minify CSS and JS files on building step
