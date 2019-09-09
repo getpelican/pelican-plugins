@@ -51,6 +51,7 @@
                  :save_as (cdr (assoc-string "SAVE_AS" org-file-properties t))
                  :tags (cdr (assoc-string "TAGS" org-file-properties t))
                  :summary (cdr (assoc-string "SUMMARY" org-file-properties t))
+                 :status (cdr (assoc-string "STATUS" org-file-properties t))
                  :slug (cdr (assoc-string "SLUG" org-file-properties t))
                  :modified (if (stringp modifiedstr)
                                (org-read-date nil nil modifiedstr nil)

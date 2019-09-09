@@ -101,8 +101,8 @@ class OrgEmacsReader(readers.BaseReader):
                     'modified': json_output['modified'] or '',
                     'tags': json_output['tags'] or '',
                     'save_as': json_output['save_as'] or '',
-                    'summary': json_output['summary'] or ''}
-
+                    'summary': json_output['summary'] or '',
+                    'status': json_output['status'] or ''}
         # remove empty strings when necessary
         for key in ['save_as', 'modified', 'lang', 'summary']:
             if not metadata[key]:

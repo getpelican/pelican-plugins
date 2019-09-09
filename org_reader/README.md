@@ -10,7 +10,7 @@ Publish Emacs Org files alongside the rest of your website or blog.
 - `ORG_READER_EMACS_SETTINGS`: Optional. An absolute path to an Elisp file, to
   run per invocation. Useful for initializing the `package` Emacs library if
   that's where your Org mode comes from, or any modifications to Org Export-
-  related variables. If you want to use your standard emacs init file, you 
+  related variables. If you want to use your standard emacs init file, you
   can ignore this variable.
 
 - `ORG_READER_BACKEND`: Optional. A custom backend to provide to Org. Defaults
@@ -25,10 +25,12 @@ the org file's header:
     #+AUTHOR: My Name
     #+PROPERTY: LANGUAGE en
     #+PROPERTY: SUMMARY hello, this is the description
+    #+PROPERTY: STATUS disable or enable document
     #+PROPERTY: SLUG test_slug
     #+PROPERTY: MODIFIED [2015-12-29 Di]
     #+PROPERTY: TAGS my, first, tags
     #+PROPERTY: SAVE_AS alternative_filename.html
+
 
 - The `TITLE` is the only mandatory header property
 - Timestamps (`DATE` and `MODIFIED`) are optional and can be either a string
