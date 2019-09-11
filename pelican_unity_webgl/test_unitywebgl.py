@@ -2,8 +2,9 @@ from unittest import TestCase
 from docutils.core import publish_string
 from docutils.parsers.rst import directives
 
-from unitywebgl import config
-from unitywebgl.UnityGameDirective import UnityWebgl
+from pelican_unity_webgl import config
+from pelican_unity_webgl.UnityGameDirective import UnityWebgl
+
 
 class TestUnityWebgl(TestCase):
 

@@ -140,7 +140,7 @@ def process_shortcodes(data_passed_from_pelican):
 		
 		function_for_generating_thumbnail_url = video_service_information['function_for_generating_thumbnail_url']
 		
-		all_instances_of_the_shortcode = re.findall('(?<!\\\)\!' + shortcode_to_search_for_not_including_exclamation_point + '.*?\)', data_passed_from_pelican._content) # Use a regular expression to find every instance of, e.g., '!youtube' followed by anything up to the first matching ')'.
+		all_instances_of_the_shortcode = re.findall(r'(?<!\\\)\!' + shortcode_to_search_for_not_including_exclamation_point + r'.*?\)', data_passed_from_pelican._content) # Use a regular expression to find every instance of, e.g., '!youtube' followed by anything up to the first matching ')'.
 		
 		if(len(all_instances_of_the_shortcode) > 0): # If the article/page HAS any shortcodes, go on. Otherwise, don't (to do so would inadvertantly wipe out the output content for that article/page).
 			replace_shortcode_in_text = "" # This just gives this an initial value before going into the loop below.
@@ -148,7 +148,7 @@ def process_shortcodes(data_passed_from_pelican):
 			# Go through each shortcode instance that we found above, and parse it:
 			for shortcode_to_parse in all_instances_of_the_shortcode:
 
-				video_id_from_shortcode = re.findall('(?<=' + shortcode_to_search_for_not_including_exclamation_point + '\().*?(?=\))', shortcode_to_parse)[0] # Get what's inside of the parentheses in, e.g., '!youtube(...).'
+				video_id_from_shortcode = re.findall('(?<=' + shortcode_to_search_for_not_including_exclamation_point + r'\().*?(?=\))', shortcode_to_parse)[0] # Get what's inside of the parentheses in, e.g., '!youtube(...).'
 				
 				# print "Video ID is " + video_id_from_shortcode # Good for debugging purposes.
 				
@@ -162,7 +162,7 @@ def process_shortcodes(data_passed_from_pelican):
 				download_thumbnail(video_id_from_shortcode, video_thumbnail_url, video_service_name, pelican_output_path)
 				
 				# Replace the shortcode (e.g., '!youtube(...)') with '<img>...</img>'. Note that the <img> is given a class that the jQuery file mentioned at the top of this file will watch over. Any time an image with that class is clicked, the jQuery function will trigger and turn it into the full video embed.
-				replace_shortcode_in_text = re.sub(r'\!' + shortcode_to_search_for_not_including_exclamation_point + '\(' + video_id_from_shortcode + '\)', r'<img class="video-embed-dummy-image" id="' + video_id_from_shortcode + '" src="' +  pelican_site_url + '/' + output_directory_for_thumbnails + '/' + video_service_name + '_' + video_id_from_shortcode + '.jpg" alt="Embedded Video - Click to view" title="Embedded Video - Click to view" embed-service="' + video_service_name + '"></img>', data_passed_from_pelican._content)
+				replace_shortcode_in_text = re.sub(r'\!' + shortcode_to_search_for_not_including_exclamation_point + r'\(' + video_id_from_shortcode + r'\)', r'<img class="video-embed-dummy-image" id="' + video_id_from_shortcode + '" src="' +  pelican_site_url + '/' + output_directory_for_thumbnails + '/' + video_service_name + '_' + video_id_from_shortcode + '.jpg" alt="Embedded Video - Click to view" title="Embedded Video - Click to view" embed-service="' + video_service_name + '"></img>', data_passed_from_pelican._content)
 				
 				# Replace the content of the page or post with our now-updated content (having gone through all instances of the shortcode and updated them all, exiting the loop above.
 				data_passed_from_pelican._content = replace_shortcode_in_text

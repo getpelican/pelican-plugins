@@ -30,9 +30,9 @@ from .mdx_liquid_tags import LiquidTags
 
 
 SYNTAX = '''{% flickr image_id [small|medium|large] ["alt text"|'alt text'] %}'''
-PARSE_SYNTAX = re.compile(('''(?P<photo_id>\S+)'''
-                           '''(?:\s+(?P<size>large|medium|small))?'''
-                           '''(?:\s+(['"]{0,1})(?P<alt>.+)(\\3))?'''))
+PARSE_SYNTAX = re.compile((r'''(?P<photo_id>\S+)'''
+                           r'''(?:\s+(?P<size>large|medium|small))?'''
+                           r'''(?:\s+(['"]{0,1})(?P<alt>.+)(\3))?'''))
 
 
 def get_info(photo_id, api_key):

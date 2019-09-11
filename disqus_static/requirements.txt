@@ -1,0 +1,2 @@
+# Using latest repo version because latest pypi release is bugged: https://github.com/disqus/disqus-python/issues/34
+git+https://github.com/disqus/disqus-python.git
