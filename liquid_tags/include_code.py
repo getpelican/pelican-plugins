@@ -53,6 +53,7 @@ FORMAT = re.compile(r"""
 (?:(?:lines:)(?P<lines>\d+-\d+))?  # Optional lines
 (?:\s+)?                           # Whitespace
 (?P<hidefilename>:hidefilename:)?  # Hidefilename flag
+(?P<hideall>:hideall:)?            # Hide title and download button
 (?:\s+)?                           # Whitespace
 (?:(?:codec:)(?P<codec>\S+))?        # Optional language
 (?:\s+)?                           # Whitespace
@@ -74,6 +75,7 @@ def include_code(preprocessor, tag, markup):
         lang = argdict['lang']
         codec = argdict['codec'] or "utf8"
         lines = argdict['lines']
+        hideall = bool(argdict['hideall'])
         hide_filename = bool(argdict['hidefilename'])
         if lines:
             first_line, last_line = map(int, lines.split("-"))
@@ -97,23 +99,27 @@ def include_code(preprocessor, tag, markup):
         else:
             code = fh.read()
 
-    if not title and hide_filename:
+    if (not title and hide_filename) and not hideall:
         raise ValueError("Either title must be specified or filename must "
                          "be available")
 
-    if not hide_filename:
-        title += " %s" % os.path.basename(src)
-    if lines:
-        title += " [Lines %s]" % lines
-    title = title.strip()
+    if not hideall:
+        if not hide_filename:
+            title += " %s" % os.path.basename(src)
+        if lines:
+            title += " [Lines %s]" % lines
+        title = title.strip()
 
-    url = '/{0}/{1}'.format(code_dir, src)
-    url = re.sub('/+', '/', url)
+        url = '/{0}/{1}'.format(code_dir, src)
+        url = re.sub('/+', '/', url)
 
-    open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
-                "<a href='{url}'>download</a></figcaption>".format(title=title,
-                                                                   url=url))
-    close_tag = "</figure>"
+        open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
+                    "<a href='{url}'>download</a></figcaption>".format(title=title,
+                                                                       url=url))
+        close_tag = "</figure>"
+    else:
+        open_tag = ''
+        close_tag = ''
 
     # store HTML tags in the stash.  This prevents them from being
     # modified by markdown.
