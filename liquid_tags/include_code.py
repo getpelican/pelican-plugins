@@ -53,6 +53,7 @@ FORMAT = re.compile(r"""
 (?:(?:lines:)(?P<lines>\d+-\d+))?  # Optional lines
 (?:\s+)?                           # Whitespace
 (?P<hidefilename>:hidefilename:)?  # Hidefilename flag
+(?P<hidelink>:hidelink:)?          # Hide download link
 (?P<hideall>:hideall:)?            # Hide title and download button
 (?:\s+)?                           # Whitespace
 (?:(?:codec:)(?P<codec>\S+))?        # Optional language
@@ -76,6 +77,7 @@ def include_code(preprocessor, tag, markup):
         codec = argdict['codec'] or "utf8"
         lines = argdict['lines']
         hideall = bool(argdict['hideall'])
+        hide_link = bool(argdict['hidelink'])
         hide_filename = bool(argdict['hidefilename'])
         if lines:
             first_line, last_line = map(int, lines.split("-"))
@@ -110,13 +112,15 @@ def include_code(preprocessor, tag, markup):
             title += " [Lines %s]" % lines
         title = title.strip()
 
-        url = '/{0}/{1}'.format(code_dir, src)
-        url = re.sub('/+', '/', url)
+        open_tag = "<figure class='code'>\n<figcaption><span>{title}</span> ".format(
+                title=title)
 
-        open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
-                    "<a href='{url}'>download</a></figcaption>".format(title=title,
-                                                                       url=url))
-        close_tag = "</figure>"
+        if not hide_link:
+            url = '/{0}/{1}'.format(code_dir, src)
+            url = re.sub('/+', '/', url)
+            open_tag += "<a href='{url}'>download</a>".format(title=title, url=url))
+
+        close_tag = "</figcaption></figure>"
     else:
         open_tag = ''
         close_tag = ''
