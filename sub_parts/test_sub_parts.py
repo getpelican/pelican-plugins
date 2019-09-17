@@ -22,8 +22,11 @@ class TestSubParts(unittest.TestCase):
         settings['FILENAME_METADATA'] = '(?P<slug>[^.]+)'
         settings['PLUGINS'] = [sub_parts]
         settings['CACHE_CONTENT'] = False
+        context = settings.copy()
+        context['generated_content'] = dict()
+        context['static_links'] = set()
         cls.generator = ArticlesGenerator(
-            context=settings.copy(), settings=settings,
+            context=context, settings=settings,
             path=settings['PATH'], theme=settings['THEME'], output_path=None)
         cls.generator.generate_context()
         cls.all_articles = list(cls.generator.articles)
@@ -98,8 +101,11 @@ class TestSubPartsPhotos(unittest.TestCase):
         settings['FILENAME_METADATA'] = '(?P<slug>[^.]+)'
         settings['PLUGINS'] = [sub_parts]
         settings['CACHE_CONTENT'] = False
+        context = settings.copy()
+        context['generated_content'] = dict()
+        context['static_links'] = set()
         cls.generator = ArticlesGenerator(
-            context=settings.copy(), settings=settings,
+            context=context, settings=settings,
             path=settings['PATH'], theme=settings['THEME'], output_path=None)
         cls.generator.generate_context()
         cls.all_articles = list(cls.generator.articles)
