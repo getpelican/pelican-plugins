@@ -25,15 +25,20 @@ class TestPhotos(unittest.TestCase):
         cls.settings['CACHE_CONTENT'] = False
         cls.settings['OUTPUT_PATH'] = cls.temp_path
         cls.settings['SITEURL'] = 'http://getpelican.com/sub'
+        cls.settings['AUTHOR'] = 'Bob Anonymous'
         photos.initialized(cls)
+        context = cls.settings.copy()
+        context['generated_content'] = dict()
+        context['static_links'] = set()
         cls.generator = ArticlesGenerator(
-            context=cls.settings.copy(), settings=cls.settings,
+            context=context, settings=cls.settings,
             path=cls.settings['PATH'], theme=cls.settings['THEME'],
             output_path=cls.settings['OUTPUT_PATH'])
         photos.register()
         cls.generator.generate_context()
-        photos.detect_gallery(cls.generator)
-        photos.detect_image(cls.generator)
+        for article in cls.generator.articles:
+            photos.detect_image(cls.generator, article)
+            photos.detect_gallery(cls.generator, article)
 
     @classmethod
     def tearDownClass(cls):
@@ -66,12 +71,13 @@ class TestPhotos(unittest.TestCase):
                           'photos/agallery/bestt.jpg'))
 
     def test_photo_article_gallery(self):
-        self.assertEqual(self.get_article('photo').photo_gallery[0],
+        photo_gallery = self.get_article('filename').photo_gallery[0][1]
+        self.assertEqual(photo_gallery[0],
                          ('best.jpg',
                           'photos/agallery/best.jpg',
                           'photos/agallery/bestt.jpg',
                           'EXIF-best', 'Caption-best'))
-        self.assertEqual(self.get_article('photo').photo_gallery[1],
+        self.assertEqual(photo_gallery[1],
                          ('night.png',
                           'photos/agallery/night.jpg',
                           'photos/agallery/nightt.jpg',
@@ -79,44 +85,45 @@ class TestPhotos(unittest.TestCase):
 
     def test_photo_article_body(self):
         expected = ('<p>Here is my best photo, again.</p>\n'
-                    '<p><img alt="" src="http://getpelican.com/sub/photos/agallery/besta.jpg" />.</p>')
+                    '<p><img alt="" src="http://getpelican.com/sub/photos/agallery/besta.jpg">.</p>')
         self.assertEqual(expected, self.get_article('photo').content)
 
     def test_filename_article_image(self):
         self.assertEqual(
-            ('best.jpg', 'agallery/best.jpg', 'photos/agallery/bestt.jpg'),
+            ('best.jpg', 'photos/agallery/besta.jpg', 'photos/agallery/bestt.jpg'),
             self.get_article('filename').photo_image)
 
     def test_filename_article_gallery(self):
-        self.assertEqual(self.get_article('filename').photo_gallery[0],
+        photo_gallery = self.get_article('filename').photo_gallery[0][1]
+        self.assertEqual(photo_gallery[0],
                          ('best.jpg',
-                          'agallery/best.jpg',
+                          'photos/agallery/best.jpg',
                           'photos/agallery/bestt.jpg',
                           'EXIF-best', 'Caption-best'))
-        self.assertEqual(self.get_article('filename').photo_gallery[1],
+        self.assertEqual(photo_gallery[1],
                          ('night.png',
-                          'agallery/night.png',
+                          'photos/agallery/night.jpg',
                           'photos/agallery/nightt.jpg',
                           'EXIF-night', ''))
 
     def test_filename_article_body(self):
         expected = ('<p>Here is my best photo, again.</p>\n'
-                    '<p><img alt="" src="{filename}agallery/best.jpg" />.</p>')
+                    '<p><img alt="" src="{filename}agallery/best.jpg">.</p>')
         self.assertEqual(expected, self.get_article('filename').content)
 
     def test_queue_resize(self):
         expected = [
             ('photos/agallery/best.jpg',
-                ('./test_data/agallery/best.jpg', (1024, 768, 80))),
+                (self.settings['PATH'] + '/agallery/best.jpg', (1024, 768, 80))),
             ('photos/agallery/besta.jpg',
-                ('./test_data/agallery/best.jpg', (760, 506, 80))),
+                (self.settings['PATH'] + '/agallery/best.jpg', (760, 506, 80))),
             ('photos/agallery/bestt.jpg',
-                ('./test_data/agallery/best.jpg', (192, 144, 60))),
+                (self.settings['PATH'] + '/agallery/best.jpg', (192, 144, 60))),
             ('photos/agallery/night.jpg',
-                ('./test_data/agallery/night.png', (1024, 768, 80))),
+                (self.settings['PATH'] + '/agallery/night.png', (1024, 768, 80))),
             ('photos/agallery/nightt.jpg',
-                ('./test_data/agallery/night.png', (192, 144, 60)))]
-        self.assertEqual(sorted(expected), sorted(photos.queue_resize.items()))
+                (self.settings['PATH'] + '/agallery/night.png', (192, 144, 60)))]
+        self.assertEqual(sorted(expected), sorted(photos.DEFAULT_CONFIG['queue_resize'].items()))
 
 if __name__ == '__main__':
     unittest.main()
