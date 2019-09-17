@@ -1,11 +1,16 @@
-from . import giphy
+import os
+import sys
+import unittest
 try:
     from unittest.mock import patch
 except ImportError:
     from mock import patch
-import os
 import pytest
+from . import giphy
 
+
+if 'nosetests' in sys.argv[0]:
+    raise unittest.SkipTest('Those tests are pytest-compatible only')
 
 PLUGIN_DIR = os.path.dirname(__file__)
 TEST_DATA_DIR = os.path.join(PLUGIN_DIR, 'test_data')
