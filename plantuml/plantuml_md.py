@@ -68,7 +68,7 @@ class PlantUMLBlockProcessor(markdown.blockprocessors.BlockProcessor):
             os.makedirs(path)
 
         # Generate image from PlantUML script
-        imageurl = self.config['siteurl']+'/'+generate_uml_image(path, text, format)
+        imageurl = self.config['siteurl']+'/images/'+generate_uml_image(path, text, format)
         # Create image tag and append to the document
         etree.SubElement(parent, "img", src=imageurl, alt=alt, attrib={'class':classes})
 

@@ -52,7 +52,7 @@ def generate_uml_image(path, plantuml_code, imgformat):
                 os.remove(newname)
 
             os.rename(name, newname)
-            return 'images/' + os.path.basename(newname)
+            return os.path.basename(newname)
         else:
             # the temporary file is still available as aid understanding errors
             raise RuntimeError('Error calling plantuml: %s' % err)
