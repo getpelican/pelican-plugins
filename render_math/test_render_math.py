@@ -19,8 +19,9 @@ class RenderMathTest(unittest.TestCase):
         settings = get_settings(filenames={})
         settings['PATH'] = join(CUR_DIR, '..', 'test_data')
         pelican_init(PelicanMock(settings))
-        generator = _build_article_generator(settings)
-        process_rst_and_summaries([generator])
+        with TemporaryDirectory() as tmpdirname:
+            generator = _build_article_generator(settings, tmpdirname)
+            process_rst_and_summaries([generator])
     def test_ok_on_custom_data(self):
         settings = get_settings(filenames={})
         settings['PATH'] = join(CUR_DIR, 'test_data')
@@ -29,22 +30,22 @@ class RenderMathTest(unittest.TestCase):
         pelican_mock = PelicanMock(settings)
         pelican_init(pelican_mock)
         Pelican.init_plugins(pelican_mock)
-        generator = _build_article_generator(settings)
-        process_rst_and_summaries([generator])
-        for article in generator.articles:
-            if article.source_path.endswith('.rst'):
-                self.assertIn('mathjaxscript_pelican', article.content)
         with TemporaryDirectory() as tmpdirname:
+            generator = _build_article_generator(settings, tmpdirname)
+            process_rst_and_summaries([generator])
+            for article in generator.articles:
+                if article.source_path.endswith('.rst'):
+                    self.assertIn('mathjaxscript_pelican', article.content)
             generator.generate_output(Writer(tmpdirname, settings=settings))
 
 
-def _build_article_generator(settings):
+def _build_article_generator(settings, output_path):
     context = settings.copy()
     context['generated_content'] = dict()
     context['static_links'] = set()
     article_generator = ArticlesGenerator(
         context=context, settings=settings,
-        path=settings['PATH'], theme=settings['THEME'], output_path=None)
+        path=settings['PATH'], theme=settings['THEME'], output_path=output_path)
     article_generator.generate_context()
     return article_generator
 

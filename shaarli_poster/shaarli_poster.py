@@ -98,13 +98,13 @@ def main():
             })
     print(json.dumps(links, indent=4, sort_keys=True))
 
-def build_article_generator(settings, content_path):
+def build_article_generator(settings, content_path, output_path=None):
     context = settings.copy()
     context['generated_content'] = dict()
     context['static_links'] = set()
     article_generator = ArticlesGenerator(
         context=context, settings=settings,
-        path=content_path, theme=settings['THEME'], output_path=None)
+        path=content_path, theme=settings['THEME'], output_path=output_path)
     article_generator.generate_context()
     return article_generator
 

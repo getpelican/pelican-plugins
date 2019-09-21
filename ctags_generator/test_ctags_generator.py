@@ -18,12 +18,15 @@ class CtagsGeneratorTest(unittest.TestCase):
         settings = get_settings(filenames={})
         settings['GENERATE_CTAGS'] = True
 
+        context = settings.copy()
+        context['generated_content'] = dict()
+        context['static_links'] = set()
         generator = ArticlesGenerator(
-            context=settings.copy(), settings=settings,
-            path=TEST_CONTENT_DIR, theme=settings['THEME'], output_path=None)
+            context=context, settings=settings,
+            path=TEST_CONTENT_DIR, theme=settings['THEME'], output_path=TEST_CONTENT_DIR)
         generator.generate_context()
 
-        writer = Writer(None, settings=settings)
+        writer = Writer(TEST_CONTENT_DIR, settings=settings)
         generate_ctags(generator, writer)
 
         output_path = os.path.join(TEST_CONTENT_DIR, 'tags')
