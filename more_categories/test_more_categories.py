@@ -2,6 +2,8 @@
 
 import os
 import unittest
+from shutil import rmtree
+from tempfile import mkdtemp
 
 from . import more_categories
 from pelican.generators import ArticlesGenerator
@@ -12,6 +14,7 @@ class TestArticlesGenerator(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        cls.temp_path = mkdtemp(prefix='pelicantests.')
         more_categories.register()
         settings = get_settings()
         settings['DEFAULT_CATEGORY'] = 'default'
@@ -23,8 +26,12 @@ class TestArticlesGenerator(unittest.TestCase):
         test_data_path = os.path.join(base_path, 'test_data')
         cls.generator = ArticlesGenerator(
             context=context, settings=settings,
-            path=test_data_path, theme=settings['THEME'], output_path=None)
+            path=test_data_path, theme=settings['THEME'], output_path=cls.temp_path)
         cls.generator.generate_context()
+
+    @classmethod
+    def tearDownClass(cls):
+        rmtree(cls.temp_path)
 
     def test_generate_categories(self):
         """Test whether multiple categories are generated correctly,

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os, shutil
+from tempfile import TemporaryDirectory
 from unittest.mock import patch, Mock
 
 from pelican.tests.support import get_settings, unittest
@@ -20,8 +21,9 @@ class ShaarliPosterTest(unittest.TestCase):
             ResponseMock([{'url': '/other-dummy-article.html'}]),  # get-links
             ResponseMock()  # post-link
         ]
-        upload_new_articles([build_article_generator(get_settings(filenames={}), TEST_CONTENT_DIR)])
-        self.assertEqual(ShaarliClientClassMock.return_value.request.call_count, 2)  # 1 get-links + 1 post-link
+        with TemporaryDirectory() as tmpdirname:
+            upload_new_articles([build_article_generator(get_settings(filenames={}), TEST_CONTENT_DIR, tmpdirname)])
+            self.assertEqual(ShaarliClientClassMock.return_value.request.call_count, 2)  # 1 get-links + 1 post-link
 
 class ResponseMock:
     def __init__(self, json=None):
