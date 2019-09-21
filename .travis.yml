@@ -6,11 +6,11 @@ before_install:
  - sudo apt-get update -qq
  - sudo apt-get install -qq --no-install-recommends ruby-sass
 install:
-    - pip install -r requirements.txt
+    - pip install -U -r requirements.txt
     # Installing pelican in editable mode makes its tests.support package available to us
     - pip install -e git+https://github.com/getpelican/pelican.git#egg=pelican
     # The following commands install all plugins dependencies.
     # The `rm`, `grep` & `sed commands` below are needed because some submodules have conflicting requirements.
     - rm pelicanthemes-generator/requirements.txt
-    - pip install -r <(grep -hv pelican */requirements.txt | sed 's/==/>=/')
+    - pip install -U -r <(grep -hv pelican */requirements.txt | sed 's/==/>=/')
 script: nosetests --with-summary-report
