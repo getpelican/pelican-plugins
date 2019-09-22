@@ -53,10 +53,12 @@ FORMAT = re.compile(r"""
 (?:(?:lines:)(?P<lines>\d+-\d+))?  # Optional lines
 (?:\s+)?                           # Whitespace
 (?P<hidefilename>:hidefilename:)?  # Hidefilename flag
+(?:\s+)?                           # Whitespace
 (?P<hidelink>:hidelink:)?          # Hide download link
+(?:\s+)?                           # Whitespace
 (?P<hideall>:hideall:)?            # Hide title and download link
 (?:\s+)?                           # Whitespace
-(?:(?:codec:)(?P<codec>\S+))?        # Optional language
+(?:(?:codec:)(?P<codec>\S+))?      # Optional language
 (?:\s+)?                           # Whitespace
 (?P<title>.+)?$                    # Optional title
 """, re.VERBOSE)
