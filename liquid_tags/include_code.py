@@ -123,7 +123,7 @@ def include_code(preprocessor, tag, markup):
         if not hide_link:
             url = '/{0}/{1}'.format(code_dir, src)
             url = re.sub('/+', '/', url)
-            open_tag += "<a href='{url}'>download</a>".format(url=url))
+            open_tag += "<a href='{url}'>download</a>".format(url=url)
 
     # store HTML tags in the stash.  This prevents them from being
     # modified by markdown.
