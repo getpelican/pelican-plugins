@@ -43,7 +43,7 @@ import sys
 from .mdx_liquid_tags import LiquidTags
 
 
-SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}"
+SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [:hidelink:] [:hideall:] [title] %}"
 FORMAT = re.compile(r"""
 ^(?:\s+)?                          # Allow whitespace at beginning
 (?P<src>\S+)                       # Find the path
