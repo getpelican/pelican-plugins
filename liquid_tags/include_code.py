@@ -108,10 +108,9 @@ def include_code(preprocessor, tag, markup):
     open_tag = ''
     close_tag = ''
 
+    open_tag = "<figure class='code'>\n<figcaption>"
+    close_tag = "</figure>"
     if not hide_all:
-        open_tag = "<figure class='code'>\n<figcaption>"
-        close_tag = "</figure>"
-
         if not hide_filename:
             title += " %s" % os.path.basename(src)
             if lines:
