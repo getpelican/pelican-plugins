@@ -14,4 +14,7 @@ install:
     # cf. https://github.com/getpelican/pelican-plugins/issues/1170
     - rm pelicanthemes-generator/requirements.txt
     - pip install -U -r <(grep -hv pelican */requirements.txt | sed 's/==/>=/')
-script: nosetests --with-summary-report
+# We need to exclude the multimarkdown_reader plugin,
+# otherwise its MmdReader class will be loaded by pelican.readers.Readers,
+# and override the default .md one:
+script: nosetests --exclude-dir=multimarkdown_reader --with-summary-report
