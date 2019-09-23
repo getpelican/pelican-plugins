@@ -344,7 +344,7 @@ def notebook(preprocessor, tag, markup):
 
     # this will stash special characters so that they won't be transformed
     # by subsequent processes.
-    body = preprocessor.configs.htmlStash.store(body, safe=True)
+    body = preprocessor.configs.htmlStash.store(body)
     return body
 
 notebook.header_saved = False
