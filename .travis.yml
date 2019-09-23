@@ -2,9 +2,20 @@ language: python
 python:
     - "3.7"
 cache: pip
+env:
+  - R_LIBS_USER=$TRAVIS_BUILD_DIR/R/Library
+cache:
+  directories:
+  - $R_LIBS_USER
 before_install:
+# By default R 3.2.3 is installed with xenial, but rpy2 requires R >= 3.3
+# Hence we add an extra deb package repo to get a more recent version:
+ - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+ - sudo add-apt-repository 'deb [arch=amd64,i386] https://cloud.r-project.org/bin/linux/ubuntu xenial/'
  - sudo apt-get update -qq
- - sudo apt-get install -qq --no-install-recommends asciidoctor pandoc plantuml ruby-sass
+ - sudo apt-get install -qq --no-install-recommends asciidoctor pandoc plantuml r-base ruby-sass
+ - mkdir -p $R_LIBS_USER
+ - echo 'install.packages("knitr", repos="https://cran.rstudio.com")' | R --no-save
 install:
     - pip install -U -r requirements.txt
     # Installing pelican in editable mode makes its tests.support package available to us
