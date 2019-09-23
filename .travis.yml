@@ -4,7 +4,7 @@ python:
 cache: pip
 before_install:
  - sudo apt-get update -qq
- - sudo apt-get install -qq --no-install-recommends asciidoctor plantuml ruby-sass
+ - sudo apt-get install -qq --no-install-recommends asciidoctor pandoc plantuml ruby-sass
 install:
     - pip install -U -r requirements.txt
     # Installing pelican in editable mode makes its tests.support package available to us
