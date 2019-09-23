@@ -78,6 +78,7 @@ plot(cars)
             'RMD_READER_RENAME_PLOT': 'disable',
             'PLUGIN_PATHS': ['../'],
             'PLUGINS': ['rmd_reader'],
+            'AUTHOR': 'Bob Anonymous',
         })
         pelican = Pelican(settings=settings)
         pelican.run()
@@ -107,6 +108,7 @@ plot(cars)
             'RMD_READER_RENAME_PLOT': 'chunklabel',
             'PLUGIN_PATHS': ['../'],
             'PLUGINS': ['rmd_reader'],
+            'AUTHOR': 'Bob Anonymous',
         })
         pelican = Pelican(settings=settings)
         pelican.run()
@@ -135,6 +137,7 @@ plot(cars)
             'RMD_READER_RENAME_PLOT': 'directory',
             'PLUGIN_PATHS': ['../'],
             'PLUGINS': ['rmd_reader'],
+            'AUTHOR': 'Bob Anonymous',
         })
         pelican = Pelican(settings=settings)
         pelican.run()
