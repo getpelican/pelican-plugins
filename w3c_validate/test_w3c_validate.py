@@ -11,7 +11,7 @@ TEST_CONTENT_DIR = os.path.join(CUR_DIR, 'test_content')
 
 class W3CValidateTest(unittest.TestCase):
 
-    def test_generate_ctags(self):
+    def test_validate_ok(self):
         with self.assertLogs('w3c_validate.wc3_validate', level='INFO') as logs:
             validate_files(PelicanMock({'OUTPUT_PATH': TEST_CONTENT_DIR}))
 
