@@ -28,4 +28,4 @@ install:
 # We need to exclude the multimarkdown_reader plugin,
 # otherwise its MmdReader class will be loaded by pelican.readers.Readers,
 # and override the default .md one:
-script: nosetests --exclude-dir=multimarkdown_reader --with-summary-report
+script: nosetests --exclude-dir=multimarkdown_reader --exclude-dir=pandoc_reader --with-summary-report
