@@ -33,7 +33,7 @@ class TestFullRun(unittest.TestCase):
         os.chdir(PLUGIN_DIR)
 
     @unittest.skipIf(IPYTHON_VERSION != 3,
-                     reason="output must be created with ipython version 2")
+                     reason="output must be created with ipython version 3")
     def test_generate_with_ipython3(self):
         '''Test generation of site with the plugin.'''
 
