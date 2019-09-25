@@ -7,6 +7,7 @@ body of your articles.
 """
 
 from __future__ import unicode_literals
+from bs4 import BeautifulSoup
 from pelican import signals
 from pelican.generators import ArticlesGenerator, StaticGenerator, PagesGenerator
 import re
@@ -77,8 +78,7 @@ def extract_summary(instance):
         if end_summary:
             content = content.replace(end_marker, '', 1)
 
-    summary = re.sub(r"<div.*>", "", summary)
-    summary = re.sub(r"</div>", "", summary)
+    summary = str(BeautifulSoup(summary, 'html.parser'))
 
     instance._content = content
     # default_status was added to Pelican Content objects after 3.7.1.
