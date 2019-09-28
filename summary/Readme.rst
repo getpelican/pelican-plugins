@@ -1,3 +1,10 @@
+Requirements
+------------
+
+This plugin requires beautifulsoup4 to ensure correctness of the extracted markup::
+
+    pip install beautifulsoup4
+
 Summary
 -------
 
