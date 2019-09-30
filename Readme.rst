@@ -141,8 +141,6 @@ Just table                Allows you to easily create and manage tables. You can
 
 Libravatar                Allows inclusion of user profile pictures from libravatar.org
 
-Link Class                Allows the insertion of class attributes into generated <a> elements (Markdown only)
-
 Linker                    Allows the definition of custom linker commands in analogy to the builtin ``{filename}``, ``{attach}``, ``{category}``, ``{tag}``, ``{author}``, and ``{index}`` syntax
 
 Liquid-style tags         Allows liquid-style tags to be inserted into markdown within Pelican documents
@@ -196,8 +194,6 @@ Pelican Github Projects   Embed a list of your public GitHub projects in your pa
 pelican_javascript        Allows you to embed Javascript and CSS files into individual articles
 
 Pelican Jinja2Content     Allows the use of Jinja2 template code in articles, including ``include`` and ``import`` statements
-
-Pelican Link Class        Set class attribute of ``<a>`` elements according to whether the link is external or internal
 
 Pelican Meetup Info       Include your Meetup.com group and event information on generated pages and articles
 
@@ -300,6 +296,16 @@ __ https://ace.c9.io
 
 Please refer to the ``Readme`` file in a plugin's folder for detailed information about
 that plugin.
+
+Removed plugins
+===============
+
+:Link Class:
+    This plugin allows the insertion of class attributes into generated
+    ``<a>`` elements, according to whether the link is external or internal
+    (Markdown only).  It used to be part of pelican-plugins, but
+    `it is available <https://pypi.org/project/pelican-linkclass/>`__ now
+    from PyPI and should be installed using ``pip``.
 
 Contributing a plugin
 =====================
