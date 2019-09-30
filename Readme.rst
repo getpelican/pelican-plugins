@@ -300,12 +300,12 @@ that plugin.
 Removed plugins
 ===============
 
-:Link Class:
-    This plugin allows the insertion of class attributes into generated
-    ``<a>`` elements, according to whether the link is external or internal
-    (Markdown only).  It used to be part of pelican-plugins, but
-    `it is available <https://pypi.org/project/pelican-linkclass/>`__ now
-    from PyPI and should be installed using ``pip``.
+========================  ===========================================================
+Plugin                    Description
+========================  ===========================================================
+Link Class                This plugin allows the insertion of class attributes into generated ``<a>`` elements, according to whether the link is external or internal (Markdown only).  It used to be part of pelican-plugins, but `it is available <https://pypi.org/project/pelican-linkclass/>`__ now from PyPI and should be installed using ``pip``.
+========================  ===========================================================
+
 
 Contributing a plugin
 =====================
