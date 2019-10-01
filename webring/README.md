@@ -24,17 +24,6 @@ WEBRING_FEED_URLS = []
 A list of web feeds in the form of a URL or local file.
 
 ```
-WEBRING_SUPPORT_HTTPS = True
-```
-Support HTTPS. It's enabled by default because most websites currently use HTTPS.
-
-_Nevertheless, you must be aware of the fact that this setting works by
-creating a global unverified https context. This means that any other
-http request made by pelican core and pelican plugins will not fail in case of
-an invalid SSL certificate. This is due to
-[a limitation in the feedparser module](https://github.com/kurtmckee/feedparser/issues/84)._
-
-```
 WEBRING_MAX_ARTICLES = 3
 ```
 The maximum number of articles.
