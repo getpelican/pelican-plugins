@@ -59,6 +59,7 @@ The sitemap is saved in ``<output_path>/sitemap.<format>``.
 Here is an example configuration (it's also the default settings):
 
 .. code-block:: python
+
     # Where your plug-ins reside
     PLUGIN_PATHS = ['/where/you/cloned/it/pelican-plugins/', ]
     PLUGINS=['sitemap',]
