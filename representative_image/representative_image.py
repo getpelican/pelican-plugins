@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 from pelican import signals
 from pelican.contents import Article, Page
-from pelican.generators import ArticlesGenerator
+from pelican.generators import ArticlesGenerator, PagesGenerator
 
 
 def images_extraction(instance):
@@ -46,6 +46,11 @@ def run_plugin(generators):
             for article in generator.articles:
                 images_extraction(article)
                 for translation in article.translations:
+                    images_extraction(translation)
+        elif isinstance(generator, PagesGenerator):
+            for page in generator.pages:
+                images_extraction(page)
+                for translation in page.translations:
                     images_extraction(translation)
 
 
