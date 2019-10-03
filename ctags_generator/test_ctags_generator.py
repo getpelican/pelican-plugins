@@ -1,6 +1,5 @@
-#!/bin/sh
+# -*- coding: utf-8 -*-
 import os, shutil
-from tempfile import mkdtemp
 
 from pelican.generators import ArticlesGenerator
 from pelican.tests.support import get_settings, unittest
@@ -9,21 +8,25 @@ from pelican.writers import Writer
 from ctags_generator import generate_ctags
 
 
-TEST_CONTENT_DIR = './test_content/'
+CUR_DIR = os.path.dirname(__file__)
+TEST_CONTENT_DIR = os.path.join(CUR_DIR, 'test_content')
 
 
-class TestCtagsGenerator(unittest.TestCase):
+class CtagsGeneratorTest(unittest.TestCase):
 
     def test_generate_ctags(self):
         settings = get_settings(filenames={})
         settings['GENERATE_CTAGS'] = True
 
+        context = settings.copy()
+        context['generated_content'] = dict()
+        context['static_links'] = set()
         generator = ArticlesGenerator(
-            context=settings.copy(), settings=settings,
-            path=TEST_CONTENT_DIR, theme=settings['THEME'], output_path=None)
+            context=context, settings=settings,
+            path=TEST_CONTENT_DIR, theme=settings['THEME'], output_path=TEST_CONTENT_DIR)
         generator.generate_context()
 
-        writer = Writer(None, settings=settings)
+        writer = Writer(TEST_CONTENT_DIR, settings=settings)
         generate_ctags(generator, writer)
 
         output_path = os.path.join(TEST_CONTENT_DIR, 'tags')
@@ -36,7 +39,3 @@ class TestCtagsGenerator(unittest.TestCase):
                 self.assertEqual(['bar', 'bar', 'foo', 'foo', 'foobar', 'foobar', 'マック', 'パイソン'], ctags)
         finally:
             os.remove(output_path)
-
-
-if __name__ == '__main__':
-    unittest.main()

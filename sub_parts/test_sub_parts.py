@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 
 import os
+from shutil import rmtree
+from tempfile import mkdtemp
 
 from pelican.generators import ArticlesGenerator
 from pelican.tests.support import unittest, get_settings
@@ -14,6 +16,7 @@ class TestSubParts(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        cls.temp_path = mkdtemp(prefix='pelicantests.')
         settings = get_settings(filenames={})
         settings['PATH'] = os.path.join(CUR_DIR, 'test_data')
         settings['AUTHOR'] = 'Me'
@@ -22,12 +25,19 @@ class TestSubParts(unittest.TestCase):
         settings['FILENAME_METADATA'] = '(?P<slug>[^.]+)'
         settings['PLUGINS'] = [sub_parts]
         settings['CACHE_CONTENT'] = False
+        context = settings.copy()
+        context['generated_content'] = dict()
+        context['static_links'] = set()
         cls.generator = ArticlesGenerator(
-            context=settings.copy(), settings=settings,
-            path=settings['PATH'], theme=settings['THEME'], output_path=None)
+            context=context, settings=settings,
+            path=settings['PATH'], theme=settings['THEME'], output_path=cls.temp_path)
         cls.generator.generate_context()
         cls.all_articles = list(cls.generator.articles)
         sub_parts.patch_subparts(cls.generator)
+
+    @classmethod
+    def tearDownClass(cls):
+        rmtree(cls.temp_path)
 
     def test_all_articles(self):
         self.assertEqual(
@@ -90,6 +100,7 @@ class TestSubPartsPhotos(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        cls.temp_path = mkdtemp(prefix='pelicantests.')
         settings = get_settings(filenames={})
         settings['PATH'] = os.path.join(CUR_DIR, 'test_data')
         settings['AUTHOR'] = 'Me'
@@ -98,14 +109,21 @@ class TestSubPartsPhotos(unittest.TestCase):
         settings['FILENAME_METADATA'] = '(?P<slug>[^.]+)'
         settings['PLUGINS'] = [sub_parts]
         settings['CACHE_CONTENT'] = False
+        context = settings.copy()
+        context['generated_content'] = dict()
+        context['static_links'] = set()
         cls.generator = ArticlesGenerator(
-            context=settings.copy(), settings=settings,
-            path=settings['PATH'], theme=settings['THEME'], output_path=None)
+            context=context, settings=settings,
+            path=settings['PATH'], theme=settings['THEME'], output_path=cls.temp_path)
         cls.generator.generate_context()
         cls.all_articles = list(cls.generator.articles)
         for a in cls.all_articles:
             a.photo_gallery = [('i.jpg', 'i.jpg', 'it.jpg', '', '')]
         sub_parts.patch_subparts(cls.generator)
+
+    @classmethod
+    def tearDownClass(cls):
+        rmtree(cls.temp_path)
 
     def test_subphotos(self):
         for a in self.all_articles:

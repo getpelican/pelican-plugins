@@ -32,8 +32,8 @@ class TestFullRun(unittest.TestCase):
         rmtree(self.temp_cache)
         os.chdir(PLUGIN_DIR)
 
-    @pytest.mark.skipif(IPYTHON_VERSION >= 3,
-                        reason="output must be created with ipython version 2")
+    @unittest.skipIf(IPYTHON_VERSION != 3,
+                     reason="output must be created with ipython version 3")
     def test_generate_with_ipython3(self):
         '''Test generation of site with the plugin.'''
 
@@ -64,15 +64,14 @@ class TestFullRun(unittest.TestCase):
         #                   os.path.join(self.temp_path,
         #                                'test-ipython-notebook.html'))
 
-    @pytest.mark.skipif(IPYTHON_VERSION < 3,
-                        reason="output must be created with ipython version 3")
+    @unittest.skipIf(IPYTHON_VERSION != 2,
+                     reason="output must be created with ipython version 2")
     def test_generate_with_ipython2(self):
         '''Test generation of site with the plugin.'''
 
         base_path = os.path.dirname(os.path.abspath(__file__))
         base_path = os.path.join(base_path, 'test_data')
         content_path = os.path.join(base_path, 'content')
-        output_path = os.path.join(base_path, 'output')
         settings_path = os.path.join(base_path, 'pelicanconf.py')
         settings = read_settings(path=settings_path,
                                  override={'PATH': content_path,

@@ -62,12 +62,9 @@ class OrgEmacsReader(readers.BaseReader):
 
     file_extensions = ['org']
 
-    def __init__(self, settings):
-        super(OrgEmacsReader, self).__init__(settings)
+    def read(self, filename):
         assert 'ORG_READER_EMACS_LOCATION' in self.settings, \
             "No ORG_READER_EMACS_LOCATION specified in settings"
-
-    def read(self, filename):
         LOG.info("Reading Org file {0}".format(filename))
         cmd = [self.settings['ORG_READER_EMACS_LOCATION']]
         cmd.extend(self.EMACS_ARGS)
@@ -101,8 +98,8 @@ class OrgEmacsReader(readers.BaseReader):
                     'modified': json_output['modified'] or '',
                     'tags': json_output['tags'] or '',
                     'save_as': json_output['save_as'] or '',
-                    'summary': json_output['summary'] or ''}
-
+                    'summary': json_output['summary'] or '',
+                    'status': json_output['status'] or ''}
         # remove empty strings when necessary
         for key in ['save_as', 'modified', 'lang', 'summary']:
             if not metadata[key]:

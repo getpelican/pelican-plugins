@@ -27,7 +27,7 @@ Category: {category}
 Content = namedtuple('Content', ['title', 'path', 'category'])
 # Characters likely to appear in blog titles/categories. Could eventually
 # extend support to more characters that can't appear in a Python identifier
-BLOG_CHARACTERS = string.letters + ' -:'
+BLOG_CHARACTERS = string.ascii_letters + ' -:'
 
 
 def make_content(directory, categories, count=5, categories_per_content=1):
@@ -77,6 +77,8 @@ def modified_pelican_run(self):
     context = self.settings.copy()
     context['filenames'] = {}  # share the dict between all the generators
     context['localsiteurl'] = self.settings['SITEURL']  # share
+    context['generated_content'] = dict()
+    context['static_links'] = set()
     generators = [
         cls(
             context=context,

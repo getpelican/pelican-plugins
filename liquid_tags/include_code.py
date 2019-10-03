@@ -117,8 +117,8 @@ def include_code(preprocessor, tag, markup):
 
     # store HTML tags in the stash.  This prevents them from being
     # modified by markdown.
-    open_tag = preprocessor.configs.htmlStash.store(open_tag, safe=True)
-    close_tag = preprocessor.configs.htmlStash.store(close_tag, safe=True)
+    open_tag = preprocessor.configs.htmlStash.store(open_tag)
+    close_tag = preprocessor.configs.htmlStash.store(close_tag)
 
     if lang:
         lang_include = ':::' + lang + '\n    '

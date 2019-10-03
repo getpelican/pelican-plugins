@@ -16,7 +16,7 @@ EXTENSIONS = ['jpg', 'png', 'svg']
 
 
 def add_author_image(author, generator):
-    hashsum = sha256(author.name).hexdigest()
+    hashsum = sha256(author.name.encode("UTF-8")).hexdigest()
     static = generator.settings['THEME'] + '/static/'
     if 'AUTHOR_AVATARS' in generator.settings.keys():
         avatar = generator.settings['AUTHOR_AVATARS'] + '/' + hashsum

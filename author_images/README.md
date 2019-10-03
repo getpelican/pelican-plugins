@@ -32,7 +32,7 @@ means you need to take a `sha256` of the authors name. The extension of
 the file can be one of `svg`, `jpg`, `jpeg` or `png`. For instance, my name is
 William Pettersson, so I can run
 
-    python -c 'import hashlib; print hashlib.sha256("William Pettersson").hexdigest()'
+    python -c 'import hashlib; print(hashlib.sha256("William Pettersson".encode("UTF-8")).hexdigest())'
 
 to get the hash sum of my name. Then I just rename my images or avatars to have
 that name, but with the appropriate extension. For simplicity, there is a

@@ -14,8 +14,8 @@ an ordinary Pelican page, so it can be Markdown, reStructuredText, etc.
 
 ## Template Variables
 
-| Variable        | Notes                                      |
-|-----------------|--------------------------------------------|
-| `author.page`   | The rendered content of the author page.   |
-| `category.page` | The rendered content of the category page. |
-| `tag.page`      | The rendered content of the tag page.      |
+| Variable        | Notes                                |
+|-----------------|--------------------------------------|
+| `author.page`   | `Page` object for the author page.   |
+| `category.page` | `Page` object for the category page. |
+| `tag.page`      | `Page` object for the tag page.      |

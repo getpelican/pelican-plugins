@@ -27,7 +27,8 @@ validated.
 
 Add `w3c_validate` to your config file's plugins after installing dependencies - `PLUGINS = ['w3c_validate']`
 
-## TODO
+## Tests
 
-[ ] - add tests
+To execute them:
 
+    nosetests -w w3c_validate

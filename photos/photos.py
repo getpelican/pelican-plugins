@@ -39,7 +39,6 @@ else:
 
 
 def initialized(pelican):
-
     p = os.path.expanduser('~/Pictures')
 
     DEFAULT_CONFIG.setdefault('PHOTO_LIBRARY', p)
@@ -99,7 +98,6 @@ def read_notes(filename, msg=None):
             for line in text.splitlines():
                 if line.startswith('#'):
                     continue
-
                 m = line.split(':', 1)
                 if len(m) > 1:
                     pic = m[0].strip()
@@ -129,7 +127,6 @@ def isalpha(img):
 def remove_alpha(img, bg_color):
     background = Image.new("RGB", img.size, bg_color)
     background.paste(img, mask=img.split()[3])  # 3 is the alpha channel
-
     return background
 
 
@@ -152,7 +149,6 @@ def ReduceOpacity(im, opacity):
 
 
 def watermark_photo(image, settings):
-
     margin = [10, 10]
     opacity = 0.6
 
@@ -192,7 +188,6 @@ def watermark_photo(image, settings):
 
 
 def rotate_image(img, exif_dict):
-
     if "exif" in img.info and piexif.ImageIFD.Orientation in exif_dict["0th"]:
         orientation = exif_dict["0th"].pop(piexif.ImageIFD.Orientation)
         if orientation == 2:
@@ -214,7 +209,6 @@ def rotate_image(img, exif_dict):
 
 
 def build_license(license, author):
-
     year = datetime.datetime.now().year
     license_file = os.path.join(DEFAULT_CONFIG['plugin_dir'], 'licenses.json')
 
@@ -228,7 +222,6 @@ def build_license(license, author):
 
 
 def manipulate_exif(img, settings):
-
     try:
         exif = piexif.load(img.info['exif'])
     except Exception:
@@ -257,7 +250,6 @@ def manipulate_exif(img, settings):
 
 
 def resize_worker(orig, resized, spec, settings):
-
     logger.info('photos: make photo {} -> {}'.format(orig, resized))
     im = Image.open(orig)
 
@@ -320,7 +312,6 @@ def resize_photos(generator, writer):
 
 
 def detect_content(content):
-
     hrefs = None
 
     def replacer(m):
@@ -460,7 +451,6 @@ def galleries_string_decompose(gallery_string):
 
 
 def process_gallery(generator, content, location):
-
     content.photo_gallery = []
 
     galleries = galleries_string_decompose(location)
@@ -540,12 +530,11 @@ def file_clipper(x):
 
 
 def process_image(generator, content, image):
-
     if image.startswith('{photo}'):
         path = os.path.join(os.path.expanduser(generator.settings['PHOTO_LIBRARY']), image_clipper(image))
         image = image_clipper(image)
     elif image.startswith('{filename}'):
-        path = os.path.join(content.relative_dir, file_clipper(image))
+        path = os.path.join(generator.path, content.relative_dir, file_clipper(image))
         image = file_clipper(image)
 
     if os.path.isfile(path):

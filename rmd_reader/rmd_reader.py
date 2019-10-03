@@ -34,9 +34,6 @@ def initsignal(pelicanobj):
     global RMD, FIG_PATH
     try:
         startr()
-        R_OBJECTS.r('Sys.setlocale("LC_ALL", "C")')
-        R_OBJECTS.r('Sys.setlocale("LC_NUMERIC", "C")')
-        R_OBJECTS.r('Sys.setlocale("LC_MESSAGES", "C")')
         
         idx = KNITR.opts_knit.names.index('set')
         path = pelicanobj.settings.get('PATH','%s/content' % settings.DEFAULT_CONFIG.get('PATH'))

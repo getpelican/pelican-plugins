@@ -60,6 +60,8 @@ class TestGzipCache(unittest.TestCase):
         # not report it). Therefore, create a dummy file to use.
         with temporary_folder() as tempdir:
             _, a_html_filename = tempfile.mkstemp(suffix='.html', dir=tempdir)
+            with open(a_html_filename, 'w') as f:
+                f.write('A' * 24)  # under this length, compressing is useless and create_gzip_file will not create any file
             gzip_cache.create_gzip_file(a_html_filename, False)
             self.assertTrue(os.path.exists(a_html_filename + '.gz'))
 
@@ -71,6 +73,8 @@ class TestGzipCache(unittest.TestCase):
         # problems for some caching strategies.
         with temporary_folder() as tempdir:
             _, a_html_filename = tempfile.mkstemp(suffix='.html', dir=tempdir)
+            with open(a_html_filename, 'w') as f:
+                f.write('A' * 24)  # under this length, compressing is useless and create_gzip_file will not create any file
             a_gz_filename = a_html_filename + '.gz'
             gzip_cache.create_gzip_file(a_html_filename, False)
             gzip_hash = get_md5(a_gz_filename)

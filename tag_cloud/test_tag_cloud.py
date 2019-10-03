@@ -2,6 +2,8 @@ import unittest
 import os
 import six
 import tag_cloud
+from shutil import rmtree
+from tempfile import mkdtemp
 
 from pelican.generators import ArticlesGenerator
 from pelican.tests.support import get_settings
@@ -15,6 +17,8 @@ class TestTagCloudGeneration(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        cls.temp_path = mkdtemp(prefix='pelicantests.')
+
         cls._settings = get_settings(filenames={})
         cls._settings['DEFAULT_CATEGORY'] = 'Default'
         cls._settings['DEFAULT_DATE'] = (1970, 1, 1)
@@ -22,10 +26,17 @@ class TestTagCloudGeneration(unittest.TestCase):
         cls._settings['CACHE_CONTENT'] = False
         tag_cloud.set_default_settings(cls._settings)
 
+        context = cls._settings.copy()
+        context['generated_content'] = dict()
+        context['static_links'] = set()
         cls.generator = ArticlesGenerator(
-            context=cls._settings.copy(), settings=cls._settings,
-            path=CONTENT_DIR, theme=cls._settings['THEME'], output_path=None)
+            context=context, settings=cls._settings,
+            path=CONTENT_DIR, theme=cls._settings['THEME'], output_path=cls.temp_path)
         cls.generator.generate_context()
+
+    @classmethod
+    def tearDownClass(cls):
+        rmtree(cls.temp_path)
 
     def test_tag_cloud_random(self):
         self.generator.settings['TAG_CLOUD_STEPS'] = 10

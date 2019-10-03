@@ -29,7 +29,7 @@ from pelican.settings import read_settings
 
 
 AUTHOR_EMAIL = 'bart.simpson@example.com'
-MD5_HASH = hashlib.md5 (AUTHOR_EMAIL).hexdigest ()
+MD5_HASH = hashlib.md5 (AUTHOR_EMAIL.encode()).hexdigest ()
 LIBRAVATAR_BASE_URL = 'http://cdn.libravatar.org/avatar/'
 
 
@@ -51,9 +51,8 @@ class TestLibravatarURL (unittest.TestCase):
         if override:
             settings.update (override)
 
-        fid = open (os.path.join (self.content_path, 'test.md'), 'w')
-        fid.write ('Title: Test\nDate:\nEmail: ' + AUTHOR_EMAIL + '\n\n')
-        fid.close ()
+        with open (os.path.join (self.content_path, 'test.md'), 'w') as test_md_file:
+            test_md_file.write ('Title: Test\nDate: 2019-09-05\nEmail: ' + AUTHOR_EMAIL + '\n\n')
 
         self.settings = read_settings (override = settings)
         pelican = Pelican (settings = self.settings)
@@ -64,14 +63,13 @@ class TestLibravatarURL (unittest.TestCase):
         rmtree (self.content_path)
 
     def test_url (self, options = ''):
-        fid = open (os.path.join (self.output_path, 'test.html'), 'r')
-        found = False
-        for line in fid.readlines ():
-            print(line)
-            if re.search (LIBRAVATAR_BASE_URL + MD5_HASH + options, line):
-                found = True
-                break
-        assert found
+        with open (os.path.join (self.output_path, 'test.html'), 'r') as test_html_file:
+            found = False
+            for line in test_html_file.readlines ():
+                if re.search (LIBRAVATAR_BASE_URL + MD5_HASH + options, line):
+                    found = True
+                    break
+            assert found
 
 class TestLibravatarMissing (TestLibravatarURL):
     """Class for testing the Libravatar "missing picture" option"""
@@ -83,7 +81,7 @@ class TestLibravatarMissing (TestLibravatarURL):
                                               self.library})
 
     def test_url (self):
-        TestLibravatarURL.test_url (self, '\?d=' + self.library)
+        TestLibravatarURL.test_url (self, r'\?d=' + self.library)
 
 
 class TestLibravatarSize (TestLibravatarURL):
@@ -95,5 +93,5 @@ class TestLibravatarSize (TestLibravatarURL):
                                   override = {'LIBRAVATAR_SIZE': self.size})
 
     def test_url (self):
-        TestLibravatarURL.test_url (self, '\?s=' + str (self.size))
+        TestLibravatarURL.test_url (self, r'\?s=' + str (self.size))
 

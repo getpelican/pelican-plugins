@@ -91,6 +91,20 @@ class TestSummary(unittest.TestCase):
         self.assertEqual(page.summary, TEST_SUMMARY)
         self.assertEqual(page.content, '<p>' + TEST_SUMMARY + '</p>' + TEST_CONTENT)
 
+    def test_correct_malformed_markup(self):
+        page_kwargs = self._copy_page_kwargs()
+        del page_kwargs['metadata']['summary']
+        malformed = '<article><div><h2>Title</h2><p>Some content</article>'
+        wellformed = (
+            '<article><div><h2>Title</h2>'
+            '<p>Some content</p></div></article>')
+        page_kwargs['content'] = (
+            '<!-- PELICAN_BEGIN_SUMMARY -->' + malformed +
+            '<!-- PELICAN_END_SUMMARY -->')
+        page = Page(**page_kwargs)
+        summary.extract_summary(page)
+        self.assertEqual(page.summary, wellformed)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,4 +1,9 @@
 import re
+import sys
+import unittest
+
+if 'nosetests' in sys.argv[0]:
+    raise unittest.SkipTest('Those tests are pytest-compatible only')
 
 import pytest
 pytest.skip("Test is currently broken, see pelican pr #1618", allow_module_level=True)

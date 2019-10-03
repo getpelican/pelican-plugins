@@ -42,12 +42,12 @@ pip install beautifulsoup4
 `article.share_post`. Keys of the dictionary are as follows,
 
 1. `facebook`
-2. `email`
-3. `twitter`
-4. `diaspora`
-5. `linkedin`
-6. `hacker-news`
-7. `reddit`
+1. `email`
+1. `twitter`
+1. `diaspora`
+1. `linkedin`
+1. `hacker-news`
+1. `reddit`
 
 ## Template Example
 

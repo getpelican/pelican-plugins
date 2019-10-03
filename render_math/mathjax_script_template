@@ -13,10 +13,13 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
     mathjaxscript.src = {source};
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
         "MathJax.Hub.Config({{" +
         "    config: ['MMLorHTML.js']," +
-        "    TeX: {{ extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'{tex_extensions}], equationNumbers: {{ autoNumber: 'AMS' }} }}," +
+        "    TeX: {{ extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'{tex_extensions}], equationNumbers: {{ autoNumber: '{equation_numbering}' }} }}," +
         "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
         "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
         "    displayAlign: '"+ align +"'," +
@@ -30,6 +33,8 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
         "        preview: '{latex_preview}'," +
         "    }}, " +
         "    'HTML-CSS': {{ " +
+        "        availableFonts: {font_list}," +
+        "        preferredFont: 'STIX'," +
         "        styles: {{ '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {{color: '{color} ! important'}} }}," +
         "        linebreaks: {{ automatic: "+ linebreak +", width: '90% container' }}," +
         "    }}, " +
@@ -50,5 +55,7 @@ if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {{
                 "VARIANT['-tex-mathit'].fonts.unshift('MathJax_{mathjax_font}-italic');" +
             "}});" +
         "}}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }}

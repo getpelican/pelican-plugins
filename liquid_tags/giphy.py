@@ -29,7 +29,7 @@ from .mdx_liquid_tags import LiquidTags
 
 
 SYNTAX = '''{% giphy gif_id ["alt text"|'alt text'] %}'''
-GIPHY = re.compile('''(?P<gif_id>[\S+]+)(?:\s+(['"]{0,1})(?P<alt>.+)(\\2))?''')
+GIPHY = re.compile(r'''(?P<gif_id>[\S+]+)(?:\s+(['"]{0,1})(?P<alt>.+)(\\2))?''')
 
 
 def get_gif(api_key, gif_id):

@@ -1,6 +1,12 @@
-from . import audio
-import pytest
 import re
+import sys
+import unittest
+import pytest
+from . import audio
+
+
+if 'nosetests' in sys.argv[0]:
+    raise unittest.SkipTest('Those tests are pytest-compatible only')
 
 
 @pytest.mark.parametrize('input,expected', [

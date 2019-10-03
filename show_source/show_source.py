@@ -1,6 +1,6 @@
 import os
 import logging
-from urlparse import urljoin
+from six.moves.urllib.parse import urljoin
 import six
 from pelican import signals
 from pelican.utils import pelican_open
