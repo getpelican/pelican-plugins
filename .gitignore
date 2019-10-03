@@ -10,3 +10,4 @@
 .project
 .pydevproject
 __pycache__
+.vscode
