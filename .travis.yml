@@ -21,14 +21,13 @@ install:
  # Installing pelican in editable mode makes its tests.support package available to us
  - pip install -e git+https://github.com/getpelican/pelican.git#egg=pelican
  # The following commands install all plugins dependencies.
- # The `rm`, `grep` & `sed commands` below are needed because some submodules have conflicting requirements.
+ # The `grep` & `sed commands` below are needed because some submodules have conflicting requirements.
  # cf. https://github.com/getpelican/pelican-plugins/issues/1170
- - rm pelicanthemes-generator/requirements.txt
  - pip install -U -r <(grep -hv pelican */requirements.txt | sed 's/==/>=/')
 # We need to exclude the multimarkdown_reader & pandoc_reader plugins,
 # otherwise their BaseReader subclasses will be loaded by pelican.readers.Readers,
 # and override the default .md one.
-# We also need to exclude the image_process & multi_neighbors as long as they are not fixed, cf. https://github.com/getpelican/pelican-plugins/issues/1170
+# We also need to exclude the image_process plugin as long as they are not fixed, cf. https://github.com/getpelican/pelican-plugins/issues/1170
 script: nosetests --with-summary-report
    --exclude-dir=multimarkdown_reader --exclude-dir=pandoc_reader
-   --exclude-dir=image_process --exclude-dir=multi_neighbors
+   --exclude-dir=image_process
