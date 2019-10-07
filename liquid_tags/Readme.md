@@ -151,6 +151,9 @@ If using `:hidefilename:`, a title must be provided as indicated above.
 This example will show the first ten lines of the file while hiding the actual
 filename.
 
+You can also hide download link and leave only filename with `:hidelink:`. If
+you would like to hide both title and Download link use `:hideall:`.
+
 The script must be in the `code` subdirectory of your content folder;
 the default location can be changed by specifying the directory in your
 settings file thusly:

@@ -43,7 +43,8 @@ import sys
 from .mdx_liquid_tags import LiquidTags
 
 
-SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}"
+SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] "\
+         "[:hidefilename:] [:hidelink:] [:hideall:] [title] %}"
 FORMAT = re.compile(r"""
 ^(?:\s+)?                          # Allow whitespace at beginning
 (?P<src>\S+)                       # Find the path
@@ -54,7 +55,11 @@ FORMAT = re.compile(r"""
 (?:\s+)?                           # Whitespace
 (?P<hidefilename>:hidefilename:)?  # Hidefilename flag
 (?:\s+)?                           # Whitespace
-(?:(?:codec:)(?P<codec>\S+))?        # Optional language
+(?P<hidelink>:hidelink:)?          # Hide download link
+(?:\s+)?                           # Whitespace
+(?P<hideall>:hideall:)?            # Hide title and download link
+(?:\s+)?                           # Whitespace
+(?:(?:codec:)(?P<codec>\S+))?      # Optional language
 (?:\s+)?                           # Whitespace
 (?P<title>.+)?$                    # Optional title
 """, re.VERBOSE)
@@ -75,6 +80,8 @@ def include_code(preprocessor, tag, markup):
         codec = argdict['codec'] or "utf8"
         lines = argdict['lines']
         hide_filename = bool(argdict['hidefilename'])
+        hide_link = bool(argdict['hidelink'])
+        hide_all = bool(argdict['hideall'])
         if lines:
             first_line, last_line = map(int, lines.split("-"))
         src = argdict['src']
@@ -89,7 +96,10 @@ def include_code(preprocessor, tag, markup):
     if not os.path.exists(code_path):
         raise ValueError("File {0} could not be found".format(code_path))
 
-    with open(code_path) as fh:
+    if not codec:
+        codec = 'utf-8'
+
+    with open(code_path, encoding=codec) as fh:
         if lines:
             code = fh.readlines()[first_line - 1: last_line]
             code[-1] = code[-1].rstrip()
@@ -97,23 +107,28 @@ def include_code(preprocessor, tag, markup):
         else:
             code = fh.read()
 
-    if not title and hide_filename:
+    if (not title and hide_filename) and not hide_all:
         raise ValueError("Either title must be specified or filename must "
                          "be available")
 
-    if not hide_filename:
-        title += " %s" % os.path.basename(src)
-    if lines:
-        title += " [Lines %s]" % lines
-    title = title.strip()
+    open_tag = ''
+    close_tag = ''
 
-    url = '/{0}/{1}'.format(code_dir, src)
-    url = re.sub('/+', '/', url)
-
-    open_tag = ("<figure class='code'>\n<figcaption><span>{title}</span> "
-                "<a href='{url}'>download</a></figcaption>".format(title=title,
-                                                                   url=url))
+    open_tag = "<figure class='code'>\n<figcaption>"
     close_tag = "</figure>"
+    if not hide_all:
+        if not hide_filename:
+            title += " %s" % os.path.basename(src)
+            if lines:
+                title += " [Lines %s]" % lines
+            title = title.strip()
+
+            open_tag += "<span>{title}</span> ".format(title=title)
+
+        if not hide_link:
+            url = '/{0}/{1}'.format(code_dir, src)
+            url = re.sub('/+', '/', url)
+            open_tag += "<a href='{url}'>download</a>".format(url=url)
 
     # store HTML tags in the stash.  This prevents them from being
     # modified by markdown.
