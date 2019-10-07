@@ -89,6 +89,8 @@ Events                    Add event start, duration, and location info to post m
 
 Extract table of content  Extracts table of contents (ToC) from ``article.content``
 
+Feed Filter               Filter elements from feeds according to custom rules.
+
 Figure References         Provides a system to number and references figures
 
 Filetime from Git         Uses Git commit to determine page date
@@ -233,7 +235,7 @@ Random article            Generates a html file which redirect to a random artic
 
 Read More link            Inserts an inline "read more" or "continue" link into the last html element of the object summary
 
-Readtime                  Adds article estimated read time calculator to the site, in the form of '<n> minutes'. 
+Readtime                  Adds article estimated read time calculator to the site, in the form of '<n> minutes'.
 
 Related posts             Adds the ``related_posts`` variable to the article's context
 
