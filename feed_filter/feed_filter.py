@@ -9,7 +9,7 @@ from datetime import datetime
 from fnmatch import fnmatch
 from urllib.parse import urlparse
 from logging import warning
-from pelican import signals, utils
+from pelican import signals
 from pelican.settings import DEFAULT_CONFIG
 
 FEED_FILTER_VERSION = '0.1'
@@ -45,6 +45,7 @@ def get_path_from_feed_url(feed):
         return ''
     return feed_path
 
+
 def apply_filters_to_feed(feed, filters):
     if len(feed.items) == 0:
         return
@@ -67,10 +68,7 @@ def apply_filters_to_feed(feed, filters):
 
     new_items = []
     for item in feed.items:
-        if len(exclusion) > 0:
-            add_it = True
-        else:
-            add_it = False
+        add_it = True if len(exclusion) > 0 else False
         for attr, value_pattern in exclusion.items():
             if attribute_match(item[attr], value_pattern):
                 add_it = False
@@ -84,7 +82,11 @@ def apply_filters_to_feed(feed, filters):
 
 def attribute_match(attr, value):
     attr = attr if not isinstance(attr, str) else [attr]
-    attr = [attr.strftime('%a, %d %b %Y %H:%M:%S')] if isinstance(attr, datetime) else attr
+    attr = (
+        [attr.strftime('%a, %d %b %Y %H:%M:%S')]
+        if isinstance(attr, datetime)
+        else attr
+    )
     value = value if not isinstance(value, str) else [value]
     for a in attr:
         for v in value:

@@ -26,6 +26,8 @@ If an exclusion filter is defined, all feed elements except those which match th
 
 If both include and exclude filters are defined, all feed elements except those which match some exclusion filter but no inclusion filter, will be included in the feed.
 
+If multiple inclusion/exclusion filters are defined for the same feed path, a single match is enough to include the item in the feed.
+
 ## Examples
 * Include only posts in some categories into the global feed:
 ```
@@ -34,7 +36,7 @@ FEED_ATOM = 'feed/atom'
 FEED_RSS = 'feed/rss'
 FEED_FILTER = {
     'feed/*': {
-        'include.categories': ('software-development', 'programming')
+        'include.categories': ['software-*', 'programming']
     }
 }
 ```
@@ -79,6 +81,19 @@ FEED_ATOM = 'feed/atom'
 FEED_RSS = 'feed/rss'
 FEED_FILTER = {
     'feed/*': {
+        'exclude.title': 'Review*'
+    }
+}
+```
+
+* In the global feed, include all posts written by a given author OR in a certain category, except if the title starts with "Review":
+```
+FEED_ATOM = 'feed/atom'
+FEED_RSS = 'feed/rss'
+FEED_FILTER = {
+    'feed/*': {
+        'include.author_name': 'An Author name',
+        'include.category': 'software-development'
         'exclude.title': 'Review*'
     }
 }

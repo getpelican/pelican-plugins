@@ -94,12 +94,23 @@ class FeedFilterTestBase(object):
     def test_include_only_by_title(self):
         self.context['FEED_FILTER'] = {
             'feed/*': {
-                'include.title': '*05'
+                'include.title': ['*05', '*06']
             }
         }
         self.create_filtered_feed('feed/' + self.feed_type)
         # Only one article verifies the inclusion filter
-        self.assertEqual(1, len(self.feed.items))
+        self.assertEqual(2, len(self.feed.items))
+
+    def test_multiple_includes(self):
+        self.context['FEED_FILTER'] = {
+            'feed/*': {
+                'include.title': '*05',
+                'include.categories': 'Tag 02',
+            }
+        }
+        self.create_filtered_feed('feed/' + self.feed_type)
+        # Two articles verifies the inclusion filter
+        self.assertEqual(2, len(self.feed.items))
 
     def test_exclude_only_by_category(self):
         self.context['FEED_FILTER'] = {
@@ -111,11 +122,22 @@ class FeedFilterTestBase(object):
         # Articles with Tag 10, 11, 12, ... 19, are excluded from the feed
         self.assertEqual(90, len(self.feed.items))
 
+    def test_multiple_excludes(self):
+        self.context['FEED_FILTER'] = {
+            'feed/*': {
+                'exclude.categories': 'Tag 1?',
+                'exclude.title': '*2?',
+            }
+        }
+        self.create_filtered_feed('feed/' + self.feed_type)
+        # Articles with Tag 10, 11, 12, ... 19, 20, 21, ..., 29 are excluded
+        self.assertEqual(80, len(self.feed.items))
+
     def test_include_exclude_by_author(self):
         self.context['FEED_FILTER'] = {
             'feed/category.*': {
-                'exclude.author_name': 'Author 4', # excludes 10 articles
-                'include.title': 'Title 43', # except the one with this title
+                'exclude.author_name': 'Author 4',  # excludes 10 articles
+                'include.title': 'Title 43',  # except the one with this title
             }
         }
         self.create_filtered_feed('feed/category.' + self.feed_type)
@@ -130,6 +152,18 @@ class FeedFilterTestBase(object):
         }
         self.create_filtered_feed('feed/category.' + self.feed_type)
         self.assertEqual(99, len(self.feed.items))
+
+    def test_multiple_inclusions_and_exclusions(self):
+        self.context['FEED_FILTER'] = {
+            'feed/category.*': {
+                'exclude.author_name': 'Author 4',
+                'exclude.categories': '*3?',
+                'include.title': 'Title 43',
+                'include.categories': '*33',
+            }
+        }
+        self.create_filtered_feed('feed/category.' + self.feed_type)
+        self.assertEqual(82, len(self.feed.items))
 
 
 class RssFeedFilterTestCase(FeedFilterTestBase, unittest.TestCase):
