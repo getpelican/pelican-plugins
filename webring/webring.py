@@ -6,6 +6,8 @@ Webring plugin for Pelican
 A plugin to create a webring in your web site from a list of web feeds.
 """
 import re
+from six.moves.urllib.request import Request, urlopen
+from six.moves.urllib.error import URLError
 from collections import namedtuple
 from logging import warning
 from operator import attrgetter
@@ -20,7 +22,6 @@ except ImportError:
 WEBRING_VERSION = '0.1'
 
 WEBRING_FEED_URLS_STR = 'WEBRING_FEED_URLS'
-WEBRING_SUPPORT_HTTPS_STR = 'WEBRING_SUPPORT_HTTPS'
 WEBRING_MAX_ARTICLES_STR = 'WEBRING_MAX_ARTICLES'
 WEBRING_ARTICLES_PER_FEED_STR = 'WEBRING_ARTICLES_PER_FEED'
 WEBRING_SUMMARY_LENGTH_STR = 'WEBRING_SUMMARY_LENGTH'
@@ -41,7 +42,6 @@ def register():
 def initialized(pelican):
     from pelican.settings import DEFAULT_CONFIG
     DEFAULT_CONFIG.setdefault(WEBRING_FEED_URLS_STR, [])
-    DEFAULT_CONFIG.setdefault(WEBRING_SUPPORT_HTTPS_STR, True)
     DEFAULT_CONFIG.setdefault(WEBRING_MAX_ARTICLES_STR, 3)
     DEFAULT_CONFIG.setdefault(WEBRING_ARTICLES_PER_FEED_STR, 1)
     DEFAULT_CONFIG.setdefault(WEBRING_SUMMARY_LENGTH_STR, 128)
@@ -55,11 +55,13 @@ def initialized(pelican):
 def fetch_feeds(generators):
     settings = get_pelican_settings(generators)
 
-    setup_feedparser(settings)
-
     fetched_articles = []
     for feed_url in settings[WEBRING_FEED_URLS_STR]:
-        fetched_articles.extend(get_feed_articles(feed_url, settings))
+        feed_html = get_feed_html(feed_url)
+        if feed_html:
+            fetched_articles.extend(
+                get_feed_articles(feed_html, feed_url, settings)
+            )
 
     fetched_articles = sorted(
         fetched_articles, key=attrgetter('date'), reverse=True)
@@ -78,35 +80,34 @@ def get_pelican_settings(generators):
     return generators[0].settings
 
 
-def setup_feedparser(settings):
-    feedparser.USER_AGENT = 'Webring Pelican plugin/%s ' \
-        '+https://github.com/pelican/pelican-plugins' % WEBRING_VERSION
+def get_feed_html(feed_url):
+    try:
+        req = Request(feed_url)
+        req.add_header(
+            'User-Agent',
+            (
+                'Webring Pelican plugin/{} '
+                + '+https://github.com/pelican/pelican-plugins'
+            ).format(WEBRING_VERSION)
+        )
+        return urlopen(req).read().decode('utf-8')
+    except URLError as e:
+        if hasattr(e, 'reason'):
+            warning('webring plugin: failed to connect to feed url (%s).',
+                    feed_url, e.reason)
+        if hasattr(e, 'code'):
+            warning('webring plugin: server returned %s error (%s).',
+                    e.code, feed_url)
+    except ValueError as e:
+        warning('webring plugin: wrong url provided (%s).', e)
 
-    if settings[WEBRING_SUPPORT_HTTPS_STR]:
-        # https://www.python.org/dev/peps/pep-0476/#opting-out
-        import ssl
-        try:
-            _create_unverified_https_context = ssl._create_unverified_context
-        except AttributeError:
-            # Legacy Python that doesn't verify HTTPS certificates by default
-            pass
-        else:
-            # Handle target environment that doesn't support HTTPS verification
-            ssl._create_default_https_context = \
-                _create_unverified_https_context
 
-
-def get_feed_articles(feed_url, settings):
-    parsed_feed = feedparser.parse(feed_url)
+def get_feed_articles(feed_html, feed_url, settings):
+    parsed_feed = feedparser.parse(feed_html)
 
     if parsed_feed.bozo:
-        if (feed_url.startswith('https')
-                and not settings[WEBRING_SUPPORT_HTTPS_STR]):
-            warning('webring plugin: error retrieving feed (%s), try enabling '
-                    'WEBRING_SUPPORT_HTTPS in your configuration.', feed_url)
-        else:
-            warning('webring plugin: possible malformed or invalid feed (%s). '
-                    'Error=%s', feed_url, parsed_feed.bozo_exception)
+        warning('webring plugin: possible malformed or invalid feed (%s). '
+                'Error=%s', feed_url, parsed_feed.bozo_exception)
 
     articles = []
     for n, entry in enumerate(parsed_feed.entries):

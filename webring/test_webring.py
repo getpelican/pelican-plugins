@@ -48,8 +48,8 @@ class WebringTest(unittest.TestCase):
         # Contents will be duplicated but still different, as they come from
         # two different feed URLs.
         self.settings[webring.WEBRING_FEED_URLS_STR] = [
-            os.path.join(test_data_path, 'pelican-rss.xml'),
-            os.path.join(test_data_path, 'pelican-atom.xml'),
+            'file://' + os.path.join(test_data_path, 'pelican-rss.xml'),
+            'file://' + os.path.join(test_data_path, 'pelican-atom.xml'),
         ]
 
     def get_fetched_articles(self):
@@ -94,6 +94,13 @@ class WebringTest(unittest.TestCase):
         webring.fetch_feeds(self.generators)
         articles = self.get_fetched_articles()
         self.assertTrue(not any(a.summary.endswith('...') for a in articles))
+
+    def test_malformed_url(self):
+        self.settings[webring.WEBRING_FEED_URLS_STR] = [
+            '://pelican-atom.xml',
+        ]
+        webring.fetch_feeds(self.generators)
+        self.assertEqual(len(self.get_fetched_articles()), 0)
 
 
 if __name__ == '__main__':
