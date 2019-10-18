@@ -135,5 +135,5 @@ class TestFullRun(unittest.TestCase):
             ['git', 'diff', '--no-ext-diff', '--exit-code', '-w', output_path,
              self.temp_path], env={'PAGER': ''},
             stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-        self.assertFalse(out, 'non-empty `diff` stdout:\n{}'.format(out))
-        self.assertFalse(err, 'non-empty `diff` stderr:\n{}'.format(out))
+        self.assertFalse(out, 'non-empty `diff` stdout:\n{}'.format(out.decode()))
+        self.assertFalse(err, 'non-empty `diff` stderr:\n{}'.format(err.decode()))
