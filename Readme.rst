@@ -129,7 +129,7 @@ I18N Sub-sites            Extends the translations functionality by creating int
 
 ical                      Looks for and parses an ``.ics`` file if it is defined in a given page's ``calendar`` metadata.
 
-Image Process             Automates the processing of images based on their class attributes
+Image Process             Automates the processing of images based on their class attributes. Make suer to check the readme.
 
 Interlinks                Lets you add frequently used URLs to your markup using short keywords
 
