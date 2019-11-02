@@ -29,7 +29,7 @@ class PelicanInlineMarkdownExtensionPattern(markdown.inlinepatterns.Pattern):
         if isinstance(tag_attributes, tuple):
             tag_style = tag_attributes[0]
             tag_class = tag_attributes[1] if len(tag_attributes) > 1 else ''
-        elif isinstance(tag_attributes, basestring):
+        elif isinstance(tag_attributes, str):
             tag_class = tag_attributes
 
         if tag_class != '':
