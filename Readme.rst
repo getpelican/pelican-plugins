@@ -73,6 +73,8 @@ Collate content           Makes categories of content available to the template 
 
 Creole reader             Allows you to write your posts using the wikicreole syntax
 
+CSS HTML JS Minify        Minifies all CSS, HTML and JavaScript files in the output path after site generation.
+
 Custom article URLs       Adds support for defining different default URLs for different categories
 
 CTags generator           Generates a "tags" file following the CTags in the "content/" directory, to provide autocompletion for code editors that support it.
