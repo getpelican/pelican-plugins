@@ -4,8 +4,7 @@ A reader that leverages GitHub's C-based markdown library to translate GitHub Fl
 
 Requirements
 ============
-
-pelican-gfm has no requirements that are outside of the python standard library aside from pelican itself.
+pelican-gfm has no requirements outside of the python standard library and pelican pelican itself.
 
 How to Use
 =========
