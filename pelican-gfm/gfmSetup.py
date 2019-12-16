@@ -79,7 +79,7 @@ def setup():
     subprocess.call([
                      "wget",
                      "--quiet",
-                     ARCHIVES + "/" + VERSION + ".tar.gz",
+                     ARCHIVES + "/" + gfmVars.VERSION + ".tar.gz",
                      WORKSPACE,
                      "-P",
                      WORKSPACE
@@ -87,13 +87,13 @@ def setup():
     subprocess.call([
                      'tar',
                      'zxf',
-                     WORKSPACE + "/" + VERSION + ".tar.gz",
+                     WORKSPACE + "/" + gfmVars.VERSION + ".tar.gz",
                      "-C",
                      WORKSPACE
                      ]
                     )
 
-    BUILDSPACE = WORKSPACE + "/" + "cmark-gfm-" + VERSION + "/build"
+    BUILDSPACE = gfmVars.WORKSPACE + "/" + "cmark-gfm-" + gfmVars.VERSION + "/build"
 
     if not os.path.isdir(BUILDSPACE):
         os.mkdir(BUILDSPACE)
@@ -113,23 +113,23 @@ def setup():
     print "Moving files"
     subprocess.call([
                      "mv",
-                     BUILDSPACE + "/src/libcmark-gfm.so." + VERSION,
-                     LIBCMARKLOCATION + "libcmark-gfm.so"
+                     BUILDSPACE + "/src/libcmark-gfm.so." + gfmVars.VERSION,
+                     gfmVars.LIBCMARKLOCATION + "libcmark-gfm.so"
                     ]
                     )
     subprocess.call([
                      "mv",
-                     BUILDSPACE + "/extensions/libcmark-gfmextensions.so." + VERSION,
-                     LIBCMARKLOCATION + "libcmark-gfmextensions.so"
+                     BUILDSPACE + "/extensions/libcmark-gfmextensions.so." + gfmVars.VERSION,
+                     gfmVars.LIBCMARKLOCATION + "libcmark-gfmextensions.so"
                     ]
                     )
 
 
 def test_configuration():
     """ Tests to ensure that the files that the plugin needs are in place. """
-    CMARKPATH = LIBCMARKLOCATION + "/libcmark-gfm.so." + VERSION
-    if os.path.isfile(LIBCMARKLOCATION + "/libcmark-gfm.so") and
-    os.path.isfile(LIBCMARKLOCATION + "/libcmark-gfmextensions.so"):
+    CMARKPATH = gfmVars.LIBCMARKLOCATION + "/libcmark-gfm.so." + gfmVars.VERSION
+    if os.path.isfile(gfmVars.LIBCMARKLOCATION + "/libcmark-gfm.so") and \
+       os.path.isfile(gfmVars.LIBCMARKLOCATION + "/libcmark-gfmextensions.so"):
         return 0
     else:
         return 1
