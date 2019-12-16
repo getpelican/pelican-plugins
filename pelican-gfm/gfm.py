@@ -101,15 +101,6 @@ F_register()
 # this could be moved into SETTINGS or somesuch, but meh. not needed now.
 OPTS = 0
 
-# The GFM extensions that we want to use
-EXTENSIONS = (
-    'autolink',
-    'table',
-    'strikethrough',
-    'tagfilter',
-)
-
-
 class GFMReader(pelican.readers.BaseReader):
     enabled = True
     """GFM-flavored Reader for the Pelican system.
@@ -199,7 +190,7 @@ class GFMReader(pelican.readers.BaseReader):
 
         parser = F_cmark_parser_new(OPTS)
         assert parser
-        for name in EXTENSIONS:
+        for name in gfmVars.EXTENSIONS:
             ext = F_cmark_find_syntax_extension(name)
             assert ext
             rv = F_cmark_parser_attach_syntax_extension(parser, ext)
