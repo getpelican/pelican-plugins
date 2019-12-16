@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3 -B
 # This gets used by the gfm plugin as well as the check_configure function
 
 LIBCMARKLOCATION = "/usr/lib/x86_64-linux-gnu"

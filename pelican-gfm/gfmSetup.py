@@ -1,10 +1,10 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
 
 import sys
 import os
 import subprocess
 import gfmVars
-
+from backports import tempfile
 
 # Eventually, equivalents for
 # other operating systems / package
@@ -45,15 +45,14 @@ def dpkg_packages_installed():
 
     if len(need_to_be_removed) is not 0:
         raise Exception("Found the following conflicting packages\
- which should be removed:\
- need_to_be_installed")
+ which should be removed:" + str(need_to_be_removed))
         rem = False
     else:
         rem = True
 
     if len(need_to_be_installed) is not 0:
         raise Exception("Could not find the following required\
-packages: need_to_be_installed")
+ packages: " + need_to_be_installed )
         ins = False
     else:
         ins = True
@@ -63,82 +62,77 @@ packages: need_to_be_installed")
         return True
 
 
-def cleanUp():
-    subprocess.call(["rm", "-rf", WORKSPACE])
-
-
 def setup():
     dpkg_packages_installed()
 
     if test_configuration() == 1:
         print("System appears to be configured")
-    # Configure the environment if it's not already configured
-    if not os.path.isdir(WORKSPACE):
-        os.mkdir(WORKSPACE)
+    else:
+        # Configure the environment if it's not already configured
 
-    subprocess.call([
-                     "wget",
-                     "--quiet",
-                     ARCHIVES + "/" + gfmVars.VERSION + ".tar.gz",
-                     WORKSPACE,
-                     "-P",
-                     WORKSPACE
-                     ])
-    subprocess.call([
-                     'tar',
-                     'zxf',
-                     WORKSPACE + "/" + gfmVars.VERSION + ".tar.gz",
-                     "-C",
-                     WORKSPACE
-                     ]
-                    )
+        with tempfile.TemporaryDirectory() as WORKSPACE:
+            subprocess.call([
+                             "wget",
+                             "--quiet",
+                             gfmVars.ARCHIVES + "/" + gfmVars.VERSION + ".tar.gz",
+                             WORKSPACE,
+                             "-P",
+                             WORKSPACE
+                             ])
+            subprocess.call([
+                             'tar',
+                             'zxf',
+                             WORKSPACE + "/" + gfmVars.VERSION + ".tar.gz",
+                             "-C",
+                             WORKSPACE
+                             ]
+                            )
 
-    BUILDSPACE = gfmVars.WORKSPACE + "/" + "cmark-gfm-" + gfmVars.VERSION + "/build"
+            BUILDSPACE = WORKSPACE + "/" + "cmark-gfm-" + gfmVars.VERSION + "/build"
 
-    if not os.path.isdir(BUILDSPACE):
-        os.mkdir(BUILDSPACE)
+            if not os.path.isdir(BUILDSPACE):
+                os.mkdir(BUILDSPACE)
 
-    thing1 = subprocess.Popen([
-                                "cmake",
-                                "-DCMARK_TESTS=OFF",
-                                "-DCMARK_STATIC=OFF",
-                                ".."
-                              ], cwd=BUILDSPACE)
-    thing1.wait()
+            thing1 = subprocess.Popen([
+                                        "cmake",
+                                        "-DCMARK_TESTS=OFF",
+                                        "-DCMARK_STATIC=OFF",
+                                        ".."
+                                      ], cwd=BUILDSPACE)
+            thing1.wait()
 
-    thing2 = subprocess.Popen(["make"], cwd=BUILDSPACE)
-    thing2.wait()
+            thing2 = subprocess.Popen(["make"], cwd=BUILDSPACE)
+            thing2.wait()
 
-    # Move the libcmark.so artifacts in place
-    print "Moving files"
-    subprocess.call([
-                     "mv",
-                     BUILDSPACE + "/src/libcmark-gfm.so." + gfmVars.VERSION,
-                     gfmVars.LIBCMARKLOCATION + "libcmark-gfm.so"
-                    ]
-                    )
-    subprocess.call([
-                     "mv",
-                     BUILDSPACE + "/extensions/libcmark-gfmextensions.so." + gfmVars.VERSION,
-                     gfmVars.LIBCMARKLOCATION + "libcmark-gfmextensions.so"
-                    ]
-                    )
+            # Move the libcmark.so artifacts in place
+            print("Moving files")
+            subprocess.call([
+                             "mv",
+                             BUILDSPACE + "/src/libcmark-gfm.so." + gfmVars.VERSION,
+                             gfmVars.LIBCMARKLOCATION + "libcmark-gfm.so"
+                            ]
+                            )
+            subprocess.call([
+                             "mv",
+                             BUILDSPACE + "/extensions/libcmark-gfmextensions.so." + gfmVars.VERSION,
+                             gfmVars.LIBCMARKLOCATION + "libcmark-gfmextensions.so"
+                            ]
+                            )
 
 
 def test_configuration():
     """ Tests to ensure that the files that the plugin needs are in place. """
     CMARKPATH = gfmVars.LIBCMARKLOCATION + "/libcmark-gfm.so." + gfmVars.VERSION
     if os.path.isfile(gfmVars.LIBCMARKLOCATION + "/libcmark-gfm.so") and \
-       os.path.isfile(gfmVars.LIBCMARKLOCATION + "/libcmark-gfmextensions.so"):
-        return 0
+            os.path.isfile(gfmVars.LIBCMARKLOCATION + "/libcmark-gfmextensions.so"):
+        return True
     else:
-        return 1
+        return False
 
 
 def configure():
         print("Checking out the configuration")
         setup()
-        cleanUp()
 
 
 if __name__ == "__main__":
