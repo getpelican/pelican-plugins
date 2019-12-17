@@ -97,6 +97,7 @@ F_register()
 
 # technically, maybe install an atexit() to release the plugins
 
+
 class GFMReader(pelican.readers.BaseReader):
     enabled = True
     """GitHub Flavored Markdown Reader for the Pelican system.

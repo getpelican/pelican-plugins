@@ -121,18 +121,10 @@ def setup():
 
             # Move the libcmark.so artifacts in place
             print("Moving files")
-            subprocess.call([
-                             "mv",
-                             BUILDSPACE + "/src/libcmark-gfm.so." + Settings.VERSION,
-                             Settings.LIBCMARKLOCATION + "/libcmark-gfm.so"
-                            ]
-                            )
-            subprocess.call([
-                             "mv",
-                             BUILDSPACE + "/extensions/libcmark-gfmextensions.so." + Settings.VERSION,
-                             Settings.LIBCMARKLOCATION + "/libcmark-gfmextensions.so"
-                            ]
-                            )
+            shutil.move(BUILDSPACE + "/src/libcmark-gfm.so." + Settings.VERSION,
+                        Settings.LIBCMARKLOCATION + "/libcmark-gfm.so")
+            shutil.move(BUILDSPACE + "/extensions/libcmark-gfmextensions.so." + Settings.VERSION,
+                        Settings.LIBCMARKLOCATION + "/libcmark-gfmextensions.so")
 
 
 def test_configuration():
