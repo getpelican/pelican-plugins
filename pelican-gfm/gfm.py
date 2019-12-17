@@ -25,8 +25,8 @@ import os
 import ctypes
 import time
 import re
-import gfmSetup
-import config
+import .gfmSetup
+import .config
 import pelican.utils
 import pelican.signals
 import pelican.readers
