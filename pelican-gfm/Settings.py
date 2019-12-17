@@ -13,7 +13,7 @@ EXTENSIONS = (
     'strikethrough',
     'tagfilter',
 )
-
+OPTS = 0
 # Do not change these
 # Do not change these
 # Do not change these

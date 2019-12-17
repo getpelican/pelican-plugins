@@ -97,11 +97,6 @@ F_register()
 
 # technically, maybe install an atexit() to release the plugins
 
-# Options for the GFM rendering call
-# this could be moved into SETTINGS or somesuch, but meh. not needed now.
-OPTS = 0
-
-
 class GFMReader(pelican.readers.BaseReader):
     enabled = True
     """GitHub Flavored Markdown Reader for the Pelican system.
@@ -189,7 +184,7 @@ class GFMReader(pelican.readers.BaseReader):
     def render(self, text):
         "Use cmark-gfm to render the Markdown into an HTML fragment."
 
-        parser = F_cmark_parser_new(OPTS)
+        parser = F_cmark_parser_new(Settings.OPTS)
         assert parser
         for name in Settings.EXTENSIONS:
             ext = F_cmark_find_syntax_extension(name.encode('utf-8'))
@@ -200,7 +195,7 @@ class GFMReader(pelican.readers.BaseReader):
         F_cmark_parser_feed(parser, text, len(text))
         doc = F_cmark_parser_finish(parser)
         assert doc
-        output = F_cmark_render_html(doc, OPTS, exts)
+        output = F_cmark_render_html(doc, Settings.OPTS, exts)
         F_cmark_parser_free(parser)
         F_cmark_node_free(doc)
         return output
