@@ -1,11 +1,15 @@
-#!/usr/bin/python3 -B
-# This gets used by the gfm plugin as well as the check_configure function
-
+# Eventual location of the libcmark files
 LIBCMARKLOCATION = "/usr/lib/x86_64-linux-gnu"
+
+# This is the archive of GitHub's cmark-gfm files
 ARCHIVES = "https://github.com/github/cmark-gfm/archive"
+
+# This is the GitHub Cmark version we're using
 VERSION = "0.28.3.gfm.12"
+
+# The name of the local tarball that will be downloaded
 LOCAL = "cmark-gfm.$VERSION.orig.tar.gz"
-WORKSPACE = '/tmp/build-cmark'
+
 # The GFM extensions that we want to use
 EXTENSIONS = (
     'autolink',

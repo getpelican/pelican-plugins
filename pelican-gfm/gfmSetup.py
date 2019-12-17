@@ -3,7 +3,7 @@
 import sys
 import os
 import subprocess
-import gfmVars
+import config
 from backports import tempfile
 
 # Eventually, equivalents for
@@ -74,7 +74,7 @@ def setup():
             subprocess.call([
                              "wget",
                              "--quiet",
-                             gfmVars.ARCHIVES + "/" + gfmVars.VERSION + ".tar.gz",
+                             config.ARCHIVES + "/" + config.VERSION + ".tar.gz",
                              WORKSPACE,
                              "-P",
                              WORKSPACE
@@ -82,13 +82,13 @@ def setup():
             subprocess.call([
                              'tar',
                              'zxf',
-                             WORKSPACE + "/" + gfmVars.VERSION + ".tar.gz",
+                             WORKSPACE + "/" + config.VERSION + ".tar.gz",
                              "-C",
                              WORKSPACE
                              ]
                             )
 
-            BUILDSPACE = WORKSPACE + "/" + "cmark-gfm-" + gfmVars.VERSION + "/build"
+            BUILDSPACE = WORKSPACE + "/" + "cmark-gfm-" + config.VERSION + "/build"
 
             if not os.path.isdir(BUILDSPACE):
                 os.mkdir(BUILDSPACE)
@@ -108,23 +108,23 @@ def setup():
             print("Moving files")
             subprocess.call([
                              "mv",
-                             BUILDSPACE + "/src/libcmark-gfm.so." + gfmVars.VERSION,
-                             gfmVars.LIBCMARKLOCATION + "libcmark-gfm.so"
+                             BUILDSPACE + "/src/libcmark-gfm.so." + config.VERSION,
+                             config.LIBCMARKLOCATION + "libcmark-gfm.so"
                             ]
                             )
             subprocess.call([
                              "mv",
-                             BUILDSPACE + "/extensions/libcmark-gfmextensions.so." + gfmVars.VERSION,
-                             gfmVars.LIBCMARKLOCATION + "libcmark-gfmextensions.so"
+                             BUILDSPACE + "/extensions/libcmark-gfmextensions.so." + config.VERSION,
+                             config.LIBCMARKLOCATION + "libcmark-gfmextensions.so"
                             ]
                             )
 
 
 def test_configuration():
     """ Tests to ensure that the files that the plugin needs are in place. """
-    CMARKPATH = gfmVars.LIBCMARKLOCATION + "/libcmark-gfm.so." + gfmVars.VERSION
-    if os.path.isfile(gfmVars.LIBCMARKLOCATION + "/libcmark-gfm.so") and \
-            os.path.isfile(gfmVars.LIBCMARKLOCATION + "/libcmark-gfmextensions.so"):
+    CMARKPATH = config.LIBCMARKLOCATION + "/libcmark-gfm.so." + config.VERSION
+    if os.path.isfile(config.LIBCMARKLOCATION + "/libcmark-gfm.so") and \
+            os.path.isfile(config.LIBCMARKLOCATION + "/libcmark-gfmextensions.so"):
         return True
     else:
         return False

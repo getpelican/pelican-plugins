@@ -26,12 +26,12 @@ import ctypes
 import time
 import re
 import gfmSetup
-import gfmVars
+import config
 import pelican.utils
 import pelican.signals
 import pelican.readers
 
-_LIBDIR = gfmVars.LIBCMARKLOCATION
+_LIBDIR = config.LIBCMARKLOCATION
 _LIBCMARK = 'libcmark-gfm.so'
 _LIBEXT = 'libcmark-gfmextensions.so'
 try:
@@ -190,7 +190,7 @@ class GFMReader(pelican.readers.BaseReader):
 
         parser = F_cmark_parser_new(OPTS)
         assert parser
-        for name in gfmVars.EXTENSIONS:
+        for name in config.EXTENSIONS:
             ext = F_cmark_find_syntax_extension(name)
             assert ext
             rv = F_cmark_parser_attach_syntax_extension(parser, ext)
