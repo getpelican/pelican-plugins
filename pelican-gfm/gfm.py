@@ -1,4 +1,5 @@
 #!/usr/bin/python3 -B
+
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -25,11 +26,11 @@ import os
 import ctypes
 import time
 import re
-import .gfmSetup
-import .config
 import pelican.utils
 import pelican.signals
 import pelican.readers
+import gfmSetup
+import config
 
 _LIBDIR = config.LIBCMARKLOCATION
 _LIBCMARK = 'libcmark-gfm.so'

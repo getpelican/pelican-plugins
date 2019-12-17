@@ -3,7 +3,7 @@
 import sys
 import os
 import subprocess
-import .config
+import config
 from backports import tempfile
 
 # Eventually, equivalents for

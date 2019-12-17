@@ -1,3 +1,4 @@
-#!/usr/bin/environment python333 -B
+#!/usr/bin/environment python3 -B
 
-from .gfm import *
+from gfm import *
+
