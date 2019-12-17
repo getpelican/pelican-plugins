@@ -3,6 +3,7 @@
 import sys
 import os
 import subprocess
+import shutil
 
 # Importing in python2 and python3 is different
 # for these for some reason. this should catch

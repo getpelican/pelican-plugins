@@ -3,6 +3,10 @@ Pelican GFM
 
 Pelican GFM is a reader that leverages GitHub's C-based markdown library to translate GitHub Flavored Markdown to html.
 
+## Note
+
+It is important to note that this currently only works on debian systems
+
 Requirements
 ============
 
