@@ -10,6 +10,7 @@ from backports import tempfile
 # other operating systems / package
 # managers could be written for this
 
+
 def dpkg_installed(package):
     """ Uses Dpkg to determine whether or not a package is installed
     requires: <package name>"""
@@ -52,7 +53,7 @@ def dpkg_packages_installed():
 
     if len(need_to_be_installed) is not 0:
         raise Exception("Could not find the following required\
- packages: " + need_to_be_installed )
+ packages: " + need_to_be_installed)
         ins = False
     else:
         ins = True

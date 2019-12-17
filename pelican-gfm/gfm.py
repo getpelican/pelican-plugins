@@ -101,6 +101,7 @@ F_register()
 # this could be moved into SETTINGS or somesuch, but meh. not needed now.
 OPTS = 0
 
+
 class GFMReader(pelican.readers.BaseReader):
     enabled = True
     """GFM-flavored Reader for the Pelican system.
