@@ -1,10 +1,22 @@
-#!/usr/bin/python3 -B
+#!/usr/bin/python -B
 
 import sys
 import os
 import subprocess
-import config
-from backports import tempfile
+
+# Importing in python2 and python3 is different
+# for these for some reason. this should catch
+# the issues either way
+
+try:
+    import tempfile
+except (ImportError, ValueError):
+    from backports import tempfile
+
+try:
+    from . import Settings
+except (ImportError, ValueError):
+    import Settings
 
 # Eventually, equivalents for
 # other operating systems / package
@@ -72,24 +84,26 @@ def setup():
         # Configure the environment if it's not already configured
 
         with tempfile.TemporaryDirectory() as WORKSPACE:
+            # Pull into the workspace
             subprocess.call([
                              "wget",
                              "--quiet",
-                             config.ARCHIVES + "/" + config.VERSION + ".tar.gz",
+                             Settings.ARCHIVES + "/" + Settings.VERSION + ".tar.gz",
                              WORKSPACE,
                              "-P",
                              WORKSPACE
                              ])
+            # Untar the files
             subprocess.call([
                              'tar',
                              'zxf',
-                             WORKSPACE + "/" + config.VERSION + ".tar.gz",
+                             WORKSPACE + "/" + Settings.VERSION + ".tar.gz",
                              "-C",
                              WORKSPACE
                              ]
                             )
-
-            BUILDSPACE = WORKSPACE + "/" + "cmark-gfm-" + config.VERSION + "/build"
+            # Create a buildspace for your cmake operation
+            BUILDSPACE = WORKSPACE + "/cmark-gfm-" + Settings.VERSION + "/build"
 
             if not os.path.isdir(BUILDSPACE):
                 os.mkdir(BUILDSPACE)
@@ -109,23 +123,22 @@ def setup():
             print("Moving files")
             subprocess.call([
                              "mv",
-                             BUILDSPACE + "/src/libcmark-gfm.so." + config.VERSION,
-                             config.LIBCMARKLOCATION + "libcmark-gfm.so"
+                             BUILDSPACE + "/src/libcmark-gfm.so." + Settings.VERSION,
+                             Settings.LIBCMARKLOCATION + "/libcmark-gfm.so"
                             ]
                             )
             subprocess.call([
                              "mv",
-                             BUILDSPACE + "/extensions/libcmark-gfmextensions.so." + config.VERSION,
-                             config.LIBCMARKLOCATION + "libcmark-gfmextensions.so"
+                             BUILDSPACE + "/extensions/libcmark-gfmextensions.so." + Settings.VERSION,
+                             Settings.LIBCMARKLOCATION + "/libcmark-gfmextensions.so"
                             ]
                             )
 
 
 def test_configuration():
     """ Tests to ensure that the files that the plugin needs are in place. """
-    CMARKPATH = config.LIBCMARKLOCATION + "/libcmark-gfm.so." + config.VERSION
-    if os.path.isfile(config.LIBCMARKLOCATION + "/libcmark-gfm.so") and \
-            os.path.isfile(config.LIBCMARKLOCATION + "/libcmark-gfmextensions.so"):
+    if os.path.isfile(Settings.LIBCMARKLOCATION + "/libcmark-gfm.so") and \
+            os.path.isfile(Settings.LIBCMARKLOCATION + "/libcmark-gfmextensions.so"):
         return True
     else:
         return False

@@ -1,4 +1,4 @@
-#!/usr/bin/python3 -B
+#!/usr/bin/python -B
 
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -29,10 +29,10 @@ import re
 import pelican.utils
 import pelican.signals
 import pelican.readers
-import gfmSetup
-import config
+from . import gfmSetup
+from . import Settings
 
-_LIBDIR = config.LIBCMARKLOCATION
+_LIBDIR = Settings.LIBCMARKLOCATION
 _LIBCMARK = 'libcmark-gfm.so'
 _LIBEXT = 'libcmark-gfmextensions.so'
 try:
@@ -61,8 +61,7 @@ F_cmark_parser_finish = cmark.cmark_parser_finish
 F_cmark_parser_finish.restype = ctypes.c_void_p
 F_cmark_parser_finish.argtypes = (ctypes.c_void_p,)
 
-F_cmark_parser_attach_syntax_extension = \
-        cmark.cmark_parser_attach_syntax_extension
+F_cmark_parser_attach_syntax_extension = cmark.cmark_parser_attach_syntax_extension
 F_cmark_parser_attach_syntax_extension.restype = ctypes.c_int
 F_cmark_parser_attach_syntax_extension.argtypes = (
                                                     ctypes.c_void_p,
@@ -105,7 +104,7 @@ OPTS = 0
 
 class GFMReader(pelican.readers.BaseReader):
     enabled = True
-    """GFM-flavored Reader for the Pelican system.
+    """GitHub Flavored Markdown Reader for the Pelican system.
 
     Pelican looks for all subclasses of BaseReader, and automatically
     registers them for the file extensions listed below. Thus, nothing
@@ -169,11 +168,11 @@ class GFMReader(pelican.readers.BaseReader):
             text = '\n'.join(lines[i:])
 
             # Render the markdown into HTML
-#                if sys.version_info >= (3, 0):
-#                    text = text.encode('utf-8')
-#                    content = self.render(text).decode('utf-8')
-#                else:
-            content = self.render(text)
+            if sys.version_info >= (3, 0):
+                text = text.encode('utf-8')
+                content = self.render(text).decode('utf-8')
+            else:
+                content = self.render(text)
 
         # Redo the slug for articles.
         if parts[0] == 'articles' and 'title' in metadata:
@@ -192,8 +191,8 @@ class GFMReader(pelican.readers.BaseReader):
 
         parser = F_cmark_parser_new(OPTS)
         assert parser
-        for name in config.EXTENSIONS:
-            ext = F_cmark_find_syntax_extension(name)
+        for name in Settings.EXTENSIONS:
+            ext = F_cmark_find_syntax_extension(name.encode('utf-8'))
             assert ext
             rv = F_cmark_parser_attach_syntax_extension(parser, ext)
             assert rv
@@ -209,9 +208,9 @@ class GFMReader(pelican.readers.BaseReader):
 
 def add_readers(readers):
     msg = "GFM plugin cannot find the required libcmark files.\
- Please run gfmSetup.configure() to build and\
+ Please run python gfmSetup.py to build and\
  configure the appropriate libcmark files"
-    if str(gfmSetup.test_configuration()) == "0":
+    if gfmSetup.test_configuration():
         readers.reader_classes['md'] = GFMReader
     else:
         raise Exception(msg)

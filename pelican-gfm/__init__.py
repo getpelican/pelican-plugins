@@ -1,4 +1,5 @@
-#!/usr/bin/environment python3 -B
+#!/usr/bin/environment python -B
 
-from gfm import *
-
+from .gfm import *
+from .gfmSetup import *
+from .Settings import *
