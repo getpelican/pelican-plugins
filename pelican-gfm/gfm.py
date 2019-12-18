@@ -48,8 +48,10 @@ try:
     cmark_ext = ctypes.CDLL(os.path.join(_LIBDIR, _LIBEXT))
 except OSError:
     raise ImportError(
-                      '%s not found. see build-mark.sh and gfm_reader.py'
-                      % _LIBCMARK
+                      '%s not found. run python3 gfmSetup.py as a\
+ user with write permisions to %s or change LIBCMARKLOCATION\
+ in Settings.py'
+                      % (_LIBCMARK, _LIBDIR)
                       )
 
 # Use ctypes to access the functions in libcmark-gfm
