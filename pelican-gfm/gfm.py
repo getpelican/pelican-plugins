@@ -29,8 +29,16 @@ import re
 import pelican.utils
 import pelican.signals
 import pelican.readers
-from . import gfmSetup
-from . import Settings
+
+try:
+    from . import gfmSetup
+except ImportError:
+    import gfmSetup
+
+try:
+    from . import Settings
+except:
+    import Settings
 
 _LIBDIR = Settings.LIBCMARKLOCATION
 _LIBCMARK = 'libcmark-gfm.so'
@@ -204,13 +212,15 @@ class GFMReader(pelican.readers.BaseReader):
 
 def add_readers(readers):
     msg = "GFM plugin cannot find the required libcmark files.\
- Please run python gfmSetup.py to build and\
- configure the appropriate libcmark files"
+ Please run python3 gfmSetup.py as a user with write permission \
+ to the directory into which the libcmark files will be placed."
     if gfmSetup.test_configuration():
         readers.reader_classes['md'] = GFMReader
+        return True
     else:
         raise Exception(msg)
 
 
 def register():
-    pelican.signals.readers_init.connect(add_readers)
+    reader = pelican.signals.readers_init.connect(add_readers)
+    return(reader)

@@ -4,6 +4,7 @@ import sys
 import os
 import subprocess
 import shutil
+import tarfile
 
 # Importing in python2 and python3 is different
 # for these for some reason. this should catch
@@ -89,20 +90,16 @@ def setup():
             subprocess.call([
                              "wget",
                              "--quiet",
-                             Settings.ARCHIVES + "/" + Settings.VERSION + ".tar.gz",
+                             os.path.join(Settings.ARCHIVES, Settings.VERSION + ".tar.gz"),
                              WORKSPACE,
                              "-P",
                              WORKSPACE
                              ])
+
             # Untar the files
-            subprocess.call([
-                             'tar',
-                             'zxf',
-                             WORKSPACE + "/" + Settings.VERSION + ".tar.gz",
-                             "-C",
-                             WORKSPACE
-                             ]
-                            )
+            tf = tarfile.open(os.path.join(WORKSPACE, Settings.VERSION + ".tar.gz"))
+            tf.extractall(path=WORKSPACE)
+
             # Create a buildspace for your cmake operation
             BUILDSPACE = WORKSPACE + "/cmark-gfm-" + Settings.VERSION + "/build"
 

@@ -37,6 +37,10 @@ Before Pelican GFM run it checks:
 If Pelican GFM finds that there is a configuration issue it will recommend that you run the following:
 	`python gfmSetup.py`
 
+## Testing
+
+There is a unittest written for gfm. the test will register and spawn a new reader and return true if there were no issues.
+
 Syntax
 ======
 This plugin leverages [GitHub Flavored Markdown](https://github.github.com/gfm/) in `md, markdown, mkd, mdown` files to generate html pages.
