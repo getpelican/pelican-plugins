@@ -1,24 +1,13 @@
-#!/usr/bin/python -B
+#!/usr/bin/python3 -B
+from __future__ import absolute_import
 
 import sys
 import os
 import subprocess
 import shutil
 import tarfile
-
-# Importing in python2 and python3 is different
-# for these for some reason. this should catch
-# the issues either way
-
-try:
-    import tempfile
-except (ImportError, ValueError):
-    from backports import tempfile
-
-try:
-    from . import Settings
-except (ImportError, ValueError):
-    import Settings
+import tempfile
+from . import Settings
 
 # Eventually, equivalents for
 # other operating systems / package

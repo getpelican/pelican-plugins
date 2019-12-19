@@ -1,5 +1,3 @@
 #!/usr/bin/environment python -B
-
+from __future__ import absolute_import
 from .gfm import *
-from .gfmSetup import *
-from .Settings import *
