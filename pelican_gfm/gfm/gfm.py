@@ -112,7 +112,8 @@ class GFMReader(pelican.readers.BaseReader):
 
     # NOTE: the builtin MarkdownReader must be disabled. Otherwise, it will be
     #       non-deterministic which Reader will be used for these files.
-    file_extensions = ['md', 'markdown', 'mkd', 'mdown']
+    #       See settings for the list of extensions.
+    file_extensions = Settings.FILE_EXTENSIONS
 
     # Metadata is specified as a single, colon-separated line, such as:
     #

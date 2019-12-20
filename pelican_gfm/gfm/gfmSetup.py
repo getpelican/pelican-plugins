@@ -13,20 +13,28 @@ from gfm import Settings
 # other operating systems / package
 # managers could be written for this
 
+# VARIABLES
+
+# Archive of GitHub's cmark-gfm files
+ARCHIVES = "https://github.com/github/cmark-gfm/archive"
+
+# Name of the tarball that will be downloaded
+LOCAL = "cmark-gfm.VERSION.orig.tar.gz"
+
 
 def dpkg_installed(package):
     """ Uses Dpkg to determine whether or not a package is installed
     requires: <package name>"""
-
     packages = subprocess.check_output(["dpkg", "-l"])
     if re.search(package, packages):
         return 0
     else:
         return 1
 
-
 def dpkg_packages_installed():
-    """ Checking to see if the appropriate packages are installed"""
+    """ Check to see if the packages required to download and 
+    make the cmark files are installed"""
+
     installed = ["cmake", "make", "wget"]
     removed = [
                 "libcmark-gfm-dev",
@@ -64,14 +72,11 @@ def dpkg_packages_installed():
 
 
 def setup():
-    dpkg_packages_installed()
-    sys.exit(0)
-
     if test_configuration() == 1:
         print("System appears to be configured")
     else:
-        # Configure the environment if it's not already configured
-
+        # Download, make, and place the libcmark files for gfm.
+        dpkg_packages_installed()
         with tempfile.TemporaryDirectory() as WORKSPACE:
             # Pull into the workspace
             subprocess.call([
@@ -120,11 +125,5 @@ def test_configuration():
     else:
         return False
 
-
-def configure():
-        print("Checking out the configuration")
-        setup()
-
-
 if __name__ == "__main__":
-    configure()
+    setup()
