@@ -17,15 +17,12 @@ from gfm import Settings
 def dpkg_installed(package):
     """ Uses Dpkg to determine whether or not a package is installed
     requires: <package name>"""
-    t1 = subprocess.Popen(["dpkg", "-l"], stdout=subprocess.PIPE)
-    t2 = subprocess.Popen([
-                            "grep",
-                            "-q",
-                            package
-                          ], stdout=subprocess.PIPE, stdin=t1.stdout)
-    data = t2.communicate()
-    ec = t2.wait()
-    return ec
+
+    packages = subprocess.check_output(["dpkg", "-l"])
+    if re.search(package, packages):
+        return 0
+    else:
+        return 1
 
 
 def dpkg_packages_installed():
@@ -68,6 +65,7 @@ def dpkg_packages_installed():
 
 def setup():
     dpkg_packages_installed()
+    sys.exit(0)
 
     if test_configuration() == 1:
         print("System appears to be configured")
