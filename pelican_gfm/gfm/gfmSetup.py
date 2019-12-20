@@ -7,7 +7,7 @@ import subprocess
 import shutil
 import tarfile
 import tempfile
-from . import Settings
+from gfm import Settings
 
 # Eventually, equivalents for
 # other operating systems / package

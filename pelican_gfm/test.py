@@ -1,10 +1,7 @@
 #!/usr/bin/python -B
-
+from __future__ import absolute_import
 import unittest
-
-# python2 and python3 differ on how to do this it seems
-
-import gfm
+from gfm import gfm
 
 class gfmTest(unittest.TestCase):
 

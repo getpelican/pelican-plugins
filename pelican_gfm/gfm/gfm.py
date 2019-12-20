@@ -30,8 +30,8 @@ import pelican.utils
 import pelican.signals
 import pelican.readers
 
-from . import gfmSetup
-from . import Settings
+from gfm import gfmSetup
+from gfm import Settings
 
 _LIBDIR = Settings.LIBCMARKLOCATION
 _LIBCMARK = 'libcmark-gfm.so'
