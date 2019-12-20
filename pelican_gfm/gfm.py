@@ -20,6 +20,7 @@
 #
 # gfm_reader.py -- GitHub-Flavored Markdown reader for Pelican
 #
+from __future__ import absolute_import
 import sys
 import os
 import ctypes
@@ -29,8 +30,8 @@ import pelican.utils
 import pelican.signals
 import pelican.readers
 
-import gfmSetup
-import Settings
+from . import gfmSetup
+from . import Settings
 
 _LIBDIR = Settings.LIBCMARKLOCATION
 _LIBCMARK = 'libcmark-gfm.so'

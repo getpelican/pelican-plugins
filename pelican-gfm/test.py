@@ -3,10 +3,8 @@
 import unittest
 
 # python2 and python3 differ on how to do this it seems
-try:
-    from .gfm import *
-except ImportError:
-    import gfm
+
+import gfm
 
 class gfmTest(unittest.TestCase):
 

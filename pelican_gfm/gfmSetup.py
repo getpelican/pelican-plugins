@@ -1,11 +1,13 @@
 #!/usr/bin/python3 -B
+from __future__ import absolute_import
+
 import sys
 import os
 import subprocess
 import shutil
 import tarfile
 import tempfile
-import Settings
+from . import Settings
 
 # Eventually, equivalents for
 # other operating systems / package
