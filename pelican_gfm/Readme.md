@@ -59,11 +59,11 @@ Ensure that `gfm` is on the list of plugins.
 
 ### Settings and Configuration
 
-The Settings.py file contains the configurables for pelican-gfm, namely:
-	- Location of the cmark lib files
-	- Version of the GitHub Cmark you wish to use
-	- CMark extensions you wish to use.
-	- File extensions to be evaluated by gfm
+The Settings.py file contains the configurables for Pelican GFM, namely:
+  * Location of the cmark lib files
+  * Version of the GitHub Cmark you wish to use
+  * CMark extensions you wish to use.
+  * File extensions to be evaluated by gfm
 
 ### Pre-Flight Checks
 
