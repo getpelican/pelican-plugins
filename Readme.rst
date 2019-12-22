@@ -209,6 +209,8 @@ Pelican Page Order        Adds a ``page_order`` attribute to all pages if one is
 
 Pelican Themes Generator  Generates theme screenshots from the Pelican Themes repository
 
+Pelican Time.Graphics     Easily embed Time.Graphics timelines in your Pelican articles
+
 pelican-rdf                Allows the processing of .rdf vocabularies, and the generation of a lightweight documentation.
 
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc

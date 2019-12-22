@@ -142,3 +142,6 @@
 [submodule "similar_posts"]
 	path = similar_posts
 	url = https://github.com/davidlesieur/similar_posts.git
+[submodule "pelican-timegraphics-plugin"]
+	path = pelican-timegraphics-plugin
+	url = https://github.com/johanvergeer/pelican-timegraphics-plugin.git
