@@ -255,6 +255,8 @@ Shaarli poster            Upload newly redacted articles onto a specified `Shaar
 
 Share post                Creates share URLs of article
 
+Shortener                 Create custom short links for the site. Works with Google Analytics.
+
 Show Source               Place a link to the source text of your posts.
 
 Similar Posts             Adds a list of similar posts to every article's context.
