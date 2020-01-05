@@ -63,7 +63,6 @@ class SitemapGenerator(object):
         self.now = datetime.now()
         self.siteurl = settings.get('SITEURL')
 
-
         self.default_timezone = settings.get('TIMEZONE', 'UTC')
         self.timezone = getattr(self, 'timezone', self.default_timezone)
         self.timezone = timezone(self.timezone)
@@ -232,14 +231,13 @@ class SitemapGenerator(object):
                                                'url',
                                                'save_as'])
 
-            for standard_page_url in ['index.html',
-                                      'archives.html',
-                                      'tags.html',
-                                      'categories.html']:
+            for standard_page in self.context['DIRECT_TEMPLATES']:
+                standard_page_url = self.context.get('{}_URL'.format(standard_page.upper()))
+                standard_page_save_as = self.context.get('{}_SAVE_AS'.format(standard_page.upper()))
                 fake = FakePage(status='published',
                                 date=self.now,
-                                url=standard_page_url,
-                                save_as=standard_page_url)
+                                url=standard_page_url or '{}.html'.format(standard_page),
+                                save_as=standard_page_save_as or '{}.html'.format(standard_page))
                 self.write_url(fake, fd)
 
             # add template pages
