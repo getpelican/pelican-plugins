@@ -11,7 +11,10 @@ from pelican import signals
 def iter3(seq):
     it = iter(seq)
     nxt = None
-    cur = next(it)
+    try:
+        cur = next(it)
+    except StopIteration:
+        return
     for prv in it:
         yield nxt, cur, prv
         nxt, cur = cur, prv
