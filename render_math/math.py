@@ -32,6 +32,7 @@ the math.  See README for more details.
 
 import os
 import sys
+import re
 
 from pelican import signals, generators
 
@@ -326,7 +327,7 @@ def rst_add_mathjax(content):
 
     # If math class is present in text, add the javascript
     # note that RST hardwires mathjax to be class "math"
-    if 'class="math"' in content._content:
+    if re.search("class=(((\"|')(.*? )?math( .*?)?\3)|(math[ />]))", content._content):
         content._content += "<script type='text/javascript'>%s</script>" % rst_add_mathjax.mathjax_script
 
 def process_rst_and_summaries(content_generators):
