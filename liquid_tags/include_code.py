@@ -111,24 +111,29 @@ def include_code(preprocessor, tag, markup):
         raise ValueError("Either title must be specified or filename must "
                          "be available")
 
-    open_tag = ''
-    close_tag = ''
-
-    open_tag = "<figure class='code'>\n<figcaption>"
+    open_tag = "<figure class='code'>\n"
     close_tag = "</figure>"
-    if not hide_all:
-        if not hide_filename:
-            title += " %s" % os.path.basename(src)
-            if lines:
-                title += " [Lines %s]" % lines
-            title = title.strip()
 
-            open_tag += "<span>{title}</span> ".format(title=title)
+    if not hide_all:
+        open_tag+= "<figcaption>"
+
+        if title:
+            open_tag += "<span class=\"liquid-tags-code-title\">{title}</span>".format(title=title.strip())
+
+        if not hide_filename:
+            filename = "%s" % os.path.basename(src)
+            open_tag += "<span class=\"liquid-tags-code-filename\">{filename}</span>".format(filename=filename.strip())
+
+        if lines:
+            lines = " [Lines %s]" % lines
+            open_tag += "<span class=\"liquid-tags-code-lines\">{lines}</span>".format(lines=lines.strip())
 
         if not hide_link:
             url = '/{0}/{1}'.format(code_dir, src)
             url = re.sub('/+', '/', url)
             open_tag += "<a href='{url}'>download</a>".format(url=url)
+
+        open_tag += "</figcaption>"
 
     # store HTML tags in the stash.  This prevents them from being
     # modified by markdown.

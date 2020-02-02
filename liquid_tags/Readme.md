@@ -120,7 +120,6 @@ plugin and add the following to your source document:
 The width and height are in pixels and are optional. If they are not specified,
 then the native video size will be used. The poster image is a preview image
 that is shown prior to initiating video playback.
-
 To link to a video file, make sure it is in a static directory, transmitted
 to your server, and available at the specified URL.
 
@@ -144,15 +143,21 @@ your source document:
     {% include_code /path/to/code.py [lang:python] [lines:X-Y] [:hidefilename:] [title] %}
 
 All arguments are optional but must be specified in the order shown above.
-If using `:hidefilename:`, a title must be provided as indicated above.
+
+    {% include_code /path/to/code.py lines:1-10 Test Example %}
+
+This example will show the first ten lines of the file.
+
+To hide filename, use `:hidefilename:`. If using `:hidefilename:`, a title must
+be provided.
+
+You can hide download link with `:hidelink:`. 
+
+If you would like to hide all three, i.e. title, filename and download link, use `:hideall:`.
+
+Following examples hides the filename.
 
     {% include_code /path/to/code.py lines:1-10 :hidefilename: Test Example %}
-
-This example will show the first ten lines of the file while hiding the actual
-filename.
-
-You can also hide download link and leave only filename with `:hidelink:`. If
-you would like to hide both title and Download link use `:hideall:`.
 
 The script must be in the `code` subdirectory of your content folder;
 the default location can be changed by specifying the directory in your
