@@ -142,3 +142,6 @@
 [submodule "similar_posts"]
 	path = similar_posts
 	url = https://github.com/davidlesieur/similar_posts.git
+[submodule "blur_thumbnails"]
+	path = blur_thumbnails
+	url = https://github.com/ELC/blur_thumbnails
