@@ -21,7 +21,7 @@ Settings
 ========================================  =======================================================
 Setting name (followed by default value)  What does it do?
 ========================================  =======================================================
-``ASCIIDOC_CMD = asciidoc``               Selects which utility to use for rendering. Will
+``ASCIIDOC_CMD = 'asciidoc'``             Selects which utility to use for rendering. Will
                                           autodetect utility if not provided.
 ``ASCIIDOC_OPTIONS = []``                 A list of options to pass to AsciiDoc. See the `manpage
                                           <http://www.methods.co.nz/asciidoc/manpage.html>`_.
