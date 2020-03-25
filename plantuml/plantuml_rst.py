@@ -78,9 +78,9 @@ def pelican_init(pelicanobj):
     try:
         if 'MD_EXTENSIONS' in pelicanobj.settings.keys(): # pre pelican 3.7.0
             pelicanobj.settings['MD_EXTENSIONS'].append(PlantUMLMarkdownExtension(config))
-        elif 'MARKDOWN' in pelicanobj.settings.keys() and \
-             not ('extension_configs' in pelicanobj.settings['MARKDOWN']['extension_configs']):  # from pelican 3.7.0
-            pelicanobj.settings['MARKDOWN']['extension_configs']['plantuml.plantuml_md'] = {}
+        #elif 'MARKDOWN' in pelicanobj.settings.keys() and \
+        #    not ('extension_configs' in pelicanobj.settings['MARKDOWN']['extension_configs']):  # from pelican 3.7.0
+        #   pelicanobj.settings['MARKDOWN']['extension_configs']['plantuml.plantuml_md'] = {}
     except:
         logger.error("[plantuml] Unable to configure plantuml markdown extension")
 
