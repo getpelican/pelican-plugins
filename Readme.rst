@@ -161,6 +161,8 @@ Mbox Reader               Generate articles automatically via email, given a pat
 
 More Categories           Multiple categories per article; nested categories (`foo/bar, foo/baz`)
 
+muextensions              Adds *PlantUML* and *Ditaa* rst directives.  This plugin is a stand alone Python package and is best installed directly via ``pip install muextensions``.  Instructions included in the README.rst.
+
 Multi Neighbors           Adds a list of newer articles and a list of older articles to every article's context.
 
 Multi parts posts         Allows you to write multi-part posts
