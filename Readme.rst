@@ -279,6 +279,8 @@ tag_cloud                 Provides a tag_cloud
 
 Textile Reader            Adds support for Textile markup
 
+`Theme Configuration`_    Allows themes to change Pelican's configuration settings via ``themeconf.py`` inside the theme directory
+
 Thumbnailer               Creates thumbnails for all of the images found under a specific directory
 
 Tipue Search              Serializes generated HTML to JSON that can be used by jQuery plugin - Tipue Search
@@ -301,6 +303,7 @@ Yuicompressor             Minify CSS and JS files on building step
 ========================  ===========================================================
 
 __ https://ace.c9.io
+.. _Theme Configuration: theme_config/
 
 Please refer to the ``Readme`` file in a plugin's folder for detailed information about
 that plugin.

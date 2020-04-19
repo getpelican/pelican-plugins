@@ -142,3 +142,6 @@
 [submodule "similar_posts"]
 	path = similar_posts
 	url = https://github.com/davidlesieur/similar_posts.git
+[submodule "theme_config"]
+	path = theme_config
+	url = https://github.com/openwall-com-au/pelican-plugins-theme_config.git
