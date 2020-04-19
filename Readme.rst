@@ -303,7 +303,7 @@ Yuicompressor             Minify CSS and JS files on building step
 ========================  ===========================================================
 
 __ https://ace.c9.io
-.. _Theme Configuration: theme_config/
+.. _Theme Configuration: https://github.com/openwall-com-au/pelican-plugins-theme_config
 
 Please refer to the ``Readme`` file in a plugin's folder for detailed information about
 that plugin.
