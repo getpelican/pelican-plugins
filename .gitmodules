@@ -142,3 +142,6 @@
 [submodule "similar_posts"]
 	path = similar_posts
 	url = https://github.com/davidlesieur/similar_posts.git
+[submodule "amtag_cloud"]
+	path = amtag_cloud
+	url = https://github.com/drJabber/amtag_cloud.git

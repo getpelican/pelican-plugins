@@ -43,6 +43,8 @@ Ace Editor                Replace default **<code>** by an Ace__ code editor wit
 
 Always modified           Copy created date metadata into modified date for easy "latest updates" indexes
 
+amtag_cloud               Produces tag cloud using Amcharts framework  
+
 AsciiDoc reader           Use AsciiDoc to write your posts.
 
 Asset management          Use the Webassets module to manage assets such as CSS and JS files.
