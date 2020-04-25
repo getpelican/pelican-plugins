@@ -64,7 +64,7 @@ def read_tags(filename):
     with pelican_open(filename) as text:
         tag = json.loads(text)
     return tag
-  
+
 #
 # guess if file is a image (e.g: a cover.jpg) :DONE:
 #
@@ -177,6 +177,14 @@ def process_album_header(generator, content, header):
         "cover": coverout,
         "tracks": tracks }
 
+def check_tag(tag):
+    return {
+        'artist': getattr(tag, 'artist', '(unknown)'),
+        'album': getattr(tag, 'album', '(unknown)'),
+        'title': getattr(tag, 'title', '(unknown)'),
+        'track': getattr(tag, 'track', 0),
+        'year': getattr(tag, 'year', 1970) }
+
 #
 # make .tags json file from audio file :DONE:
 #
@@ -195,6 +203,10 @@ def make_tags(infile, outfile):
             "title": '',
             "track": 0,
             "year": 1970 }
+    else:
+        tag = check_tag(tag)
+
+    tag['file'] = os.path.basename(infile)
 
     try:
         outtags = open(outfile, 'w')
@@ -202,16 +214,7 @@ def make_tags(infile, outfile):
         logger.exception('music: Could not open for writing {}'.format(outname))
         return
 
-    # tag() is an object, convert to dict.
-    t = {
-        "file": os.path.basename(infile),
-        "artist": tag.artist,
-        "album": tag.album,
-        "title": tag.title,
-        "track": tag.track,
-        "year": tag.year }
-
-    jss = json.dumps(t)
+    jss = json.dumps(tag)
     outtags.write(jss)
     outtags.close()
 
