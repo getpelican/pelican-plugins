@@ -91,7 +91,8 @@ def replace_music_entities(content):
     else:
         outputmusic = site + '/' + MUSIC_ROOT_OUTPUT
 
-    content._content = content._content.replace('{music}', outputmusic)
+    if content._content:
+        content._content = content._content.replace('{music}', outputmusic)
 
 #
 # generates a music_album context object from album header :DONE:
