@@ -81,6 +81,23 @@ are not specified, then the dimensions will be 640 (wide) by 390 (tall).
 If you experience issues with code generation (e.g., missing closing tags),
 add `SUMMARY_MAX_LENGTH = None` to your settings file.
 
+### Embedding just thumbnail
+
+If you do not want to add over megabyte of JS code to page you can embed linked
+thumbnail instead. To use that feature set `YOUTUBE_THUMB_ONLY` variable in your
+settings file. `YOUTUBE_THUMB_SIZE` variable controls dimensions of thumbnail
+with 4 sizes available:
+
+name  | xres | yres
+------|------|-----
+maxres| 1280 | 720
+sd    |  640 | 480
+hq    |  480 | 360
+mq    |  320 | 180
+
+Embedded thumbnails have CSS class 'youtube_video' which can be used to add
+'play' button above.
+
 ## Vimeo Tag
 To insert a Vimeo video into your content, enable the `liquid_tags.vimeo`
 plugin and add the following to your source document:
