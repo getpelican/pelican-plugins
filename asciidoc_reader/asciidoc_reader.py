@@ -13,6 +13,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 
 def call(cmd):
     """Calls a CLI command and returns the stdout as string."""
