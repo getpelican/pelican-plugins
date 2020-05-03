@@ -101,6 +101,8 @@ Footer Insert             Add standardized footer (e.g., author information) at 
 
 GA Page View              Display Google Analytics page views on individual articles and pages
 
+Google Adsense            Add Google Adsense in your static blog.
+
 Gallery                   Allows an article to contain an album of pictures
 
 Gist directive            This plugin adds a ``gist`` reStructuredText directive.
@@ -235,7 +237,7 @@ Random article            Generates a html file which redirect to a random artic
 
 Read More link            Inserts an inline "read more" or "continue" link into the last html element of the object summary
 
-Readtime                  Adds article estimated read time calculator to the site, in the form of '<n> minutes'. 
+Readtime                  Adds article estimated read time calculator to the site, in the form of '<n> minutes'.
 
 Related posts             Adds the ``related_posts`` variable to the article's context
 

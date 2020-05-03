@@ -142,3 +142,6 @@
 [submodule "similar_posts"]
 	path = similar_posts
 	url = https://github.com/davidlesieur/similar_posts.git
+[submodule "pelican-adsense"]
+	path = pelican-adsense
+	url = https://github.com/riquellopes/pelican-adsense.git
