@@ -8,6 +8,7 @@ This plugin:
 - Also adds the width of the contained image to any parent div.figures.
     - If RESPONSIVE_IMAGES == True, also adds style="max-width: 100%;"
 - Corrects alt text: if alt == image filename, set alt = ''
+- Inserts figure numbers into figure captions, if FIGURE_NUMBERS == True in your config file, or you have figure_numbers metadata in the article.
 
 TODO: Need to add a test.py for this plugin.
 
@@ -32,6 +33,7 @@ def content_object_init(instance):
     if instance._content is not None:
         content = instance._content
         soup = BeautifulSoup(content, 'html.parser')
+        fig_count = 0
 
         for img in soup(['img', 'object']):
             logger.debug('Better Fig. PATH: %s', instance.settings['PATH'])
@@ -126,6 +128,7 @@ def content_object_init(instance):
                 if img['alt'] == img['src']:
                     img['alt'] = ''
 
+            # Does this image belong to a Figure?
             fig = img.find_parent('div', 'figure')
             if fig:
                 if fig.get('style'):
@@ -133,8 +136,26 @@ def content_object_init(instance):
                 else:
                     fig['style'] = extra_style
 
+                # Should we add Figure numbers?
+                # TODO: you should probably be able to switch this on globally and off per post, too.
+                # Is FIGURE_NUMBERS = True in the global config, or does 'figure_numbers' exist in this articles metadata and is it true?
+
+                if ('FIGURE_NUMBERS' in instance.settings and instance.settings['FIGURE_NUMBERS']) \
+                    or 'figure_numbers' in instance.metadata:
+
+                    caption = fig.find('p', class_='caption')
+                    if caption and caption.string:
+                        logger.debug('Better Fig. Caption.string: ' + caption.string)
+                        fig_count += 1
+                        new_tag = soup.new_tag('span')
+                        new_tag['id'] = 'figure_{}'.format(fig_count)
+                        new_tag['class'] = 'figure_num'
+                        new_tag.string = 'Figure {}: '.format(fig_count)
+                        caption.string.insert_before(new_tag)
+
         instance._content = soup.decode()
 
 
 def register():
     signals.content_object_init.connect(content_object_init)
+
