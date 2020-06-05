@@ -23,7 +23,7 @@ SHOW_OUTPUT = logger.getEffectiveLevel() <= logging.DEBUG
 COMMANDS = {
     # '.ext': ('command {flags} {filename', 'silent_flag', 'verbose_flag')
     '.svg': ('svgo {flags} --input="{filename}" --output="{filename}"', '--quiet', ''),
-    '.jpg': ('jpegtran {flags} -copy none -optimize -outfile "{filename}" "{filename}"', '', '-v'),
+    '.jpg': ('jpegtran {flags} -copy none -optimize -progressive -outfile "{filename}" "{filename}"', '', '-v'),
     '.png': ('optipng {flags} "{filename}"', '--quiet', ''),
 }
 
