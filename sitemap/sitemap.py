@@ -11,14 +11,16 @@ from __future__ import unicode_literals
 import re
 import collections
 import os.path
+import logging
 
 from datetime import datetime
-from logging import warning, info
 from codecs import open
 from pytz import timezone
 
 from pelican import signals, contents
 from pelican.utils import get_date
+
+log = logging.getLogger(__name__)
 
 TXT_HEADER = """{0}/index.html
 {0}/archives.html
@@ -86,7 +88,7 @@ class SitemapGenerator(object):
         config = settings.get('SITEMAP', {})
 
         if not isinstance(config, dict):
-            warning("sitemap plugin: the SITEMAP setting must be a dict")
+            log.warning("sitemap plugin: the SITEMAP setting must be a dict")
         else:
             fmt = config.get('format')
             pris = config.get('priorities')
@@ -94,8 +96,8 @@ class SitemapGenerator(object):
             self.sitemapExclude = config.get('exclude', [])
 
             if fmt not in ('xml', 'txt'):
-                warning("sitemap plugin: SITEMAP['format'] must be `txt' or `xml'")
-                warning("sitemap plugin: Setting SITEMAP['format'] on `xml'")
+                log.warning("sitemap plugin: SITEMAP['format'] must be `txt' or `xml'")
+                log.warning("sitemap plugin: Setting SITEMAP['format'] on `xml'")
             elif fmt == 'txt':
                 self.format = fmt
                 return
@@ -109,28 +111,28 @@ class SitemapGenerator(object):
                 for k, v in pris.items():
                     if k in valid_keys and not isinstance(v, (int, float)):
                         default = self.priorities[k]
-                        warning("sitemap plugin: priorities must be numbers")
-                        warning("sitemap plugin: setting SITEMAP['priorities']"
-                                "['{0}'] on {1}".format(k, default))
+                        log.warning("sitemap plugin: priorities must be numbers")
+                        log.warning("sitemap plugin: setting SITEMAP['priorities']"
+                                    "['{0}'] on {1}".format(k, default))
                         pris[k] = default
                 self.priorities.update(pris)
             elif pris is not None:
-                warning("sitemap plugin: SITEMAP['priorities'] must be a dict")
-                warning("sitemap plugin: using the default values")
+                log.warning("sitemap plugin: SITEMAP['priorities'] must be a dict")
+                log.warning("sitemap plugin: using the default values")
 
             if isinstance(chfreqs, dict):
                 # .items() for py3k compat.
                 for k, v in chfreqs.items():
                     if k in valid_keys and v not in valid_chfreqs:
                         default = self.changefreqs[k]
-                        warning("sitemap plugin: invalid changefreq `{0}'".format(v))
-                        warning("sitemap plugin: setting SITEMAP['changefreqs']"
-                                "['{0}'] on '{1}'".format(k, default))
+                        log.warning("sitemap plugin: invalid changefreq `{0}'".format(v))
+                        log.warning("sitemap plugin: setting SITEMAP['changefreqs']"
+                                    "['{0}'] on '{1}'".format(k, default))
                         chfreqs[k] = default
                 self.changefreqs.update(chfreqs)
             elif chfreqs is not None:
-                warning("sitemap plugin: SITEMAP['changefreqs'] must be a dict")
-                warning("sitemap plugin: using the default values")
+                log.warning("sitemap plugin: SITEMAP['changefreqs'] must be a dict")
+                log.warning("sitemap plugin: using the default values")
 
     def write_url(self, page, fd):
 
@@ -152,8 +154,8 @@ class SitemapGenerator(object):
         try:
             lastdate = self.get_date_modified(page, lastdate)
         except ValueError:
-            warning("sitemap plugin: " + page.save_as + " has invalid modification date,")
-            warning("sitemap plugin: using date value as lastmod.")
+            log.warning("sitemap plugin: " + page.save_as + " has invalid modification date,")
+            log.warning("sitemap plugin: using date value as lastmod.")
         lastmod = format_date(lastdate)
 
         if isinstance(page, contents.Article):

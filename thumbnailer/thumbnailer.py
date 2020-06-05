@@ -10,7 +10,7 @@ try:
     from PIL import Image, ImageOps
     enabled = True
 except ImportError:
-    logging.warning("Unable to load PIL, disabling thumbnailer")
+    logger.warning("Unable to load PIL, disabling thumbnailer")
     enabled = False
 
 DEFAULT_IMAGE_DIR = "pictures"
@@ -84,7 +84,7 @@ class Resizer(object):
                 targeth = int(tmph)
                 resizer = self._exact_resize
 
-        logging.debug("Using resizer {0}".format(resizer.__name__))
+        logger.debug("Using resizer {0}".format(resizer.__name__))
         return resizer(targetw, targeth, image)
 
     def get_thumbnail_name(self, in_path):

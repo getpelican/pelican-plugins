@@ -12,14 +12,16 @@ from collections import defaultdict
 
 from pelican import signals
 
-from logging import warning
+import logging
+
+log = logging.getLogger(__name__)
 
 warning_message = """multi_part plugin: this plugin has been deprecated.
 The 'series' plugin provides better support for multi part articles.
 """
 
 def aggregate_multi_part(generator):
-    warning(warning_message)
+    log.warning(warning_message)
     multi_part = defaultdict(list)
 
     for article in generator.articles:

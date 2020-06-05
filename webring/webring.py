@@ -9,15 +9,17 @@ import re
 from six.moves.urllib.request import Request, urlopen
 from six.moves.urllib.error import URLError
 from collections import namedtuple
-from logging import warning
+import logging
 from operator import attrgetter
 
 from pelican import signals, utils
 
+log = logging.getLogger(__name__)
+
 try:
     import feedparser
 except ImportError:
-    warning('Webring Plugin: Failed to load dependency (feedparser)')
+    log.warning('Webring Plugin: Failed to load dependency (feedparser)')
 
 WEBRING_VERSION = '0.1'
 
@@ -93,21 +95,21 @@ def get_feed_html(feed_url):
         return urlopen(req).read().decode('utf-8')
     except URLError as e:
         if hasattr(e, 'reason'):
-            warning('webring plugin: failed to connect to feed url (%s).',
-                    feed_url, e.reason)
+            log.warning('webring plugin: failed to connect to feed url (%s).',
+                        feed_url, e.reason)
         if hasattr(e, 'code'):
-            warning('webring plugin: server returned %s error (%s).',
-                    e.code, feed_url)
+            log.warning('webring plugin: server returned %s error (%s).',
+                        e.code, feed_url)
     except ValueError as e:
-        warning('webring plugin: wrong url provided (%s).', e)
+        log.warning('webring plugin: wrong url provided (%s).', e)
 
 
 def get_feed_articles(feed_html, feed_url, settings):
     parsed_feed = feedparser.parse(feed_html)
 
     if parsed_feed.bozo:
-        warning('webring plugin: possible malformed or invalid feed (%s). '
-                'Error=%s', feed_url, parsed_feed.bozo_exception)
+        log.warning('webring plugin: possible malformed or invalid feed (%s). '
+                    'Error=%s', feed_url, parsed_feed.bozo_exception)
 
     articles = []
     for n, entry in enumerate(parsed_feed.entries):
@@ -134,7 +136,7 @@ def get_entry_datetime(entry):
     try:
         return utils.get_date(entry.get('published', ''))
     except ValueError:
-        warning(
+        log.warning(
             'Webring Plugin: Invalid date on feed entry titled "%s"'
             % entry.get('title', 'Unknown title'))
         return utils.SafeDatetime.now()
