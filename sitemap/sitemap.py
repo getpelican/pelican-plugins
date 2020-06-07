@@ -218,7 +218,7 @@ class SitemapGenerator(object):
         for article in self.context['articles']:
             pages += article.translations
 
-        info('writing {0}'.format(path))
+        log.info('writing {0}'.format(path))
 
         with open(path, 'w', encoding='utf-8') as fd:
 
