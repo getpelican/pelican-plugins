@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 import re
 import sys
+import six
 import unittest
 
 import pytest
@@ -10,7 +12,7 @@ if 'nosetests' in sys.argv[0]:
     raise unittest.SkipTest('Those tests are pytest-compatible only')
 
 @pytest.mark.parametrize(
-        'input,expected', [
+        'input, expected', [
             (
                 'test_data/main.c',
                 ('test_data/main.c', None, None, None, None, None, None, None)
@@ -62,8 +64,10 @@ class Object:
 
 class preprocessor:
     @classmethod
-    def func(*x, safe=False):
-        return ''.join([str(s) for s in x])
+    def func(cls, *x, **kwargs):
+        safe = kwargs.get('safe', False)
+        cls_s = "<class '%s.%s'>" % (cls.__module__, cls.__name__)
+        return '%s%s' % (cls_s, ''.join([str(s) for s in x]))
 
     def __init__(self):
         self.configs = Object()
