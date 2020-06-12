@@ -78,7 +78,7 @@ class LiquidTags(markdown.Extension):
             return func
         return dec
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         self.htmlStash = md.htmlStash
         md.registerExtension(self)
         if 'include_code' in _LiquidTagsPreprocessor._tags:
