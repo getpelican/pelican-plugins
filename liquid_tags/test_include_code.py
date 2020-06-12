@@ -81,10 +81,11 @@ class preprocessor:
                 'test_data/main.c',
                 (
                     '<class \'liquid_tags.test_include_code.preprocessor\'>'
-                    '<figure class=\'code\'>\n<figcaption>'
-                    '<span>main.c</span> '
+                    '<figure class=\'code\'>\n'
+                    '<figcaption>'
+                    '<span class="liquid-tags-code-filename">main.c</span>'
                     '<a href=\'/test_data/main.c\'>download</a>'
-                    '\n'
+                    '</figcaption>\n'
                     '\n'
                     '    #include <stdio.h>\n'
                     '    \n'
@@ -103,7 +104,7 @@ class preprocessor:
                 'test_data/main.c :hideall:',
                 (
                     '<class \'liquid_tags.test_include_code.preprocessor\'>'
-                    '<figure class=\'code\'>\n<figcaption>'
+                    '<figure class=\'code\'>\n'
                     '\n'
                     '\n'
                     '    #include <stdio.h>\n'
@@ -123,9 +124,11 @@ class preprocessor:
                 'test_data/main.c :hidefilename: C application',
                 (
                     '<class \'liquid_tags.test_include_code.preprocessor\'>'
-                    '<figure class=\'code\'>\n<figcaption>'
+                    '<figure class=\'code\'>\n'
+                    '<figcaption>'
+                    '<span class="liquid-tags-code-title">C application</span>'
                     '<a href=\'/test_data/main.c\'>download</a>'
-                    '\n'
+                    '</figcaption>\n'
                     '\n'
                     '    #include <stdio.h>\n'
                     '    \n'
@@ -144,9 +147,10 @@ class preprocessor:
                 'test_data/main.c :hidelink:',
                 (
                     '<class \'liquid_tags.test_include_code.preprocessor\'>'
-                    '<figure class=\'code\'>\n<figcaption>'
-                    '<span>main.c</span> '
-                    '\n'
+                    '<figure class=\'code\'>\n'
+                    '<figcaption>'
+                    '<span class="liquid-tags-code-filename">main.c</span>'
+                    '</figcaption>\n'
                     '\n'
                     '    #include <stdio.h>\n'
                     '    \n'
@@ -165,10 +169,11 @@ class preprocessor:
                 'test_data/main.c lang:c',
                 (
                     '<class \'liquid_tags.test_include_code.preprocessor\'>'
-                    '<figure class=\'code\'>\n<figcaption>'
-                    '<span>main.c</span> '
+                    '<figure class=\'code\'>\n'
+                    '<figcaption>'
+                    '<span class="liquid-tags-code-filename">main.c</span>'
                     '<a href=\'/test_data/main.c\'>download</a>'
-                    '\n'
+                    '</figcaption>\n'
                     '\n'
                     '    :::c\n'
                     '    #include <stdio.h>\n'
@@ -188,10 +193,12 @@ class preprocessor:
                 'test_data/main.c lines:4-6',
                 (
                     '<class \'liquid_tags.test_include_code.preprocessor\'>'
-                    '<figure class=\'code\'>\n<figcaption>'
-                    '<span>main.c [Lines 4-6]</span> '
+                    '<figure class=\'code\'>\n'
+                    '<figcaption>'
+                    '<span class="liquid-tags-code-filename">main.c</span>'
+                    '<span class="liquid-tags-code-lines">[Lines 4-6]</span>'
                     '<a href=\'/test_data/main.c\'>download</a>'
-                    '\n'
+                    '</figcaption>\n'
                     '\n'
                     '        printf("Hello world!");\n'
                     '    \n'
@@ -205,10 +212,11 @@ class preprocessor:
                 'test_data/main_cz.c codec:iso-8859-1',
                 (
                     '<class \'liquid_tags.test_include_code.preprocessor\'>'
-                    '<figure class=\'code\'>\n<figcaption>'
-                    '<span>main_cz.c</span> '
+                    '<figure class=\'code\'>\n'
+                    '<figcaption>'
+                    '<span class="liquid-tags-code-filename">main_cz.c</span>'
                     '<a href=\'/test_data/main_cz.c\'>download</a>'
-                    '\n'
+                    '</figcaption>\n'
                     '\n'
                     '    #include <stdio.h>\n'
                     '    \n'
@@ -227,10 +235,12 @@ class preprocessor:
                 'test_data/main.c C Application',
                 (
                     '<class \'liquid_tags.test_include_code.preprocessor\'>'
-                    '<figure class=\'code\'>\n<figcaption>'
-                    '<span>C Application main.c</span> '
+                    '<figure class=\'code\'>\n'
+                    '<figcaption>'
+                    '<span class="liquid-tags-code-title">C Application</span>'
+                    '<span class="liquid-tags-code-filename">main.c</span>'
                     '<a href=\'/test_data/main.c\'>download</a>'
-                    '\n'
+                    '</figcaption>\n'
                     '\n'
                     '    #include <stdio.h>\n'
                     '    \n'
