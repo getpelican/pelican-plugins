@@ -16,46 +16,42 @@ import re
 import os
 from functools import wraps
 
-# Define some regular expressions
-LIQUID_TAG = re.compile(r'\{%.*?%\}', re.MULTILINE | re.DOTALL)
-EXTRACT_TAG = re.compile(r'(?:\s*)(\S+)(?:\s*)')
 LT_CONFIG = { 'CODE_DIR': 'code',
               'NOTEBOOK_DIR': 'notebooks',
               'FLICKR_API_KEY': 'flickr',
-              'GIPHY_API_KEY': 'giphy'
+              'GIPHY_API_KEY': 'giphy',
+              'LT_DELIMITERS': ('{%', '%}'),
 }
 LT_HELP = { 'CODE_DIR' : 'Code directory for include_code subplugin',
             'NOTEBOOK_DIR' : 'Notebook directory for notebook subplugin',
             'FLICKR_API_KEY': 'Flickr key for accessing the API',
-            'GIPHY_API_KEY': 'Giphy key for accessing the API'
+            'GIPHY_API_KEY': 'Giphy key for accessing the API',
+            'LT_DELIMITERS': 'Alternative set of Liquid Tags block delimiters',
 }
 
 class _LiquidTagsPreprocessor(markdown.preprocessors.Preprocessor):
+    LT_FMT = r'{0}(?:\s*)(?P<tag>\S+)(?:\s*)(?P<markup>.*?)(?:\s*){1}'
+    LT_RE_FLAGS = re.MULTILINE | re.DOTALL | re.UNICODE
     _tags = {}
+
     def __init__(self, configs):
+        cls = self.__class__
+        liquid_tag_re = cls.LT_FMT.format(
+                *map(re.escape, configs.getConfig('LT_DELIMITERS')))
+        self.liquid_tag = re.compile(liquid_tag_re, cls.LT_RE_FLAGS)
         self.configs = configs
+
+    def expand_tag(self, match):
+        tag, markup = match.groups()
+        if tag in self.__class__._tags:
+            return self.__class__._tags[tag](self, tag, markup)
+        else:
+            return match[0]
 
     def run(self, lines):
         page = '\n'.join(lines)
-        liquid_tags = LIQUID_TAG.findall(page)
-
-        for i, markup in enumerate(liquid_tags):
-            # remove {% %}
-            markup = markup[2:-2]
-            tag = EXTRACT_TAG.match(markup).groups()[0]
-            markup = EXTRACT_TAG.sub('', markup, 1)
-            if tag in self._tags:
-                liquid_tags[i] = self._tags[tag](self, tag, markup.strip())
-
-        # add an empty string to liquid_tags so that chaining works
-        liquid_tags.append('')
-
-        # reconstruct string
-        page = ''.join(itertools.chain(*zip(LIQUID_TAG.split(page),
-                                            liquid_tags)))
-
-        # resplit the lines
-        return page.split("\n")
+        page = self.liquid_tag.sub(self.expand_tag, page)
+        return page.splitlines()
 
 
 class LiquidTags(markdown.Extension):
