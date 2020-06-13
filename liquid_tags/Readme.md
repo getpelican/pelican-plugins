@@ -258,8 +258,10 @@ comment line `# <!-- collapse=False -->` will be expanded on load but
 can be collapsed by tapping on their header. Cells without collapsed
 comments are rendered as standard code input cells.
 
-## Configuration settings in custom tags
 
+## Advanced features
+
+### Configuration settings in custom tags
 Tags do not have access to the full Pelicans settings, and instead arrange for 
 the variables to be passed to the tag.  For tag authors who plan to add their 
 tag as in-tree tags, they can just add the variables they need to an array in 
@@ -268,6 +270,15 @@ need by including a tuple of (variable, default value, helptext) in the
 user's `pelicanconf.py` settings:
 
     LIQUID_CONFIGS = (('PATH', '.', "The default path"), ('SITENAME', 'Default Sitename', 'The name of the site'))
+
+### Custom delimiters
+If you are using Liquid Tags in conjunction with some other plugin that also
+uses the `{%` and `%}` delimiters to mark its blocks, then chaos will occur.
+You can avoid the chaos by defining an alternative set of delimiters for 
+Liquid Tags. Just add them as a tuple in your `pelicanconf.py` settings:
+
+    LT_DELIMITERS = ('<+', '+>')
+
 
 ## Testing
 
