@@ -257,5 +257,13 @@ class preprocessor:
             ),
         ]
 )
+
 def test_create_html(input, expected):
-    assert include_code.include_code(preprocessor(), 'include_code', input) == expected
+    # output is returned as utf-8
+    output = include_code.include_code(preprocessor(), 'include_code', input)
+
+    # expected needs to be interpreted as utf-8 in python2
+    if six.PY2:
+        expected = expected.decode('utf-8')
+
+    assert output == expected
