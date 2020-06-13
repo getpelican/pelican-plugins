@@ -39,9 +39,11 @@ in the STATIC_PATHS setting, e.g.:
 """
 import re
 import os
-import sys
+import six
 from .mdx_liquid_tags import LiquidTags
 
+if six.PY2:
+    from io import open
 
 SYNTAX = "{% include_code /path/to/code.py [lang:python] [lines:X-Y] "\
          "[:hidefilename:] [:hidelink:] [:hideall:] [title] %}"
@@ -77,7 +79,7 @@ def include_code(preprocessor, tag, markup):
         argdict = match.groupdict()
         title = argdict['title'] or ""
         lang = argdict['lang']
-        codec = argdict['codec'] or "utf8"
+        codec = argdict['codec'] or "utf-8"
         lines = argdict['lines']
         hide_filename = bool(argdict['hidefilename'])
         hide_link = bool(argdict['hidelink'])
@@ -85,6 +87,9 @@ def include_code(preprocessor, tag, markup):
         if lines:
             first_line, last_line = map(int, lines.split("-"))
         src = argdict['src']
+
+    if not codec:
+        codec = 'utf-8'
 
     if not src:
         raise ValueError("Error processing input, "
@@ -95,9 +100,6 @@ def include_code(preprocessor, tag, markup):
 
     if not os.path.exists(code_path):
         raise ValueError("File {0} could not be found".format(code_path))
-
-    if not codec:
-        codec = 'utf-8'
 
     with open(code_path, encoding=codec) as fh:
         if lines:
@@ -145,18 +147,11 @@ def include_code(preprocessor, tag, markup):
     else:
         lang_include = ''
 
-    if sys.version_info[0] < 3:
-        source = (open_tag
-                  + '\n\n    '
-                  + lang_include
-                  + '\n    '.join(code.decode(codec).split('\n')) + '\n\n'
-                  + close_tag + '\n')
-    else:
-        source = (open_tag
-                  + '\n\n    '
-                  + lang_include
-                  + '\n    '.join(code.split('\n')) + '\n\n'
-                  + close_tag + '\n')
+    source = (open_tag
+              + '\n\n    '
+              + lang_include
+              + '\n    '.join(code.split('\n')) + '\n\n'
+              + close_tag + '\n')
 
     return source
 
