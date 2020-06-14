@@ -82,7 +82,7 @@ def parse_for_footnotes(article_or_page_generator):
                     ol.appendChild(li)
                     e.parentNode.removeChild(e)
                 dom.getElementsByTagName(u"body")[0].appendChild(ol)
-                s = html5lib.serializer.HTMLSerializer(omit_optional_tags=False, quote_attr_values='legacy')
+                s = html5lib.serializer.HTMLSerializer(omit_optional_tags=False, quote_attr_values='always')
                 output_generator = s.serialize(
                     html5lib.treewalkers.getTreeWalker(u"dom")(dom.getElementsByTagName(u"body")[0]))
                 article._content = u"".join(list(output_generator)).replace(
