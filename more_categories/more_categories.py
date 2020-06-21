@@ -41,7 +41,6 @@ class Category(URLWrapper):
             else:
                 subs = self.settings.get('SLUG_REGEX_SUBSTITUTIONS', [])
             self._slug = slugify(self.shortname, regex_subs=subs)
-            print(self._slug)
             if self.parent:
                 self._slug = self.parent.slug + '/' + self._slug
         return self._slug
