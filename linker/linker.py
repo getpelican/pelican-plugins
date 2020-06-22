@@ -67,7 +67,7 @@ class LinkerBase(object):
 
     """
     commands = [] # link commands handled by the Linker. EXAMPLE: ['mailto']
-    builtins = ['filename', 'attach', 'category', 'tag', 'author', 'index']
+    builtins = ['attach', 'author', 'category', 'filename', 'index', 'static', 'tag']
 
 
     def __init__(self, settings):

@@ -1,8 +1,8 @@
 # Linker
 
 This plugin allows to define custom linker commands in analogy to the builtin
-`{filename}`, `{attach}`, `{category}`, `{tag}`, `{author}`, and `{index}`
-syntax.
+`{attach}`, `{author}`, `{category}`, `{filename}`, `{index}`, `{static}` and
+`{tag}` syntax.
 
 ## Provided commands (each of which in its own submodule)
 
@@ -12,22 +12,29 @@ syntax.
 non-JS fallback.
 
 * **How the HTML code is replaced step by step**
-  * your code in a content file (page or article):
+
+  * Your code in a content file (page or article):
 
     ```
-    <a href="{mailto}webmaster" rel="nofollow">Send me a mail</a>
+    `Send me a mail <{mailtor}webmaster>`_
     ```
 
-  * plugin replacement (after computing `'jroznfgre' = rot_13('webmaster')`):
+  * Pelican generated output:
 
     ```
-    <a href="/mailto/jroznfgre/" rel="nofollow">Send me a mail</a>
+    <a href="{mailto}webmaster">Send me a mail</a>
     ```
 
-  * result of a JS-powered transform (which you could add):
+  * Plugin replacement (after computing `'jroznfgre' = rot_13('webmaster')`):
 
     ```
-    <a href="mailto:webmaster@example.com" rel="nofollow">Send me a mail</a>
+    <a href="/mailto/jroznfgre/">Send me a mail</a>
+    ```
+
+  * Result of a JS-powered transform (which you must add):
+
+    ```
+    <a href="mailto:webmaster@example.com">Send me a mail</a>
     ```
 
   * As a fallback for users without JS, the static page
@@ -35,15 +42,30 @@ non-JS fallback.
   `mailto_fallback`.
 
 * **Usage instruction**
-  * activate nested `{mailto}` plugin using
 
-    ```
+  * Activate nested `{mailto}` plugin using
+
+    ``
     PLUGINS = ['linker.mailto']
-    ```
+    ``
 
-  * provide the `mailto_fallback` template (accessing `mailto` which is injected
+  * Provide the `mailto_fallback` template (accessing `mailto` which is injected
   into the template)
-  * optionally, add some JS to improve the user experience as sketched above
+
+  * Add JS to the theme to improve the user experience as sketched above
+
+    ```
+    <script>
+        var pattern = new RegExp("mailto\/([a-z_\.\-]+)\/")
+        var a = document.querySelectorAll('a[href^="/mailto/"]');
+        for (var i = 0, len = a.length; i < len; i++) {
+            var match = pattern.exec(a[i])
+            if (match.length == 2) {
+                a[i].setAttribute('href', 'mailto:'+match[1].replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);})+'@example.com')
+            }
+        }
+    </script>
+    ```
 
 ## Other included submodules
 
