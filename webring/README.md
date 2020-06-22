@@ -1,5 +1,7 @@
 # Webring Plugin
 
+**NOTE: [This plugin has been moved to its own repository](https://github.com/pelican-plugins/webring). Please file any issues/PRs there. Once all plugins have been migrated to the [new Pelican Plugins organization](https://github.com/pelican-plugins), this monolithic repository will be archived.**
+
 This plugin retrieves the latest posts from a list of web feeds and makes
 them available in templates, effectively creating a [partial webring][1]. Posts
 are sorted from newer to older.

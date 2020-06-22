@@ -1,4 +1,7 @@
 # Subcategory Plugin
+
+**NOTE: [This plugin has been moved to its own repository](https://github.com/pelican-plugins/more-categories). Please file any issues/PRs there. Once all plugins have been migrated to the [new Pelican Plugins organization](https://github.com/pelican-plugins), this monolithic repository will be archived.**
+
 This plugin adds support for multiple categories per article, and for nested
 categories. It requires Pelican 4.0.0 or newer.
 

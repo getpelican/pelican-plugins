@@ -1,5 +1,8 @@
 Math Render Plugin For Pelican
 ==============================
+
+**NOTE: [This plugin has been moved to its own repository](https://github.com/pelican-plugins/render-math). Please file any issues/PRs there. Once all plugins have been migrated to the [new Pelican Plugins organization](https://github.com/pelican-plugins), this monolithic repository will be archived.**
+
 This plugin gives pelican the ability to render mathematics. It accomplishes
 this by using the [MathJax](http://www.mathjax.org/) javascript engine.
 

@@ -1,5 +1,7 @@
 # Jinja2 Content
 
+**NOTE: [This plugin has been moved to its own repository](https://github.com/pelican-plugins/jinja2content). Please file any issues/PRs there. Once all plugins have been migrated to the [new Pelican Plugins organization](https://github.com/pelican-plugins), this monolithic repository will be archived.**
+
 This plugin allows the use of Jinja2 directives inside your pelican articles and pages.
 
 In this approach, your content is *first* rendered by the Jinja template engine. The result
