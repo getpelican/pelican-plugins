@@ -71,6 +71,8 @@ Code include              Includes Pygments highlighted code in reStructuredText
 
 Collate content           Makes categories of content available to the template as lists through a ``collations`` attribute
 
+Cookie hint               Adds a small banner at the bottom of every html page which shows the user the this website uses cookies (DSGVO)
+
 Creole reader             Allows you to write your posts using the wikicreole syntax
 
 CSS HTML JS Minify        Minifies all CSS, HTML and JavaScript files in the output path after site generation.
