@@ -109,6 +109,8 @@ GitHub wiki               Converts a flat github wiki into a structured read onl
 
 GitHub activity           On the template side, you just have to iterate over the ``github_activity`` variable
 
+Gitversion                Adds template variables for git commit id and commit date
+
 Global license            Allows you to define a ``LICENSE`` setting and adds the contents of that license variable to the article's context
 
 Glossary                  Adds a variable containing definitions extracted from definition lists in articles and pages. This variable is visible to all page templates.
