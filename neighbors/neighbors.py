@@ -33,17 +33,14 @@ def get_translation(article, prefered_language):
 
 def set_neighbors(articles, next_name, prev_name):
     for nxt, cur, prv in iter3(articles):
-        exec("cur.{} = nxt".format(next_name))
-        exec("cur.{} = prv".format(prev_name))
+        setattr(cur, next_name, nxt)
+        setattr(cur, prev_name, prv)
 
         for translation in cur.translations:
-            exec(
-                "translation.{} = get_translation(nxt, translation.lang)"
-                .format(next_name))
-            exec(
-                "translation.{} = get_translation(prv, translation.lang)"
-                .format(prev_name))
-
+            setattr(translation, next_name,
+                    get_translation(nxt, translation.lang))
+            setattr(translation, prev_name,
+                    get_translation(prv, translation.lang))
 
 def neighbors(generator):
     set_neighbors(generator.articles, 'next_article', 'prev_article')
