@@ -22,6 +22,9 @@ def link_source_files(generator):
         getattr(generator, attr, None) for attr in PROCESS
         if getattr(generator, attr, None) is not None]
     # Work on each item
+    autoext_setting = generator.settings.get(
+        'SHOW_SOURCE_AUTOEXT', False
+    )
     for post in posts[0]:
         if not 'SHOW_SOURCE_ON_SIDEBAR' in generator.settings and \
             not 'SHOW_SOURCE_IN_SECTION' in generator.settings:
@@ -51,6 +54,10 @@ def link_source_files(generator):
                     )
             except Exception:
                 return
+            if autoext_setting:
+                copy_to_plain_name, __ = os.path.splitext(copy_to)
+                __, source_ext = os.path.splitext(post.source_path)
+                copy_to = copy_to_plain_name + source_ext
             # Format post source dict & populate
             out = dict()
             out['copy_raw_from'] = post.source_path

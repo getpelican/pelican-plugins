@@ -123,5 +123,10 @@ thus:
 
 This is the same behaviour for pages also.
 
+By default, the source file will be a ``.txt`` file, or have the extension
+specified by ``SHOW_SOURCE_FILENAME``. However, if ``SHOW_SOURCE_AUTOEXT`` 
+is set to ``True``, the ``.txt`` extension will be replaced by the actual
+extension of the source file.
+
 .. _`Sphinx`: http://www.sphinx-doc.org/
 .. _`pelican-bootstrap3`: https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3
