@@ -1,5 +1,13 @@
-from . import youtube
+import sys
+import unittest
+
 import pytest
+
+from . import youtube
+
+
+if "nosetests" in sys.argv[0]:
+    raise unittest.SkipTest("Those tests are pytest-compatible only")
 
 
 class configs:
