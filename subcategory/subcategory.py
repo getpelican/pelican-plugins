@@ -5,13 +5,12 @@
 Adds support for subcategories on pelican articles
 """
 import os
-from collections import defaultdict
 from operator import attrgetter
 from functools import partial
 
 from pelican import signals
 from pelican.urlwrappers import URLWrapper, Category
-from pelican.utils import (slugify, python_2_unicode_compatible)
+from pelican.utils import slugify
 
 from six import text_type
 
