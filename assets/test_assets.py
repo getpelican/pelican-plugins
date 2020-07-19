@@ -31,6 +31,7 @@ class TestWebAssets(unittest.TestCase):
         import assets
         self.temp_path = mkdtemp(prefix='pelicantests.')
         settings = {
+            'ASSET_CONFIG': [('sass_bin', 'scss')],
             'PATH': os.path.join(os.path.dirname(CUR_DIR), 'test_data', 'content'),
             'OUTPUT_PATH': self.temp_path,
             'PLUGINS': [assets],
