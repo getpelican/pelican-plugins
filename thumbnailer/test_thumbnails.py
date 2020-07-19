@@ -30,7 +30,7 @@ class ThumbnailerTests(TestCase):
     def testHeight(self):
         r = Resizer('aspect', '?x250', self.img_path)
         output = r.resize(self.img)
-        self.assertEqual((375, 250), output.size)
+        self.assertEqual((376, 250), output.size)
 
 class ThumbnailerFilenameTest(TestCase):
 
