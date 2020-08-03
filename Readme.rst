@@ -141,6 +141,8 @@ JPEG Reader               Create image gallery pages based on content of JPEG me
 
 Just table                Allows you to easily create and manage tables. You can embed the tables into posts with a simple way.
 
+Latex-Prerender           Enables displaying of latex equations without JS. Pure HTML and CSS, thanks to KaTex.
+
 Libravatar                Allows inclusion of user profile pictures from libravatar.org
 
 Link Class                Allows the insertion of class attributes into generated <a> elements (Markdown only)
