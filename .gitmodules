@@ -142,3 +142,6 @@
 [submodule "similar_posts"]
 	path = similar_posts
 	url = https://github.com/davidlesieur/similar_posts.git
+[submodule "bundler_cache_busting"]
+	path = bundler_cache_busting
+	url = https://github.com/ELC/bundler_cache_busting
