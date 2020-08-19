@@ -8,7 +8,7 @@ Requirements: Pelican 3.8 or higher
 
 from pelican import signals
 from pelican.urlwrappers import URLWrapper
-from pelican.utils import (slugify, python_2_unicode_compatible)
+from pelican.utils import slugify
 
 from collections import defaultdict
 from six import text_type

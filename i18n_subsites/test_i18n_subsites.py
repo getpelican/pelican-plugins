@@ -136,4 +136,4 @@ class TestFullRun(unittest.TestCase):
              self.temp_path], env={'PAGER': ''},
             stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
         self.assertFalse(out, 'non-empty `diff` stdout:\n{}'.format(out))
-        self.assertFalse(err, 'non-empty `diff` stderr:\n{}'.format(out))
+        self.assertFalse(err, 'non-empty `diff` stderr:\n{}'.format(err))
