@@ -16,7 +16,7 @@ from pelican import signals
 logger = logging.getLogger(__name__)
 
 # A list of file types to exclude from possible compression
-EXCLUDE_TYPES = [
+EXCLUDE_TYPES = (
     # Compressed types
     '.bz2',
     '.gz',
@@ -43,7 +43,7 @@ EXCLUDE_TYPES = [
     # but it's not worth it.
     '.woff',
     '.woff2',
-]
+)
 
 COMPRESSION_LEVEL = 9 # Best Compression
 
@@ -63,21 +63,25 @@ def create_gzip_cache(pelican):
 
     :param pelican: The Pelican instance
     '''
+    user_exclude_types = pelican.settings.get('GZIP_CACHE_EXCLUDE_TYPES', ())
+    overwrite = should_overwrite(pelican.settings)
     for dirpath, _, filenames in os.walk(pelican.settings['OUTPUT_PATH']):
         for name in filenames:
-            if should_compress(name):
+            if should_compress(name, user_exclude_types):
                 filepath = os.path.join(dirpath, name)
-                create_gzip_file(filepath, should_overwrite(pelican.settings))
+                create_gzip_file(filepath, overwrite)
 
 
-def should_compress(filename):
+def should_compress(filename, user_exclude_types):
     '''Check if the filename is a type of file that should be compressed.
 
     :param filename: A file name to check against
+    :param user_exclude_types: User-supplied list of extensions to exclude
     '''
-    for extension in EXCLUDE_TYPES:
-        if filename.endswith(extension):
-            return False
+    if filename.endswith(EXCLUDE_TYPES):
+        return False
+    if filename.endswith(user_exclude_types):
+        return False
 
     return True
 

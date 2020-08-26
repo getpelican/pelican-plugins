@@ -32,16 +32,24 @@ def temporary_folder():
 class TestGzipCache(unittest.TestCase):
 
     def test_should_compress(self):
-        # Some filetypes should compress and others shouldn't.
-        self.assertTrue(gzip_cache.should_compress('foo.html'))
-        self.assertTrue(gzip_cache.should_compress('bar.css'))
-        self.assertTrue(gzip_cache.should_compress('baz.js'))
-        self.assertTrue(gzip_cache.should_compress('foo.txt'))
+        user_exclude_types = ()
 
-        self.assertFalse(gzip_cache.should_compress('foo.gz'))
-        self.assertFalse(gzip_cache.should_compress('bar.png'))
-        self.assertFalse(gzip_cache.should_compress('baz.mp3'))
-        self.assertFalse(gzip_cache.should_compress('foo.mov'))
+        # Some filetypes should compress and others shouldn't.
+        self.assertTrue(gzip_cache.should_compress('foo.html', user_exclude_types))
+        self.assertTrue(gzip_cache.should_compress('bar.css', user_exclude_types))
+        self.assertTrue(gzip_cache.should_compress('baz.js', user_exclude_types))
+        self.assertTrue(gzip_cache.should_compress('foo.txt', user_exclude_types))
+
+        self.assertFalse(gzip_cache.should_compress('foo.gz', user_exclude_types))
+        self.assertFalse(gzip_cache.should_compress('bar.png', user_exclude_types))
+        self.assertFalse(gzip_cache.should_compress('baz.mp3', user_exclude_types))
+        self.assertFalse(gzip_cache.should_compress('foo.mov', user_exclude_types))
+
+        user_exclude_types = ('.html', '.xyz')
+        self.assertFalse(gzip_cache.should_compress('foo.html', user_exclude_types))
+        self.assertFalse(gzip_cache.should_compress('bar.xyz', user_exclude_types))
+        self.assertFalse(gzip_cache.should_compress('foo.gz', user_exclude_types))
+        self.assertTrue(gzip_cache.should_compress('baz.js', user_exclude_types))
 
     def test_should_overwrite(self):
         # Default to false if GZIP_CACHE_OVERWRITE is not set
