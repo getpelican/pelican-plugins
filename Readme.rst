@@ -45,7 +45,7 @@ Plugin descriptions
 ========================  ===========================================================
 Plugin                    Description
 ========================  ===========================================================
-Ace Editor                Replace default **<code>** by an Ace__ code editor with settings configure on pelicanconf.py.
+Ace Editor                Replace default **<code>** by an `Ace <https://ace.c9.io>`__ code editor with settings configure on pelicanconf.py.
 
 Always modified           Copy created date metadata into modified date for easy "latest updates" indexes
 
@@ -109,7 +109,7 @@ GA Page View              Display Google Analytics page views on individual arti
 
 Gallery                   Allows an article to contain an album of pictures
 
-Gist directive            This plugin adds a ``gist`` reStructuredText directive.
+Gist directive            This plugin adds a ``gist`` reStructuredText directive. To install the latest version from Pypi: ``pip install pelican-gist`` - `Source repository <https://github.com/streeter/pelican-gist>`__
 
 GitHub wiki               Converts a flat github wiki into a structured read only wiki on your site
 
@@ -163,7 +163,7 @@ Markdown-metaYAML         Pelican reader to enable YAML-style metadata in markdo
 
 Math Render               Gives pelican the ability to render mathematics
 
-Mbox Reader               Generate articles automatically via email, given a path to a Unix mbox
+Mbox Reader               Generate articles automatically via email, given a path to a Unix mbox. To install the latest version from Pypi: ``pip install pelican-mboxreader`` - `Source repository <https://github.com/TC01/pelican-mboxreader>`__
 
 More Categories           Multiple categories per article; nested categories (`foo/bar, foo/baz`)
 
@@ -193,13 +193,13 @@ Pelican Comment System    Allows you to add static comments to your articles
 
 pelican-ert               Allows you to add estimated reading time of an article
 
-Pelican-flickr            Brings your Flickr photos & sets into your static website
+Pelican-flickr            Brings your Flickr photos & sets into your static website. To install the latest version from Pypi: ``pip install pelican-flickr`` - `Source repository <https://github.com/La0/pelican-flickr>`__
 
 Pelican Genealogy         Add surnames and people so metadata and context can be accessed from within a theme to provide surname and person pages
 
 Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
 
-Pelican Github Projects   Embed a list of your public GitHub projects in your pages
+Pelican Github Projects   Embed a list of your public GitHub projects in your pages. To install the latest version from Pypi: ``pip install pelican-githubprojects`` - `Source repository <https://github.com/kura/pelican-githubprojects>`__
 
 pelican_javascript        Allows you to embed Javascript and CSS files into individual articles
 
@@ -207,7 +207,7 @@ Pelican Jinja2Content     Allows the use of Jinja2 template code in articles, in
 
 Pelican Link Class        Set class attribute of ``<a>`` elements according to whether the link is external or internal
 
-Pelican Meetup Info       Include your Meetup.com group and event information on generated pages and articles
+Pelican Meetup Info       Include your Meetup.com group and event information on generated pages and articles. To install the latest version from Pypi: ``pip install pelican_meetup_info`` - `Source repository <https://github.com/tylerdave/pelican-meetup-info>`__
 
 Pelican Page Hierarchy    Creates a URL hierarchy for pages that matches the filesystem hierarchy of their sources
 
@@ -219,11 +219,11 @@ pelican-rdf                Allows the processing of .rdf vocabularies, and the g
 
 pelican-toc               Generates a Table of Contents and make it available to the theme via article.toc
 
-Pelican Vimeo             Enables you to embed Vimeo videos in your pages and articles
+Pelican Vimeo             Enables you to embed Vimeo videos in your pages and articles. To install the latest version from Pypi: ``pip install pelican-vimeo`` - `Source repository <https://github.com/kura/pelican_vimeo>`__
 
-Pelican YouTube           Enables you to embed YouTube videos in your pages and articles
+Pelican YouTube           Enables you to embed YouTube videos in your pages and articles. To install the latest version from Pypi: ``pip install pelican-youtube`` - `Source repository <https://github.com/kura/pelican_youtube>`__
 
-pelicanfly                Lets you type things like ``i ♥ :fa-coffee:`` in your Markdown documents and have it come out as little Font Awesome icons in the browser
+pelicanfly                Lets you type things like ``i ♥ :fa-coffee:`` in your Markdown documents and have it come out as little Font Awesome icons in the browser. To install the latest version from Pypi: ``pip install pelicanfly`` - `Source repository <https://github.com/bmcorser/pelicanfly>`__
 
 Photos                    Add a photo or a gallery of photos to an article, or include photos in the body text. Resize photos as needed.
 
@@ -303,10 +303,9 @@ Webring                   Add a webring to your site from a list of web feeds (e
 
 W3C validate              Submits generated HTML content to the W3C Markup Validation Service
 
+
 Yuicompressor             Minify CSS and JS files on building step
 ========================  ===========================================================
-
-__ https://ace.c9.io
 
 Please refer to the ``Readme`` file in a plugin's folder for detailed information about
 that plugin.
