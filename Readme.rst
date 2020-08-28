@@ -195,6 +195,8 @@ pelican-ert               Allows you to add estimated reading time of an article
 
 Pelican-flickr            Brings your Flickr photos & sets into your static website
 
+pelican-gfm               A reader that uses GitHub's C based cmark libraries to translate .md files
+
 Pelican Genealogy         Add surnames and people so metadata and context can be accessed from within a theme to provide surname and person pages
 
 Pelican Gist tag          Easily embed GitHub Gists in your Pelican articles
