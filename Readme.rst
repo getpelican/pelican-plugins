@@ -274,7 +274,7 @@ Post Revision                                                     `❎ <https://
 
 `Reddit poster <./reddit_poster>`_                                                                                                          You can use the 'subreddit' attribute in you articles to specify which subbreddit the article should be post in aside of your default sub.
 
-`Related posts <./related_posts>`_                                                                                                          Adds the ``related_posts`` variable to the article's context
+Related posts                                                     `✅ <https://github.com/pelican-plugins/related-posts>`_                  Adds the ``related_posts`` variable to the article's context
 
 Render Math                                                       `✅ <https://github.com/pelican-plugins/render-math>`_                    Render mathematics in content via the MathJax Javascript engine
 
@@ -316,7 +316,7 @@ Sitemap                                                           `✅ <https://
 
 `Textile Reader <./textile_reader>`_                                                                                                        Adds support for Textile markup
 
-`Thumbnailer <./thumbnailer>`_                                                                                                              Creates thumbnails for all of the images found under a specific directory
+Thumbnailer                                                       `✅ <https://github.com/pelican-plugins/thumbnailer>`_                    Creates thumbnails for all of the images found under a specific directory
 
 `Tipue Search <./tipue_search>`_                                                                                                            Serializes generated HTML to JSON that can be used by jQuery plugin - Tipue Search
 
