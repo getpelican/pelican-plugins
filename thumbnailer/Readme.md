@@ -1,6 +1,10 @@
 Thumbnail Creation of images
 ============================
 
+**NOTE:** `This plugin has been moved to its own repository <https://github.com/pelican-plugins/thumbnailer>`_. Please file any issues/PRs there. Once all plugins have been migrated to the `new Pelican Plugins organization <https://github.com/pelican-plugins>`_, this monolithic repository will be archived.
+
+-------------------------------------------------------------------------------
+
 This plugin creates thumbnails for all of the images found under a specific directory, in various thumbnail sizes.
 It requires `PIL` to function properly since `PIL` is used to resize the images, and the thumbnail will only be re-built
 if it doesn't already exist (to save processing time).
