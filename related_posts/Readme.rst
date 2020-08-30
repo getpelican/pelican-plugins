@@ -1,6 +1,10 @@
 Related posts
 -------------
 
+**NOTE:** `This plugin has been moved to its own repository <https://github.com/pelican-plugins/related-posts>`_. Please file any issues/PRs there. Once all plugins have been migrated to the `new Pelican Plugins organization <https://github.com/pelican-plugins>`_, this monolithic repository will be archived.
+
+-------------------------------------------------------------------------------
+
 This plugin adds the ``related_posts`` variable to the article's context.
 By default, up to 5 articles are listed. You can customize this value by 
 defining ``RELATED_POSTS_MAX`` in your settings file::
