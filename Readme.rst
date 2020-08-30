@@ -46,13 +46,13 @@ Migration status:
 
 * (blank): Local hosted plugin is still waiting for migration work.
 * ⚠️ : Deprecated. Can be safely removed from this repository.
-* ❎: Externally maintained plugins that do not need explicit migration from the mono-repo. Migration work need to happen in the original owners' repo.
+* ✔ : Externally maintained plugins that do not need explicit migration from the mono-repo. Migration work need to happen in the original owners' repo.
 * ✅: Repository has been migrated to `Pelican Plugins`_ organization.
 
 ================================================================  ========================================================================  ===========================================================
-Plugin                                                            Migration                                                                 Description
+Plugin                                                            ℹ️                                                                         Description
 ================================================================  ========================================================================  ===========================================================
-Ace Editor                                                        `❎ <https://github.com/mothsART/ace_editor>`_                            Replace default **<code>** by an Ace__ code editor with settings configure on pelicanconf.py.
+Ace Editor                                                        `✔  <https://github.com/mothsART/ace_editor>`_                            Replace default **<code>** by an Ace__ code editor with settings configure on pelicanconf.py.
 
 `Always modified <./always_modified>`_                                                                                                      Copy created date metadata into modified date for easy "latest updates" indexes
 
@@ -64,9 +64,9 @@ Ace Editor                                                        `❎ <https://
 
 `Auto Pages <./autopages>`_                                                                                                                 Generate custom content for generated Author, Category, and Tag pages (e.g. author biography)
 
-Backref Translate                                                 `❎ <https://github.com/daltonmatos/pelican-plugin-backref-translate>`_   Add a new attribute (``is_translation_of``) to every article/page (which is a translation) pointing back to the original article/page which is being translated
+Backref Translate                                                 `✔  <https://github.com/daltonmatos/pelican-plugin-backref-translate>`_   Add a new attribute (``is_translation_of``) to every article/page (which is a translation) pointing back to the original article/page which is being translated
 
-Better code samples                                               `❎ <https://github.com/classner/better_code_samples>`_                   Wraps ``table`` blocks with ``div > .hilitewrapper > .codehilitetable`` class attribute, allowing for scrollable code blocks.
+Better code samples                                               `✔  <https://github.com/classner/better_code_samples>`_                   Wraps ``table`` blocks with ``div > .hilitewrapper > .codehilitetable`` class attribute, allowing for scrollable code blocks.
 
 `Better code line numbers <./better_codeblock_line_numbering>`_                                                                             Allow code blocks with line numbers to wrap
 
@@ -76,13 +76,13 @@ Better code samples                                               `❎ <https://
 
 `bootstrap-rst <./bootstrap-rst>`_                                                                                                          Provides most (though not all) of Bootstrap's features as rst directives
 
-bootstrapify                                                      `❎ <https://github.com/ingwinlu/pelican-bootstrapify>`_                  Automatically add bootstraps default classes to your content
+bootstrapify                                                      `✔  <https://github.com/ingwinlu/pelican-bootstrapify>`_                  Automatically add bootstraps default classes to your content
 
 `Category meta <./category_meta>`_                                                                                                          Read metadata for each category from an index file in that category's directory.
 
-Category Order                                                    `❎ <https://github.com/jhshi/pelican.plugins.category_order>`_           Order categories (and tags) by the number of articles in that category (or tag).
+Category Order                                                    `✔  <https://github.com/jhshi/pelican.plugins.category_order>`_           Order categories (and tags) by the number of articles in that category (or tag).
 
-CJK auto spacing                                                  `❎ <https://github.com/yuex/cjk-auto-spacing>`_                          Inserts spaces between Chinese/Japanese/Korean characters and English words
+CJK auto spacing                                                  `✔  <https://github.com/yuex/cjk-auto-spacing>`_                          Inserts spaces between Chinese/Japanese/Korean characters and English words
 
 `Clean summary <./clean_summary>`_                                                                                                          Cleans your summary of excess images
 
@@ -100,11 +100,11 @@ CJK auto spacing                                                  `❎ <https://
 
 `Dateish <./dateish>`_                                                                                                                      Treat arbitrary metadata fields as datetime objects
 
-Dead Links                                                        `❎ <https://github.com/silentlamb/pelican-deadlinks>`_                   Manage dead links (website not available, errors such as 403, 404)
+Dead Links                                                        `✔  <https://github.com/silentlamb/pelican-deadlinks>`_                   Manage dead links (website not available, errors such as 403, 404)
 
 `Disqus static comments <./disqus_static>`_                                                                                                 Adds a disqus_comments property to all articles. Comments are fetched at generation time using disqus API
 
-Encrypt content                                                   `❎ <https://github.com/mindcruzer/pelican-encrypt-content>`_             Password protect pages and articles
+Encrypt content                                                   `✔  <https://github.com/mindcruzer/pelican-encrypt-content>`_             Password protect pages and articles
 
 `Events <./events>`_                                                                                                                        Add event start, duration, and location info to post metadata to generate an iCalendar file
 
@@ -112,7 +112,7 @@ Encrypt content                                                   `❎ <https://
 
 `Feed summary <./feed_summary>`_                                  ⚠️                                                                         Allows article summaries to be used in ATOM and RSS feeds instead of the entire article.
 
-Figure References                                                 `❎ <https://github.com/cmacmackin/figure-ref>`_                          Provides a system to number and references figures
+Figure References                                                 `✔  <https://github.com/cmacmackin/figure-ref>`_                          Provides a system to number and references figures
 
 `Filetime from Git <./filetime_from_git>`_                                                                                                  Uses Git commit to determine page date
 
@@ -120,7 +120,7 @@ Figure References                                                 `❎ <https://
 
 `Footer Insert <./footer_insert>`_                                                                                                          Add standardized footer (e.g., author information) at end of every article
 
-GA Page View                                                      `❎ <https://github.com/jhshi/pelican.plugins.ga_page_view>`_             Display Google Analytics page views on individual articles and pages
+GA Page View                                                      `✔  <https://github.com/jhshi/pelican.plugins.ga_page_view>`_             Display Google Analytics page views on individual articles and pages
 
 `Gallery <./gallery>`_                                                                                                                      Allows an article to contain an album of pictures
 
@@ -152,7 +152,7 @@ GA Page View                                                      `❎ <https://
 
 `ical <./ical>`_                                                                                                                            Looks for and parses an ``.ics`` file if it is defined in a given page's ``calendar`` metadata.
 
-Image Process                                                     `❎ <https://github.com/whiskyechobravo/image_process>`_                  Automates the processing of images based on their class attributes
+Image Process                                                     `✔  <https://github.com/whiskyechobravo/image_process>`_                  Automates the processing of images based on their class attributes
 
 `Interlinks <./interlinks>`_                                                                                                                Lets you add frequently used URLs to your markup using short keywords
 
@@ -160,19 +160,19 @@ Jinja2 Content                                                    `✅ <https://
 
 `JPEG Reader <./jpeg_reader>`_                                                                                                              Create image gallery pages based on content of JPEG metadata
 
-Just table                                                        `❎ <https://github.com/burakkose/just_table>`_                           Allows you to easily create and manage tables. You can embed the tables into posts with a simple way.
+Just table                                                        `✔  <https://github.com/burakkose/just_table>`_                           Allows you to easily create and manage tables. You can embed the tables into posts with a simple way.
 
 `Libravatar <./libravatar>`_                                                                                                                Allows inclusion of user profile pictures from libravatar.org
 
-Lightbox                                                          `❎ <https://github.com/kura/lightbox>`_                                  A pure CSS lightbox for Pelican.
+Lightbox                                                          `✔  <https://github.com/kura/lightbox>`_                                  A pure CSS lightbox for Pelican.
 
 `Linker <./linker>`_                                                                                                                        Allows the definition of custom linker commands in analogy to the builtin ``{filename}``, ``{attach}``, ``{category}``, ``{tag}``, ``{author}``, and ``{index}`` syntax
 
 `Liquid-style tags <./liquid_tags>`_                                                                                                        Allows liquid-style tags to be inserted into markdown within Pelican documents
 
-Load CSV                                                          `❎ <https://github.com/e9t/pelican-loadcsv>`_                            Adds ``csv`` Jinja tag to display the contents of a CSV file as an HTML table
+Load CSV                                                          `✔  <https://github.com/e9t/pelican-loadcsv>`_                            Adds ``csv`` Jinja tag to display the contents of a CSV file as an HTML table
 
-Markdown-metaYAML                                                 `❎ <https://github.com/joachimneu/pelican-md-metayaml>`_                 Pelican reader to enable YAML-style metadata in markdown articles
+Markdown-metaYAML                                                 `✔  <https://github.com/joachimneu/pelican-md-metayaml>`_                 Pelican reader to enable YAML-style metadata in markdown articles
 
 `Markdown Inline Extension <./md_inline_extension>`_                                                                                        Enables you to add customize inline patterns to your markdown
 
@@ -180,89 +180,89 @@ Markdown-metaYAML                                                 `❎ <https://
 
 More Categories                                                   `✅ <https://github.com/pelican-plugins/more-categories>`_                Multiple categories per article; nested categories (`foo/bar, foo/baz`)
 
-Multi Neighbors                                                   `❎ <https://github.com/davidlesieur/multi_neighbors>`_                   Adds a list of newer articles and a list of older articles to every article's context.
+Multi Neighbors                                                   `✔  <https://github.com/davidlesieur/multi_neighbors>`_                   Adds a list of newer articles and a list of older articles to every article's context.
 
 `Multi parts posts <./multi_part>`_                                                                                                         Allows you to write multi-part posts
 
-MultiMarkdown reader                                              `❎ <https://github.com/dames57/multimarkdown_reader>`_                   A MultiMarkdown reader.
+MultiMarkdown reader                                              `✔  <https://github.com/dames57/multimarkdown_reader>`_                   A MultiMarkdown reader.
 
 Neighbor articles                                                 `✅ <https://github.com/pelican-plugins/neighbors>`_                      Adds ``next_article`` (newer) and ``prev_article`` (older) variables to the article's context
 
 `Optimize images <./optimize_images>`_                                                                                                      Applies lossless compression on JPEG and PNG images
 
-Pandoc Org Reader                                                 `❎ <https://github.com/jo-tham/org_pandoc_reader>`_
+Pandoc Org Reader                                                 `✔  <https://github.com/jo-tham/org_pandoc_reader>`_
 
 `Python Org Reader <./org_python_reader>`_
 
 `Org Reader <./org_reader>`_                                                                                                                Create posts via Emacs Orgmode files
 
-Pandoc reader                                                     `❎ <https://github.com/liob/pandoc_reader>`_
+Pandoc reader                                                     `✔  <https://github.com/liob/pandoc_reader>`_
 
-Panorama                                                          `❎ <https://github.com/romainx/panorama>`_                               Creates charts from posts metadata
+Panorama                                                          `✔  <https://github.com/romainx/panorama>`_                               Creates charts from posts metadata
 
-PDF Images                                                        `❎ <https://github.com/cmacmackin/pdf-img>`_                             If an img tag contains a PDF, EPS or PS file as a source, this plugin generates a PNG preview which will then act as a link to the original file.
+PDF Images                                                        `✔  <https://github.com/cmacmackin/pdf-img>`_                             If an img tag contains a PDF, EPS or PS file as a source, this plugin generates a PNG preview which will then act as a link to the original file.
 
 `PDF generator <./pdf>`_                                                                                                                    Automatically exports articles and pages as PDF files
 
-Pelican Cite                                                      `❎ <https://github.com/cmacmackin/pelican-cite>`_                        Produces inline citations and a bibliography in articles and pages, using a BibTeX file.
+Pelican Cite                                                      `✔  <https://github.com/cmacmackin/pelican-cite>`_                        Produces inline citations and a bibliography in articles and pages, using a BibTeX file.
 
-pelican-ert                                                       `❎ <https://github.com/nogaems/pelican-ert>`_                            Allows you to add estimated reading time of an article
+pelican-ert                                                       `✔  <https://github.com/nogaems/pelican-ert>`_                            Allows you to add estimated reading time of an article
 
-Pelican-flickr                                                    `❎ <https://github.com/La0/pelican-flickr>`_                             Brings your Flickr photos & sets into your static website
+Pelican-flickr                                                    `✔  <https://github.com/La0/pelican-flickr>`_                             Brings your Flickr photos & sets into your static website
 
-Pelican Genealogy                                                 `❎ <https://github.com/zappala/pelican-genealogy>`_                      Add surnames and people so metadata and context can be accessed from within a theme to provide surname and person pages
+Pelican Genealogy                                                 `✔  <https://github.com/zappala/pelican-genealogy>`_                      Add surnames and people so metadata and context can be accessed from within a theme to provide surname and person pages
 
-Pelican Gist tag                                                  `❎ <https://github.com/streeter/pelican-gist>`_                          Easily embed GitHub Gists in your Pelican articles
+Pelican Gist tag                                                  `✔  <https://github.com/streeter/pelican-gist>`_                          Easily embed GitHub Gists in your Pelican articles
 
-Pelican Github Projects                                           `❎ <https://github.com/kura/pelican-githubprojects>`_                    Embed a list of your public GitHub projects in your pages
+Pelican Github Projects                                           `✔  <https://github.com/kura/pelican-githubprojects>`_                    Embed a list of your public GitHub projects in your pages
 
-Jupyter Notebooks                                                 `❎ <https://github.com/danielfrg/pelican-jupyter>`_                      Provides two modes to use Jupyter notebooks in Pelican.
+Jupyter Notebooks                                                 `✔  <https://github.com/danielfrg/pelican-jupyter>`_                      Provides two modes to use Jupyter notebooks in Pelican.
 
 Pelican Jinja2Content                                             `⚠️  <https://github.com/joachimneu/pelican-jinja2content>`_               Allows the use of Jinja2 template code in articles, including ``include`` and ``import`` statements
 
-Lang Category                                                     `❎ <https://github.com/CNBorn/pelican-langcategory>`_                    Make languages behave the same as categories (visitor can browse articles in certain language).
+Lang Category                                                     `✔  <https://github.com/CNBorn/pelican-langcategory>`_                    Make languages behave the same as categories (visitor can browse articles in certain language).
 
-Pelican Link Class                                                `❎ <https://github.com/rlaboiss/pelican-linkclass>`_                     Set class attribute of ``<a>`` elements according to whether the link is external or internal
+Pelican Link Class                                                `✔  <https://github.com/rlaboiss/pelican-linkclass>`_                     Set class attribute of ``<a>`` elements according to whether the link is external or internal
 
-Pelican Mbox Reader                                               `❎ <https://github.com/TC01/pelican-mboxreader>`_                        Generate articles automatically via email, given a path to a Unix mbox
+Pelican Mbox Reader                                               `✔  <https://github.com/TC01/pelican-mboxreader>`_                        Generate articles automatically via email, given a path to a Unix mbox
 
-Pelican Open graph                                                `❎ <https://github.com/whiskyechobravo/pelican-open_graph>`_             Generates Open Graph tags for your articles
+Pelican Open graph                                                `✔  <https://github.com/whiskyechobravo/pelican-open_graph>`_             Generates Open Graph tags for your articles
 
-Pelican Page Hierarchy                                            `❎ <https://github.com/akhayyat/pelican-page-hierarchy>`_                Creates a URL hierarchy for pages that matches the filesystem hierarchy of their sources
+Pelican Page Hierarchy                                            `✔  <https://github.com/akhayyat/pelican-page-hierarchy>`_                Creates a URL hierarchy for pages that matches the filesystem hierarchy of their sources
 
-Pelican Page Order                                                `❎ <https://github.com/akhayyat/pelican-page-order>`_                    Adds a ``page_order`` attribute to all pages if one is not defined.
+Pelican Page Order                                                `✔  <https://github.com/akhayyat/pelican-page-order>`_                    Adds a ``page_order`` attribute to all pages if one is not defined.
 
 `pelican-rdf <./pelican-rdf>`_                                                                                                              Allows the processing of .rdf vocabularies, and the generation of a lightweight documentation.
 
-pelican-toc                                                       `❎ <https://github.com/ingwinlu/pelican-toc>`_                           Generates a Table of Contents and make it available to the theme via article.toc
+pelican-toc                                                       `✔  <https://github.com/ingwinlu/pelican-toc>`_                           Generates a Table of Contents and make it available to the theme via article.toc
 
-Version Generator                                                 `❎ <https://github.com/Shaked/pelican-version>`_                         A simple version generator which generates an incremented version file.
+Version Generator                                                 `✔  <https://github.com/Shaked/pelican-version>`_                         A simple version generator which generates an incremented version file.
 
 `Pelican Comment System <./pelican_comment_system>`_                                                                                        Allows you to add static comments to your articles
 
-pelican_javascript                                                `❎ <https://github.com/mortada/pelican_javascript>`_                     Allows you to embed Javascript and CSS files into individual articles
+pelican_javascript                                                `✔  <https://github.com/mortada/pelican_javascript>`_                     Allows you to embed Javascript and CSS files into individual articles
 
-Pelican Meetup Info                                               `❎ <https://github.com/tylerdave/pelican-meetup-info>`_                  Include your Meetup.com group and event information on generated pages and articles
+Pelican Meetup Info                                               `✔  <https://github.com/tylerdave/pelican-meetup-info>`_                  Include your Meetup.com group and event information on generated pages and articles
 
 `Unity WebGL <./pelican_unity_webgl>`_                                                                                                      Easily embed Unity3d games into posts and pages
 
-Pelican Vimeo                                                     `❎ <https://github.com/kura/pelican_vimeo>`_                             Enables you to embed Vimeo videos in your pages and articles
+Pelican Vimeo                                                     `✔  <https://github.com/kura/pelican_vimeo>`_                             Enables you to embed Vimeo videos in your pages and articles
 
-Pelican YouTube                                                   `❎ <https://github.com/kura/pelican_youtube>`_                           Enables you to embed YouTube videos in your pages and articles
+Pelican YouTube                                                   `✔  <https://github.com/kura/pelican_youtube>`_                           Enables you to embed YouTube videos in your pages and articles
 
-pelicanfly                                                        `❎ <https://github.com/bmcorser/pelicanfly>`_                            Lets you type things like ``i ♥ :fa-coffee:`` in your Markdown documents and have it come out as little Font Awesome icons in the browser
+pelicanfly                                                        `✔  <https://github.com/bmcorser/pelicanfly>`_                            Lets you type things like ``i ♥ :fa-coffee:`` in your Markdown documents and have it come out as little Font Awesome icons in the browser
 
-Pelican Themes Generator                                          `❎ <https://github.com/badele/pelicanthemes-generator>`_                 Generates theme screenshots from the Pelican Themes repository
+Pelican Themes Generator                                          `✔  <https://github.com/badele/pelicanthemes-generator>`_                 Generates theme screenshots from the Pelican Themes repository
 
 `permalink <./permalinks>`_                                                                                                                 Enables a kind of permalink using html redirects.
 
 `Photos <./photos>`_                                                                                                                        Add a photo or a gallery of photos to an article, or include photos in the body text. Resize photos as needed.
 
-Pin to top                                                        `❎ <https://github.com/Shaked/pin_to_top>`_                              Pin Pelican's article(s) to top "Sticky article"
+Pin to top                                                        `✔  <https://github.com/Shaked/pin_to_top>`_                              Pin Pelican's article(s) to top "Sticky article"
 
 `PlantUML <./plantuml>`_                                                                                                                    Allows you to define UML diagrams directly into rst documents using the great PlantUML tool
 
-Post Revision                                                     `❎ <https://github.com/jhshi/pelican.plugins.post_revision>`_            Extract article and page revision information from Git commit history
+Post Revision                                                     `✔  <https://github.com/jhshi/pelican.plugins.post_revision>`_            Extract article and page revision information from Git commit history
 
 `Post statistics <./post_stats>`_                                                                                                           Calculates various statistics about a post and store them in an article.stats dictionary
 
@@ -278,7 +278,7 @@ Related posts                                                     `✅ <https://
 
 Render Math                                                       `✅ <https://github.com/pelican-plugins/render-math>`_                    Render mathematics in content via the MathJax Javascript engine
 
-Replacer                                                          `❎ <https://github.com/narusemotoki/replacer>`_                          Replace a text of a generated HTML
+Replacer                                                          `✔  <https://github.com/narusemotoki/replacer>`_                          Replace a text of a generated HTML
 
 `Representative image <./representative_image>`_                                                                                            Extracts a representative image (i.e, featured image) from the article's summary or content
 
@@ -296,7 +296,7 @@ Series                                                            `✅ <https://
 
 `Show Source <./show_source>`_                                                                                                              Place a link to the source text of your posts.
 
-Similar Posts                                                     `❎ <https://github.com/davidlesieur/similar_posts>`_                     Adds a list of similar posts to every article's context.
+Similar Posts                                                     `✔  <https://github.com/davidlesieur/similar_posts>`_                     Adds a list of similar posts to every article's context.
 
 Simple footnotes                                                  `✅ <https://github.com/pelican-plugins/simple-footnotes>`_               Adds footnotes to blog posts
 
