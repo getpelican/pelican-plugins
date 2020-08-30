@@ -182,7 +182,7 @@ More Categories                                                   `✔  <https:/
 
 Multi Neighbors                                                   `❓ <https://github.com/davidlesieur/multi_neighbors>`_                   Adds a list of newer articles and a list of older articles to every article's context.
 
-`Multi parts posts <./multi_part>`_                                                                                                         Allows you to write multi-part posts
+`Multi parts posts <./multi_part>`_                               ⚠️                                                                         Allows you to write multi-part posts
 
 MultiMarkdown reader                                              `❓ <https://github.com/dames57/multimarkdown_reader>`_                   A MultiMarkdown reader.
 
