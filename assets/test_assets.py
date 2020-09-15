@@ -12,47 +12,17 @@ import subprocess
 
 from pelican import Pelican
 from pelican.settings import read_settings
+from pelican.tests.support import mute, skipIfNoExecutable, module_exists
 
 CUR_DIR = os.path.dirname(__file__)
 THEME_DIR = os.path.join(CUR_DIR, 'test_data')
 CSS_REF = open(os.path.join(THEME_DIR, 'static', 'css',
                             'style.min.css')).read()
-CSS_HASH = hashlib.md5(CSS_REF).hexdigest()[0:8]
-
-
-def skipIfNoExecutable(executable):
-    """Skip test if `executable` is not found
-
-    Tries to run `executable` with subprocess to make sure it's in the path,
-    and skips the tests if not found (if subprocess raises a `OSError`).
-    """
-
-    with open(os.devnull, 'w') as fnull:
-        try:
-            res = subprocess.call(executable, stdout=fnull, stderr=fnull)
-        except OSError:
-            res = None
-
-    if res is None:
-        return unittest.skip('{0} executable not found'.format(executable))
-
-    return lambda func: func
-
-
-def module_exists(module_name):
-    """Test if a module is importable."""
-
-    try:
-        __import__(module_name)
-    except ImportError:
-        return False
-    else:
-        return True
-
+CSS_HASH = hashlib.md5(CSS_REF.encode()).hexdigest()[0:8]
 
 
 @unittest.skipUnless(module_exists('webassets'), "webassets isn't installed")
-@skipIfNoExecutable(['scss', '-v'])
+@skipIfNoExecutable(['sass', '-v'])
 @skipIfNoExecutable(['cssmin', '--version'])
 class TestWebAssets(unittest.TestCase):
     """Base class for testing webassets."""
@@ -61,18 +31,20 @@ class TestWebAssets(unittest.TestCase):
         import assets
         self.temp_path = mkdtemp(prefix='pelicantests.')
         settings = {
+            'ASSET_CONFIG': [('sass_bin', 'scss')],
             'PATH': os.path.join(os.path.dirname(CUR_DIR), 'test_data', 'content'),
             'OUTPUT_PATH': self.temp_path,
             'PLUGINS': [assets],
             'THEME': THEME_DIR,
             'LOCALE': locale.normalize('en_US'),
+            'CACHE_CONTENT': False
         }
         if override:
             settings.update(override)
 
         self.settings = read_settings(override=settings)
         pelican = Pelican(settings=self.settings)
-        pelican.run()
+        mute(True)(pelican.run)()
 
     def tearDown(self):
         rmtree(self.temp_path)
@@ -97,7 +69,7 @@ class TestWebAssetsRelativeURLS(TestWebAssets):
         # Test that the Jinja2 extension was correctly added.
 
         from webassets.ext.jinja2 import AssetsExtension
-        self.assertIn(AssetsExtension, self.settings['JINJA_EXTENSIONS'])
+        self.assertIn(AssetsExtension, self.settings['JINJA_ENVIRONMENT']['extensions'])
 
     def test_compilation(self):
         # Compare the compiled css with the reference.

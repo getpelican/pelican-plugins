@@ -1,6 +1,10 @@
 Related posts
 -------------
 
+**NOTE:** `This plugin has been moved to its own repository <https://github.com/pelican-plugins/related-posts>`_. Please file any issues/PRs there. Once all plugins have been migrated to the `new Pelican Plugins organization <https://github.com/pelican-plugins>`_, this monolithic repository will be archived.
+
+-------------------------------------------------------------------------------
+
 This plugin adds the ``related_posts`` variable to the article's context.
 By default, up to 5 articles are listed. You can customize this value by 
 defining ``RELATED_POSTS_MAX`` in your settings file::
@@ -19,9 +23,16 @@ For example::
     {% endif %}
 
 
-You can also override related posts by using it as part of your post's meta data 'related_posts:'.
-The 'related_posts:' meta data works together with your existing slugs:
+Your related posts should share a common tag. You can also use ``related_posts:`` in your post's meta data.
+The 'related_posts:' meta data works together with your existing slugs::
 
-    related_posts: slug1,slug2,slug3...slugN 
+    related_posts: slug1, slug2, slug3, ... slugN
 
-N represents the RELATED_POSTS_MAX
+``N`` represents the ``RELATED_POSTS_MAX``.
+
+Additionally, you can specify::
+
+    RELATED_POSTS_SKIP_SAME_CATEGORY = True
+
+in your settings file. With this setting, ``article.related_posts`` will
+contain only related posts from categories other than the original article's.

@@ -4,14 +4,15 @@ Gallery
 * Allows an article to contain an album of pictures.
 * All albums can also be syndicated into a central gallery page.
 
-##How to Use
+## How to Use
 
 1. Group images into folders, with each folder representing an album.
-2. Place all album folders within a folder named gallery, which resides within the images folder.
+2. Place all album folders within a folder, which should reside under content.
+3. Insert `GALLERY_PATH` to your `pelicanconf.py` and set a path to that folder. By default it is `images/gallery`.
 
-		./content/images/gallery/album_name
+		./content/images/gallery/{your albums}
 	
-###Articles
+### Articles
 
 Attach an album to an article/post by placing a gallery metadata tag with the name of the album.
 
@@ -25,7 +26,7 @@ And the filename of images within an album.
 
 	article.albumimages
 
-###Gallery Page
+### Gallery Page
 
 Create a page and a gallery template (named gallery.html). And inform pelican to use the gallery template for the page.
 
@@ -36,9 +37,9 @@ The dictionary key is the name of the album and the lists contain the filenames.
 
 	page.gallery
 	
-##Examples
+## Examples
 
-###article.html
+### article.html
 
 	<h2><a href="{{ SITEURL }}/pages/gallery.html#{{ article.album }}">{{ article.album }}</a></h2>
 	    <ul>
@@ -47,7 +48,7 @@ The dictionary key is the name of the album and the lists contain the filenames.
 		{% endfor %}
 	    </ul>
 		
-###gallery.html
+### gallery.html
 
 	{% for album, images in page.gallery.iteritems() %}
 	<h2><a name="{{ album }}">{{ album }}</a></h2>
@@ -58,17 +59,17 @@ The dictionary key is the name of the album and the lists contain the filenames.
 	</ul>
 	{% endfor %}
 
-###posts/foo.md
+### posts/foo.md
 
 	title:Foo
 	gallery:albumname
 	
-###pages/gallery.md
+### pages/gallery.md
 
 	title:All Images
 	template:gallery
 	
-##Reasoning
+## Reasoning
 
 The album name and filenames are returned as opposed to the direct path to the images,
 to allow flexibility of different thumbnail sizes to be used it different locations of a website.
@@ -79,7 +80,7 @@ to allow flexibility of different thumbnail sizes to be used it different locati
 It also allows a thumbnail to link to the full image,
 as well as the filename extension to be stripped and the title of an image to be displayed along side the title of an album.
 
-##Recommendation
+## Recommendation
 
 It is recommended to use this extension along with the thumbnailer plugin.
 
@@ -88,9 +89,3 @@ It is recommended to use this extension along with the thumbnailer plugin.
           ]
 
 You may also wish to use this along with a gallery plugin such as [Colorbox](http://www.jacklmoore.com/colorbox/).
-
-##In Use
-
-* [SESIF Article](http://sesif.github.io/my-super-title.html)
-* [SESIF Gallery](http://sesif.github.io/pages/gallery.html)
-* [SESIF Source](http://github.com/SESIF/SESIF.github.io/tree/source)

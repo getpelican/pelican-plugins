@@ -1,0 +1,74 @@
+* Org Python Reader plugin
+
+This plugin add the possibility to write your pages and blog posts in
+Org format from Emacs Org-mode.
+
+To generate your website, you don't need Emacs, Pandoc or any other
+software.
+
+
+** Dependency
+
+   This plugin only need =orgco= python package.
+   
+   You can install it with =pip=:
+   #+BEGIN_SRC sh
+   pip install orgco
+   #+END_SRC
+
+** Install
+
+   First, install this plugin in path know by pelican. Set pelican
+   variable =PLUGIN_PATHS= in =pelicanconf.py= if necessary.
+
+   Second, enable this plugin by adding his name to the pelican
+   variable =PLUGINS= in =pelicanconf.py=
+   
+   Exemple:
+   #+BEGIN_SRC python
+   PLUGINS = ['org_python_reader']
+   #+END_SRC
+
+** Settings
+
+   With this plugin, you define settings with the =ORGMODE= variable,
+   a dictionary.
+
+   Available settings:
+   - =code_highlight=: =True= or =False=, enable code highlight with
+     =orgco=. Default is =True=.
+
+   Exemple of settings:
+   #+BEGIN_SRC python
+     ORGMODE = {
+	 'code_highlight': False,
+     }
+   #+END_SRC
+
+** Usage
+
+   Simply write content in Org format.
+
+** More informations
+
+*** Org-mode
+    
+     Org-mode is an Emacs mode for keeping notes, maintaining TODO
+     lists, planning projects, and authoring documents with a fast and
+     effective plain-text system.
+
+     - [[http://orgmode.org][Org-mode website]]
+     - [[https://www.gnu.org/software/emacs/][Emacs website]]
+     - [[https://www.youtube.com/watch?v=SzA2YODtgK4][Getting Started With Org Mode]]
+
+*** Orgco
+
+    #+BEGIN_QUOTE
+    With orgco you can convert Emacs’ orgmode to other formats.
+    #+END_QUOTE
+
+    - [[https://github.com/paetzke/orgco][orgco website]]
+
+*** Author
+    Sébastien Gendre <seb@k-7.ch>
+    [[https://k-7.ch/][Website]]

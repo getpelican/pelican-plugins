@@ -1,0 +1,43 @@
+Breadcrumbs
+===============================================================================
+.. lead:: Indicate the current page's location within a navigational hierarchy.
+
+
+Separators are automatically added in CSS through `:before` and `content.`
+
+
+.. container:: bs-example
+
+   .. class:: breadcrumb
+
+      * Home
+
+   .. class:: breadcrumb
+
+      * Home
+      * Library
+
+   .. class:: breadcrumb
+
+      * Home
+      * Library
+      * Data
+
+
+.. code::
+   :class: highlight
+
+   .. class:: breadcrumb
+
+      * Home
+
+   .. class:: breadcrumb
+
+      * Home
+      * Library
+
+   .. class:: breadcrumb
+
+      * Home
+      * Library
+      * Data

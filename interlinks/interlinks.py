@@ -1,46 +1,73 @@
-﻿# -*- coding: utf-8 -*-
-
+# -*- coding: utf-8 -*-
 """
 Interlinks
 =========================
-
-This plugin allows you to include "interwiki" or shortcuts links into the blog, as keyword>rest_of_url
-
+This plugin allows you to include "interwiki" or shortcuts links into the blog,
+as keyword>rest_of_url
 """
+import re
+
+from pelican import signals
 
 from bs4 import BeautifulSoup
-from pelican import signals
-import re
+from bs4 import SoupStrainer
 
 interlinks = {}
 
-def getSettings (generator):
 
-	global interlinks
+def getSettings(generator):
 
-	interlinks = {'this': generator.settings['SITEURL']+"/"}
-	if 'INTERLINKS' in generator.settings:
-		for key, value in generator.settings['INTERLINKS'].items():
-			interlinks[key] = value
+    global interlinks
 
-def content_object_init(instance):
+    interlinks = {'this': generator.settings['SITEURL']+"/"}
+    if 'INTERLINKS' in generator.settings:
+        for key, value in generator.settings['INTERLINKS'].items():
+            interlinks[key] = value
 
-	if instance._content is not None:
-		content = instance._content
-		# use Python's built-in parser so no duplicated html & body tags appear, or use tag.unwrap()
-		text = BeautifulSoup(content, "html.parser")
-		
-		if 'a' in content:
-			for link in text.find_all(href=re.compile("(.+?)>")):
-				url = link.get('href')
-				m = re.search(r"(.+?)>", url).groups()
-				name = m[0]
-				if name in interlinks:
-					hi = url.replace(name+">",interlinks[name])
-					link['href'] = hi
 
-		instance._content = text.decode()
+def parse_links(instance):
+
+    if instance._content is not None:
+        content = instance._content
+
+        if '<a' in content:
+            text = BeautifulSoup(
+                content, "html.parser", parse_only=SoupStrainer("a"))
+            for link in text.find_all("a", href=re.compile("(.+?)>")):
+                old_tag = link.decode()
+                url = link.get('href')
+                m = re.search(r"(.+?)>", url).groups()
+                name = m[0]
+                if name in interlinks:
+                    hi = url.replace(name + ">", interlinks[name])
+                    link['href'] = hi
+
+                content = content.replace(old_tag, link.decode())
+
+        if '<img' in content:
+            text = BeautifulSoup(
+                content, "html.parser", parse_only=SoupStrainer("img"))
+            for img in text.find_all('img', src=re.compile("(.+?)>")):
+                old_tag = img.decode()
+                url = img.get('src')
+                m = re.search(r"(.+?)>", url).groups()
+                name = m[0]
+                if name in interlinks:
+                    hi = url.replace(name+">", interlinks[name])
+                    img['src'] = hi
+
+                # generated output has no trailing slash; match for replacement
+                repaired_old_tag = old_tag.replace("/>", ">")
+
+                content = content.replace(
+                    repaired_old_tag,
+                    img.decode()
+                )
+
+
+        instance._content = content
+
 
 def register():
-	signals.generator_init.connect(getSettings)
-	signals.content_object_init.connect(content_object_init)
+    signals.generator_init.connect(getSettings)
+    signals.content_object_init.connect(parse_links)

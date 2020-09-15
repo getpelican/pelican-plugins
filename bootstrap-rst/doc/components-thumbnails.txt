@@ -1,0 +1,157 @@
+Thumbnails
+===============================================================================
+.. lead:: Extend Bootstrap's grid system with the thumbnail component to easily
+          display grids of images, videos, text, and more.
+
+Default example
+---------------
+
+By default, Bootstrap's thumbnails are designed to showcase linked images with
+minimal required markup.
+
+.. container:: bs-example
+
+   .. row::
+
+      .. column::
+         :width: 3
+
+         .. image:: 171x180.png
+            :class: thumbnail
+
+      .. column::
+         :width: 3
+
+         .. image:: 171x180.png
+            :class: thumbnail
+
+      .. column::
+         :width: 3
+
+         .. image:: 171x180.png
+            :class: thumbnail
+
+      .. column::
+         :width: 3
+
+         .. image:: 171x180.png
+            :class: thumbnail
+
+.. code::
+   :class: highlight
+
+      .. column::
+         :width: 3
+
+         .. image:: 171x180.png
+            :class: thumbnail
+
+      .. column::
+         :width: 3
+
+         .. image:: 171x180.png
+            :class: thumbnail
+
+      .. column::
+         :width: 3
+
+         .. image:: 171x180.png
+            :class: thumbnail
+
+      .. column::
+         :width: 3
+
+         .. image:: 171x180.png
+            :class: thumbnail
+
+Custom content
+--------------
+
+With a bit of extra markup, it's possible to add any kind of HTML content like
+headings, paragraphs, or buttons into thumbnails.
+
+.. container:: bs-example
+
+   .. row::
+
+      .. column::
+         :width: 4
+
+         .. thumbnail::
+
+            .. image:: 300x200.png
+
+            .. caption::
+
+               :h3:`Thumbnail label`
+
+               Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec
+               id elit non mi porta gravida at eget metus. Nullam id dolor id nibh
+               ultricies vehicula ut id elit.
+
+               .. button:: Button
+                  :class: primary
+
+               .. button:: Button
+
+
+      .. column::
+         :width: 4
+
+         .. thumbnail::
+
+            .. image:: 300x200.png
+
+            .. caption::
+
+               :h3:`Thumbnail label`
+
+               Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec
+               id elit non mi porta gravida at eget metus. Nullam id dolor id nibh
+               ultricies vehicula ut id elit.
+
+               .. button:: Button
+                  :class: primary
+
+               .. button:: Button
+
+
+      .. column::
+         :width: 4
+
+         .. thumbnail::
+
+            .. image:: 300x200.png
+
+            .. caption::
+
+               :h3:`Thumbnail label`
+
+               Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec
+               id elit non mi porta gravida at eget metus. Nullam id dolor id nibh
+               ultricies vehicula ut id elit.
+
+               .. button:: Button
+                  :class: primary
+
+               .. button:: Button
+
+.. code::
+   :class: highlight
+
+   .. thumbnail::
+
+      .. image:: 300x200.png
+
+      .. caption::
+
+         :h3:`Thumbnail label`
+
+         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec
+         id elit non mi porta gravida at eget metus. Nullam id dolor id nibh
+         ultricies vehicula ut id elit.
+
+         .. button:: Button
+            :class: primary
+
+         .. button:: Button

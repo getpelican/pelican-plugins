@@ -30,10 +30,13 @@ def validate(filename):
     Use W3C validator service: https://bitbucket.org/nmb10/py_w3c/ .
     :param filename: the filename to validate
     """
-    import HTMLParser
+    try:
+        from html.parser import HTMLParser
+    except ImportError:  # fallback for Python 2:
+        from HTMLParser import HTMLParser
     from py_w3c.validators.html.validator import HTMLValidator
 
-    h = HTMLParser.HTMLParser()  # for unescaping WC3 messages
+    h = HTMLParser()  # for unescaping WC3 messages
 
     vld = HTMLValidator()
     LOG.info("Validating: {0}".format(filename))
@@ -43,12 +46,16 @@ def validate(filename):
 
     # display errors and warning
     for err in vld.errors:
+        line = err.get('line') or err['lastLine']
+        col = err.get('col') or '{}-{}'.format(err['firstColumn'], err['lastColumn'])
         LOG.error(u'line: {0}; col: {1}; message: {2}'.
-                  format(err['line'], err['col'], h.unescape(err['message']))
+                  format(line, col, h.unescape(err['message']))
                   )
     for err in vld.warnings:
+        line = err.get('line') or err['lastLine']
+        col = err.get('col') or '{}-{}'.format(err['firstColumn'], err['lastColumn'])
         LOG.warning(u'line: {0}; col: {1}; message: {2}'.
-                    format(err['line'], err['col'], h.unescape(err['message']))
+                    format(line, col, h.unescape(err['message']))
                     )
 
 

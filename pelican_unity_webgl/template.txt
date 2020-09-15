@@ -1,0 +1,9 @@
+<!-- Begin Unity webgl app -->
+    <link rel="stylesheet" href="{2}/style.css">
+    <script src="{2}/UnityProgress.js"></script>
+    <script src="{1}/{0}/Build/UnityLoader.js"></script>
+    <script>
+        var gameInstance = UnityLoader.instantiate("gameContainer", "{1}/{0}/Build/{0}.json", {{onProgress: UnityProgress}});
+    </script>
+    <div id="gameContainer" style="width: {3}px; height: {4}px; left: 50%; transform: translateX(-50%);"></div>
+<!-- End Unity webgl app -->

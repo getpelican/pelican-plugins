@@ -1,0 +1,89 @@
+#!/usr/bin/runhaskell
+{-|
+
+  Script adapted from pandoc-plantuml-filter by Kurt Bonne
+  Original source at https://github.com/kbonne/pandoc-plantuml-filter.git
+
+  This script is meant to be run by pandoc executed by the pandoc_reader pelican plugin.
+  I've changed output paths to be compatibile with pelican output structure.
+
+  If using the pandoc_reader pelican plugin with this script, the plantuml plugin is not necessary.
+
+  Installation:
+  -------------
+    This script requires Haskell, but if you are using pandoc, it's already installed :-)
+    Copy this file in your pelican project, in the same directory of pelicanconf.py, and make sure it is executable.
+
+    In the pelicanconf.py configure the need plugins:
+
+      PLUGINS = ['pandoc_reader']
+      PANDOC_ARGS = ['--filter=pandoc-plantuml']
+
+    If this script will be putted in a different location, adapt the PANDOC_ARGS value.
+
+  Usage:
+  ------
+    In Markdown posts use the following syntax to include PlantUML diagrams:
+
+    ```plantuml
+    @startuml
+       Alice -> Bob: Authentication Request
+       Bob --> Alice: Authentication Response
+
+       Alice -> Bob: Another authentication Request
+       Alice <-- Bob: another authentication Response
+    @enduml
+    ```
+
+    Rendered images will bu put in the output/images folder.
+-}
+
+import Text.Pandoc.JSON
+import Data.ByteString.Lazy (hGetContents, hPut)
+import Data.ByteString.Lazy.UTF8 (fromString)
+import Data.Digest.Pure.SHA (sha1, showDigest)
+import System.IO (hClose, hPutStr, IOMode(..), openBinaryFile, hPutStrLn, stderr)
+import System.Process
+import System.Directory
+
+processBlocks :: Block -> IO Block
+processBlocks b =
+  case b of
+    CodeBlock (_ , ["plantuml"], _) content -> plantUMLToImg content
+    _ -> return b
+
+plantUMLToImg :: String -> IO Block
+plantUMLToImg content =  do
+  path <- renderImage content
+  
+  --hPutStrLn stderr "dopo renderImage"
+
+  return $ Para [Image [] (path, "")]
+
+renderImage :: String -> IO String
+renderImage content = do
+  createDirectoryIfMissing (True) "output/images"
+  let path = uniqueName content ++ ".png"
+  (Just hIn, Just hOut, _, _) <-
+    createProcess (proc "plantuml" ["-pipe", "-tepg"]){ std_in = CreatePipe,
+                                                        std_out = CreatePipe }
+  hPutStr hIn content
+  hClose hIn
+
+  let outPath = "output/images/" ++ path
+  hFile <- openBinaryFile outPath WriteMode
+  img <- hGetContents hOut
+  hPut hFile img
+
+  hClose hFile
+  hClose hOut
+
+  let imgPath = "images/" ++ path
+
+  return imgPath
+
+uniqueName :: String -> String
+uniqueName = showDigest . sha1 . fromString
+
+main :: IO ()
+main = toJSONFilter processBlocks
