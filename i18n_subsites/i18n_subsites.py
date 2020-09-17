@@ -104,6 +104,8 @@ def prepare_site_db_and_overrides():
             overrides['THEME_STATIC_DIR'] = posixpath.join(
                 relpath, _MAIN_SETTINGS['THEME_STATIC_DIR'])
             overrides['THEME_STATIC_PATHS'] = []
+        if 'FEED_DOMAIN' not in overrides:
+            overrides['FEED_DOMAIN'] = posixpath.join(main_siteurl, lang)
         # to change what is perceived as translations
         overrides['DEFAULT_LANG'] = lang
 
