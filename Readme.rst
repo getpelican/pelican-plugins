@@ -296,7 +296,7 @@ Series                                                            `✔  <https:/
 
 `Show Source <./show_source>`_                                                                                                              Place a link to the source text of your posts.
 
-Similar Posts                                                     `❓ <https://github.com/davidlesieur/similar_posts>`_                     Adds a list of similar posts to every article's context.
+Similar Posts                                                     `✔  <https://github.com/pelican-plugins/similar-posts>`_                  Adds a list of similar posts to every article's context.
 
 Simple footnotes                                                  `✔  <https://github.com/pelican-plugins/simple-footnotes>`_               Adds footnotes to blog posts
 
