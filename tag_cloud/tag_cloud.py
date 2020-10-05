@@ -51,7 +51,7 @@ def generate_tag_cloud(generator):
     def generate_tag(tag, count):
         tag = (
             tag,
-            int(math.floor(steps - (steps - 1) * math.log(count - min_count + 1)
+            int(round(steps - (steps - 1) * math.log(count - min_count + 1)
                 / (math.log(max_count - min_count + 1) or 1)))
         )
         if generator.settings.get('TAG_CLOUD_BADGE'):
