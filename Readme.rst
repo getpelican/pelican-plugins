@@ -152,7 +152,7 @@ GA Page View                                                      `❓ <https://
 
 `ical <./ical>`_                                                                                                                            Looks for and parses an ``.ics`` file if it is defined in a given page's ``calendar`` metadata.
 
-Image Process                                                     `❓ <https://github.com/whiskyechobravo/image_process>`_                  Automates the processing of images based on their class attributes
+Image Process                                                     `✔  <https://github.com/pelican-plugins/image-process>`_                  Automates the processing of images based on their class attributes
 
 `Interlinks <./interlinks>`_                                                                                                                Lets you add frequently used URLs to your markup using short keywords
 
