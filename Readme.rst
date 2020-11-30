@@ -196,7 +196,7 @@ Pandoc Org Reader                                                 `❓ <https://
 
 `Org Reader <./org_reader>`_                                                                                                                Create posts via Emacs Orgmode files
 
-Pandoc reader                                                     `❓ <https://github.com/liob/pandoc_reader>`_
+Pandoc reader                                                     `✔  <https://github.com/pelican-plugins/pandoc-reader>`_
 
 Panorama                                                          `❓ <https://github.com/romainx/panorama>`_                               Creates charts from posts metadata
 
