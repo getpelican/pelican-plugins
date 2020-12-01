@@ -74,7 +74,7 @@ class AsciiDocReader(BaseReader):
         """Parses the AsciiDoc file at the given `source_path` and returns found
         metadata."""
         metadata = {}
-        with open(source_path) as fi:
+        with open(source_path, encoding="latin-1") as fi:
             prev = ""
             for line in fi.readlines():
                 # Parse for doc title.
@@ -88,7 +88,7 @@ class AsciiDocReader(BaseReader):
                         metadata['title'] = self.process_metadata('title', fix_unicode(title))
 
                 # Parse for other metadata.
-                regexp = re.compile(r"^:[A-z]+:\s*[A-z0-9]")
+                regexp = re.compile(r"^:[A-z]+:\s*\w")
                 if regexp.search(line):
                     toks = line.split(":", 2)
                     key = toks[1].strip().lower()
