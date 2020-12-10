@@ -25,14 +25,6 @@ def default():
         if len(call(cmd + " --help")):
             return cmd
 
-def fix_unicode(val):
-    if sys.version_info < (3,0):
-        val = unicode(val.decode("utf-8"))
-    else:
-        # This fixes an issue with character substitutions, e.g. 'ñ' to 'Ã±'.
-        val = str.encode(val, "latin-1").decode("utf-8")
-    return val
-
 ALLOWED_CMDS = ["asciidoc", "asciidoctor"]
 
 ENABLED = None != default()
@@ -74,7 +66,7 @@ class AsciiDocReader(BaseReader):
         """Parses the AsciiDoc file at the given `source_path` and returns found
         metadata."""
         metadata = {}
-        with open(source_path, encoding="latin-1") as fi:
+        with open(source_path, encoding='utf-8') as fi:
             prev = ""
             for line in fi.readlines():
                 # Parse for doc title.
@@ -85,7 +77,7 @@ class AsciiDocReader(BaseReader):
                     elif line.count("=") == len(prev.strip()):
                         title = prev.strip()
                     if title:
-                        metadata['title'] = self.process_metadata('title', fix_unicode(title))
+                        metadata['title'] = self.process_metadata('title', title)
 
                 # Parse for other metadata.
                 regexp = re.compile(r"^:[A-z]+:\s*\w")
@@ -93,7 +85,7 @@ class AsciiDocReader(BaseReader):
                     toks = line.split(":", 2)
                     key = toks[1].strip().lower()
                     val = toks[2].strip()
-                    metadata[key] = self.process_metadata(key, fix_unicode(val))
+                    metadata[key] = self.process_metadata(key, val)
                 prev = line
         return metadata
 
