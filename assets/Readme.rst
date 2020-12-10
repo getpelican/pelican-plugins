@@ -1,6 +1,8 @@
 Asset management
 ----------------
 
+**NOTE:** `This plugin has been moved to its own repository <https://github.com/pelican-plugins/webassets>`_. Please file any issues/PRs there. Once all plugins have been migrated to the `new Pelican Plugins organization <https://github.com/pelican-plugins>`_, this monolithic repository will be archived.
+
 This plugin allows you to use the `Webassets`_ module to manage assets such as
 CSS and JS files. The module must first be installed::
 

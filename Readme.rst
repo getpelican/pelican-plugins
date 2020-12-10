@@ -58,7 +58,7 @@ Ace Editor                                                        `❓ <https://
 
 `AsciiDoc reader <./asciidoc_reader>`_                                                                                                      Use AsciiDoc to write your posts.
 
-`Asset management <./assets>`_                                                                                                              Use the Webassets module to manage assets such as CSS and JS files.
+Asset management                                                  `✔  <https://github.com/pelican-plugins/webassets>`_                      Use the Webassets module to manage assets such as CSS and JS files.
 
 `Author images <./author_images>`_                                                                                                          Adds support for author images and avatars.
 
