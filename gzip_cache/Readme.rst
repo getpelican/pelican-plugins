@@ -12,6 +12,10 @@ file within the same directory as the original file.
 Settings
 --------
 
-* `GZIP_CACHE_OVERWRITE`
+* ``GZIP_CACHE_OVERWRITE``:
   If True, the original files will be replaced by the gzip-compressed files. 
   This is useful for static hosting services (e.g S3). Defaults to False.
+* ``GZIP_CACHE_EXCLUDE_TYPES``:
+  A tuple of file extensions to exclude in addition to the built-in ones.
+  Extensions must be specified with leading dot, e.g.
+  ``GZIP_CACHE_EXCLUDE_TYPES = ('.php', '.py', '.tmp')``

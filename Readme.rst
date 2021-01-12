@@ -152,7 +152,7 @@ GA Page View                                                      `❓ <https://
 
 `ical <./ical>`_                                                                                                                            Looks for and parses an ``.ics`` file if it is defined in a given page's ``calendar`` metadata.
 
-Image Process                                                     `❓ <https://github.com/whiskyechobravo/image_process>`_                  Automates the processing of images based on their class attributes
+Image Process                                                     `✔  <https://github.com/pelican-plugins/image-process>`_                  Automates the processing of images based on their class attributes
 
 `Interlinks <./interlinks>`_                                                                                                                Lets you add frequently used URLs to your markup using short keywords
 
@@ -196,7 +196,7 @@ Pandoc Org Reader                                                 `❓ <https://
 
 `Org Reader <./org_reader>`_                                                                                                                Create posts via Emacs Orgmode files
 
-Pandoc reader                                                     `❓ <https://github.com/liob/pandoc_reader>`_
+Pandoc reader                                                     `✔  <https://github.com/pelican-plugins/pandoc-reader>`_
 
 Panorama                                                          `❓ <https://github.com/romainx/panorama>`_                               Creates charts from posts metadata
 
@@ -296,7 +296,7 @@ Series                                                            `✔  <https:/
 
 `Show Source <./show_source>`_                                                                                                              Place a link to the source text of your posts.
 
-Similar Posts                                                     `❓ <https://github.com/davidlesieur/similar_posts>`_                     Adds a list of similar posts to every article's context.
+Similar Posts                                                     `✔  <https://github.com/pelican-plugins/similar-posts>`_                  Adds a list of similar posts to every article's context.
 
 Simple footnotes                                                  `✔  <https://github.com/pelican-plugins/simple-footnotes>`_               Adds footnotes to blog posts
 
