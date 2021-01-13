@@ -137,9 +137,19 @@ def content_object_init(instance):
                     fig['style'] = extra_style
 
                 # Should we add Figure numbers?
-                # TODO: you should probably be able to switch this on globally and off per post, too.
-                # Is FIGURE_NUMBERS = True in the global config, or does 'figure_numbers' exist in this articles metadata and is it true?
-                if ('FIGURE_NUMBERS' in instance.settings and instance.settings['FIGURE_NUMBERS']) or 'figure_numbers' in instance.metadata:
+                addFigNum = False # default to false
+                if 'FIGURE_NUMBERS' in instance.settings:
+                    # It's set globally, so override default
+                    addFigNum = instance.settings['FIGURE_NUMBERS']
+                if 'figure_numbers' in instance.metadata:
+                    # It's set on the page, so override global setting
+                    addFigNum = instance.metadata['figure_numbers']
+
+                if addFigNum:
+                    logger.debug('Better Fig. instance.settings.FIGURE_NUMBERS: %s', instance.settings.get('FIGURE_NUMBERS', False))
+                    logger.debug('Better Fig. instance.metadata.figure_numbers: %s', instance.metadata.get('figure_numbers', False))
+                    logger.debug('Better Fig. addFigNum: %s', addFigNum)
+
                     caption = fig.find('p', class_='caption')
                     if caption and caption.string:
                         logger.debug('Better Fig. Caption.string: ' + caption.string)
