@@ -1,0 +1,70 @@
+Alerts
+===============================================================================
+.. lead:: Provide contextual feedback messages for typical user actions with
+          the handful of available and flexible alert messages. For inline
+          dismissal, use the `alerts jQuery plugin
+          <http://getbootstrap.com/javascript/>`_.
+.. ----------------------------------------------------------------------------
+
+Examples
+--------
+
+Wrap any text and an optional dismiss button in `.alert` and one of the four
+contextual classes (e.g., `.alert-success`) for basic alert messages.
+
+.. callout:: danger
+
+   :h4:`No default class`
+   Alerts don't have default classes, only base and modifier classes. A default
+   gray alert doesn't make too much sense, so you're required to specify a type
+   via contextual class. Choose from success, info, warning, or danger.
+
+
+.. container:: bs-example
+
+   .. alert:: **Well done!** You successfully read this important alert message.
+      :type: success
+
+   .. alert:: **Heads up!** This alert needs your attention, but it's not super important.
+      :type: info
+
+   .. alert:: **Warning!** Better check yourself, you're not looking too good.
+      :type: warning
+
+   .. alert:: **Oh snap!** Change a few things up and try submitting again.
+      :type: danger
+
+
+.. code::
+   :class: highlight
+
+   .. alert:: **Well done!** You successfully read this important alert message.
+      :type: success
+
+   .. alert:: **Heads up!** This alert needs your attention, but it's not super important.
+      :type: info
+
+   .. alert:: **Warning!** Better check yourself, you're not looking too good.
+      :type: warning
+
+   .. alert:: **Oh snap!** Change a few things up and try submitting again.
+      :type: danger
+
+
+Dismissable alerts
+------------------
+
+Build on any alert by adding an optional `.alert-dismissable` and close button.
+
+.. container:: bs-example
+
+   .. alert:: **Warning!** Better check yourself, you're not looking too good.
+      :type: warning
+      :dismissable:
+
+
+.. callout:: warning
+
+   :h4:`Ensure proper behavior across all devices`
+   Be sure to use the `<button>` element with the `data-dismiss="alert"` data
+   attribute.

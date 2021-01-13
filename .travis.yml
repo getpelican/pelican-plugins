@@ -1,13 +1,33 @@
 language: python
 python:
-    - "2.7"
-    - "3.2"
+    - "3.7"
+cache: pip
+env:
+ - R_LIBS_USER=$TRAVIS_BUILD_DIR/R/Library
+cache:
+  directories:
+   - $R_LIBS_USER
 before_install:
+# By default R 3.2.3 is installed with xenial, but rpy2 requires R >= 3.3
+# Hence we add an extra deb package repo to get a more recent version:
+ - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+ - sudo add-apt-repository 'deb [arch=amd64,i386] https://cloud.r-project.org/bin/linux/ubuntu xenial/'
  - sudo apt-get update -qq
- - sudo apt-get install -qq --no-install-recommends ruby-sass
+ - sudo apt-get install -qq --no-install-recommends asciidoctor pandoc plantuml r-base ruby-sass
+ - mkdir -p $R_LIBS_USER
+ - echo 'install.packages("knitr", repos="https://cran.rstudio.com")' | R --no-save
 install:
-    - pip install nose
-    - pip install -e git://github.com/getpelican/pelican.git#egg=pelican
-    - pip install --use-mirrors Markdown
-    - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then pip install --use-mirrors webassets cssmin; fi
-script: nosetests
+ - pip install -U -r requirements.txt
+ # Installing pelican in editable mode makes its tests.support package available to us
+ - pip install -e git+https://github.com/getpelican/pelican.git#egg=pelican
+ # The following commands install all plugins dependencies.
+ # The `grep` & `sed commands` below are needed because some submodules have conflicting requirements.
+ # cf. https://github.com/getpelican/pelican-plugins/issues/1170
+ - pip install -U -r <(grep -hv pelican */requirements.txt | sed 's/==/>=/')
+# We need to exclude the multimarkdown_reader & pandoc_reader plugins,
+# otherwise their BaseReader subclasses will be loaded by pelican.readers.Readers,
+# and override the default .md one.
+# We also need to exclude the image_process plugin as long as they are not fixed, cf. https://github.com/getpelican/pelican-plugins/issues/1170
+script: nosetests --with-summary-report
+   --exclude-dir=multimarkdown_reader --exclude-dir=pandoc_reader
+   --exclude-dir=image_process

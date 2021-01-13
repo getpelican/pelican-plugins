@@ -1,0 +1,45 @@
+Jumbotron
+===============================================================================
+
+A lightweight, flexible component that can optionally extend the entire
+viewport to showcase key content on your site.
+
+.. container:: bs-example
+
+   .. jumbotron::
+
+      :h1:`Hello, world!`
+
+      This is a simple hero unit, a simple jumbotron-style component for
+      calling extra attention to featured content or information.
+
+      .. button:: Learn more
+         :class: primary large
+
+.. code::
+   :class: highlight
+
+
+   .. jumbotron::
+
+      :h1:`Hello, world!`
+
+      This is a simple hero unit, a simple jumbotron-style component for
+      calling extra attention to featured content or information.
+
+      .. button:: Learn more
+         :class: primary large
+
+
+To make the jumbotron full width, and without rounded corners, place it outside
+all .containers and instead add a .container within.
+
+.. code::
+   :class: highlight
+
+
+   .. jumbotron::
+
+      .. container::
+
+         ...

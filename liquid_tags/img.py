@@ -24,6 +24,7 @@ Output
 """
 import re
 from .mdx_liquid_tags import LiquidTags
+import six
 
 SYNTAX = '{% img [class name(s)] [http[s]:/]/path/to/image [width [height]] [title text | "title text" ["alt text"]] %}'
 
@@ -42,7 +43,7 @@ def img(preprocessor, tag, markup):
     match = ReImg.search(markup)
     if match:
         attrs = dict([(key, val.strip())
-                      for (key, val) in match.groupdict().iteritems() if val])
+                      for (key, val) in six.iteritems(match.groupdict()) if val])
     else:
         raise ValueError('Error processing input. '
                          'Expected syntax: {0}'.format(SYNTAX))
@@ -57,9 +58,9 @@ def img(preprocessor, tag, markup):
 
     # Return the formatted text
     return "<img {0}>".format(' '.join('{0}="{1}"'.format(key, val)
-                                       for (key, val) in attrs.iteritems()))
+                                       for (key, val) in six.iteritems(attrs)))
 
 #----------------------------------------------------------------------
 # This import allows image tag to be a Pelican plugin
-from liquid_tags import register
+from .liquid_tags import register
 

@@ -1,0 +1,15 @@
+Badges
+===============================================================================
+.. lead:: Easily highlight new or unread items by adding a <span class="badge">
+          to links, Bootstrap navs, and more.
+
+
+.. container:: bs-example
+
+  `Inbox <#>`_ :badge:`42`
+
+
+Self collapsing
+
+When there are no new or unread items, badges will simply collapse (via CSS's
+`:empty` selector) provided no content exists within.

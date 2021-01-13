@@ -1,0 +1,3 @@
+# Using git version as no Python3-compatible exists on Pypi: https://github.com/rst2pdf/rst2pdf/issues/799
+git+https://github.com/rst2pdf/rst2pdf.git
+xhtml2pdf

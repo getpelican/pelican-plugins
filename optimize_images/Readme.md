@@ -1,12 +1,14 @@
 Optimize Images Plugin For Pelican
 ==================================
 
-This plugin applies lossless compression on JPEG and PNG images, with no
-effect on image quality. It uses [jpegtran][1] and [OptiPNG][2]. It assumes
-that both of these tools are installed on system path.
+This plugin applies lossless compression on JPEG, PNG and SVG images, with no
+effect on image quality via [jpegtran][], [OptiPNG][] and [svgo][] respectively. 
+The plugin assumes that all of these tools are installed, with associated
+executables available on the system path.
 
-[1]: http://jpegclub.org/jpegtran/              "jpegtran"
-[2]: http://optipng.sourceforge.net/            "OptiPNG"
+[jpegtran]: http://jpegclub.org/jpegtran/
+[OptiPNG]: http://optipng.sourceforge.net/
+[SVGO]: https://github.com/svg/svgo
 
 
 Installation
@@ -23,4 +25,4 @@ Then use as follows by adding the following to your settings.py:
 Usage
 -----
 The plugin will activate and optimize images upon `finalized` signal of
-pelican.
+Pelican.

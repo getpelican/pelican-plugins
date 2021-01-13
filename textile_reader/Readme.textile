@@ -1,0 +1,16 @@
+h1. Textile Reader Plugin for Pelican
+
+p. This plugin adds support for "Textile markup":https://github.com/netcarver/textile via the "textile egg on pypi":https://pypi.python.org/pypi/textile .
+
+p. Input files are similar in format to Markdown files, in that they start with the post metadata in "Key: value" pairs, one per line. However, the metadata is ended by a line containing only "----", and then all that follows is the body content.  If the separator line is missing then the whole file is assumed to be content.
+
+h2. Example Input File
+
+<pre>Title: An Example Textile-formatted Input for Pelican
+Date: 2013-08-12
+Category: Plugins
+Tags: textile, pelican
+Author: Joey Coleman
+----
+p. Lorem ipsum dolor sit amet...
+</pre>

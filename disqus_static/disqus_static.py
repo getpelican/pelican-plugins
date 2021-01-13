@@ -6,13 +6,14 @@ This plugin adds a disqus_comments property to all articles.
 Comments are fetched at generation time using disqus API.
 """
 
+from __future__ import unicode_literals
 from disqusapi import DisqusAPI, Paginator
 from pelican import signals
 
 def initialized(pelican):
-    from pelican.settings import _DEFAULT_CONFIG
-    _DEFAULT_CONFIG.setdefault('DISQUS_SECRET_KEY', '')
-    _DEFAULT_CONFIG.setdefault('DISQUS_PUBLIC_KEY', '')
+    from pelican.settings import DEFAULT_CONFIG
+    DEFAULT_CONFIG.setdefault('DISQUS_SECRET_KEY', '')
+    DEFAULT_CONFIG.setdefault('DISQUS_PUBLIC_KEY', '')
     if pelican:
         pelican.settings.setdefault('DISQUS_SECRET_KEY', '')
         pelican.settings.setdefault('DISQUS_PUBLIC_KEY', '')

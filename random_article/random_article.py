@@ -11,11 +11,13 @@ saved at SITEURL.
 from __future__ import unicode_literals
 
 import os.path
+import logging
 
-from logging import info
 from codecs import open
 
 from pelican import signals
+
+log = logging.getLogger(__name__)
 
 HTML_TOP = """
 <!DOCTYPE html>
@@ -68,7 +70,7 @@ class RandomArticleGenerator(object):
     def generate_output(self, writer):
         path = os.path.join(self.output_path, self.randomurl)
         articles = self.context['articles']
-        info('writing {0}'.format(path))
+        log.info('writing %r', path)
 
         if len(articles) == 0:
             return

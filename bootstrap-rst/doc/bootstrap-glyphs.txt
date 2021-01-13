@@ -1,0 +1,805 @@
+.. ----------------------------------------------------------------------------
+.. Bootstrap RST - glyph definitions
+.. ----------------------------------------------------------------------------
+
+.. role:: glyphicon-class
+
+.. |asterisk| raw:: html
+
+   <span class="glyphicon glyphicon-asterisk"></span>
+
+.. |plus| raw:: html
+
+   <span class="glyphicon glyphicon-plus"></span>
+
+.. |euro| raw:: html
+
+   <span class="glyphicon glyphicon-euro"></span>
+
+.. |minus| raw:: html
+
+   <span class="glyphicon glyphicon-minus"></span>
+
+.. |cloud| raw:: html
+
+   <span class="glyphicon glyphicon-cloud"></span>
+
+.. |envelope| raw:: html
+
+   <span class="glyphicon glyphicon-envelope"></span>
+
+.. |pencil| raw:: html
+
+   <span class="glyphicon glyphicon-pencil"></span>
+
+.. |glass| raw:: html
+
+   <span class="glyphicon glyphicon-glass"></span>
+
+.. |music| raw:: html
+
+   <span class="glyphicon glyphicon-music"></span>
+
+.. |search| raw:: html
+
+   <span class="glyphicon glyphicon-search"></span>
+
+.. |heart| raw:: html
+
+   <span class="glyphicon glyphicon-heart"></span>
+
+.. |star| raw:: html
+
+   <span class="glyphicon glyphicon-star"></span>
+
+.. |star-empty| raw:: html
+
+   <span class="glyphicon glyphicon-star-empty"></span>
+
+.. |user| raw:: html
+
+   <span class="glyphicon glyphicon-user"></span>
+
+.. |film| raw:: html
+
+   <span class="glyphicon glyphicon-film"></span>
+
+.. |th-large| raw:: html
+
+   <span class="glyphicon glyphicon-th-large"></span>
+
+.. |th| raw:: html
+
+   <span class="glyphicon glyphicon-th"></span>
+
+.. |th-list| raw:: html
+
+   <span class="glyphicon glyphicon-th-list"></span>
+
+.. |ok| raw:: html
+
+   <span class="glyphicon glyphicon-ok"></span>
+
+.. |remove| raw:: html
+
+   <span class="glyphicon glyphicon-remove"></span>
+
+.. |zoom-in| raw:: html
+
+   <span class="glyphicon glyphicon-zoom-in"></span>
+
+.. |zoom-out| raw:: html
+
+   <span class="glyphicon glyphicon-zoom-out"></span>
+
+.. |off| raw:: html
+
+   <span class="glyphicon glyphicon-off"></span>
+
+.. |signal| raw:: html
+
+   <span class="glyphicon glyphicon-signal"></span>
+
+.. |cog| raw:: html
+
+   <span class="glyphicon glyphicon-cog"></span>
+
+.. |trash| raw:: html
+
+   <span class="glyphicon glyphicon-trash"></span>
+
+.. |home| raw:: html
+
+   <span class="glyphicon glyphicon-home"></span>
+
+.. |file| raw:: html
+
+   <span class="glyphicon glyphicon-file"></span>
+
+.. |time| raw:: html
+
+   <span class="glyphicon glyphicon-time"></span>
+
+.. |road| raw:: html
+
+   <span class="glyphicon glyphicon-road"></span>
+
+.. |download-alt| raw:: html
+
+   <span class="glyphicon glyphicon-download-alt"></span>
+
+.. |download| raw:: html
+
+   <span class="glyphicon glyphicon-download"></span>
+
+.. |upload| raw:: html
+
+   <span class="glyphicon glyphicon-upload"></span>
+
+.. |inbox| raw:: html
+
+   <span class="glyphicon glyphicon-inbox"></span>
+
+.. |play-circle| raw:: html
+
+   <span class="glyphicon glyphicon-play-circle"></span>
+
+.. |repeat| raw:: html
+
+   <span class="glyphicon glyphicon-repeat"></span>
+
+.. |refresh| raw:: html
+
+   <span class="glyphicon glyphicon-refresh"></span>
+
+.. |list-alt| raw:: html
+
+   <span class="glyphicon glyphicon-list-alt"></span>
+
+.. |lock| raw:: html
+
+   <span class="glyphicon glyphicon-lock"></span>
+
+.. |flag| raw:: html
+
+   <span class="glyphicon glyphicon-flag"></span>
+
+.. |headphones| raw:: html
+
+   <span class="glyphicon glyphicon-headphones"></span>
+
+.. |volume-off| raw:: html
+
+   <span class="glyphicon glyphicon-volume-off"></span>
+
+.. |volume-down| raw:: html
+
+   <span class="glyphicon glyphicon-volume-down"></span>
+
+.. |volume-up| raw:: html
+
+   <span class="glyphicon glyphicon-volume-up"></span>
+
+.. |qrcode| raw:: html
+
+   <span class="glyphicon glyphicon-qrcode"></span>
+
+.. |barcode| raw:: html
+
+   <span class="glyphicon glyphicon-barcode"></span>
+
+.. |tag| raw:: html
+
+   <span class="glyphicon glyphicon-tag"></span>
+
+.. |tags| raw:: html
+
+   <span class="glyphicon glyphicon-tags"></span>
+
+.. |book| raw:: html
+
+   <span class="glyphicon glyphicon-book"></span>
+
+.. |bookmark| raw:: html
+
+   <span class="glyphicon glyphicon-bookmark"></span>
+
+.. |print| raw:: html
+
+   <span class="glyphicon glyphicon-print"></span>
+
+.. |camera| raw:: html
+
+   <span class="glyphicon glyphicon-camera"></span>
+
+.. |font| raw:: html
+
+   <span class="glyphicon glyphicon-font"></span>
+
+.. |bold| raw:: html
+
+   <span class="glyphicon glyphicon-bold"></span>
+
+.. |italic| raw:: html
+
+   <span class="glyphicon glyphicon-italic"></span>
+
+.. |text-height| raw:: html
+
+   <span class="glyphicon glyphicon-text-height"></span>
+
+.. |text-width| raw:: html
+
+   <span class="glyphicon glyphicon-text-width"></span>
+
+.. |align-left| raw:: html
+
+   <span class="glyphicon glyphicon-align-left"></span>
+
+.. |align-center| raw:: html
+
+   <span class="glyphicon glyphicon-align-center"></span>
+
+.. |align-right| raw:: html
+
+   <span class="glyphicon glyphicon-align-right"></span>
+
+.. |align-justify| raw:: html
+
+   <span class="glyphicon glyphicon-align-justify"></span>
+
+.. |list| raw:: html
+
+   <span class="glyphicon glyphicon-list"></span>
+
+.. |indent-left| raw:: html
+
+   <span class="glyphicon glyphicon-indent-left"></span>
+
+.. |indent-right| raw:: html
+
+   <span class="glyphicon glyphicon-indent-right"></span>
+
+.. |facetime-video| raw:: html
+
+   <span class="glyphicon glyphicon-facetime-video"></span>
+
+.. |picture| raw:: html
+
+   <span class="glyphicon glyphicon-picture"></span>
+
+.. |map-marker| raw:: html
+
+   <span class="glyphicon glyphicon-map-marker"></span>
+
+.. |adjust| raw:: html
+
+   <span class="glyphicon glyphicon-adjust"></span>
+
+.. |tint| raw:: html
+
+   <span class="glyphicon glyphicon-tint"></span>
+
+.. |edit| raw:: html
+
+   <span class="glyphicon glyphicon-edit"></span>
+
+.. |share| raw:: html
+
+   <span class="glyphicon glyphicon-share"></span>
+
+.. |check| raw:: html
+
+   <span class="glyphicon glyphicon-check"></span>
+
+.. |move| raw:: html
+
+   <span class="glyphicon glyphicon-move"></span>
+
+.. |step-backward| raw:: html
+
+   <span class="glyphicon glyphicon-step-backward"></span>
+
+.. |fast-backward| raw:: html
+
+   <span class="glyphicon glyphicon-fast-backward"></span>
+
+.. |backward| raw:: html
+
+   <span class="glyphicon glyphicon-backward"></span>
+
+.. |play| raw:: html
+
+   <span class="glyphicon glyphicon-play"></span>
+
+.. |pause| raw:: html
+
+   <span class="glyphicon glyphicon-pause"></span>
+
+.. |stop| raw:: html
+
+   <span class="glyphicon glyphicon-stop"></span>
+
+.. |forward| raw:: html
+
+   <span class="glyphicon glyphicon-forward"></span>
+
+.. |fast-forward| raw:: html
+
+   <span class="glyphicon glyphicon-fast-forward"></span>
+
+.. |step-forward| raw:: html
+
+   <span class="glyphicon glyphicon-step-forward"></span>
+
+.. |eject| raw:: html
+
+   <span class="glyphicon glyphicon-eject"></span>
+
+.. |chevron-left| raw:: html
+
+   <span class="glyphicon glyphicon-chevron-left"></span>
+
+.. |chevron-right| raw:: html
+
+   <span class="glyphicon glyphicon-chevron-right"></span>
+
+.. |plus-sign| raw:: html
+
+   <span class="glyphicon glyphicon-plus-sign"></span>
+
+.. |minus-sign| raw:: html
+
+   <span class="glyphicon glyphicon-minus-sign"></span>
+
+.. |remove-sign| raw:: html
+
+   <span class="glyphicon glyphicon-remove-sign"></span>
+
+.. |ok-sign| raw:: html
+
+   <span class="glyphicon glyphicon-ok-sign"></span>
+
+.. |question-sign| raw:: html
+
+   <span class="glyphicon glyphicon-question-sign"></span>
+
+.. |info-sign| raw:: html
+
+   <span class="glyphicon glyphicon-info-sign"></span>
+
+.. |screenshot| raw:: html
+
+   <span class="glyphicon glyphicon-screenshot"></span>
+
+.. |remove-circle| raw:: html
+
+   <span class="glyphicon glyphicon-remove-circle"></span>
+
+.. |ok-circle| raw:: html
+
+   <span class="glyphicon glyphicon-ok-circle"></span>
+
+.. |ban-circle| raw:: html
+
+   <span class="glyphicon glyphicon-ban-circle"></span>
+
+.. |arrow-left| raw:: html
+
+   <span class="glyphicon glyphicon-arrow-left"></span>
+
+.. |arrow-right| raw:: html
+
+   <span class="glyphicon glyphicon-arrow-right"></span>
+
+.. |arrow-up| raw:: html
+
+   <span class="glyphicon glyphicon-arrow-up"></span>
+
+.. |arrow-down| raw:: html
+
+   <span class="glyphicon glyphicon-arrow-down"></span>
+
+.. |share-alt| raw:: html
+
+   <span class="glyphicon glyphicon-share-alt"></span>
+
+.. |resize-full| raw:: html
+
+   <span class="glyphicon glyphicon-resize-full"></span>
+
+.. |resize-small| raw:: html
+
+   <span class="glyphicon glyphicon-resize-small"></span>
+
+.. |exclamation-sign| raw:: html
+
+   <span class="glyphicon glyphicon-exclamation-sign"></span>
+
+.. |gift| raw:: html
+
+   <span class="glyphicon glyphicon-gift"></span>
+
+.. |leaf| raw:: html
+
+   <span class="glyphicon glyphicon-leaf"></span>
+
+.. |fire| raw:: html
+
+   <span class="glyphicon glyphicon-fire"></span>
+
+.. |eye-open| raw:: html
+
+   <span class="glyphicon glyphicon-eye-open"></span>
+
+.. |eye-close| raw:: html
+
+   <span class="glyphicon glyphicon-eye-close"></span>
+
+.. |warning-sign| raw:: html
+
+   <span class="glyphicon glyphicon-warning-sign"></span>
+
+.. |plane| raw:: html
+
+   <span class="glyphicon glyphicon-plane"></span>
+
+.. |calendar| raw:: html
+
+   <span class="glyphicon glyphicon-calendar"></span>
+
+.. |random| raw:: html
+
+   <span class="glyphicon glyphicon-random"></span>
+
+.. |comment| raw:: html
+
+   <span class="glyphicon glyphicon-comment"></span>
+
+.. |magnet| raw:: html
+
+   <span class="glyphicon glyphicon-magnet"></span>
+
+.. |chevron-up| raw:: html
+
+   <span class="glyphicon glyphicon-chevron-up"></span>
+
+.. |chevron-down| raw:: html
+
+   <span class="glyphicon glyphicon-chevron-down"></span>
+
+.. |retweet| raw:: html
+
+   <span class="glyphicon glyphicon-retweet"></span>
+
+.. |shopping-cart| raw:: html
+
+   <span class="glyphicon glyphicon-shopping-cart"></span>
+
+.. |folder-close| raw:: html
+
+   <span class="glyphicon glyphicon-folder-close"></span>
+
+.. |folder-open| raw:: html
+
+   <span class="glyphicon glyphicon-folder-open"></span>
+
+.. |resize-vertical| raw:: html
+
+   <span class="glyphicon glyphicon-resize-vertical"></span>
+
+.. |resize-horizontal| raw:: html
+
+   <span class="glyphicon glyphicon-resize-horizontal"></span>
+
+.. |hdd| raw:: html
+
+   <span class="glyphicon glyphicon-hdd"></span>
+
+.. |bullhorn| raw:: html
+
+   <span class="glyphicon glyphicon-bullhorn"></span>
+
+.. |bell| raw:: html
+
+   <span class="glyphicon glyphicon-bell"></span>
+
+.. |certificate| raw:: html
+
+   <span class="glyphicon glyphicon-certificate"></span>
+
+.. |thumbs-up| raw:: html
+
+   <span class="glyphicon glyphicon-thumbs-up"></span>
+
+.. |thumbs-down| raw:: html
+
+   <span class="glyphicon glyphicon-thumbs-down"></span>
+
+.. |hand-right| raw:: html
+
+   <span class="glyphicon glyphicon-hand-right"></span>
+
+.. |hand-left| raw:: html
+
+   <span class="glyphicon glyphicon-hand-left"></span>
+
+.. |hand-up| raw:: html
+
+   <span class="glyphicon glyphicon-hand-up"></span>
+
+.. |hand-down| raw:: html
+
+   <span class="glyphicon glyphicon-hand-down"></span>
+
+.. |circle-arrow-right| raw:: html
+
+   <span class="glyphicon glyphicon-circle-arrow-right"></span>
+
+.. |circle-arrow-left| raw:: html
+
+   <span class="glyphicon glyphicon-circle-arrow-left"></span>
+
+.. |circle-arrow-up| raw:: html
+
+   <span class="glyphicon glyphicon-circle-arrow-up"></span>
+
+.. |circle-arrow-down| raw:: html
+
+   <span class="glyphicon glyphicon-circle-arrow-down"></span>
+
+.. |globe| raw:: html
+
+   <span class="glyphicon glyphicon-globe"></span>
+
+.. |wrench| raw:: html
+
+   <span class="glyphicon glyphicon-wrench"></span>
+
+.. |tasks| raw:: html
+
+   <span class="glyphicon glyphicon-tasks"></span>
+
+.. |filter| raw:: html
+
+   <span class="glyphicon glyphicon-filter"></span>
+
+.. |briefcase| raw:: html
+
+   <span class="glyphicon glyphicon-briefcase"></span>
+
+.. |fullscreen| raw:: html
+
+   <span class="glyphicon glyphicon-fullscreen"></span>
+
+.. |dashboard| raw:: html
+
+   <span class="glyphicon glyphicon-dashboard"></span>
+
+.. |paperclip| raw:: html
+
+   <span class="glyphicon glyphicon-paperclip"></span>
+
+.. |heart-empty| raw:: html
+
+   <span class="glyphicon glyphicon-heart-empty"></span>
+
+.. |link| raw:: html
+
+   <span class="glyphicon glyphicon-link"></span>
+
+.. |phone| raw:: html
+
+   <span class="glyphicon glyphicon-phone"></span>
+
+.. |pushpin| raw:: html
+
+   <span class="glyphicon glyphicon-pushpin"></span>
+
+.. |usd| raw:: html
+
+   <span class="glyphicon glyphicon-usd"></span>
+
+.. |gbp| raw:: html
+
+   <span class="glyphicon glyphicon-gbp"></span>
+
+.. |sort| raw:: html
+
+   <span class="glyphicon glyphicon-sort"></span>
+
+.. |sort-by-alphabet| raw:: html
+
+   <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+
+.. |sort-by-alphabet-alt| raw:: html
+
+   <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+
+.. |sort-by-order| raw:: html
+
+   <span class="glyphicon glyphicon-sort-by-order"></span>
+
+.. |sort-by-order-alt| raw:: html
+
+   <span class="glyphicon glyphicon-sort-by-order-alt"></span>
+
+.. |sort-by-attributes| raw:: html
+
+   <span class="glyphicon glyphicon-sort-by-attributes"></span>
+
+.. |sort-by-attributes-alt| raw:: html
+
+   <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+
+.. |unchecked| raw:: html
+
+   <span class="glyphicon glyphicon-unchecked"></span>
+
+.. |expand| raw:: html
+
+   <span class="glyphicon glyphicon-expand"></span>
+
+.. |collapse-down| raw:: html
+
+   <span class="glyphicon glyphicon-collapse-down"></span>
+
+.. |collapse-up| raw:: html
+
+   <span class="glyphicon glyphicon-collapse-up"></span>
+
+.. |log-in| raw:: html
+
+   <span class="glyphicon glyphicon-log-in"></span>
+
+.. |flash| raw:: html
+
+   <span class="glyphicon glyphicon-flash"></span>
+
+.. |log-out| raw:: html
+
+   <span class="glyphicon glyphicon-log-out"></span>
+
+.. |new-window| raw:: html
+
+   <span class="glyphicon glyphicon-new-window"></span>
+
+.. |record| raw:: html
+
+   <span class="glyphicon glyphicon-record"></span>
+
+.. |save| raw:: html
+
+   <span class="glyphicon glyphicon-save"></span>
+
+.. |open| raw:: html
+
+   <span class="glyphicon glyphicon-open"></span>
+
+.. |saved| raw:: html
+
+   <span class="glyphicon glyphicon-saved"></span>
+
+.. |import| raw:: html
+
+   <span class="glyphicon glyphicon-import"></span>
+
+.. |export| raw:: html
+
+   <span class="glyphicon glyphicon-export"></span>
+
+.. |send| raw:: html
+
+   <span class="glyphicon glyphicon-send"></span>
+
+.. |floppy-disk| raw:: html
+
+   <span class="glyphicon glyphicon-floppy-disk"></span>
+
+.. |floppy-saved| raw:: html
+
+   <span class="glyphicon glyphicon-floppy-saved"></span>
+
+.. |floppy-remove| raw:: html
+
+   <span class="glyphicon glyphicon-floppy-remove"></span>
+
+.. |floppy-save| raw:: html
+
+   <span class="glyphicon glyphicon-floppy-save"></span>
+
+.. |floppy-open| raw:: html
+
+   <span class="glyphicon glyphicon-floppy-open"></span>
+
+.. |credit-card| raw:: html
+
+   <span class="glyphicon glyphicon-credit-card"></span>
+
+.. |transfer| raw:: html
+
+   <span class="glyphicon glyphicon-transfer"></span>
+
+.. |cutlery| raw:: html
+
+   <span class="glyphicon glyphicon-cutlery"></span>
+
+.. |header| raw:: html
+
+   <span class="glyphicon glyphicon-header"></span>
+
+.. |compressed| raw:: html
+
+   <span class="glyphicon glyphicon-compressed"></span>
+
+.. |earphone| raw:: html
+
+   <span class="glyphicon glyphicon-earphone"></span>
+
+.. |phone-alt| raw:: html
+
+   <span class="glyphicon glyphicon-phone-alt"></span>
+
+.. |tower| raw:: html
+
+   <span class="glyphicon glyphicon-tower"></span>
+
+.. |stats| raw:: html
+
+   <span class="glyphicon glyphicon-stats"></span>
+
+.. |sd-video| raw:: html
+
+   <span class="glyphicon glyphicon-sd-video"></span>
+
+.. |hd-video| raw:: html
+
+   <span class="glyphicon glyphicon-hd-video"></span>
+
+.. |subtitles| raw:: html
+
+   <span class="glyphicon glyphicon-subtitles"></span>
+
+.. |sound-stereo| raw:: html
+
+   <span class="glyphicon glyphicon-sound-stereo"></span>
+
+.. |sound-dolby| raw:: html
+
+   <span class="glyphicon glyphicon-sound-dolby"></span>
+
+.. |sound-5-1| raw:: html
+
+   <span class="glyphicon glyphicon-sound-5-1"></span>
+
+.. |sound-6-1| raw:: html
+
+   <span class="glyphicon glyphicon-sound-6-1"></span>
+
+.. |sound-7-1| raw:: html
+
+   <span class="glyphicon glyphicon-sound-7-1"></span>
+
+.. |copyright-mark| raw:: html
+
+   <span class="glyphicon glyphicon-copyright-mark"></span>
+
+.. |registration-mark| raw:: html
+
+   <span class="glyphicon glyphicon-registration-mark"></span>
+
+.. |cloud-download| raw:: html
+
+   <span class="glyphicon glyphicon-cloud-download"></span>
+
+.. |cloud-upload| raw:: html
+
+   <span class="glyphicon glyphicon-cloud-upload"></span>
+
+.. |tree-conifer| raw:: html
+
+   <span class="glyphicon glyphicon-tree-conifer"></span>
+
+.. |tree-deciduous| raw:: html
+
+   <span class="glyphicon glyphicon-tree-deciduous"></span>

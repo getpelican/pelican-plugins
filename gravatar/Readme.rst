@@ -7,9 +7,17 @@ makes the variable available within the article's context. You can add
 address. Obviously, that email address must be associated with a Gravatar
 account.
 
-Alternatively, you can provide an email address from within article metadata::
+Alternatively, you can provide an email address from within article metadata.
+
+In reSTructuredText::
 
     :email:  john.doe@example.com
 
-If the email address is defined via at least one of the two methods above,
-the ``author_gravatar`` variable is added to the article's context.
+In Markdown::
+
+    Email:  john.doe@example.com
+
+If the email address is defined via at least one of the two methods above, the
+``author_gravatar`` variable is added to the article's context. For Markdown,
+it is critical that the 'E' in ``Email`` is capitalized.
+

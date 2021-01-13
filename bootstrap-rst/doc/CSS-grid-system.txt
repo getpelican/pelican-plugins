@@ -1,0 +1,235 @@
+Grid system
+===============================================================================
+.. lead::
+
+   Bootstrap includes a responsive, mobile first fluid grid system that
+   appropriately scales up to 12 columns as the device or viewport size
+   increases. It includes predefined classes for easy layout options, as well
+   as powerful mixins for generating more semantic layouts.
+.. ----------------------------------------------------------------------------
+
+
+
+Introduction
+------------
+
+Grid systems are used for creating page layouts through a series of rows and
+columns that house your content. Here's how the Bootstrap grid system works:
+
+* Rows must be placed within a `.container` (fixed-width) or `.container-fluid`
+  (full-width) for proper alignment and padding.
+* Use rows to create horizontal groups of columns.
+* Content should be placed within columns, and only columns may be immediate children of rows.
+* Predefined grid classes like `.row` and `.col-xs-4` are available for quickly
+  making grid layouts. Less mixins can also be used for more semantic layouts.
+* Columns create gutters (gaps between column content) via padding. That
+  padding is offset in rows for the first and last column via negative margin
+  on `.row` s.
+* Grid columns are created by specifying the number of twelve available columns
+  you wish to span. For example, three equal columns would use three `.col-xs-4`.
+  Look to the examples for applying these principles to your code.
+
+Look to the examples for applying these principles to your code.
+
+Media queries
+-------------
+
+We use the following media queries in our Less files to create the key
+breakpoints in our grid system.
+
+.. code:: css
+   :class: highlight
+
+   /* Extra small devices (phones, less than 768px) */
+   /* No media query since this is the default in Bootstrap */
+
+   /* Small devices (tablets, 768px and up) */
+   @media (min-width: @screen-sm-min) { ... }
+
+   /* Medium devices (desktops, 992px and up) */
+   @media (min-width: @screen-md-min) { ... }
+
+   /* Large devices (large desktops, 1200px and up) */
+   @media (min-width: @screen-lg-min) { ... }
+
+We occasionally expand on these media queries to include a max-width to limit
+CSS to a narrower set of devices.
+
+.. code:: css
+   :class: highlight
+
+   @media (max-width: @screen-xs-max) { ... }
+   @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { ... }
+   @media (min-width: @screen-md-min) and (max-width: @screen-md-max) { ... }
+   @media (min-width: @screen-lg-min) { ... }
+
+
+Grid options
+------------
+
+See how aspects of the Bootstrap grid system work across multiple devices with
+a handy table.
+
+.. table::
+   :class: table table-bordered table-striped
+
+   +---------------------+---------------------+------------------+-------------------+--------------------+
+   |                     | Extra small devices | Small devices    | Medium devices    | Large devices      |
+   |                     | Phones (<768px)     | Tablets (≥768px) | Desktops (≥992px) | Desktops (≥1200px) |
+   +=====================+=====================+==================+===================+====================+
+   | **Grid Behavior**   | Horizontal at all   | Collapsed to start, horizontal above breakpoints          |
+   |                     | times               |                                                           |
+   +---------------------+---------------------+------------------+-------------------+--------------------+
+   | **Container Width** | None (auto)         | 750px            | 970px             | 1170px             |
+   +---------------------+---------------------+------------------+-------------------+--------------------+
+   | **Class Predix**    | `col-xs-`           | `col-sd-`        | `col-md-`         | `col-lg-`          |
+   +---------------------+---------------------+------------------+-------------------+--------------------+
+   | **# Columns**       | 12                                                                              |
+   +---------------------+---------------------+------------------+-------------------+--------------------+
+   | **Column Width**    | :text-muted:`Auto`  | 60px             | 78px              | 95px               |
+   +---------------------+---------------------+------------------+-------------------+--------------------+
+   | **Gutter width**    | 30px (15px on each side of a column)                                            |
+   +---------------------+---------------------+------------------+-------------------+--------------------+
+   | **Netsable**        | Yes                                                                             |
+   +---------------------+---------------------+------------------+-------------------+--------------------+
+   | **Offsets**         | Yes                                                                             |
+   +---------------------+---------------------+------------------+-------------------+--------------------+
+   | **Column Ordering** | Yes                                                                             |
+   +---------------------+---------------------+------------------+-------------------+--------------------+
+
+Grid classes apply to devices with screen widths greater than or equal to the
+breakpoint sizes, and override grid classes targeted at smaller
+devices. Therefore, applying any `.col-md-` class to an element will not only
+affect its styling on medium devices but also on large devices if a `.col-lg-`
+class is not present.
+
+
+Example: Stacked-to-horizontal
+------------------------------
+
+Using a single set of `.col-md-*` grid classes, you can create a basic grid
+system that starts out stacked on mobile devices and tablet devices (the extra
+small to small range) before becoming horizontal on desktop (medium)
+devices. Place grid columns in any `.row`.
+
+.. row:: show-grid
+
+   .. column:: .col-md-1
+   .. column:: .col-md-1
+   .. column:: .col-md-1
+   .. column:: .col-md-1
+   .. column:: .col-md-1
+   .. column:: .col-md-1
+   .. column:: .col-md-1
+   .. column:: .col-md-1
+   .. column:: .col-md-1
+   .. column:: .col-md-1
+   .. column:: .col-md-1
+   .. column:: .col-md-1
+
+.. row:: show-grid
+
+   .. column:: .col-md-8
+      :width: 8
+   .. column:: .col-md-4
+      :width: 4
+
+.. row:: show-grid
+
+   .. column:: .col-md-4
+      :width: 4
+   .. column:: .col-md-4
+      :width: 4
+   .. column:: .col-md-4
+      :width: 4
+
+.. row:: show-grid
+
+   .. column:: .col-md-6
+      :width: 6
+   .. column:: .col-md-6
+      :width: 6
+
+
+Offsetting columns
+------------------
+
+Move columns to the right using `.col-md-offset-*` classes. These classes
+increase the left margin of a column by * columns. For example,
+`.col-md-offset-4` moves `.col-md-4` over four columns.
+
+
+.. row:: show-grid
+
+   .. column:: .col-md-4
+      :width: 4
+   .. column:: .col-md-4
+      :width: 4
+      :offset: 4
+
+
+.. row:: show-grid
+
+   .. column:: .col-md-3
+      :width: 3
+      :offset: 3
+
+   .. column:: .col-md-3
+      :width: 3
+      :offset: 3
+
+
+.. row:: show-grid
+
+   .. column:: .col-md-6
+      :width: 6
+      :offset: 3
+
+
+Nesting columns
+---------------
+
+To nest your content with the default grid, add a new `.row` and set of
+`.col-md-*` columns within an existing `.col-md-*` column. Nested rows should
+include a set of columns that add up to 12 or less.
+
+.. row:: show-grid
+
+   .. column:: Level 1: .col-md-9
+      :width: 9
+
+      .. row:: show-grid
+
+         .. column:: Level 2: .col-md-6
+            :width: 6
+         .. column:: Level 2: .col-md-6
+            :width: 6
+
+
+Column ordering
+---------------
+
+Easily change the order of our built-in grid columns with .col-md-push-* and
+.col-md-pull-* modifier classes.
+
+
+.. row:: show-grid
+
+   .. column:: .col-md-9 . col-push-3
+      :width: 9
+      :push: 3
+
+   .. column:: .col-md-3 . col-pull-9
+      :width: 3
+      :pull: 9
+
+.. code::
+   :class: highlight
+
+   .. column:: .col-md-9 . col-push-3
+      :width: 9
+      :push: 3
+
+   .. column:: .col-md-3 . col-pull-9
+      :width: 3
+      :pull: 9

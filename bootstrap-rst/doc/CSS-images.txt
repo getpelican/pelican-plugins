@@ -1,0 +1,52 @@
+Images
+===============================================================================
+
+Responsive images
+-----------------
+
+Images in Bootstrap 3 can be made responsive-friendly via the addition of the
+.img-responsive class. This applies max-width: 100%; and height: auto; to the
+image so that it scales nicely to the parent element.
+
+
+.. code::
+   :class: highlight
+
+   .. image:: image.png
+      :class: img-responsive
+
+Image shapes
+------------
+
+Add classes to an `<img>` element to easily style images in any project.
+
+
+.. callout:: danger
+
+   :h4:`Cross-browser compatibility`
+   Keep in mind that Internet Explorer 8 lacks support for rounded corners.
+
+
+.. container:: bs-example
+
+   .. image:: 140x140.png
+      :class: img-rounded
+
+   .. image:: 140x140.png
+      :class: img-circle
+
+   .. image:: 140x140.png
+      :class: img-thumbnail
+
+
+.. code::
+   :class: highlight
+
+   .. image:: 140x140.png
+      :class: img-rounded
+
+   .. image:: 140x140.png
+      :class: img-circle
+
+   .. image:: 140x140.png
+      :class: img-thumbnail
