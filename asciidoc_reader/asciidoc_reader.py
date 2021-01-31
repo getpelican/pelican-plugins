@@ -15,9 +15,16 @@ import subprocess
 import sys
 import tempfile
 
+def encoding():
+    """Return encoding used to decode shell output in call function"""
+    if os.name == 'nt':
+        from ctypes import cdll
+        return 'cp' + str(cdll.kernel32.GetOEMCP())
+    return 'utf-8'
+
 def call(cmd):
     """Calls a CLI command and returns the stdout as string."""
-    return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).communicate()[0].decode('utf-8')
+    return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).communicate()[0].decode(encoding())
 
 def default():
     """Attempt to find the default AsciiDoc utility."""
