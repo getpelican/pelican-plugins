@@ -18,13 +18,21 @@ import tempfile
 import logging
 logger = logging.getLogger(__name__)
 
+
+def encoding():
+    """Return encoding used to decode shell output in call function"""
+    if os.name == 'nt':
+        from ctypes import cdll
+        return 'cp' + str(cdll.kernel32.GetOEMCP())
+    return 'utf-8'
+
 def call(cmd):
     """Calls a CLI command and returns the stdout as string."""
     logger.debug('AsciiDocReader: Running: %s', cmd)
     stdoutdata, stderrdata = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).communicate()
     if stderrdata:
         logger.warning('AsciiDocReader: strderr: %s', stderrdata)
-    return stdoutdata.decode('utf-8')
+    return stdoutdata.decode(encoding())
 
 def default():
     """Attempt to find the default AsciiDoc utility."""
