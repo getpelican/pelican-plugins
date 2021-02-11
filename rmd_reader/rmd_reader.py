@@ -22,8 +22,12 @@ def startr():
     logger.debug('STARTING R')
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        import rpy2.rinterface
-        rpy2.rinterface.set_initoptions((b'rpy2', b'--no-save', b'--vanilla', b'--quiet'))
+        try:
+            import rpy2.rinterface
+            rpy2.rinterface.set_initoptions((b'rpy2', b'--no-save', b'--vanilla', b'--quiet'))
+        except AttributeError:
+            from rpy2.rinterface_lib import embedded
+            embedded.set_initoptions(("rpy2", "--no-save", "--vanilla", "--quiet"))
         import rpy2.robjects as R_OBJECTS
         from rpy2.robjects.packages import importr
     KNITR = importr('knitr')
