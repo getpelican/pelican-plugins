@@ -19,11 +19,11 @@ PLUGINS = ['sitemap',
 
 ## Dependency
 
-This plugin requires [rpy2](https://pypi.python.org/pypi/rpy2) in a 2.x version.
+This plugin requires [rpy2](https://pypi.python.org/pypi/rpy2).
 Install it with:
 
 ```
-pip install "rpy2<3"
+pip install rpy2
 ```
 
 Of course, R must be installed and also the knitr package.
