@@ -67,6 +67,10 @@ def share_post(content):
     )
     reddit_link = 'https://www.reddit.com/submit?url=%s&title=%s' % (
         url, title)
+    mastodon_link = 'https://toot.karamoff.dev/?text=%s%%0D%%0A%s' %(
+        title, url)
+    telegram_link = 'https://telegram.me/share/url?url=%s' %(
+        url)
 
     content.share_post = {
         'diaspora': diaspora_link,
@@ -76,6 +80,8 @@ def share_post(content):
         'hacker-news': hackernews_link,
         'email': mail_link,
         'reddit': reddit_link,
+        'mastodon': mastodon_link,
+        'telegram': telegram_link,
     }
 
 
