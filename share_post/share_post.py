@@ -48,41 +48,28 @@ def share_post(content):
     if isinstance(content, contents.Static):
         return
 
-    title = article_title(content)
-    url = article_url(content)
-    summary = article_summary(content)
-    hastags = twitter_hastags(content)
-    via = twitter_via(content)
-
-    mail_link = 'mailto:?subject=%s&amp;body=%s' % (title, url)
-    diaspora_link = 'https://sharetodiaspora.github.io/?title=%s&url=%s' % (
-        title, url)
-    facebook_link = 'https://www.facebook.com/sharer/sharer.php?u=%s' % url
-    twitter_link = 'https://twitter.com/intent/tweet?text=%s&url=%s%s%s' % (
-        title, url, via, hastags)
-    hackernews_link = 'https://news.ycombinator.com/submitlink?t=%s&u=%s' % (
-        title, url)
-    linkedin_link = 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&summary=%s&source=%s' % (  # noqa
-        url, title, summary, url
+    link_templates = dict(
+        mail = "mailto:?subject={title}&amp;body={url}",
+        diaspora = "https://sharetodiaspora.github.io/?title={title}&url={url}",
+        facebook = "https://www.facebook.com/sharer/sharer.php?u={url}",
+        twitter = "https://twitter.com/intent/tweet?text={title}&url={url}{via}{hashtags}",
+        hackernews = "https://news.ycombinator.com/submitlink?t={title}&u={url}",
+        linkedin = "https://www.linkedin.com/shareArticle?mini=true&url={url}&title={title}&summary={summary}&source={url}",
+        reddit = "https://www.reddit.com/submit?url={url}&title={title}",
+        mastodon = "https://toot.karamoff.dev/?text={title}%0D%0A{url}",
+        telegram = "https://telegram.me/share/url?url={url}",
     )
-    reddit_link = 'https://www.reddit.com/submit?url=%s&title=%s' % (
-        url, title)
-    mastodon_link = 'https://toot.karamoff.dev/?text=%s%%0D%%0A%s' %(
-        title, url)
-    telegram_link = 'https://telegram.me/share/url?url=%s' %(
-        url)
-
-    content.share_post = {
-        'diaspora': diaspora_link,
-        'twitter': twitter_link,
-        'facebook': facebook_link,
-        'linkedin': linkedin_link,
-        'hacker-news': hackernews_link,
-        'email': mail_link,
-        'reddit': reddit_link,
-        'mastodon': mastodon_link,
-        'telegram': telegram_link,
-    }
+    fillin = dict(
+        title = article_title(content),
+        url = article_url(content),
+        summary = article_summary(content),
+        hashtags = twitter_hastags(content),
+        via = twitter_via(content),
+    )
+    content.share_post = dict([
+        (network, link_template.format(**fillin))
+        for network, link_template in link_templates.items()
+    ])
 
 
 def run_plugin(generators):
