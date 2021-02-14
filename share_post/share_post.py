@@ -58,6 +58,7 @@ def share_post(content):
         reddit = "https://www.reddit.com/submit?url={url}&title={title}",
         mastodon = "https://toot.karamoff.dev/?text={title}%0D%0A{url}",
         telegram = "https://telegram.me/share/url?url={url}",
+        whatsapp = "https://api.whatsapp.com/send/?phone&text={title}%0D%0A{url}&app_absent=0",
     )
     fillin = dict(
         title = article_title(content),
