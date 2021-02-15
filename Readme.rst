@@ -222,7 +222,7 @@ Pelican Jinja2Content                                             `⚠️  <http
 
 Lang Category                                                     `❓ <https://github.com/CNBorn/pelican-langcategory>`_                    Make languages behave the same as categories (visitor can browse articles in certain language).
 
-Pelican Link Class                                                `❓ <https://github.com/rlaboiss/pelican-linkclass>`_                     Set class attribute of ``<a>`` elements according to whether the link is external or internal
+Pelican Link Class                                                `✔  <https://github.com/pelican-plugins/linkclass>`_                      Set class attribute of ``<a>`` elements according to whether the link is external or internal
 
 Pelican Mbox Reader                                               `❓ <https://github.com/TC01/pelican-mboxreader>`_                        Generate articles automatically via email, given a path to a Unix mbox
 
