@@ -1,7 +1,7 @@
 Thumbnail Creation of images
 ============================
 
-**NOTE:** `This plugin has been moved to its own repository <https://github.com/pelican-plugins/thumbnailer>`_. Please file any issues/PRs there. Once all plugins have been migrated to the `new Pelican Plugins organization <https://github.com/pelican-plugins>`_, this monolithic repository will be archived.
+**NOTE:** [This plugin has been moved to its own repository](https://github.com/pelican-plugins/thumbnailer). Please file any issues/PRs there. Once all plugins have been migrated to the [new Pelican Plugins organization](https://github.com/pelican-plugins), this monolithic repository will be archived.
 
 -------------------------------------------------------------------------------
 
