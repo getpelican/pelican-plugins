@@ -17,7 +17,7 @@
       (let (; extract org export properties
             (org-export-env (org-export-get-environment))
             ; convert MODIFIED prop to string
-            (modifiedstr (cdr (assoc-string "MODIFIED" org-file-properties t)))
+            (modifiedstr (cdr (assoc-string "MODIFIED" org-keyword-properties t)))
             ; prepare date property
             (dateobj (car (plist-get (org-export-get-environment) ':date))))
 
@@ -44,15 +44,15 @@
                           (car (plist-get org-export-env ':author)))
 
                  ; org file properties
-                 :category (cdr (assoc-string "CATEGORY" org-file-properties t))
+                 :category (cdr (assoc-string "CATEGORY" org-keyword-properties t))
 
                  ; custom org file properties, defined as #+PROPERTY: NAME ARG
-                 :language (cdr (assoc-string "LANGUAGE" org-file-properties t))
-                 :save_as (cdr (assoc-string "SAVE_AS" org-file-properties t))
-                 :tags (cdr (assoc-string "TAGS" org-file-properties t))
-                 :summary (cdr (assoc-string "SUMMARY" org-file-properties t))
-                 :status (cdr (assoc-string "STATUS" org-file-properties t))
-                 :slug (cdr (assoc-string "SLUG" org-file-properties t))
+                 :language (cdr (assoc-string "LANGUAGE" org-keyword-properties t))
+                 :save_as (cdr (assoc-string "SAVE_AS" org-keyword-properties t))
+                 :tags (cdr (assoc-string "TAGS" org-keyword-properties t))
+                 :summary (cdr (assoc-string "SUMMARY" org-keyword-properties t))
+                 :status (cdr (assoc-string "STATUS" org-keyword-properties t))
+                 :slug (cdr (assoc-string "SLUG" org-keyword-properties t))
                  :modified (if (stringp modifiedstr)
                                (org-read-date nil nil modifiedstr nil)
                              "")
