@@ -1,6 +1,8 @@
 Show Source plugin
 ------------------
 
+**NOTE:** `This plugin has been moved to its own repository <https://github.com/pelican-plugins/show-source>`_. Please file any issues/PRs there. Once all plugins have been migrated to the `new Pelican Plugins organization <https://github.com/pelican-plugins>`_, this monolithic repository will be archived.
+
 The plugin allows you to place a link to the source text of your posts in the
 same way that `Sphinx`_ does. It works for both pages and articles.
 

@@ -294,7 +294,7 @@ Series                                                            `✔  <https:/
 
 `Shortcodes <./shortcodes>`_                                                                                                                Easy and explicit inline jinja2 macros
 
-`Show Source <./show_source>`_                                                                                                              Place a link to the source text of your posts.
+Show Source                                                       `✔  <https://github.com/pelican-plugins/show-source>`_                    Place a link to the source text of your posts.
 
 Similar Posts                                                     `✔  <https://github.com/pelican-plugins/similar-posts>`_                  Adds a list of similar posts to every article's context.
 
