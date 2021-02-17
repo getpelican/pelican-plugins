@@ -312,7 +312,7 @@ Sitemap                                                           `✔  <https:/
 
 `Summary <./summary>`_                                                                                                                      Allows easy, variable length summaries directly embedded into the body of your articles
 
-`tag_cloud <./tag_cloud>`_                                                                                                                  Provides a tag_cloud
+Tag Cloud                                                         `✔  <https://github.com/pelican-plugins/tag-cloud>`_                      Provides a tag cloud of frequently-used post tags
 
 `Textile Reader <./textile_reader>`_                                                                                                        Adds support for Textile markup
 
