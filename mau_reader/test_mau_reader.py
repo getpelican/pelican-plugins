@@ -12,7 +12,7 @@ from .mau_reader import mau_enabled
 CUR_DIR = os.path.dirname(__file__)
 CONTENT_PATH = os.path.join(CUR_DIR, 'test_data')
 
-@unittest.skipUnless(readers.Mau, "Mau isn't installed")
+@unittest.skipUnless(mau_enabled, "Mau isn't installed")
 class MauReaderTest(ReaderTest):
     def test_article_with_metadata(self):
         reader = readers.MauReader(settings=get_settings())
