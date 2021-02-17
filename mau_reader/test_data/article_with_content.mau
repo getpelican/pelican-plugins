@@ -1,0 +1,14 @@
+:pelican.title:Test Mau file with content
+:pelican.date:2021-02-17 13:00:00
+:pelican.modified:2021-02-17 14:00:00
+:pelican.category:test
+:pelican.tags:foo, bar, foobar
+:pelican.summary:I have a lot to test
+
+= A test document
+
+This is just a test. Some typography with _underscores_ and *stars*.
+
+:ans:42
+
+This is a replaced variable: {ans}
