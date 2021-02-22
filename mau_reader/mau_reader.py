@@ -42,9 +42,6 @@ class MauReader(BaseReader):
 
         metadata = self._parse_metadata(self._mau.variables["pelican"])
 
-        with open("mau_tmp.html", "w") as f:
-            f.write(content)
-
         return content, metadata
 
     def _parse_metadata(self, meta):
