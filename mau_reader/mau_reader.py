@@ -14,11 +14,12 @@ from pelican import signals
 try:
     from mau import Mau
     from mau.visitors.html_visitor import DEFAULT_TEMPLATES as mau_default_templates
+
     mau_enabled = True
 except ImportError:
     mau_enabled = False  # NOQA
 
-    
+
 class MauReader(BaseReader):
     enabled = mau_enabled
     file_extensions = ["mau"]
@@ -28,11 +29,11 @@ class MauReader(BaseReader):
 
     def read(self, source_path):
         config = self.settings["MAU"].get("config", {})
+        config["no_document"] = True
+
         output_format = self.settings["MAU"].get("output_format", "html")
         custom_templates = self.settings["MAU"].get("custom_templates", {})
         mau_default_templates.update(custom_templates)
-
-        mau_default_templates["document.html"] = "{{ content|join }}"
 
         self._source_path = source_path
         self._mau = Mau(config, output_format, default_templates=mau_default_templates)
@@ -41,11 +42,14 @@ class MauReader(BaseReader):
 
         metadata = self._parse_metadata(self._mau.variables["pelican"])
 
+        with open("mau_tmp.html", "w") as f:
+            f.write(content)
+
         return content, metadata
 
     def _parse_metadata(self, meta):
         """Return the dict containing document metadata"""
-        formatted_fields = self.settings['FORMATTED_FIELDS']
+        formatted_fields = self.settings["FORMATTED_FIELDS"]
 
         output = {}
         for name, value in meta.items():
@@ -62,9 +66,11 @@ class MauReader(BaseReader):
 
         return output
 
+
 def add_reader(readers):
     for ext in MauReader.file_extensions:
         readers.reader_classes[ext] = MauReader
+
 
 def register():
     signals.readers_init.connect(add_reader)
