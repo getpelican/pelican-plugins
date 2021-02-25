@@ -28,7 +28,7 @@ class MauReader(BaseReader):
         super().__init__(*args, **kwargs)
 
     def read(self, source_path):
-        config = self.settings["MAU"].get("config", {})
+        config = self.settings.get("MAU", {})
         config["no_document"] = True
 
         output_format = self.settings["MAU"].get("output_format", "html")
