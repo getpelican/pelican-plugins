@@ -202,7 +202,7 @@ Panorama                                                          `❓ <https://
 
 PDF Images                                                        `❓ <https://github.com/cmacmackin/pdf-img>`_                             If an img tag contains a PDF, EPS or PS file as a source, this plugin generates a PNG preview which will then act as a link to the original file.
 
-`PDF generator <./pdf>`_                                                                                                                    Automatically exports articles and pages as PDF files
+PDF Generator                                                     `✔  <https://github.com/pelican-plugins/pdf>`_                            Automatically exports articles and pages as PDF files
 
 Pelican Cite                                                      `❓ <https://github.com/cmacmackin/pelican-cite>`_                        Produces inline citations and a bibliography in articles and pages, using a BibTeX file.
 

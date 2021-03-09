@@ -2,6 +2,8 @@
 PDF Generator
 -------------
 
+**NOTE:** `This plugin has been moved to its own repository <https://github.com/pelican-plugins/pdf>`_. Please file any issues/PRs there. Once all plugins have been migrated to the `new Pelican Plugins organization <https://github.com/pelican-plugins>`_, this monolithic repository will be archived.
+
 The PDF Generator plugin automatically exports articles and pages as PDF files
 as part of the site generation process. PDFs are saved to:
 ``output/pdf/``
