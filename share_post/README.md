@@ -1,5 +1,7 @@
 # Share Post
 
+**NOTE:** [This plugin has been moved to its own repository](https://github.com/pelican-plugins/share-post). Please file any issues/PRs there. Once all plugins have been migrated to the [new Pelican Plugins organization](https://github.com/pelican-plugins), this monolithic repository will be archived.
+
 A Pelican plugin to create share URLs of article
 
 # Author

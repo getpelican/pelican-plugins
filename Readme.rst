@@ -290,7 +290,7 @@ Series                                                            `✔  <https:/
 
 `Shaarli poster <./shaarli_poster>`_                                                                                                        Upload newly redacted articles onto a specified `Shaarli <https://github.com/shaarli/Shaarli>`__ instance.
 
-`Share post <./share_post>`_                                                                                                                Creates share URLs of article
+Share post                                                        `✔  <https://github.com/pelican-plugins/share-post>`_                     Creates share URLs for the current article
 
 `Shortcodes <./shortcodes>`_                                                                                                                Easy and explicit inline jinja2 macros
 
