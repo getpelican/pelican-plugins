@@ -168,7 +168,7 @@ Lightbox                                                          `❓ <https://
 
 `Linker <./linker>`_                                                                                                                        Allows the definition of custom linker commands in analogy to the builtin ``{filename}``, ``{attach}``, ``{category}``, ``{tag}``, ``{author}``, and ``{index}`` syntax
 
-`Liquid-style tags <./liquid_tags>`_                              `✔  <https://github.com/pelican-plugins/liquid-tags>`_                    Allows liquid-style tags to be inserted into markdown within Pelican documents
+Liquid-style tags                                                 `✔  <https://github.com/pelican-plugins/liquid-tags>`_                    Allows liquid-style tags to be inserted into markdown within Pelican documents
 
 Load CSV                                                          `❓ <https://github.com/e9t/pelican-loadcsv>`_                            Adds ``csv`` Jinja tag to display the contents of a CSV file as an HTML table
 
