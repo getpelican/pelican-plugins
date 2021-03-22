@@ -268,7 +268,7 @@ Post Revision                                                     `❓ <https://
 
 `Random article <./random_article>`_                                                                                                        Generates a html file which redirect to a random article
 
-`Read More link <./read_more_link>`_                                                                                                        Inserts an inline "read more" or "continue" link into the last html element of the object summary
+Read More link                                                    `✔  <https://github.com/pelican-plugins/read-more>`_                      Inserts an inline "read more" or "continue" link into the last html element of the object summary
 
 `Readtime <./readtime>`_                                                                                                                    Adds article estimated read time calculator to the site, in the form of '<n> minutes'.
 

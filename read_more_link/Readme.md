@@ -1,6 +1,11 @@
 Read More Link
 ===
 
+**NOTE:** [This plugin has been moved to its own repository](https://github.com/pelican-plugins/read-more). 
+Please file any issues/PRs there. Once all plugins have been migrated to the 
+[new Pelican Plugins organization](https://github.com/pelican-plugins>), 
+this monolithic repository will be archived.
+
 **Author**: Vuong Nguyen (http://vuongnguyen.com)
 
 This plugin inserts an inline "read more" or "continue" link into the last html element of the object summary.
