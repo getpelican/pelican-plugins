@@ -1,5 +1,7 @@
 # Libravatar plugin for Pelican
 
+**NOTE:** [This plugin has been moved to its own repository](https://github.com/pelican-plugins/avatar). Please file any issues/PRs there. Once all plugins have been migrated to the [new Pelican Plugins organization](https://github.com/pelican-plugins), this monolithic repository will be archived.
+
 ## Description
 
 This plugin allows the inclusion of [Libravatar](http://www.libravatar.org)

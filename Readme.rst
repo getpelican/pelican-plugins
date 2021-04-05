@@ -138,7 +138,7 @@ GA Page View                                                      `❓ <https://
 
 `GooglePlus comments <./googleplus_comments>`_                                                                                              Adds GooglePlus comments to Pelican
 
-`Gravatar <./gravatar>`_                                                                                                                    Assigns the ``author_gravatar`` variable to the Gravatar URL and makes the variable available within the article's context
+Gravatar                                                          `✔  <https://github.com/pelican-plugins/avatar>`_                         This plugin's functionality has been superseded by the newer Avatar plugin
 
 `Gzip cache <./gzip_cache>`_                                                                                                                Enables certain web servers (e.g., Nginx) to use a static cache of gzip-compressed files to prevent the server from compressing files during an HTTP call
 
@@ -162,7 +162,7 @@ Jinja2 Content                                                    `✔  <https:/
 
 Just table                                                        `❓ <https://github.com/burakkose/just_table>`_                           Allows you to easily create and manage tables. You can embed the tables into posts with a simple way.
 
-`Libravatar <./libravatar>`_                                                                                                                Allows inclusion of user profile pictures from libravatar.org
+Libravatar                                                        `✔  <https://github.com/pelican-plugins/avatar>`_                         Allows inclusion of user profile pictures from libravatar.org
 
 Lightbox                                                          `❓ <https://github.com/kura/lightbox>`_                                  A pure CSS lightbox for Pelican.
 

@@ -1,6 +1,8 @@
 Gravatar
 --------
 
+**NOTE:** `This plugin has been moved to its own repository <https://github.com/pelican-plugins/avatar>`_. Please file any issues/PRs there. Once all plugins have been migrated to the `new Pelican Plugins organization <https://github.com/pelican-plugins>`_, this monolithic repository will be archived.
+
 This plugin assigns the ``author_gravatar`` variable to the Gravatar URL and
 makes the variable available within the article's context. You can add
 ``AUTHOR_EMAIL`` to your settings file to define the default author's email
