@@ -60,11 +60,11 @@ class AsciiDocReader(BaseReader):
             logger.debug('AsciiDocReader: Reading: %s', source_path)
             optlist = self.settings.get('ASCIIDOC_OPTIONS', []) + self.default_options
             options = " ".join(optlist)
-            content = call("%s %s -o - '%s'" % (cmd, options, source_path))
+            content = call("%s %s -o - \"%s\"" % (cmd, options, source_path))
             # Beware! # Don't use tempfile.NamedTemporaryFile under Windows: https://bugs.python.org/issue14243
             # Also, use mkstemp correctly (Linux and Windows): https://www.logilab.org/blogentry/17873
             fd, temp_name = tempfile.mkstemp()
-            content = call("%s %s -o %s '%s'" % (cmd, options, temp_name, source_path))
+            content = call("%s %s -o %s \"%s\"" % (cmd, options, temp_name, source_path))
             with open(temp_name, encoding='utf-8') as f:
                 content = f.read()
             os.close(fd)
