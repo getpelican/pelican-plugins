@@ -318,7 +318,7 @@ Tag Cloud                                                         `✔  <https:/
 
 Thumbnailer                                                       `✔  <https://github.com/pelican-plugins/thumbnailer>`_                    Creates thumbnails for all of the images found under a specific directory
 
-`Tipue Search <./tipue_search>`_                                                                                                            Serializes generated HTML to JSON that can be used by jQuery plugin - Tipue Search
+Tipue Search                                                      `✔  <https://github.com/pelican-plugins/tipue-search>`_                   Serializes generated HTML to JSON that can be used by jQuery plugin - Tipue Search
 
 `Touch <./touch>`_                                                                                                                          Does a touch on your generated files using the date metadata from the content
 
