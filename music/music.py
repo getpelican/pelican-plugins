@@ -16,14 +16,10 @@ from pelican.generators import PagesGenerator
 from pelican.settings import DEFAULT_CONFIG
 from pelican import signals
 from pelican.utils import pelican_open
+import taglib
+from shutil import copyfile
 
 logger = logging.getLogger(__name__)
-
-try:
-    import tagpy
-    from shutil import copyfile
-except ImportError:
-    logger.error('music: tagpy and/or shutil modules not found')
 
 MUSIC_ROOT_OUTPUT = 'music'
 def initialized(pelican):
@@ -168,8 +164,8 @@ def process_album_header(generator, content, header):
                 "cover": coverout,
                 "path": os.path.join(albumout, tag.get('file', '')),
                 "title": tag.get('title', ''),
-                "track": tag.get('track', 0),
-                "year": tag.get('year', 1970) }
+                "track": tag.get('track', '0'),
+                "year": tag.get('year', '1970') }
             tracks.append(track)
 
     content.music_album = {
@@ -180,23 +176,23 @@ def process_album_header(generator, content, header):
 
 def check_tag(tag):
     return {
-        'artist': getattr(tag, 'artist', '(unknown)'),
-        'album': getattr(tag, 'album', '(unknown)'),
-        'title': getattr(tag, 'title', '(unknown)'),
-        'track': getattr(tag, 'track', 0),
-        'year': getattr(tag, 'year', 1970) }
+        'artist': tag.get('ARTIST', ['unknown'])[0],
+        'album': tag.get('ALBUM', ['unknown'])[0],
+        'title': tag.get('TITLE', ['unknown'])[0],
+        'track': tag.get('TRACK', ['0'])[0],
+        'year': tag.get('YEAR', ['1970'])[0] }
 
 #
 # make .tags json file from audio file :DONE:
 #
 def make_tags(infile, outfile):
     try:
-        insong = tagpy.FileRef(infile).file()
+        insong = taglib.File(infile)
     except Exception as e:
         logger.exception('music: Could not open for reading {}'.format(infile))
         return
 
-    tag = insong.tag()
+    tag = insong.tags
     if tag is  None:
         tag = {
             "artist": '',
@@ -262,8 +258,8 @@ def process_track_header(generator, content, header):
         "cover": coverout,
         "path": trackout,
         "title": tag.get('title', ''),
-        "track": tag.get('track', 0),
-        "year": tag.get('year', 1970) }
+        "track": tag.get('track', '0'),
+        "year": tag.get('year', '1970') }
 
 
     if isinstance(generator, ArticlesGenerator):
