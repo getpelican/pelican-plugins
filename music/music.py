@@ -198,8 +198,8 @@ def make_tags(infile, outfile):
             "artist": '',
             "album": '',
             "title": '',
-            "track": 0,
-            "year": 1970 }
+            "track": '0',
+            "year": '1970' }
     else:
         tag = check_tag(tag)
 
