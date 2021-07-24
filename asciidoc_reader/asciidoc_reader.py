@@ -98,7 +98,7 @@ class AsciiDocReader(BaseReader):
                         metadata['title'] = self.process_metadata('title', title)
 
                 # Parse for other metadata.
-                regexp = re.compile(r"^:[A-z]+:\s*\w")
+                regexp = re.compile(r"^:\w+:")
                 if regexp.search(line):
                     toks = line.split(":", 2)
                     key = toks[1].strip().lower()
