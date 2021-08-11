@@ -85,7 +85,7 @@ def initialize(article_generator):
     # Reset old states (autoreload mode)
     global _all_comments
     global _pelican_writer
-    _pelican_writer = _pelican_obj.get_writer()
+    _pelican_writer = _pelican_obj._get_writer()
     _all_comments = []
 
 def warn_on_slug_collision(items):
