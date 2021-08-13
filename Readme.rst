@@ -256,7 +256,7 @@ Pelican Themes Generator                                          `❓ <https://
 
 `permalink <./permalinks>`_                                                                                                                  Enables a kind of permalink using html redirects.
 
-`Photos <./photos>`_                                                                                                                         Add a photo or a gallery of photos to an article, or include photos in the body text. Resize photos as needed.
+`Photos <./photos>`_                                               `✔  <https://github.com/pelican-plugins/photos>`                          Add a photo or a gallery of photos to an article, or include photos in the body text. Resize photos as needed.
 
 Pin to top                                                        `❓ <https://github.com/Shaked/pin_to_top>`_                               Pin Pelican's article(s) to top "Sticky article"
 

@@ -1,5 +1,10 @@
 # Photos
 
+**NOTE:** [This plugin has been moved to its own repository](https://github.com/pelican-plugins/photos).
+Please file any issues/PRs there. Once all plugins have been migrated to the
+[new Pelican Plugins organization](https://github.com/pelican-plugins>),
+this monolithic repository will be archived.
+
 Use Photos to add a photo or a gallery of photos to an article, or to include photos in the body text. Photos are kept separately, as an organized library of high resolution photos, and resized as needed.
 
 ## How to install and configure
