@@ -40,6 +40,7 @@ def get_published_articles_urls(client, pelican_settings):
     args = Namespace(
         endpoint_name='get-links',
         limit='all',
+        insecure=pelican_settings.get('SHAARLI_POSTER_INSECURE'),
         searchtags=pelican_settings.get('SHAARLI_POSTER_TAG', DEFAULT_TAG)
     )
     response = client.request(args)

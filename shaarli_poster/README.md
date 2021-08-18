@@ -31,6 +31,7 @@ Available options:
 - `SHAARLI_POSTER_TAG` (optional, default: `'FromPelican'`) : defines tag to add on all Shaarli links created by this plugin
 - `SHAARLI_POSTER_CONFIG_FILE_PATH` (optional) : where to look for a [python-shaarli-client configuration file](https://python-shaarli-client.readthedocs.io/en/latest/user/configuration.html)
 - `SHAARLI_POSTER_INSTANCE` : name of the instance to use in this configuration file, instead of the default one
+- `SHAARLI_POSTER_INSECURE` (optional) : set it to `True` to disable certs verification
 
 
 ## CLI usage
