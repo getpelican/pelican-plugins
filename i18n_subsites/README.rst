@@ -56,6 +56,7 @@ dictionary must be given (but can be empty) in the ``I18N_SUBSITES`` dictionary
 You must also have the following in your pelican configuration
 
 .. code-block:: python
+
     JINJA_ENVIRONMENT = {
         'extensions': ['jinja2.ext.i18n'],
     }
@@ -154,9 +155,11 @@ to set a list of directories in the variable ``I18N_LINK_DIRS``.
 For each path a symbolic link is created which links to the original directory.
 
 .. code-block:: python
+
     I18N_LINK_DIRS = ['images/thumbnails', 'photos']
 
 .. code-block::
+
    └── output/                                              # base output directory
        ├── images/
        │   └── thumbnails/                                  # original directory
