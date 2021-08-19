@@ -266,6 +266,7 @@ def resize_worker(orig, resized, spec, settings):
                 mode=image.mode, size=image.size, data=image.data)
     else:
         im = Image.open(orig)
+    im = ImageOps.exif_transpose(im)
 
     if ispiexif and settings['PHOTO_EXIF_KEEP'] and im.format == 'JPEG':  # Only works with JPEG exif for sure.
         try:
