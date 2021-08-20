@@ -39,8 +39,8 @@ def build_shaarli_client(settings):
 def get_published_articles_urls(client, pelican_settings):
     args = Namespace(
         endpoint_name='get-links',
-        limit='all',
         insecure=pelican_settings.get('SHAARLI_POSTER_INSECURE'),
+        limit='all',
         searchtags=pelican_settings.get('SHAARLI_POSTER_TAG', DEFAULT_TAG)
     )
     response = client.request(args)
@@ -51,6 +51,7 @@ def publish_new_article(client, pelican_settings, article):
     description, tags = get_desc_and_tags(article, pelican_settings)
     args = Namespace(
         endpoint_name='post-link',
+        insecure=pelican_settings.get('SHAARLI_POSTER_INSECURE'),
         url=os.path.join(pelican_settings['SITEURL'], article.url),
         title=article.title,
         description=description,
