@@ -155,5 +155,5 @@ class TestFullRun(unittest.TestCase):
             )
 
         # Check jinja2 translation.
-        self.assertIn('Welcome to our Testing site', root_index)
-        self.assertIn('Willkommen Sie zur unserer Testseite', de_index)
+        self.assertIn('Welcome to our Testing site | Acme Ltd', root_index)
+        self.assertIn('Willkommen Sie zur unserer Testseite | Acme AG', de_index)
