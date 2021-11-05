@@ -27,7 +27,6 @@ class Tipue_Search_JSON_Generator(object):
 
     def __init__(self, context, settings, path, theme, output_path, *null):
 
-        self.output_path = output_path
         self.context = context
         self.siteurl = settings.get('SITEURL')
         self.relative_urls = settings.get('RELATIVE_URLS')
