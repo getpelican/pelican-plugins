@@ -14,7 +14,7 @@ Released under AGPLv3+ license, see LICENSE
 """
 
 from datetime import datetime, timedelta
-from pelican import signals, utils
+from pelican import signals, utils, contents
 from collections import namedtuple, defaultdict
 import icalendar
 import logging
@@ -33,30 +33,29 @@ TIME_MULTIPLIERS = {
 
 events = []
 localized_events = defaultdict(list)
-Event = namedtuple("Event", "dtstart dtend metadata")
 
 
-def parse_tstamp(ev, field_name):
+def parse_tstamp(metadata, field_name):
     """Parse a timestamp string in format "YYYY-MM-DD HH:MM"
 
     :returns: datetime
     """
     try:
-        return datetime.strptime(ev[field_name], '%Y-%m-%d %H:%M')
+        return datetime.strptime(metadata[field_name], '%Y-%m-%d %H:%M')
     except Exception as e:
         log.error("Unable to parse the '%s' field in the event named '%s': %s" \
-            % (field_name, ev['title'], e))
+            % (field_name, metadata['title'], e))
         raise
 
 
-def parse_timedelta(ev):
+def parse_timedelta(metadata):
     """Parse a timedelta string in format [<num><multiplier> ]*
     e.g. 2h 30m
 
     :returns: timedelta
     """
 
-    chunks = ev['event-duration'].split()
+    chunks = metadata['event-duration'].split()
     tdargs = {}
     for c in chunks:
         try:
@@ -66,41 +65,46 @@ def parse_timedelta(ev):
         except KeyError:
             log.error("""Unknown time multiplier '%s' value in the \
 'event-duration' field in the '%s' event. Supported multipliers \
-are: '%s'.""" % (c, ev['title'], ' '.join(TIME_MULTIPLIERS)))
+are: '%s'.""" % (c, metadata['title'], ' '.join(TIME_MULTIPLIERS)))
             raise RuntimeError("Unknown time multiplier '%s'" % c)
         except ValueError:
             log.error("""Unable to parse '%s' value in the 'event-duration' \
-field in the '%s' event.""" % (c, ev['title']))
+field in the '%s' event.""" % (c, metadata['title']))
             raise ValueError("Unable to parse '%s'" % c)
 
 
     return timedelta(**tdargs)
 
 
-def parse_article(generator, metadata):
+def parse_article(content):
     """Collect articles metadata to be used for building the event calendar
 
     :returns: None
     """
-    if 'event-start' not in metadata:
+    if not isinstance(content, contents.Article):
         return
 
-    dtstart = parse_tstamp(metadata, 'event-start')
+    if 'event-start' not in content.metadata:
+        return
 
-    if 'event-end' in metadata:
-        dtend = parse_tstamp(metadata, 'event-end')
+    dtstart = parse_tstamp(content.metadata, 'event-start')
 
-    elif 'event-duration' in metadata:
-        dtdelta = parse_timedelta(metadata)
+    if 'event-end' in content.metadata:
+        dtend = parse_tstamp(content.metadata, 'event-end')
+
+    elif 'event-duration' in content.metadata:
+        dtdelta = parse_timedelta(content.metadata)
         dtend = dtstart + dtdelta
 
     else:
         msg = "Either 'event-end' or 'event-duration' must be" + \
-            " speciefied in the event named '%s'" % metadata['title']
+            " speciefied in the event named '%s'" % content.metadata['title']
         log.error(msg)
         raise ValueError(msg)
 
-    events.append(Event(dtstart, dtend, metadata))
+    content.event_plugin_data = {"dtstart": dtstart, "dtend": dtend}
+
+    events.append(content)
 
 
 def generate_ical_file(generator):
@@ -127,8 +131,8 @@ def generate_ical_file(generator):
     for e in curr_events:
         ie = icalendar.Event(
             summary=e.metadata['summary'],
-            dtstart=e.dtstart,
-            dtend=e.dtend,
+            dtstart=e.event_plugin_data["dtstart"],
+            dtend=e.event_plugin_data["dtend"],
             dtstamp=e.metadata['date'],
             priority=5,
             uid=e.metadata['title'] + e.metadata['summary'],
@@ -161,10 +165,10 @@ def generate_events_list(generator):
 
     if not localized_events:
         generator.context['events_list'] = sorted(events, reverse = True,
-                                                  key=lambda ev: (ev.dtstart, ev.dtend))
+                                                  key=lambda ev: (ev.event_plugin_data["dtstart"], ev.event_plugin_data["dtend"]))
     else:
         generator.context['events_list'] = {k: sorted(v, reverse = True,
-                                                      key=lambda ev: (ev.dtstart, ev.dtend))
+                                                      key=lambda ev: (ev.event_plugin_data["dtstart"], ev.event_plugin_data["dtend"]))
                                             for k, v in localized_events.items()}
 
 def initialize_events(article_generator):
@@ -178,7 +182,7 @@ def initialize_events(article_generator):
 
 def register():
     signals.article_generator_init.connect(initialize_events)
-    signals.article_generator_context.connect(parse_article)
+    signals.content_object_init.connect(parse_article)
     signals.article_generator_finalized.connect(generate_localized_events)
     signals.article_generator_finalized.connect(generate_ical_file)
     signals.article_generator_finalized.connect(generate_events_list)

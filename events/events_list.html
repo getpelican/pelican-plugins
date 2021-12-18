@@ -7,26 +7,26 @@
 
     {% if events_list %}
     <ul class="post-list">
-    {% for evstart, evend, event in events_list %}
+    {% for event in events_list %}
       <li>
         <p>
-          <a href="../{{event.slug}}.html">
-            <b>{{event['title']}}</b>
+          <a href="{{ SITEURL }}/{{ event.url }}">
+            <b>{{ event.metadata["title"] }}</b>
           </a>
         </p>
         <p>
-        {% if evstart.date() == evend.date() %}
-        From {{evstart}} to {{evend.time()}}
+        {% if event.event_plugin_data["dtstart"].date() == event.event_plugin_data["dtend"].date() %}
+        From {{ event.event_plugin_data["dtstart"] }} to {{ event.event_plugin_data["dtend"].time() }}
         {% else %}
-        From {{evstart}} to {{evend}}
+        From {{ event.event_plugin_data["dtstart"] }} to {{ event.event_plugin_data["dtend"] }}
         {% endif %}
         </p>
 
         {% if event.location %}
-        <p>Location: {{event.location}}</p>
+        <p>Location: {{ event.metadata["location"] }}</p>
         {% endif %}
 
-        <p>{{event['summary']}}</p>
+        <p>{{ event.metadata["summary"] }}</p>
 
       </li>
     {% endfor %}
