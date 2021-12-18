@@ -76,6 +76,10 @@ field in the '%s' event.""" % (c, metadata['title']))
     return timedelta(**tdargs)
 
 
+def basic_isoformat(datetime_value):
+    return datetime_value.strftime("%Y%m%dT%H%M%S")
+
+
 def parse_article(content):
     """Collect articles metadata to be used for building the event calendar
 
@@ -131,9 +135,9 @@ def generate_ical_file(generator):
     for e in curr_events:
         ie = icalendar.Event(
             summary=e.metadata['summary'],
-            dtstart=e.event_plugin_data["dtstart"].isoformat(),
-            dtend=e.event_plugin_data["dtend"].isoformat(),
-            dtstamp=e.metadata['date'].isoformat(),
+            dtstart=basic_isoformat(e.event_plugin_data["dtstart"]),
+            dtend=basic_isoformat(e.event_plugin_data["dtend"]),
+            dtstamp=basic_isoformat(e.metadata['date']),
             priority=5,
             uid=e.metadata['title'] + e.metadata['summary'],
         )
