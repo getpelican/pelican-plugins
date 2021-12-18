@@ -131,9 +131,9 @@ def generate_ical_file(generator):
     for e in curr_events:
         ie = icalendar.Event(
             summary=e.metadata['summary'],
-            dtstart=e.event_plugin_data["dtstart"],
-            dtend=e.event_plugin_data["dtend"],
-            dtstamp=e.metadata['date'],
+            dtstart=e.event_plugin_data["dtstart"].isoformat(),
+            dtend=e.event_plugin_data["dtend"].isoformat(),
+            dtstamp=e.metadata['date'].isoformat(),
             priority=5,
             uid=e.metadata['title'] + e.metadata['summary'],
         )
