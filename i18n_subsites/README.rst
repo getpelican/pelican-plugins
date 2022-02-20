@@ -7,25 +7,145 @@ internationalized sub-sites for the default site.
 
 This plugin is designed for Pelican 3.4 and later.
 
-What it does
-============
+How to install
+==============
+
+1. Clone the entire pelican-plugins repository, if you haven't done so already.
+2. Add this plugin to the ``PLUGINS`` variable in ``pelicanconf.py``:
+
+   .. code-block:: python
+
+      PLUGIN_PATHS = [..., '/path/to/pelican-plugins']
+      PLUGINS = [... , 'i18n_subsites']
+
+How to configure
+================
+
+For each sub-site, you can override language specific parameters in the
+``I18N_SUBSITES`` dictionary. For example, it allows you to localize
+the ``SITENAME`` variable that you use in your template:
+
+.. code-block:: python
+
+    SITENAME = 'Amazing blog'
+    I18N_SUBSITES = {
+        'cz': {
+             'SITENAME': 'Hezkej blog',
+        }
+    }
+
+How to handle language specific templates
+=========================================
+
+You can choose one of these two approaches:
+
+**Create language-specific templates**
+  1. Copy the main template directory into its own language specific copy.
+     For example copy ``themes/simple`` to ``themes/simple-cz``
+  2. Edit ``pelicanconf.py`` as follows:
+
+     .. code-block:: python
+
+        DEFAULT_LANG = 'en'
+        SITENAME = 'Beautiful blog'
+        THEME = 'themes/simple'
+        I18N_SUBSITES = {
+            'cz': {
+                 'SITENAME': 'Hezkej blog',
+                 'THEME': 'themes/simple-cz',
+            }
+        }
+  3. Include language buttons or links in the template so visitors can change
+     from one language to the other. This short `howto <./implementing_language_buttons.rst>`_
+     shows two example implementations of language buttons.
+
+**Keep a single template and internationalize it**
+  If you plan to keep a single template and internationalize it, you must also
+  have the following in your pelican configuration. For a kickstart read this
+  `guide <./localizing_using_jinja2.rst>`_.
+
+  .. code-block:: python
+
+      JINJA_ENVIRONMENT = {
+         'extensions': ['jinja2.ext.i18n'],
+     }
+
+How to handle language specific content
+=======================================
+
+1. Add a ``lang`` metadata field to each article or page, if you haven't 
+   done so already. This will make sure that the content will appear either
+   in the main site, or in a particular sub-site. Articles or pages without
+   a ``lang`` field will appear in every sub-site.
+2. Add an identical ``slug`` metadata field to every translation of an article 
+   or page. This will make sure it will contain 
+   ``<link rel="alternate" hreflang="..." ... >`` pointing to other
+   translations. The actual inclusion of this hreflang alternative link in
+   the HTML head section depends on the template so refer to translations.html
+   for more details.
+3. Add both a language specific ``url`` and ``save_as`` metadata field to the
+   translated article or page. See the example below how this works in practice.
+
+
+Example
+-------
+
+Let's create `content/article1.md`, using the previous ``pelicanconf.py`` settings:
+
+.. code-block:: markdown
+
+    Title: Hello world
+    Slug: hello-world
+    Lang: en
+    Date: 2021-05-23T15:04:59+02:00
+
+    # Hello world
+
+    This is the first paragraph of the content in English.
+
+Additionally, let's translate this page into Czech by creating 
+``content/article1-cz.md``:
+
+.. code-block:: markdown
+
+    Title: Ahoj svete
+    Slug: hello-world
+    Save_As: ahoj-svete.html
+    Url: ahoj-svete.html
+    Lang: cz
+    Date: 2021-05-23T15:44:13+02:00
+
+    # Ahoj svete
+
+    Toto je prvni odstavec obsahu v cestine.
+
+If you run Pelican, it will create these 2 files with hreflang tags
+that correctly cross-reference each other:
+
+.. code-block::
+
+    output/hello-world.html
+    output/cz/ahoj-svete.html
+
+What this plugin does behind the scenes
+=======================================
 
 1. When the content of the main site is being generated, the settings
    are saved and the generation stops when content is ready to be
    written. While reading source files and generating content objects,
    the output queue is modified in certain ways:
 
-  - translations that will appear as native in a different (sub-)site
-    will be removed
-  - untranslated articles will be transformed to drafts if
-    ``I18N_UNTRANSLATED_ARTICLES`` is ``'hide'`` (default), removed if
-    ``'remove'`` or kept as they are if ``'keep'``.
-  - untranslated pages will be transformed into hidden pages if
-    ``I18N_UNTRANSLATED_PAGES`` is ``'hide'`` (default), removed if
-    ``'remove'`` or kept as they are if ``'keep'``.''
-  - additional content manipulation similar to articles and pages can
-    be specified for custom generators in the ``I18N_GENERATOR_INFO``
-    setting.
+   * translations that will appear as native in a different (sub-)site
+     will be removed
+   * untranslated articles will be transformed to drafts if
+     ``I18N_UNTRANSLATED_ARTICLES`` is ``'hide'`` (default), removed if
+     ``'remove'`` or kept as they are if ``'keep'``.
+   * untranslated pages will be transformed into hidden pages if
+     ``I18N_UNTRANSLATED_PAGES`` is ``'hide'`` (default), removed if
+     ``'remove'`` or kept as they are if ``'keep'``.''
+   * additional content manipulation similar to articles and pages can
+     be specified for custom generators in the ``I18N_GENERATOR_INFO``
+     setting.
 
 2. For each language specified in the ``I18N_SUBSITES`` dictionary the
    settings overrides are applied to the settings from the main site
@@ -35,31 +155,6 @@ What it does
    contents, translations and static files are interlinked across the
    (sub-)sites.
 4. Finally, all the output is written.
-
-Setting it up
-=============
-
-For each extra used language code, a language-specific settings overrides
-dictionary must be given (but can be empty) in the ``I18N_SUBSITES`` dictionary
-
-.. code-block:: python
-
-    PLUGINS = ['i18n_subsites', ...]
-
-    # mapping: language_code -> settings_overrides_dict
-    I18N_SUBSITES = {
-        'cz': {
-	    'SITENAME': 'Hezkej blog',
-	    }
-	}
-
-You must also have the following in your pelican configuration
-
-.. code-block:: python
-    JINJA_ENVIRONMENT = {
-        'extensions': ['jinja2.ext.i18n'],
-    }
-
 
 
 Default and special overrides
@@ -101,8 +196,7 @@ sub-site. There are two approaches to having the templates localized:
   gettext ``*.po`` files, but it is harder to maintain over time.
 - You use only one theme and localize the templates using the
   `jinja2.ext.i18n Jinja2 extension
-  <http://jinja.pocoo.org/docs/templates/#i18n>`_. For a kickstart
-  read this `guide <./localizing_using_jinja2.rst>`_.
+  <http://jinja.pocoo.org/docs/templates/#i18n>`_. 
 
 Additional context variables
 ............................
@@ -144,19 +238,6 @@ to link to the main site.
 
 This short `howto <./implementing_language_buttons.rst>`_ shows two
 example implementations of language buttons.
-
-Usage notes
-===========
-- It is **mandatory** to specify ``lang`` metadata for each article
-  and page as ``DEFAULT_LANG`` is later changed for each sub-site, so
-  content without ``lang`` metadata would be rendered in every
-  (sub-)site.
-- As with the original translations functionality, ``slug`` metadata
-  is used to group translations. It is therefore often convenient to
-  compensate for this by overriding the content URL (which defaults to
-  slug) using the ``url`` and ``save_as`` metadata. You could also
-  give articles e.g. ``name`` metadata and use it in ``ARTICLE_URL =
-  '{name}.html'``.
 
 Development
 ===========
