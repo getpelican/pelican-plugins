@@ -63,12 +63,16 @@ class PlantUMLBlockProcessor(markdown.blockprocessors.BlockProcessor):
         # Remove block header and footer
         text = re.sub(self.RE, "", re.sub(self.RE_END, "", text))
 
-        path = os.path.abspath(os.path.join('output', 'images'))
+        path = self.config['dest_directory']
         if not os.path.exists(path):
             os.makedirs(path)
 
         # Generate image from PlantUML script
-        imageurl = self.config['siteurl']+'/images/'+generate_uml_image(path, text, format)
+        imageurl = '/'.join([
+            self.config['siteurl'],
+            self.config['static_path'],
+            generate_uml_image(path, text, format)
+        ])
         # Create image tag and append to the document
         etree.SubElement(parent, "img", src=imageurl, alt=alt, attrib={'class':classes})
 
@@ -78,10 +82,12 @@ class PlantUMLMarkdownExtension(markdown.Extension):
     # For details see https://pythonhosted.org/Markdown/extensions/api.html#configsettings
     def __init__(self, *args, **kwargs):
         self.config = {
-            'classes': ["uml","Space separated list of classes for the generated image. Default uml."],
-            'alt'    : ["uml diagram", "Text to show when image is not available."],
-            'format' : ["png", "Format of image to generate (png or svg). Default png."],
-            'siteurl': ["", "URL of document, used as a prefix for the image diagram."]
+            'classes'       : ["uml","Space separated list of classes for the generated image. Default uml."],
+            'alt'           : ["uml diagram", "Text to show when image is not available."],
+            'format'        : ["png", "Format of image to generate (png or svg). Default png."],
+            'siteurl'       : ["", "URL of document, used as a prefix for the image diagram."],
+            'dest_directory': ["", "Absolute path ON THE DISK where generated diagrams will be written."],
+            'static_path'   : ["", "Absolute path ON THE WEBSITE where are available generated diagrams."],
         }
 
         super(PlantUMLMarkdownExtension, self).__init__(*args, **kwargs)
