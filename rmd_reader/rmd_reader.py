@@ -38,22 +38,22 @@ def initsignal(pelicanobj):
     global RMD, FIG_PATH
     try:
         startr()
-
+        
         idx = KNITR.opts_knit.names.index('set')
         path = pelicanobj.settings.get('PATH','%s/content' % settings.DEFAULT_CONFIG.get('PATH'))
         logger.debug("RMD_READER PATH = %s", path)
         KNITR.opts_knit[idx](**{'base.dir': path})
-
+        
         knitroptsknit = pelicanobj.settings.get('RMD_READER_KNITR_OPTS_KNIT', None)
         if knitroptsknit:
             KNITR.opts_knit[idx](**{str(k): v for k,v in knitroptsknit.items()})
-
+        
         idx = KNITR.opts_chunk.names.index('set')
         knitroptschunk = pelicanobj.settings.get('RMD_READER_KNITR_OPTS_CHUNK', None)
         if knitroptschunk:
             FIG_PATH = knitroptschunk['fig.path'] if 'fig.path' in knitroptschunk else 'figure/'
             KNITR.opts_chunk[idx](**{str(k): v for k,v in knitroptschunk.items()})
-
+        
         RMD = True
     except ImportError as ex:
         RMD = False
