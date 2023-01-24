@@ -38,12 +38,13 @@ Please refer to the `Contributing`_ file.
 
 ----------------------------------------------------------------------------
 
-> This fork is a prototype to demo an alternate way of organizing and
-> presenting the pelican-plugins repo in way that is easier to track and
-> understand the difference between pre- and and post- Pelican v4.5 plugins.
->
-> The default branch has been renamed to ``main`` from ``master`` to ensure
-> people learn about the post-v4.5 migration and only use legacy plugins on purpose.
->
-> To make 'real' search and replace ``github.com/maphew`` with ``github.com/getpelican``
-> and delete these footer paragraphs.
+*This fork is a prototype to demo an alternate way of organizing and
+presenting the pelican-plugins repo in way that is easier to track and
+understand the difference between pre- and and post- Pelican v4.5 plugins.*
+
+*The default branch has been renamed to ``main`` from ``master`` to ensure
+people learn about the post-v4.5 migration and only use legacy plugins on purpose.*
+
+*To make this demo 'real' search and replace ``github.com/maphew`` with 
+``github.com/getpelican`` and delete these footer paragraphs before merging
+the Pull Request.*
