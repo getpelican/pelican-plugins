@@ -1,1 +1,0 @@
-../pelicanhtml_2.tpl
