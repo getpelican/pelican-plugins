@@ -1,2 +1,0 @@
-cssmin
-webassets
