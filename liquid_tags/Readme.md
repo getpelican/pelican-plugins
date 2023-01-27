@@ -17,7 +17,7 @@ can be added as follows.
 
 First, in your pelicanconf.py file, add the plugins you want to use:
 
-    PLUGIN_PATH = '/path/to/pelican-plugins'
+    PLUGIN_PATHS = ['/path/to/pelican-plugins']
     PLUGINS = ['liquid_tags.img', 'liquid_tags.video',
                'liquid_tags.youtube', 'liquid_tags.vimeo',
                'liquid_tags.include_code', 'liquid_tags.notebook']
