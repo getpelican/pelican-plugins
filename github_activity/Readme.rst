@@ -32,4 +32,4 @@ variable, as in this example::
 ``github_activity`` is a list of lists. The first element is the title,
 and the second element is the raw HTML from GitHub.
 
-.. _feedparser: https://crate.io/packages/feedparser/
+.. _feedparser: https://pypi.org/project/feedparser/
