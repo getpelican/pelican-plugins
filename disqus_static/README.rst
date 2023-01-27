@@ -58,3 +58,8 @@ Usage
         </ul>
     </div>
     {% endif %}
+    
+Issues
+-----
+If you run into an error: "No module named 'httplib'" then please see the following.
+https://github.com/disqus/disqus-python/issues/34
