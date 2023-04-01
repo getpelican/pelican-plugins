@@ -60,7 +60,6 @@ class AsciiDocReader(BaseReader):
             logger.debug('AsciiDocReader: Reading: %s', source_path)
             optlist = self.settings.get('ASCIIDOC_OPTIONS', []) + self.default_options
             options = " ".join(optlist)
-            content = call("%s %s -o - \"%s\"" % (cmd, options, source_path))
             # Beware! # Don't use tempfile.NamedTemporaryFile under Windows: https://bugs.python.org/issue14243
             # Also, use mkstemp correctly (Linux and Windows): https://www.logilab.org/blogentry/17873
             fd, temp_name = tempfile.mkstemp()
@@ -98,7 +97,7 @@ class AsciiDocReader(BaseReader):
                         metadata['title'] = self.process_metadata('title', title)
 
                 # Parse for other metadata.
-                regexp = re.compile(r"^:[A-z]+:\s*\w")
+                regexp = re.compile(r"^:\w+:")
                 if regexp.search(line):
                     toks = line.split(":", 2)
                     key = toks[1].strip().lower()
