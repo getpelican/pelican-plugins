@@ -142,3 +142,9 @@
 [submodule "similar_posts"]
 	path = similar_posts
 	url = https://github.com/davidlesieur/similar_posts.git
+[submodule "business_cards"]
+	path = business_cards
+	url = https://github.com/native2k/pelican.plugins.business_cards.git
+[submodule "qr_code"]
+	path = qr_code
+	url = https://github.com/native2k/pelican.plugins.qr_code.git
