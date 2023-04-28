@@ -320,7 +320,7 @@ Thumbnailer                                                       `✔  <https:/
 
 `Tipue Search <./tipue_search>`_                                                                                                             Serializes generated HTML to JSON that can be used by jQuery plugin - Tipue Search
 
-`Touch <./touch>`_                                                                                                                           Does a touch on your generated files using the date metadata from the content
+`Touch <./touch>`_                                                `✔  <https://github.com/pelican-plugins/touch>`_                           Does a touch on your generated files using the date metadata from the content
 
 `Twitter Bootstrap <./twitter_bootstrap_rst_directives>`_                                                                                    Defines some rst directive that enable a clean usage of the twitter bootstrap CSS and Javascript components
 
