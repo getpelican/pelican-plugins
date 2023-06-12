@@ -172,7 +172,7 @@ Liquid-style tags                                                 `✔  <https:/
 
 Load CSV                                                          `❓ <https://github.com/e9t/pelican-loadcsv>`_                             Adds ``csv`` Jinja tag to display the contents of a CSV file as an HTML table
 
-Markdown-metaYAML                                                 `❓ <https://github.com/joachimneu/pelican-md-metayaml>`_                  Pelican reader to enable YAML-style metadata in markdown articles
+Markdown-metaYAML                                                 `⚠️  <https://github.com/joachimneu/pelican-md-metayaml>`_                  Pelican reader to enable YAML-style metadata in markdown articles. See also: `YAML Metadata <https://github.com/pelican-plugins/yaml-metadata>`_
 
 `Markdown Inline Extension <./md_inline_extension>`_                                                                                         Enables you to add customize inline patterns to your markdown
 
