@@ -25,17 +25,34 @@ from .magic_set import magic_set
 class FeedSummaryWriter(Writer):
     def _add_item_to_the_feed(self, feed, item):
         if self.settings['FEED_USE_SUMMARY']:
+            
             title = Markup(item.title).striptags()
             link = '%s/%s' % (self.site_url, item.url)
+            authorname = getattr(item, 'author', '')
+
+            content = item.summary if hasattr(item, 'summary') else item.get_content(self.site_url)
+            if self.settings['FEED_USE_SUMMARY_FOOTER']:
+                footer_tmpl = u"""<br/>The post <a href="{posturl}">{posttitle}</a> was first published in <a href="{siteurl}">{sitename}</a> by {authorname}."""
+                if self.settings['FEED_USE_SUMMARY_FOOTER_CUSTOM']:
+                    footer_tmpl = self.settings['FEED_USE_SUMMARY_FOOTER_CUSTOM']
+                footer_parsed = footer_tmpl.format(
+                    posturl=link,
+                    posttitle=title,
+                    siteurl=self.site_url,
+                    sitename=self.settings['SITENAME'],
+                    authorname=getattr(item, 'author', '')
+                )
+                content += footer_parsed
+
             feed.add_item(
                 title=title,
                 link=link,
                 unique_id='tag:%s,%s:%s' % (urlparse(link).netloc,
                                             item.date.date(),
                                             urlparse(link).path.lstrip('/')),
-                description=item.summary if hasattr(item, 'summary') else item.get_content(self.site_url),
+                description=content,
                 categories=item.tags if hasattr(item, 'tags') else None,
-                author_name=getattr(item, 'author', ''),
+                author_name=authorname,
                 pubdate=set_date_tzinfo(item.modified if hasattr(item, 'modified') else item.date,
                     self.settings.get('TIMEZONE', None)))
         else:
@@ -46,6 +63,8 @@ def set_feed_use_summary_default(pelican_object):
     # everybody who uses DEFAULT_CONFIG is already used/copied it or uses the pelican_object.settings copy.
 
     pelican_object.settings.setdefault('FEED_USE_SUMMARY', False)
+    pelican_object.settings.setdefault('FEED_USE_SUMMARY_FOOTER', False)
+    pelican_object.settings.setdefault('FEED_USE_SUMMARY_FOOTER_CUSTOM', None)
 
 def patch_pelican_writer(pelican_object):
     @magic_set(pelican_object)
