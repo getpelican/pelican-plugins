@@ -42,7 +42,7 @@ def validate(filename):
     LOG.info("Validating: {0}".format(filename))
 
     # call w3c webservice
-    vld.validate_file(filename)
+    vld.validate_file(filename.encode('ascii'))
 
     # display errors and warning
     for err in vld.errors:
