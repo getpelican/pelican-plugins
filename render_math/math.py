@@ -80,7 +80,7 @@ def process_settings(pelicanobj):
     mathjax_settings['equation_numbering'] = 'none' # AMS, auto, none
 
     # Source for MathJax
-    mathjax_settings['source'] = "'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML'"
+    mathjax_settings['source'] = "'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML'"
 
     # Get the user specified settings
     try:
