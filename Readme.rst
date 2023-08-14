@@ -280,7 +280,7 @@ Render Math                                                       `✔  <https:/
 
 Replacer                                                          `❓ <https://github.com/narusemotoki/replacer>`_                           Replace a text of a generated HTML
 
-`Representative image <./representative_image>`_                                                                                             Extracts a representative image (i.e, featured image) from the article's summary or content
+Representative Image                                              `✔  <https://github.com/pelican-plugins/featured-image>`_                  Extracts a representative image (i.e, featured image) from the article's summary or content
 
 `RMD Reader <./rmd_reader>`_                                                                                                                 Create posts via knitr RMarkdown files
 
