@@ -266,7 +266,7 @@ class HTMLTranslator(PelicanHTMLTranslator):
         self.meta.insert(0, self.content_type % self.settings.output_encoding)
         self.head.insert(0, self.content_type % self.settings.output_encoding)
         if self.math_header:
-            self.head.append(self.math_header)
+            self.head += self.math_header
         # skip content-type meta tag with interpolated charset value:
         self.html_head.extend(self.head[1:])
         # self.body_prefix.append(self.starttag(node, 'div', CLASS='document'))
