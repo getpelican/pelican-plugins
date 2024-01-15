@@ -85,7 +85,8 @@ class AsciiDocReader(BaseReader):
         metadata = {}
         with open(source_path, encoding='utf-8') as fi:
             prev = ""
-            for line in fi.readlines():
+            lines = iter(fi.readlines())
+            for line in lines:
                 # Parse for doc title.
                 if 'title' not in metadata.keys():
                     title = ""
@@ -102,6 +103,11 @@ class AsciiDocReader(BaseReader):
                     toks = line.split(":", 2)
                     key = toks[1].strip().lower()
                     val = toks[2].strip()
+                    # Support for soft-wrapped attributes:
+                    # https://docs.asciidoctor.org/asciidoc/latest/attributes/wrap-values/#soft-wrap-attribute-values
+                    while val.endswith("\\"):
+                        line = next(lines)
+                        val = val[:-1] + line.strip()
                     metadata[key] = self.process_metadata(key, val)
                 prev = line
         logger.debug('AsciiDocReader: Found metadata: %s', metadata)

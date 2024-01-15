@@ -65,6 +65,29 @@ class AsciiDocReaderTest(unittest.TestCase):
         expected = "".join(expected.splitlines())
         self.assertEqual(actual, expected)
 
+    def test_article_with_asc_multiline(self):
+        # test to ensure that multiline metadata is correctly parsed
+        page = self.read_file(path="article_with_asc_multiline.asc")
+        expected = [
+            '<div id="preamble">',
+            '<div class="sectionbody">',
+            '<div class="paragraph">',
+            '<p>Content starts here!</p>',
+            '</div>',
+            '</div>',
+            '</div>',
+        ]
+        actual = "".join(page.content.splitlines())
+        expected = "".join(expected)
+        self.assertEqual(actual, expected)
+
+        expected = {
+            'author': 'Jane Doe',
+            'description': 'A very long and descriptive description!',
+        }
+        for key, value in expected.items():
+            self.assertEqual(value, page.metadata[key])
+
 
 if __name__ == '__main__':
     unittest.main()
