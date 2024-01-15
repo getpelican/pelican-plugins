@@ -55,7 +55,7 @@ class Matrix2D(list):
                         v += (self[i * 3 + x] * other[y * 3 + i])
                     r.append(v)
         else:
-            raise NotImplementedError
+            raise TypeError
         return Matrix2D(r)
 
     def for_PIL(self):
