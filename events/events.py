@@ -16,7 +16,9 @@ Released under AGPLv3+ license, see LICENSE
 from datetime import datetime, timedelta
 from pelican import signals, utils, contents
 from collections import namedtuple, defaultdict
+from html.parser import HTMLParser
 import icalendar
+from io import StringIO
 import logging
 import os.path
 import pytz
@@ -33,6 +35,25 @@ TIME_MULTIPLIERS = {
 
 events = []
 localized_events = defaultdict(list)
+
+
+class MLStripper(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.reset()
+        self.strict = False
+        self.convert_charrefs= True
+        self.text = StringIO()
+    def handle_data(self, d):
+        self.text.write(d)
+    def get_data(self):
+        return self.text.getvalue()
+
+
+def strip_html_tags(html):
+    s = MLStripper()
+    s.feed(html)
+    return s.get_data()
 
 
 def parse_tstamp(metadata, field_name):
@@ -133,8 +154,8 @@ def generate_ical_file(generator):
     curr_events = events if not localized_events else localized_events[DEFAULT_LANG]
 
     for e in curr_events:
-        ie = icalendar.Event(
-            summary=e.metadata['summary'],
+        icalendar_event = icalendar.Event(
+            summary=strip_html_tags(e.metadata['summary']),
             dtstart=basic_isoformat(e.event_plugin_data["dtstart"]),
             dtend=basic_isoformat(e.event_plugin_data["dtend"]),
             dtstamp=basic_isoformat(e.metadata['date']),
@@ -142,9 +163,9 @@ def generate_ical_file(generator):
             uid=e.metadata['title'] + e.metadata['summary'],
         )
         if 'event-location' in e.metadata:
-            ie.add('location', e.metadata['event-location'])
+            icalendar_event.add('location', e.metadata['event-location'])
 
-        ical.add_component(ie)
+        ical.add_component(icalendar_event)
 
     with open(ics_fname, 'wb') as f:
         f.write(ical.to_ical())
