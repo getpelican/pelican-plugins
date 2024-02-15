@@ -28,12 +28,13 @@ the org file's header:
 #+PROPERTY: SLUG test_slug
 #+PROPERTY: MODIFIED [2015-12-29 Di]
 #+PROPERTY: TAGS my, first, tags
+#+PROPERTY: TEMPLATE article
 #+PROPERTY: SAVE_AS alternative_filename.html
 
 - The TITLE is the only mandatory header property
 - Timestamps (DATE and MODIFIED) are optional and can be either a string of
   %Y-%m-%d or an org timestamp
-- The property names (SUMMARY, SLUG, MODIFIED, TAGS, SAVE_AS) can be either
+- The property names (SUMMARY, SLUG, MODIFIED, TAGS, TEMPLATE, SAVE_AS) can be either
   lower-case or upper-case
 - The slug is automatically the filename of the Org file, if not explicitly
   specified
@@ -99,7 +100,8 @@ class OrgEmacsReader(readers.BaseReader):
                     'tags': json_output['tags'] or '',
                     'save_as': json_output['save_as'] or '',
                     'summary': json_output['summary'] or '',
-                    'status': json_output['status'] or ''}
+                    'status': json_output['status'] or '',
+                    'template': json_output['template'] or None}
         # remove empty strings when necessary
         for key in ['save_as', 'modified', 'lang', 'summary']:
             if not metadata[key]:

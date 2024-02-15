@@ -50,6 +50,7 @@
                  :language (cdr (assoc-string "LANGUAGE" org-keyword-properties t))
                  :save_as (cdr (assoc-string "SAVE_AS" org-keyword-properties t))
                  :tags (cdr (assoc-string "TAGS" org-keyword-properties t))
+                 :template (cdr (assoc-string "TEMPLATE" org-keyword-properties t))
                  :summary (cdr (assoc-string "SUMMARY" org-keyword-properties t))
                  :status (cdr (assoc-string "STATUS" org-keyword-properties t))
                  :slug (cdr (assoc-string "SLUG" org-keyword-properties t))
