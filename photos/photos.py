@@ -172,7 +172,7 @@ def watermark_photo(image, settings):
         mark_image = Image.open(settings['PHOTO_WATERMARK_IMG'])
         mark_image_size = [watermark_layer.size[0] // image_reducer for size in mark_size]
         mark_image_size = settings['PHOTO_WATERMARK_IMG_SIZE'] if settings['PHOTO_WATERMARK_IMG_SIZE'] else mark_image_size
-        mark_image.thumbnail(mark_image_size, Image.ANTIALIAS)
+        mark_image.thumbnail(mark_image_size, Image.Resampling.LANCZOS)
         mark_position = [watermark_layer.size[i] - mark_image.size[i] - margin[i] for i in [0, 1]]
         mark_position = tuple([mark_position[0] - (text_size[0] // 2) + (mark_image_size[0] // 2), mark_position[1] - text_size[1]])
 
@@ -265,9 +265,9 @@ def resize_worker(orig, resized, spec, settings):
     icc_profile = im.info.get("icc_profile", None)
 
     if settings['PHOTO_SQUARE_THUMB'] and spec == settings['PHOTO_THUMB']:
-        im = ImageOps.fit(im, (spec[0], spec[1]), Image.ANTIALIAS)
+        im = ImageOps.fit(im, (spec[0], spec[1]), Image.Resampling.LANCZOS)
 
-    im.thumbnail((spec[0], spec[1]), Image.ANTIALIAS)
+    im.thumbnail((spec[0], spec[1]), Image.Resampling.LANCZOS)
     directory = os.path.split(resized)[0]
 
     if isalpha(im):
