@@ -18,12 +18,13 @@ def minify(pelican):
       :param pelican: The Pelican instance
     """
     executable = pelican.settings.get('YUICOMPRESSOR_EXECUTABLE', 'yuicompressor')
+    extra_options = pelican.settings.get('YUICOMPRESSOR_EXTRA_OPTIONS', [])
     for dirpath, _, filenames in os.walk(pelican.settings['OUTPUT_PATH']):
         for name in filenames:
             if os.path.splitext(name)[1] in ('.css','.js'):
                 filepath = os.path.join(dirpath, name)
                 logger.info('minify %s', filepath)
-                check_call([executable, '--charset', 'utf-8', filepath, '-o', filepath])
+                check_call([executable] + extra_options + ['--charset', 'utf-8', filepath, '-o', filepath])
 
 def register():
     signals.finalized.connect(minify)
