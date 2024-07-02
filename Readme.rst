@@ -86,7 +86,7 @@ CJK auto spacing                                                  `❓ <https://
 
 `Clean summary <./clean_summary>`_                                                                                                           Cleans your summary of excess images
 
-`Code include <./code_include>`_                                                                                                             Includes Pygments highlighted code in reStructuredText
+`Code include <./code_include>`_                                                                                                             Includes Pygments__ syntax highlights of various programming code for Markdown and reStructuredText
 
 `Collate content <./collate_content>`_                                                                                                       Makes categories of content available to the template as lists through a ``collations`` attribute
 
@@ -336,6 +336,7 @@ Webring                                                           `✔  <https:/
 ================================================================  ========================================================================  ===========================================================
 
 __ https://ace.c9.io
+__ https://pygments.org/styles/
 
 Please refer to the ``Readme`` file in a plugin's folder for detailed information about
 that plugin.
