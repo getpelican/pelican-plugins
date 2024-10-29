@@ -11,8 +11,8 @@ from pelican.readers import BaseReader
 from pelican import signals
 import os
 import re
+import shutil
 import subprocess
-import sys
 import tempfile
 
 import logging
@@ -37,7 +37,7 @@ def call(cmd):
 def default():
     """Attempt to find the default AsciiDoc utility."""
     for cmd in ALLOWED_CMDS:
-        if len(call(cmd + " --help")):
+        if shutil.which(cmd):
             logger.debug('AsciiDocReader: Using cmd: %s', cmd)
             return cmd
 
