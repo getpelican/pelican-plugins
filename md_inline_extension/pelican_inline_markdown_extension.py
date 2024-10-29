@@ -8,8 +8,8 @@ the Pelican Python static site generator to add inline patterns.
 
 import markdown
 import re
+import xml.etree.ElementTree as etree
 
-from markdown.util import etree
 from markdown.util import AtomicString
 
 class PelicanInlineMarkdownExtensionPattern(markdown.inlinepatterns.Pattern):
@@ -21,7 +21,7 @@ class PelicanInlineMarkdownExtensionPattern(markdown.inlinepatterns.Pattern):
         self.config = pelican_markdown_extension.getConfig('config')
 
     def handleMatch(self, m):
-        node = markdown.util.etree.Element(self.tag)
+        node = etree.Element(self.tag)
         tag_attributes = self.config.get(m.group('prefix'), ('', 'pelican-inline'))
         tag_class = 'pelican-inline'  # default class
         tag_style = ''  # default is for no styling
@@ -54,7 +54,7 @@ class PelicanInlineMarkdownExtension(markdown.Extension):
             config['config'] = [config['config'], 'config for markdown extension']
             super(PelicanInlineMarkdownExtension, self).__init__(config)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         # Regex to detect mathjax
         config = self.getConfig('config')
         patterns = []
@@ -66,4 +66,4 @@ class PelicanInlineMarkdownExtension(markdown.Extension):
         inline_regex = r'(?P<prefix>%s)(?P<text>.+?)\2' % ('|'.join(patterns))
 
         # Process after escapes
-        md.inlinePatterns.add('texthighlight_inlined', PelicanInlineMarkdownExtensionPattern(self, 'span', inline_regex), '>emphasis2')
+        md.inlinePatterns.register('texthighlight_inlined', PelicanInlineMarkdownExtensionPattern(self, 'span', inline_regex), 321)
