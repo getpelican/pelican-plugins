@@ -50,6 +50,9 @@ pip install beautifulsoup4
 1. `linkedin`
 1. `hacker-news`
 1. `reddit`
+1. `mastodon`
+1. `telegram`
+1. `whatsup`
 
 ## Template Example
 
@@ -66,11 +69,17 @@ pip install beautifulsoup4
     ❄
     <a href="{{article.share_post['linkedin']}}" target="_blank" title="Share on LinkedIn">LinkedIn</a>
     ❄
+    <a href="{{article.share_post['mastodon']}}" target="_blank" title="Share on Mastodon">Reddit</a>
+    ❄
     <a href="{{article.share_post['hacker-news']}}" target="_blank" title="Share on HackerNews">HackerNews</a>
     ❄
     <a href="{{article.share_post['email']}}" target="_blank" title="Share via Email">Email</a>
     ❄
     <a href="{{article.share_post['reddit']}}" target="_blank" title="Share via Reddit">Reddit</a>
+    ❄
+    <a href="{{article.share_post['telegram']}}" target="_blank" title="Share via Telegram">Reddit</a>
+    ❄
+    <a href="{{article.share_post['whatsup']}}" target="_blank" title="Share via WhatsApp">Reddit</a>
   </p>
 </section>
 {% endif %}
