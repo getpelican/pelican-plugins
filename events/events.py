@@ -60,7 +60,7 @@ def parse_timedelta(metadata):
     for c in chunks:
         try:
             m = TIME_MULTIPLIERS[c[-1]]
-            val = int(c[:-1])
+            val = float(c[:-1])
             tdargs[m] = val
         except KeyError:
             log.error("""Unknown time multiplier '%s' value in the \
