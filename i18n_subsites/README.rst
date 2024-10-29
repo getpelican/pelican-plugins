@@ -145,6 +145,7 @@ to link to the main site.
 This short `howto <./implementing_language_buttons.rst>`_ shows two
 example implementations of language buttons.
 
+
 Usage notes
 ===========
 - It is **mandatory** to specify ``lang`` metadata for each article
@@ -158,8 +159,12 @@ Usage notes
   give articles e.g. ``name`` metadata and use it in ``ARTICLE_URL =
   '{name}.html'``.
 
+
 Development
 ===========
 
 - A demo and a test site is in the ``gh-pages`` branch and can be seen
   at http://smartass101.github.io/pelican-plugins/
+- A demo site used for automated end to end testing is defined in
+  i18n_subsites/test_data.
+- Run the tests using `python -m unittest i18n_subsites/test_i18n_subsites.py`

@@ -1,6 +1,10 @@
 {% extends "!simple/base.html" %}
 
-{% block title %}{% trans %}Welcome to our{% endtrans %} {{ SITENAME }}{% endblock %}
+{% block title %}
+{% trans %}Welcome to our{% endtrans %} {{ L10N.SITE_NAME }} | {{ L10N.COMPANY.NAME }} {{ L10N.COMPANY.INCORPORATION }}
+{% endblock %}
+
+
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/style.css" />
