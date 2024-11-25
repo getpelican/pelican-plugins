@@ -1,0 +1,1 @@
+from .jinja2_footnotes_filter import *
