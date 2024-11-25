@@ -32,6 +32,13 @@ By default, this plugin expects the YUI Compressor executable to be named
 YUICOMPRESSOR_EXECUTABLE = 'yui-compressor'
 ```
 
+Additional options can be passed to YUI Compressor by setting list
+`YUICOMPRESSOR_EXTRA_OPTIONS` in `pelicanconf.py`:
+
+```python
+YUICOMPRESSOR_EXTRA_OPTIONS = ['--disable-optimizations']
+```
+
 # Licence
 
 GNU AFFERO GENERAL PUBLIC LICENSE Version 3
