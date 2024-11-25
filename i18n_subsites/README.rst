@@ -9,31 +9,31 @@ This plugin is designed for Pelican 3.4 and later.
 
 What it does
 ============
-
-1. When the content of the main site is being generated, the settings
-   are saved and the generation stops when content is ready to be
-   written. While reading source files and generating content objects,
-   the output queue is modified in certain ways:
+1. When content of main site is ready to be written, generation stops and associate content objects are modified this way:
 
   - translations that will appear as native in a different (sub-)site
     will be removed
-  - untranslated articles will be transformed to drafts if
-    ``I18N_UNTRANSLATED_ARTICLES`` is ``'hide'`` (default), removed if
-    ``'remove'`` or kept as they are if ``'keep'``.
-  - untranslated pages will be transformed into hidden pages if
-    ``I18N_UNTRANSLATED_PAGES`` is ``'hide'`` (default), removed if
-    ``'remove'`` or kept as they are if ``'keep'``.''
-  - additional content manipulation similar to articles and pages can
-    be specified for custom generators in the ``I18N_GENERATOR_INFO``
-    setting.
 
-2. For each language specified in the ``I18N_SUBSITES`` dictionary the
-   settings overrides are applied to the settings from the main site
-   and a new sub-site is generated in the same way as with the main
-   site until content is ready to be written.
+  - untranslated articles will be transformed
+    (draft if ``I18N_UNTRANSLATED_ARTICLES`` is ``'hide'`` (default),
+    removed if ``'remove'`` and kept if ``'keep'``), same for pages,
+    define ``'hide'``(default), ``'remove'`` or ``'keep'``
+    in your configuration.
+
+  - additional content manipulation similar to articles and pages are executed
+    if you have define custom generators in the ``I18N_GENERATOR_INFO``
+    setting, for more information to define this generator take a look on the
+    [pelican plugins documentation](http://docs.getpelican.com/en/3.6.3/plugins.html).
+
+2. For each language specified in the ``I18N_SUBSITES`` dictionary, main site
+   settings are overrides
+   and a new sub-site is generated
+   until content is ready to be written.
+
 3. When all (sub-)sites are waiting for content writing, all removed
    contents, translations and static files are interlinked across the
    (sub-)sites.
+
 4. Finally, all the output is written.
 
 Setting it up
@@ -99,6 +99,7 @@ sub-site. There are two approaches to having the templates localized:
   ``my_theme_lang`` and then editing the templates in the new
   localized theme. This approach means you don't have to deal with
   gettext ``*.po`` files, but it is harder to maintain over time.
+
 - You use only one theme and localize the templates using the
   `jinja2.ext.i18n Jinja2 extension
   <http://jinja.pocoo.org/docs/templates/#i18n>`_. For a kickstart
@@ -151,12 +152,15 @@ Usage notes
   and page as ``DEFAULT_LANG`` is later changed for each sub-site, so
   content without ``lang`` metadata would be rendered in every
   (sub-)site.
+
 - As with the original translations functionality, ``slug`` metadata
   is used to group translations. It is therefore often convenient to
   compensate for this by overriding the content URL (which defaults to
   slug) using the ``url`` and ``save_as`` metadata. You could also
   give articles e.g. ``name`` metadata and use it in ``ARTICLE_URL =
   '{name}.html'``.
+
+  - During theme or configuration modifications, disable cache not to see old output of your site. Put  ``LOAD_CONTENT_CACHE = False`` and ``DELETE_OUTPUT_DIRECTORY = True`` and you will be peacefull.
 
 Development
 ===========
