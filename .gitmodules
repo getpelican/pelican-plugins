@@ -49,9 +49,6 @@
 [submodule "bootstrapify"]
 	path = bootstrapify
 	url = https://github.com/ingwinlu/pelican-bootstrapify.git
-[submodule "pelican-jinja2content"]
-	path = pelican-jinja2content
-	url = https://github.com/joachimneu/pelican-jinja2content.git
 [submodule "panorama"]
 	path = panorama
 	url = https://github.com/romainx/panorama.git

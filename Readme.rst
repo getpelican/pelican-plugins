@@ -218,8 +218,6 @@ Pelican Github Projects                                           `❓ <https://
 
 Jupyter Notebooks                                                 `❓ <https://github.com/danielfrg/pelican-jupyter>`_                       Provides two modes to use Jupyter notebooks in Pelican.
 
-Pelican Jinja2Content                                             `⚠️  <https://github.com/joachimneu/pelican-jinja2content>`_                Allows the use of Jinja2 template code in articles, including ``include`` and ``import`` statements
-
 Lang Category                                                     `❓ <https://github.com/CNBorn/pelican-langcategory>`_                     Make languages behave the same as categories (visitor can browse articles in certain language).
 
 Pelican Link Class                                                `✔  <https://github.com/pelican-plugins/linkclass>`_                       Set class attribute of ``<a>`` elements according to whether the link is external or internal
