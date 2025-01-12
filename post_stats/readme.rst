@@ -1,6 +1,11 @@
 Post Statistics
 ==================
 
+**NOTE:** `This plugin has been moved to its own repository <https://github.com/pelican-plugins/statistics>`_.
+Please file any issues/PRs there. Once all plugins have been migrated to the
+`new Pelican Plugins organization <https://github.com/pelican-plugins>`_,
+this monolithic repository will be archived.
+
 A Pelican plugin to calculate various statistics about a post and store them in an article.stats dictionary:
 
 - ``wc``: how many words

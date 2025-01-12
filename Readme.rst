@@ -264,7 +264,7 @@ Pin to top                                                        `❓ <https://
 
 Post Revision                                                     `❓ <https://github.com/jhshi/pelican.plugins.post_revision>`_             Extract article and page revision information from Git commit history
 
-`Post statistics <./post_stats>`_                                                                                                            Calculates various statistics about a post and store them in an article.stats dictionary
+Post Statistics                                                   `✔  <https://github.com/pelican-plugins/statistics>`_                      Calculates various statistics about a post and stores them in an ``article.stats`` dictionary
 
 `Random article <./random_article>`_                                                                                                         Generates a html file which redirect to a random article
 
