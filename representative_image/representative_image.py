@@ -1,4 +1,5 @@
 import six
+from itertools import chain
 from bs4 import BeautifulSoup
 
 from pelican import signals
@@ -43,12 +44,12 @@ def images_extraction(instance):
 def run_plugin(generators):
     for generator in generators:
         if isinstance(generator, ArticlesGenerator):
-            for article in generator.articles:
+            for article in chain(generator.articles, generator.hidden_articles, generator.drafts):
                 images_extraction(article)
                 for translation in article.translations:
                     images_extraction(translation)
         elif isinstance(generator, PagesGenerator):
-            for page in generator.pages:
+            for page in chain(generator.pages, generator.hidden_pages, generator.draft_pages):
                 images_extraction(page)
                 for translation in page.translations:
                     images_extraction(translation)
