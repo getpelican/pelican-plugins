@@ -34,28 +34,54 @@ class TestFullRun(unittest.TestCase):
     def test_generic_tag_with_config(self):
         '''Test generation of site with a generic tag that reads in a config file.'''
 
-        base_path = os.path.dirname(os.path.abspath(__file__))
-        base_path = os.path.join(base_path, 'test_data')
-        content_path = os.path.join(base_path, 'content')
-        output_path = os.path.join(base_path, 'output')
-        settings_path = os.path.join(base_path, 'pelicanconf.py')
-        settings = read_settings(path=settings_path,
-                                 override={'PATH': content_path,
-                                           'OUTPUT_PATH': self.temp_path,
-                                           'CACHE_PATH': self.temp_cache,
-                                           }
-                                 )
+        _pj = os.path.join
+        base_path = _pj(os.path.dirname(os.path.abspath(__file__)), 'test_data')
+        content_path = _pj(base_path, 'content')
+        output_path = _pj(base_path, 'output')
+        settings_path = _pj(base_path, 'pelicanconf.py')
+        override = {
+                'PATH': content_path,
+                'OUTPUT_PATH': self.temp_path,
+                'CACHE_PATH': self.temp_cache,
+        }
+        settings = read_settings(path=settings_path, override=override)
 
         pelican = Pelican(settings)
         pelican.run()
 
-        assert os.path.exists(os.path.join(self.temp_path,
-                                           'test-generic-config-tag.html'))
+        # test normal tags
+        f = _pj(self.temp_path, 'test-generic-config-tag.html')
+        assert os.path.exists(f)
+        assert "Tester" in open(f).read()
 
-        assert "Tester" in open(os.path.join(self.temp_path,
-                                           'test-generic-config-tag.html')).read()
         # test differences
-        #assert filecmp.cmp(os.path.join(output_path,
-        #                                'test-ipython-notebook-v3.html'),
-        #                   os.path.join(self.temp_path,
-        #                                'test-ipython-notebook.html'))
+        f1 = _pj(output_path, 'test-ipython-notebook-v3.html')
+        f2 = _pj(self.temp_path, 'test-ipython-notebook.html')
+        #assert filecmp.cmp(f1, f2)
+
+    def test_generic_alt_delimiters(self):
+        '''Test generation of site with alternatively delimited tags.'''
+
+        _pj = os.path.join
+        base_path = _pj(os.path.dirname(os.path.abspath(__file__)), 'test_data')
+        content_path = _pj(base_path, 'content')
+        output_path = _pj(base_path, 'output')
+        settings_path = _pj(base_path, 'pelicanconf.py')
+        override = {
+                'PATH': content_path,
+                'OUTPUT_PATH': self.temp_path,
+                'CACHE_PATH': self.temp_cache,
+                'LT_DELIMITERS': ('<+', '+>'),
+        }
+        settings = read_settings(path=settings_path, override=override)
+
+        pelican = Pelican(settings)
+        pelican.run()
+
+        # test alternate delimiters
+        f = _pj(self.temp_path, 'test-alternate-tag-delimiters.html')
+        fc = open(f).read()
+        assert '{% generic config author %} is stupid' in fc
+        assert 'The Tester is smart' in fc
+        assert 'The Tester is stupid' not in fc
+
