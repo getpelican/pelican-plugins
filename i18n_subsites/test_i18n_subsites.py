@@ -125,6 +125,9 @@ class TestFullRun(unittest.TestCase):
             'OUTPUT_PATH': self.temp_path,
             'CACHE_PATH': self.temp_cache,
             'PLUGINS': [i18ns],
+            'JINJA_ENVIRONMENT' : {
+     'extensions': ['jinja2.ext.i18n'],
+},
             }
         )
         pelican = Pelican(settings)
