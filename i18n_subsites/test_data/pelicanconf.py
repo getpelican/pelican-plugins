@@ -12,9 +12,8 @@ TIMEZONE = 'UTC'
 DEFAULT_LANG = 'en'
 LOCALE = 'en_US.UTF-8'
 
-# Generate only one feed
-FEED_ALL_ATOM = 'feeds_all.atom.xml'
-CATEGORY_FEED_ATOM = None
+FEED_ALL_ATOM = 'feeds/all.atom.xml'
+CATEGORY_FEED_ATOM = 'feeds/{slug}.atom.xml'
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
