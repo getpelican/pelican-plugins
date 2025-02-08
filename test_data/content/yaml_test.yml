@@ -1,0 +1,23 @@
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+INFOJS_OPT: view:info toc:t ltoc:nil
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:nil
+#+TITLE: Mynydd Mawr.
+#+BEGIN_HTML
+---
+date: 2010-02-17
+layout: post
+title: Mynydd Mawr.
+summary: Mynydd Mawr is an outlier of the Moel Hebog group and is situated between Snowdon and the Nantlle Ridge. It's not very high - 698m or 2269ft, but because of it's position the views from the top are spectacular.
+category: blog
+comments: true
+tags: [mountaineering, trips]
+---
+#+END_HTML
+
+This article is a test for the Emacs org-mode yaml importer plugin.
+
+Mynydd Mawr is an outlier of the Moel Hebog group and is situated
+between Snowdon and the Nantlle Ridge. It's not very high - 698m or
+2269ft, but because of it's position the views from the top are
+spectacular.
