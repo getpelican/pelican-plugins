@@ -424,9 +424,8 @@ def create_next_subsite(pelican_obj):
         _MAIN_SETTINGS = None             # to initialize next time
     else:
         with temporary_locale():
-            settings = _MAIN_SETTINGS.copy()
             lang, overrides = _SUBSITE_QUEUE.popitem()
-            settings.update(overrides)
+            settings = _merge_dict(_MAIN_SETTINGS, overrides)
             settings = configure_settings(settings)      # to set LOCALE, etc.
             cls = get_pelican_cls(settings)
 
@@ -434,6 +433,29 @@ def create_next_subsite(pelican_obj):
             _LOGGER.debug(("Generating i18n subsite for language '{}' "
                            "using class {}").format(lang, cls))
             new_pelican_obj.run()
+
+
+def _merge_dict(target, source):
+    """
+    Update the values in `target` mapping based on the values from source.
+
+    Any keys from `target` not found in `source` are kept.
+    """
+    result = {}
+    for key, value in target.items():
+        if key not in source:
+            # Keep the original value as it's not found.
+            result[key] = copy(value)
+            continue
+
+        update = source[key]
+
+        if isinstance(value, dict):
+            update = _merge_dict(value, update)
+
+        result[key] = update
+
+    return result
 
 
 # map: signal name -> function name
