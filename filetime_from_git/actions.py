@@ -28,8 +28,14 @@ def filetime_from_git(content, git_content):
         return
 
     path = content.source_path
-    fs_creation_time = datetime_from_timestamp(os.stat(path).st_ctime, content)
-    fs_modified_time = datetime_from_timestamp(os.stat(path).st_mtime, content)
+
+    try:
+        st = os.stat(path)
+    except FileNotFoundError:
+        return
+
+    fs_creation_time = datetime_from_timestamp(st.st_ctime, content)
+    fs_modified_time = datetime_from_timestamp(st.st_mtime, content)
 
     # 1. file is not managed by git
     #    date: fs time
