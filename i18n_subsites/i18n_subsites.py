@@ -81,10 +81,10 @@ def prepare_site_db_and_overrides():
 
     _SITE_DB.keys() need to be ready for filter_translations
     '''
-    _SITE_DB.clear()
-    _SITE_DB[_MAIN_LANG] = _MAIN_SITEURL
     # make sure it works for both root-relative and absolute
     main_siteurl = '/' if _MAIN_SITEURL == '' else _MAIN_SITEURL
+    _SITE_DB.clear()
+    _SITE_DB[_MAIN_LANG] = main_siteurl
     for lang, overrides in _SUBSITE_QUEUE.items():
         if 'SITEURL' not in overrides:
             overrides['SITEURL'] = posixpath.join(main_siteurl, lang)
