@@ -105,6 +105,10 @@ Markdown reader
 
 To enable table of contents generation for the Markdown reader you need to set `MD_EXTENSIONS = (['toc'])` in your Pelican configuration file.
 
+**NOTE:** Per [the Pelican doc](docs.getpelican.com/en/3.6.3/settings.html), don't forget to add back default 
+`MD_EXTENSIONS` values so that this change won't break your blog post written by MD.
+
+
 To add a table of contents to your Markdown document (`.md`) you need to place the `[TOC]` marker to its beginning. See the [Python Markdown documentation](http://pythonhosted.org/Markdown/extensions/toc.html) for more details.
 
 ```markdown
