@@ -1,5 +1,7 @@
 # Summary
 
+**NOTE:** [This plugin has been renamed and moved to its own repository](https://github.com/pelican-plugins/featured-image). Please file any issues/PRs there. Once all plugins have been migrated to the new [Pelican Plugins organization](https://github.com/pelican-plugins), this monolithic repository will be archived.
+
 This plugin extracts a representative image (i.e, featured image) from the summary or content of an article or a page, if not specified in the metadata.
 
 The plugin also removes any images from the summary after extraction to avoid duplication.
