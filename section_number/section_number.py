@@ -5,76 +5,41 @@ Section number plugin for Pelican
 Adds section numbers to section titles of the article
 """
 
+import pelican.contents
 from pelican import signals
+from bs4 import BeautifulSoup
 
 
-def _extract_level(text, idx):
-    end = text.find(">", idx)
+def _insert_title_number(text: str, level_max: int) -> str:
+    levels_count = dict()
+    soup = BeautifulSoup(text, 'html.parser')
+    previous_level = 0
 
-    if end == -1:
-        return (idx, -1)
+    for head_tag in soup.find_all([f'h{i}' for i in range(1, level_max)],
+                                  recursive=True):
+        level = int(head_tag.name.replace('h', ''))
 
-    try:
-        level = int(text[idx: end])
-        return (end, level)
+        if level < previous_level:
+            for k in levels_count.keys():
+                if k > level:
+                    levels_count[k] = 0
 
-    except:
-        return (idx, -1)
+        levels_count.setdefault(level, 0)
+        levels_count[level] += 1
 
+        top_head_string = ''
+        for top_level, top_level_count in levels_count.items():
+            if top_level < level and top_level_count != 0:
+                top_head_string = f'{top_head_string}{top_level_count}.'
 
-def _level_str(level_nums, level_max):
-    ret = u''
+        head_tag.string = f'{top_head_string}{levels_count[level]}' \
+                          f' {head_tag.string}'
+        previous_level = level
 
-    if len(level_nums) > level_max:
-        return ret
-
-    for n in level_nums:
-        ret += str(n) + '.'
-
-    return ret[:-1]
-
-
-def _insert_title_number(text, level_max):
-    idx = 0
-    levels = []
-    level_nums = []
-
-    while True:
-        idx = text.find("<h", idx)
-        if idx == -1:
-            break
-
-        (idx, level) = _extract_level(text, idx + 2)
-
-        if level == -1:
-            continue
-
-        if not levels:
-            levels += [level]
-            level_nums += [1]
-
-        elif level == levels[-1]:
-            level_nums[-1] += 1
-
-        elif level < levels[-1]:
-            while level < levels[-1]:
-                levels.pop()
-                level_nums.pop()
-            level_nums[-1] += 1
-
-        else:
-            while level > levels[-1]:
-                levels += [levels[-1] + 1]
-                level_nums += [1]
-
-        text = text[:idx + 1] + \
-            _level_str(level_nums, level_max) + '. ' + text[idx + 1:]
-
-    # print text.encode('gb2312')
-    return text
+    return soup.decode(formatter='html')
 
 
-def process_content(content):
+def process_content(content: pelican.contents.Article):
     if content._content is None:
         return
 
