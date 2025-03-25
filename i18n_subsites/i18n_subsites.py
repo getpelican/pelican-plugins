@@ -406,6 +406,36 @@ def get_pelican_cls(settings):
     return cls
 
 
+def create_dirs(settings):
+    dirs = settings.get('I18N_LINK_DIRS') or []
+    if not dirs:
+        return
+
+    toutput = settings['OUTPUT_PATH']
+    soutput = os.path.split(toutput)[0]
+
+    _LOGGER.debug("create dirs {} in '{}' ".format(dirs, toutput))
+
+    if not os.path.exists(toutput):
+       os.makedirs(toutput)
+
+    for dir in dirs:
+        src=os.path.join(soutput, dir)
+        if not os.path.exists(src):
+            os.makedirs(src)
+
+        destpath = os.path.split(dir)[0]
+        if destpath:
+            destpathloc = os.path.join(toutput, destpath)
+            if not os.path.exists(destpathloc):
+                os.makedirs(destpathloc)
+
+        dest=os.path.join(toutput, dir)
+        if not os.path.exists(dest):
+            _LOGGER.debug(" create link '{}' -> '{}'".format(dest, src))
+            os.symlink(src, dest)
+
+
 def create_next_subsite(pelican_obj):
     '''Create the next subsite using the lang-specific config
 
@@ -433,6 +463,8 @@ def create_next_subsite(pelican_obj):
             new_pelican_obj = cls(settings)
             _LOGGER.debug(("Generating i18n subsite for language '{}' "
                            "using class {}").format(lang, cls))
+
+            create_dirs(settings)
             new_pelican_obj.run()
 
 
