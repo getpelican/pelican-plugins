@@ -7,7 +7,7 @@ Use this plugin to make writing coding tutorials easier! You can
 maintain the example source files separately from the actual article.
 
 Based heavily on ``docutils.parsers.rst.directives.Include``. Include
-a file and output as a code block formatted with pelican's Pygments
+a file or URL and output as a code block formatted with pelican's Pygments
 directive.
 
 Note that this is broken with the Docutils 0.10 release, there's a
@@ -25,8 +25,12 @@ Directives
         :tab-width: integer, hard tabs are replaced with `tab-width` spaces
         :start-line: integer, starting line to begin reading include file
         :end-line: integer, last line from include file to display
+        :linenos: string, Enable line numbers
+        :linenostart: integer, offset for line numbers
 
-``start-line``, and ``end-line`` have the same meaning as in the
+
+
+``start-line``, ``end-line``,and ``linenos``  have the same meaning as in the
 docutils ``include`` directive, that is, they index from zero.
 
 Example
@@ -67,3 +71,16 @@ Example
         :start-line: 3
         :end-line: 11
 
+Example using an URL
+--------------------
+
+.. code:: rst
+
+     .. code-include:: https://raw.githubusercontent.com/getpelican/pelican-plugins/master/code_include/code_include.py
+        :lexer: python
+        :encoding: utf-8
+        :tab-width: 4
+        :start-line: 12
+        :end-line: 21
+        :linenos: inline
+        :linenostart: 12
