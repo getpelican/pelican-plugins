@@ -13,7 +13,7 @@ Author: Federico Ceratto <federico.ceratto@gmail.com>
 Released under AGPLv3+ license, see LICENSE
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pelican import signals, utils, contents
 from collections import namedtuple, defaultdict
 import icalendar
@@ -77,7 +77,7 @@ field in the '%s' event.""" % (c, metadata['title']))
 
 
 def basic_isoformat(datetime_value):
-    return datetime_value.strftime("%Y%m%dT%H%M%S")
+    return datetime_value.astimezone(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
 def parse_article(content):
