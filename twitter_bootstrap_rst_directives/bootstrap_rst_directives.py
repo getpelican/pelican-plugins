@@ -366,7 +366,7 @@ class Alert(rst.Directive):
         # Recurse inside its children and change the hyperlinks classes
         for child in new_element.traverse(include_self=False):
             if isinstance(child, nodes.reference):
-                child.set_class('alert-link')
+                child['classes'].append('alert-link')
         # Set its custom bootstrap classes
         new_element['classes'] += ['alert ', alert_name]
         # Return one single element
