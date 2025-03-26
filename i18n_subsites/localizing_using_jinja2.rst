@@ -107,6 +107,11 @@ create a mapping file ``babel.cfg`` with the following line
 .. code-block:: cfg
 
     [jinja2: templates/**.html]
+    extensions=jinja2.ext.autoescape,jinja2.ext.with_,...
+    
+Make sure to mention all the extensions you are using. Failing to do 
+so will result in incomplete catalog. You can add `silent=false` if
+you need to debug.
 
 
 2. Extract translatable strings from templates
