@@ -9,7 +9,7 @@ This form allows your visitors to easily write comments and send them to you via
 	mkdir -p [yourtheme]/templates/pcs
 	mkdir -p [yourtheme]/static/js
 	cp ./theme/templates/pcs/comments.html [yourtheme]/templates/pcs/comments.html
-	cp ./theme/static/js/comments.js      [yourtheme]/static/js/comments.html
+	cp ./theme/static/js/comments.js      [yourtheme]/static/js/comments.js
 	```
 
 2. Modify your `article.html` template:
