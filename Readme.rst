@@ -148,7 +148,7 @@ Gravatar                                                          `✔  <https:/
 
 `HTML tags for rST <./html_rst_directive>`_                                                                                                  Allows you to use HTML tags from within reST documents
 
-`I18N Sub-sites <./i18n_subsites>`_                                                                                                          Extends the translations functionality by creating internationalized sub-sites for the default site
+I18N Subsites                                                     `✔  <https://github.com/pelican-plugins/i18n-subsites>`_                   Extends the translations functionality by creating internationalized sub-sites for the default site
 
 `ical <./ical>`_                                                                                                                             Looks for and parses an ``.ics`` file if it is defined in a given page's ``calendar`` metadata.
 
