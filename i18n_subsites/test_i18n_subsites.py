@@ -42,12 +42,12 @@ class TestSettingsManipulation(unittest.TestCase):
         self.settings['PELICAN_CLASS'] = object
         cls = i18ns.get_pelican_cls(self.settings)
         self.assertIs(cls, object)
-        
+
     def test_get_pelican_cls_str(self):
         '''Test that we get correct class given by string'''
         cls = i18ns.get_pelican_cls(self.settings)
         self.assertIs(cls, Pelican)
-        
+
 
 class TestSitesRelpath(unittest.TestCase):
     '''Test relative path between sites generation'''
@@ -72,7 +72,7 @@ class TestSitesRelpath(unittest.TestCase):
         self.assertEqual(i18ns.relpath_to_site('en', 'de'), 'de')
         self.assertEqual(i18ns.relpath_to_site('de', 'en'), '..')
 
-        
+
 class TestRegistration(unittest.TestCase):
     '''Test plugin registration'''
 
@@ -91,49 +91,69 @@ class TestRegistration(unittest.TestCase):
             self.assertIn(id(handler), sig.receivers)
             # clean up
             sig.disconnect(handler)
-        
+
 
 class TestFullRun(unittest.TestCase):
     '''Test running Pelican with the Plugin'''
 
-    def setUp(self):
-        '''Create temporary output and cache folders'''
-        self.temp_path = mkdtemp(prefix='pelicantests.')
-        self.temp_cache = mkdtemp(prefix='pelican_cache.')
+    def cleanDirs(self, dirs):
+        """
+        Recursive delete each path from `dirs`.
+        """
+        for path in dirs:
+            rmtree(path)
 
-    def tearDown(self):
-        '''Remove output and cache folders'''
-        rmtree(self.temp_path)
-        rmtree(self.temp_cache)
+    def getContent(self, base, target):
+        """
+        Return the text content of file.
+        """
+        path = os.path.join(base, target)
+        with open(path, 'r') as stream:
+            return stream.read()
 
     def test_sites_generation(self):
-        '''Test generation of sites with the plugin
+        """
+        It will generate multiple copies of the site.
 
-        Compare with recorded output via ``git diff``.
-        To generate output for comparison run the command
-        ``pelican -o test_data/output -s test_data/pelicanconf.py \
-        test_data/content``
-        Remember to remove the output/ folder before that.
-        '''
+        Once copy is the default language, and the others are copies for each
+        enabled language in I18N_SUBSITES
+        from i18n_subsites/test_data/pelicanconf.py
+        """
+        output_path = mkdtemp(prefix='pelicantests.')
+        cache_path = mkdtemp(prefix='pelican_cache.')
+        self.addCleanup(self.cleanDirs, [output_path, cache_path])
+
         base_path = os.path.dirname(os.path.abspath(__file__))
         base_path = os.path.join(base_path, 'test_data')
         content_path = os.path.join(base_path, 'content')
-        output_path = os.path.join(base_path, 'output')
         settings_path = os.path.join(base_path, 'pelicanconf.py')
         settings = read_settings(path=settings_path, override={
             'PATH': content_path,
-            'OUTPUT_PATH': self.temp_path,
-            'CACHE_PATH': self.temp_cache,
+            'OUTPUT_PATH': output_path,
+            'CACHE_PATH': cache_path,
             'PLUGINS': [i18ns],
             }
         )
         pelican = Pelican(settings)
         pelican.run()
 
-        # compare output
-        out, err = subprocess.Popen(
-            ['git', 'diff', '--no-ext-diff', '--exit-code', '-w', output_path,
-             self.temp_path], env={'PAGER': ''},
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-        self.assertFalse(out, 'non-empty `diff` stdout:\n{}'.format(out))
-        self.assertFalse(err, 'non-empty `diff` stderr:\n{}'.format(err))
+        root_deploy = os.listdir(output_path)
+        self.assertIn('de', root_deploy)
+        self.assertIn('cz', root_deploy)
+
+        root_index = self.getContent(output_path, 'index.html')
+        de_index = self.getContent(output_path, 'de/index.html')
+
+        # Check pelicanconf,py translation.
+        self.assertIn(
+            'example.com/test/author/the-tester.html">The Tester</a>',
+            root_index
+            )
+        self.assertIn(
+            'example.com/test/de/author/der-tester.html">Der Tester</a>',
+            de_index
+            )
+
+        # Check jinja2 translation.
+        self.assertIn('Welcome to our Testing site | Acme Ltd', root_index)
+        self.assertIn('Willkommen Sie zur unserer Testseite | Acme AG', de_index)
