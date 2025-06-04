@@ -37,6 +37,14 @@ else:
     ispiexif = True
     logger.debug('piexif found.')
 
+try:
+    import pyheif
+except ImportError:
+    isheif = False
+    logger.error('pyheif not found! HEIC files not supported')
+else:
+    isheif = True
+    logger.debug('pyheif found.')
 
 def initialized(pelican):
     p = os.path.expanduser('~/Pictures')
@@ -251,7 +259,14 @@ def manipulate_exif(img, settings):
 
 def resize_worker(orig, resized, spec, settings):
     logger.info('photos: make photo {} -> {}'.format(orig, resized))
-    im = Image.open(orig)
+    if isheif and orig.upper().endswith('.HEIC'):
+        with open(orig, 'rb') as file:
+            image = pyheif.read_heif(file)
+            im = Image.frombytes(
+                mode=image.mode, size=image.size, data=image.data)
+    else:
+        im = Image.open(orig)
+    im = ImageOps.exif_transpose(im)
 
     if ispiexif and settings['PHOTO_EXIF_KEEP'] and im.format == 'JPEG':  # Only works with JPEG exif for sure.
         try:

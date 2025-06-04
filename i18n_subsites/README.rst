@@ -61,6 +61,7 @@ dictionary must be given (but can be empty) in the ``I18N_SUBSITES`` dictionary
 You must also have the following in your pelican configuration
 
 .. code-block:: python
+
     JINJA_ENVIRONMENT = {
         'extensions': ['jinja2.ext.i18n'],
     }
@@ -149,6 +150,32 @@ to link to the main site.
 
 This short `howto <./implementing_language_buttons.rst>`_ shows two
 example implementations of language buttons.
+
+Additional config option
+........................
+
+If you use plugins like  ``photos``, ``thumbnailer`` and want to prevent
+the system from copying the files into each language directory, it is possible
+to set a list of directories in the variable ``I18N_LINK_DIRS``.
+For each path a symbolic link is created which links to the original directory.
+
+.. code-block:: python
+
+    I18N_LINK_DIRS = ['images/thumbnails', 'photos']
+
+.. code-block::
+
+   └── output/                                              # base output directory
+       ├── images/
+       │   └── thumbnails/                                  # original directory
+       ├── photos/                                          # original directory
+       └─── de/                                             # language subfolder
+            ├── photos -> /output/photos                    # symbolic link to original directory
+            └── images/
+                └── thumbnails -> /output/images/thumbnails # symbolic link to original directory
+
+
+
 
 Usage notes
 ===========
