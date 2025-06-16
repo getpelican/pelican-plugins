@@ -2,6 +2,7 @@
 from __future__ import print_function
 
 import filecmp
+import logging
 import os
 import unittest
 from shutil import rmtree
@@ -32,65 +33,46 @@ class TestFullRun(unittest.TestCase):
         rmtree(self.temp_cache)
         os.chdir(PLUGIN_DIR)
 
-    @unittest.skipIf(IPYTHON_VERSION != 3,
-                     reason="output must be created with ipython version 3")
-    def test_generate_with_ipython3(self):
+    @unittest.skipIf(IPYTHON_VERSION not in (2, 3),
+                     reason="iPython v%d is not supported" % IPYTHON_VERSION)
+    def test_generate(self):
         '''Test generation of site with the plugin.'''
 
-        base_path = os.path.dirname(os.path.abspath(__file__))
-        base_path = os.path.join(base_path, 'test_data')
-        content_path = os.path.join(base_path, 'content')
-        output_path = os.path.join(base_path, 'output')
-        settings_path = os.path.join(base_path, 'pelicanconf.py')
-        settings = read_settings(path=settings_path,
-                                 override={'PATH': content_path,
-                                           'OUTPUT_PATH': self.temp_path,
-                                           'CACHE_PATH': self.temp_cache,
-                                           }
-                                 )
+        # set paths
+        _pj = os.path.join
+        base_path = _pj(os.path.dirname(os.path.abspath(__file__)), 'test_data')
+        content_path = _pj(base_path, 'content')
+        output_path = _pj(base_path, 'output')
+        settings_path = _pj(base_path, 'pelicanconf.py')
 
+        # read settings
+        override = {
+                'PATH': content_path,
+                'OUTPUT_PATH': self.temp_path,
+                'CACHE_PATH': self.temp_cache,
+        }
+        settings = read_settings(path=settings_path, override=override)
+
+        # run and test created files
         pelican = Pelican(settings)
         pelican.run()
 
         # test existence
-        assert os.path.exists(os.path.join(self.temp_path,
-                                           'test-ipython-notebook-nb-format-3.html'))
-        assert os.path.exists(os.path.join(self.temp_path,
-                                           'test-ipython-notebook-nb-format-4.html'))
+        assert os.path.exists(_pj(self.temp_path,
+                                  'test-ipython-notebook-nb-format-3.html'))
+        assert os.path.exists(_pj(self.temp_path,
+                                  'test-ipython-notebook-nb-format-4.html'))
 
         # test differences
-        #assert filecmp.cmp(os.path.join(output_path,
-        #                                'test-ipython-notebook-v2.html'),
-        #                   os.path.join(self.temp_path,
-        #                                'test-ipython-notebook.html'))
+        if IPYTHON_VERSION == 3:
+            f1 = _pj(output_path, 'test-ipython-notebook-v2.html')
+            f2 = _pj(self.temp_path, 'test-ipython-notebook.html')
+            #assert filecmp.cmp(f1, f2)
+        elif IPYTHON_VERSION == 2:
+            f1 = _pj(output_path, 'test-ipython-notebook-v3.html')
+            f2 = _pj(self.temp_path, 'test-ipython-notebook.html')
+            #assert filecmp.cmp(f1, f2)
+        else:
+            logging.error('Unexpected IPYTHON_VERSION: %s', IPYTHON_VERSION)
+            assert False
 
-    @unittest.skipIf(IPYTHON_VERSION != 2,
-                     reason="output must be created with ipython version 2")
-    def test_generate_with_ipython2(self):
-        '''Test generation of site with the plugin.'''
-
-        base_path = os.path.dirname(os.path.abspath(__file__))
-        base_path = os.path.join(base_path, 'test_data')
-        content_path = os.path.join(base_path, 'content')
-        settings_path = os.path.join(base_path, 'pelicanconf.py')
-        settings = read_settings(path=settings_path,
-                                 override={'PATH': content_path,
-                                           'OUTPUT_PATH': self.temp_path,
-                                           'CACHE_PATH': self.temp_cache,
-                                           }
-                                 )
-
-        pelican = Pelican(settings)
-        pelican.run()
-
-        # test existence
-        assert os.path.exists(os.path.join(self.temp_path,
-                                           'test-ipython-notebook-nb-format-3.html'))
-        assert os.path.exists(os.path.join(self.temp_path,
-                                           'test-ipython-notebook-nb-format-4.html'))
-
-        # test differences
-        #assert filecmp.cmp(os.path.join(output_path,
-        #                                'test-ipython-notebook-v3.html'),
-        #                   os.path.join(self.temp_path,
-        #                                'test-ipython-notebook.html'))

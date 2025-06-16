@@ -283,8 +283,9 @@ def notebook(preprocessor, tag, markup):
 
     language_applied_highlighter = partial(custom_highlighter, language=language)
 
+    content_root = preprocessor.configs.getConfig('PATH', default='content')
     nb_dir =  preprocessor.configs.getConfig('NOTEBOOK_DIR')
-    nb_path = os.path.join(settings.get('PATH', 'content'), nb_dir, src)
+    nb_path = os.path.join(content_root, nb_dir, src)
 
     if not os.path.exists(nb_path):
         raise ValueError("File {0} could not be found".format(nb_path))
