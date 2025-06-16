@@ -17,6 +17,8 @@ from .generateUmlDiagram import generate_uml_image
 
 
 global_siteurl = "" # URL of the site, filled on plugin initialization
+global_dest_static = ""  # Absolute path to the first writable PATH in "STATIC_PATHS" ON THE DISK
+global_static_path = ""  # Path of the first writable PATH in "STATIC_PATHS" ON THE WEBSITE
 
 
 class PlantUML_rst(Directive):
@@ -26,6 +28,8 @@ class PlantUML_rst(Directive):
     has_content = True
 
     global global_siteurl
+    global global_static_path
+    global global_dest_static
 
     option_spec = {
         'class' : directives.class_option,
@@ -34,7 +38,7 @@ class PlantUML_rst(Directive):
     }
 
     def run(self):
-        path = os.path.abspath(os.path.join('output', 'images'))
+        path = global_dest_static
         if not os.path.exists(path):
             os.makedirs(path)
 
@@ -43,7 +47,7 @@ class PlantUML_rst(Directive):
 
         try:
             uml_format = self.options.get('format', 'png')
-            url = global_siteurl+'/images/'+generate_uml_image(path, body, uml_format)
+            url = global_siteurl+global_static_path+generate_uml_image(path, body, uml_format)
         except Exception as exc:
             error = self.state_machine.reporter.error(
                 'Failed to run plantuml: %s' % exc,
@@ -60,8 +64,23 @@ class PlantUML_rst(Directive):
 
 def pelican_init(pelicanobj):
 
-    global global_siteurl
+    global global_siteurl, global_static_path, global_dest_static
     global_siteurl = pelicanobj.settings['SITEURL']
+    for static_path in pelicanobj.settings['STATIC_PATHS']:
+        output_static_path = os.path.abspath(
+            os.path.join(
+                pelicanobj.settings['OUTPUT_PATH'],
+                static_path
+            )
+        )
+        if not os.path.exists(output_static_path):
+            os.makedirs(output_static_path)
+        if os.path.isdir(output_static_path) and os.access(output_static_path, os.W_OK):
+            global_static_path = static_path
+            global_dest_static = output_static_path
+    if global_static_path == "":
+        raise Exception("No writable static path found. Use the key `STATIC_PATHS` on your configuration.")
+    logger.debug("[plantuml] Will write generated diagrams into %s", global_dest_static)
 
     """ Prepare configurations for the MD plugin """
     try:
@@ -73,7 +92,11 @@ def pelican_init(pelicanobj):
         return
 
     # Register the Markdown plugin
-    config = { 'siteurl': pelicanobj.settings['SITEURL'] }
+    config = {
+        'siteurl': pelicanobj.settings['SITEURL'],
+        'dest_directory': global_dest_static,
+        'static_path': global_static_path,
+    }
 
     try:
         if 'MD_EXTENSIONS' in pelicanobj.settings.keys(): # pre pelican 3.7.0
