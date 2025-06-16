@@ -2,3 +2,4 @@ Markdown
 nose
 nose-exclude
 nose-summary-report
+beautifulsoup4
